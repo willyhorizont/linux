@@ -1,0 +1,932 @@
+{
+    "extensions.ignoreRecommendations": true,
+    // 1. turn off VS Code IntelliSense
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.quickSuggestions": {
+        "other": "off",
+        "comments": "off",
+        "strings": "off"
+    },
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.parameterHints.enabled": false,
+    "editor.codeActionsOnSave": {},
+    
+    // 2. Turn off Error Checking
+    "editor.showUnused": false,
+    "editor.showDeprecated": false,
+    "problems.decorations.enabled": false,
+
+    // 3. Turn off Language Server
+    "javascript.validate.enable": false,
+    "javascript.suggest.enabled": false,
+
+    "typescript.validate.enable": false,
+    "typescript.suggest.enabled": false,
+
+    "python.languageServer": "None",
+    "python.analysis.diagnosticMode": "openFilesOnly",
+
+    "editor.semanticHighlighting.enabled": true,
+
+    "views.customizations": {
+        "viewContainerLocations": {
+            "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e": 0
+        },
+        "viewLocations": {
+            "workbench.explorer.openEditorsView": "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e"
+        },
+        "viewContainerBadgeEnablementStates": {}
+    },
+    "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e.state.hidden": [
+        {
+            "id": "workbench.explorer.openEditorsView",
+            "isHidden": false
+        }
+    ],
+    "workbench.explorer.views.state.hidden": [
+        {
+            "id": "workbench.explorer.openEditorsView",
+            "isHidden": false
+        },
+    ],
+    "workbench.activity.pinnedViewlets2": [
+        {
+            "id": "workbench.view.explorer",
+            "pinned": true,
+            "visible": true,
+            "order": 0
+        },
+        {
+            "id": "workbench.views.service.auxiliarybar.d8075f6a-32ff-4930-b609-1ce17888bc4e",
+            "pinned": true,
+            "visible": true,
+            "order": 1
+        },
+        {
+            "id": "workbench.view.search",
+            "pinned": true,
+            "visible": true,
+            "order": 2
+        },
+        {
+            "id": "workbench.view.scm",
+            "pinned": true,
+            "visible": true,
+            "order": 3
+        },
+        {
+            "id": "workbench.view.extensions",
+            "pinned": true,
+            "visible": true,
+            "order": 4
+        },
+        {
+            "id": "workbench.view.editSessions",
+            "pinned": true,
+            "visible": true,
+            "order": 5
+        },
+        {
+            "id": "userDataProfiles",
+            "pinned": true,
+            "visible": true,
+            "order": 6
+        }
+    ],
+    "workbench.preferredDarkColorTheme": "Visual Studio 2017 Dark - C++",
+    "workbench.colorTheme": "Visual Studio 2017 Dark - C++",
+    // "workbench.colorTheme": "Visual Studio Dark - C++",
+    // "workbench.colorTheme": "GitHub Dark",
+    // "workbench.colorTheme": "GitHub Dark Default",
+    // "workbench.colorTheme": "GitHub Dark Dimmed",
+    // "workbench.colorTheme": "GitHub Dark High Contrast",
+    // "workbench.colorTheme": "One Dark Pro",
+    // "workbench.colorTheme": "One Dark Pro Darker",
+    // "workbench.colorTheme": "One Dark Pro Flat",
+    // "workbench.colorTheme": "One Dark Pro Mix",
+    // "workbench.colorTheme": "One Dark Pro Night Flat",
+    // "workbench.colorTheme": "Dracula Theme",
+    // "workbench.colorTheme": "Dracula Theme Soft",
+    // "workbench.colorTheme": "Ayu Dark",
+    // "workbench.colorTheme": "Ayu Dark Bordered",
+    // "workbench.colorTheme": "Ayu Mirage",
+    // "workbench.colorTheme": "Ayu Mirage Bordered",
+    // "workbench.colorTheme": "Night Owl",
+    // "workbench.colorTheme": "Night Owl (No Italics)",
+    // "workbench.colorTheme": "One Monokai",
+    "workbench.colorCustomizations": {
+        "editorUnnecessaryCode.border": "#ffee00",
+        "editorUnnecessaryCode.opacity": "#ffee00",
+        // #0A0C10
+        "button.foreground": "#3d222c",
+        "input.background": "#3d222c",
+        "badge.foreground": "#3d222c",
+        "titleBar.activeBackground": "#3d222c",
+        "activityBar.background": "#3d222c",
+        "activityBarBadge.foreground": "#3d222c",
+        "statusBar.background": "#3d222c",
+        "statusBar.noFolderBackground": "#3d222c",
+        "statusBar.debuggingForeground": "#3d222c",
+        "tab.activeBackground": "#3d222c",
+        "tab.hoverBackground": "#3d222c",
+        "tab.activeBorder": "#3d222c",
+        "tab.unfocusedActiveBorder": "#3d222c",
+        "editor.background": "#3d222c",
+        "editor.selectionForeground": "#3d222c",
+        "peekViewResult.background": "#3d222c",
+        // #010409
+        "textBlockQuote.background": "#29161d",
+        "titleBar.inactiveBackground": "#29161d",
+        "sideBar.background": "#29161d",
+        "sideBarSectionHeader.background": "#29161d",
+        "editorGroupHeader.tabsBackground": "#29161d",
+        "tab.inactiveBackground": "#29161d",
+        "editorOverviewRuler.border": "#29161d",
+        "panel.background": "#29161d",
+        "editor.lineHighlightBorder": "#FF0000",
+        "editor.rangeHighlightBorder": "#FF0000",
+        "editor.rangeHighlightBackground": "#FF00001A",
+        "editor.lineHighlightBackground": "#FF00001A",
+        "editor.findMatchBackground": "#ffffff33",
+        "editor.wordHighlightBorder": "#0095ff",
+        "editor.wordHighlightBackground": "#0000004f",
+        "editor.findMatchBorder": "#ffffff",
+        "editor.findMatchHighlightBackground": "#FF000044",
+    },
+    "editor.tokenColorCustomizations": {
+        "[Visual Studio 2017 Dark - C++]": {
+            "variables": "#dfc570",
+            "textMateRules": [
+                {
+                    "scope": "keyword.operator",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.definition.string.begin",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.definition.string.end",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.separator",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.terminator",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+                {
+                    "scope": "punctuation.separator.continuation",
+                    "settings": {
+                        "foreground": "#f33535"
+                    }
+                },
+            ]
+        }
+    },
+    // "editor.semanticTokenColorCustomizations": {
+    //     "enabled": true, // enable for all themes
+    //     "[Visual Studio 2017 Dark - C++]": {
+    //         "enabled": true,
+    //         "rules": {
+    //             // "type":  "#969696",
+    //             // "namespace": "#00897B",
+    //             // "function": "#ffc5ff",
+    //             "variable": "#dfc570",
+    //             "operator": "#f33535",
+    //             "punctuation": "#ff5517",
+    //             // "string": "#ffe07c"
+    //         }
+    //     }
+    // },
+    "editor.semanticTokenColorCustomizations": {
+        "enabled": true, // enable for all themes
+        "[Default Dark+]": {
+            "enabled": true // enable for a particular theme
+        }
+    },
+    // "files.defaultLanguage": "javascript",
+    // "files.defaultLanguage": "typescriptreact",
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyleInactive": "line",
+    "[typst]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    // "files.exclude": {
+    //     "**/*.pdf": true
+    // },
+    // "workbench.editorAssociations": {
+    //     "**/*.pdf": "default"
+    // },
+
+    "explorer.compactFolders": false,
+    "workbench.tree.indent": 24,
+    "workbench.editor.showTabs": "multiple",
+    "workbench.editor.wrapTabs": true,
+    "workbench.editor.tabSizing": "fixed",
+    "workbench.editor.tabSizingFixedMinWidth": 50,
+    "workbench.editor.pinnedTabSizing": "shrink",
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.editor.preventPinnedEditorClose": "keyboardAndMouse",
+    "workbench.editor.tabActionCloseVisibility": false,
+    "workbench.editor.tabActionUnpinVisibility": false,
+    "workbench.sideBar.location": "right",
+    "workbench.editor.pinnedTabsOnSeparateRow": true,
+    "workbench.editor.titleScrollbarSizing": "large",
+    "workbench.iconTheme": "vscode-great-icons",
+    "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', monospace",
+    "editor.maxTokenizationLineLength": 9999999999999999999999999999999999999999999999999999999,
+    "editor.rulers": [],
+    "editor.wordWrap": "off",
+    "html.format.enable": false,
+    "prettier.printWidth": 9999999999999999999999999999999999999999999999999999999,
+    "html.format.wrapLineLength": 9999999999999999999999999999999999999999999999999999999,
+    "prettier.tabWidth": 4,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": false,
+    "[html]": {
+        // "editor.defaultFormatter": "vscode.html-language-features",
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "code-runner.showRunIconInEditorTitleMenu": true,
+
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "php.suggest.basic": false,
+    "window.title": "${rootName}${separator}${activeEditorLong}${dirty}",
+    "terminal.integrated.gpuAcceleration": "off",
+    "json.maxItemsComputed": 500000,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.lineHeight": 27,
+    "[json]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace",
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "javascript.validate.enable": false,
+    "editor.guides.bracketPairs": "active",
+    "editor.bracketPairColorization.enabled": true,
+    "material-icon-theme.activeIconPack": "react",
+    "prettier.singleQuote": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "editor.inlineSuggest.enabled": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "tabnine.experimentalAutoImports": true,
+    "editor.foldingMaximumRegions": 50000,
+    "rapidapi.terminalLink.enabled": false,
+    "eslint.alwaysShowStatus": true,
+    "prettier.trailingComma": "es5",
+    "javascript.suggest.paths": false,
+    "editor.showFoldingControls": "always",
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "python.formatting.provider": "none",
+    "python.formatting.autopep8Args": [
+        "--max-line-length",
+        "1000",
+        "--ignore=E731"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnType": true
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "cmake.configureOnOpen": true,
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt",
+        "matlab.interrupt"
+    ],
+    "julia.symbolCacheDownload": true,
+    "julia.enableTelemetry": true,
+    "window.commandCenter": false,
+    "[ruby]": {
+        // All of these settings are scoped only to the Ruby language
+        "editor.defaultFormatter": "Shopify.ruby-lsp", // Use the Ruby LSP as the default formatter
+        "editor.formatOnSave": false, // Format files automatically when saving
+        "editor.tabSize": 4, // Use 2 spaces for indentation
+        "editor.insertSpaces": true, // Use spaces and not tabs for indentantion
+        "editor.semanticHighlighting.enabled": true, // Enable semantic highlighting
+        "editor.formatOnType": false // Enable formatting while typing
+    },
+    "code-runner.ignoreSelection": true,
+    "code-runner.runInTerminal": true,
+    "files.associations": {
+        // 1. JavaScript / TypeScript
+        "*.js": "javascript",
+
+        // 2. Python
+        "*.py": "python",
+
+        // 3. PHP
+        "*.php": "php",
+
+        // 4. Go
+        "*.go": "go",
+
+        // 5. Perl
+        "*.pl": "perl",
+
+        // 6. Julia
+        "*.jl": "julia",
+
+        // 7. Lua
+        "*.lua": "lua",
+
+        // 8. Ruby
+        "*.rb": "ruby",
+
+        // 9. R
+        "*.r": "r",
+
+        // 10. Kotlin
+        "*.kt": "rust",
+
+        // 11. Swift
+        "*.swift": "swift",
+
+        // 12. Dart
+        "*.dart": "dart",
+
+        // 13. VB.NET (Visual Basic dotNET)
+        "*.vb": "vb",
+
+        // 14. C# (C Sharp)
+        "*.cs": "csharp",
+
+        // 15. MATLAB / Octave
+        "*.m": "objective-c",
+
+        // 16. Wolfram Language (Mathematica)
+        "*.wl": "cpp",
+
+        // 17. Raku
+        "*.raku": "java",
+
+        // 18. Scala
+        "*.scala": "swift",
+
+        // 19. Java
+        "*.java": "java",
+
+        // 20. Nu
+        "*.nu": "julia",
+
+        // 21. Elvish
+        "*.elv": "python",
+
+        // 22. Vim Script
+        "*.vim": "csharp",
+
+        // 23. Rust
+        "*.rs": "rust",
+
+        // 24. Nix
+        "*.nix": "lua",
+
+        // 25. Tcl
+        "*.tcl": "lua",
+
+        // 26. GDScript
+        "*.gd": "dart",
+
+        // 27. Typst
+        "*.typ": "dart",
+
+        // 28. PowerShell
+        "*.ps1": "powershell",
+
+        // 29. Elixir
+        "*.exs": "ruby",
+
+        // 30. OCaml
+        "*.ml": "rust",
+
+        // 31. Erlang
+        "*.erl": "rust",
+
+        // 32. Gleam
+        "*.gleam": "rust",
+
+        // 33. Zig
+        "*.zig": "java",
+
+        // 34. Nim
+        "*.nim": "rust",
+
+        // 35. Odin
+        "*.odin": "rust",
+
+        // 36. C++ (C Plus Plus)
+        "*.cpp": "cpp",
+
+        // 37. Objective C
+        "*.m": "objective-c",
+
+        // 38. Smalltalk
+        "*.st": "groovy",
+
+        // 39. ActionScript
+        "*.as": "rust",
+
+        // 40. Groovy
+        "*.groovy": "groovy",
+
+        // 41. Cangjie
+        "*.cj": "swift",
+
+        // 42. C3
+        "*.c3": "rust",
+
+        // 43. C
+        "*.c": "c",
+
+        // 44. D
+        "*.d": "csharp",
+
+        // 45. V
+        "*.v": "go",
+
+        // 46. Vala
+        "*.vala": "rust",
+
+        // 47. Crystal
+        "*.cr": "ruby",
+
+        // 48. Wren
+        "*.wren": "rust",
+
+        // 49. Pike
+        "*.pike": "rust",
+
+        "*.h": "objective-c",
+    },
+    "code-runner.executorMapByFileExtension": {
+        ".sh": "bash $fullFileName",
+
+        // 1. JavaScript / TypeScript
+        ".js": "bash $workspaceRoot/languages/javascript-or-typescript/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 2. Python
+        ".py": "bash $workspaceRoot/languages/python/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 3. PHP
+        ".php": "bash $workspaceRoot/languages/php/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 4. Go
+        ".go": "bash $workspaceRoot/languages/go/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 5. Perl
+        ".pl": "bash $workspaceRoot/languages/perl/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 6. Julia
+        ".jl": "bash $workspaceRoot/languages/julia/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 7. Lua
+        ".lua": "bash $workspaceRoot/languages/lua/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 8. Ruby
+        ".rb": "bash $workspaceRoot/languages/ruby/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 9. R
+        ".r": "bash $workspaceRoot/languages/r/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 10. Kotlin
+        ".kt": "bash $workspaceRoot/languages/kotlin/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 11. Swift
+        ".swift": "bash $workspaceRoot/languages/swift/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 12. Dart
+        ".dart": "bash $workspaceRoot/languages/dart/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 13. VB.NET (Visual Basic dotNET)
+        ".vb": "bash $workspaceRoot/languages/visual-basic-dot-net/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 14. C# (C Sharp)
+        ".cs": "bash $workspaceRoot/languages/c-sharp/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 15. MATLAB / Octave
+        ".m": "bash $workspaceRoot/languages/objective-c/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 16. Wolfram Language (Mathematica)
+        ".wl": "bash $workspaceRoot/languages/wolfram-language-mathematica/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 17. Raku
+        ".raku": "bash $workspaceRoot/languages/raku/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 18. Scala
+        ".scala": "bash $workspaceRoot/languages/scala/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 19. Java
+        ".java": "bash $workspaceRoot/languages/java/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 20. Nu
+        ".nu": "bash $workspaceRoot/languages/nu/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 21. Elvish
+        ".elv": "bash $workspaceRoot/languages/elvish/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 22. Vim Script
+        ".vim": "bash $workspaceRoot/languages/vim-script/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 23. Rust
+        ".rs": "bash $workspaceRoot/languages/rust/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 24. Nix
+        ".nix": "bash $workspaceRoot/languages/nix/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 25. Tcl
+        ".tcl": "bash $workspaceRoot/languages/tcl/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 26. GDScript
+        ".gd": "bash $workspaceRoot/languages/gdscript/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 27. Typst
+        ".typ": "bash $workspaceRoot/languages/typst/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 28. PowerShell
+        ".ps1": "bash $workspaceRoot/languages/powershell/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 29. Elixir
+        ".exs": "bash $workspaceRoot/languages/elixir/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 30. OCaml
+        ".ml": "bash $workspaceRoot/languages/ocaml/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 31. Erlang
+        ".erl": "bash $workspaceRoot/languages/erlang/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 32. Gleam
+        ".gleam": "bash $workspaceRoot/languages/gleam/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 33. Zig
+        ".zig": "bash $workspaceRoot/languages/zig/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 34. Nim
+        ".nim": "bash $workspaceRoot/languages/nim/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 35. Odin
+        ".odin": "bash $workspaceRoot/languages/odin/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 36. C++ (C Plus Plus)
+        ".cpp": "bash $workspaceRoot/languages/c-plus-plus/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 37. Objective C
+        ".m": "bash $workspaceRoot/languages/objective-c/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 38. Smalltalk
+        ".st": "bash $workspaceRoot/languages/smalltalk/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 39. ActionScript
+        ".as": "bash $workspaceRoot/languages/actionscript/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 40. Groovy
+        ".groovy": "bash $workspaceRoot/languages/groovy/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 41. Cangjie
+        ".cj": "bash $workspaceRoot/languages/cangjie/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 42. C3
+        ".c3": "bash $workspaceRoot/languages/c3/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 43. C
+        ".c": "bash $workspaceRoot/languages/c/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 44. D
+        ".d": "bash $workspaceRoot/languages/d/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 45. V
+        ".v": "bash $workspaceRoot/languages/v/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 46. Vala
+        ".vala": "bash $workspaceRoot/languages/vala/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 47. Crystal
+        ".cr": "bash $workspaceRoot/languages/crystal/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 48. Wren
+        ".wren": "bash $workspaceRoot/languages/wren/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 49. Pike
+        ".pike": "bash $workspaceRoot/languages/pike/runner.sh $dirWithoutTrailingSlash/$fileName",
+    },
+    "code-runner.executorMap": {
+        "shellscript": "bash $fullFileName",
+
+        // 1. JavaScript / TypeScript
+        "javascript": "bash $workspaceRoot/languages/javascript-or-typescript/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 2. Python
+        "python": "bash $workspaceRoot/languages/python/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 3. PHP
+        "php": "bash $workspaceRoot/languages/php/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 4. Go
+        "go": "bash $workspaceRoot/languages/go/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 5. Perl
+        "perl": "bash $workspaceRoot/languages/perl/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 6. Julia
+        "julia": "bash $workspaceRoot/languages/julia/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 7. Lua
+        "lua": "bash $workspaceRoot/languages/lua/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 8. Ruby
+        "ruby": "bash $workspaceRoot/languages/ruby/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 9. R
+        "r": "bash $workspaceRoot/languages/r/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 10. Kotlin
+        // ".kt": "bash $workspaceRoot/languages/kotlin/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 11. Swift
+        "swift": "bash $workspaceRoot/languages/swift/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 12. Dart
+        "dart": "bash $workspaceRoot/languages/dart/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 13. VB.NET (Visual Basic dotNET)
+        "vb": "bash $workspaceRoot/languages/visual-basic-dot-net/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 14. C# (C Sharp)
+        "csharp": "bash $workspaceRoot/languages/c-sharp/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 15. MATLAB / Octave
+        // ".m": "bash $workspaceRoot/languages/objective-c/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 16. Wolfram Language (Mathematica)
+        // ".wl": "bash $workspaceRoot/languages/wolfram-language-mathematica/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 17. Raku
+        "raku": "bash $workspaceRoot/languages/raku/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 18. Scala
+        // ".scala": "bash $workspaceRoot/languages/scala/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 19. Java
+        "java": "bash $workspaceRoot/languages/java/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 20. Nu
+        // ".nu": "bash $workspaceRoot/languages/nu/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 21. Elvish
+        // ".elv": "bash $workspaceRoot/languages/elvish/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 22. Vim Script
+        // ".vim": "bash $workspaceRoot/languages/vim-script/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 23. Rust
+        "rust": "bash $workspaceRoot/languages/rust/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 24. Nix
+        // ".nix": "bash $workspaceRoot/languages/nix/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 25. Tcl
+        // ".tcl": "bash $workspaceRoot/languages/tcl/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 26. GDScript
+        // ".gd": "bash $workspaceRoot/languages/gdscript/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 27. Typst
+        // ".typ": "bash $workspaceRoot/languages/typst/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 28. PowerShell
+        "powershell": "bash $workspaceRoot/languages/powershell/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 29. Elixir
+        // ".exs": "bash $workspaceRoot/languages/elixir/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 30. OCaml
+        // ".ml": "bash $workspaceRoot/languages/ocaml/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 31. Erlang
+        // ".erl": "bash $workspaceRoot/languages/erlang/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 32. Gleam
+        // ".gleam": "bash $workspaceRoot/languages/gleam/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 33. Zig
+        // ".zig": "bash $workspaceRoot/languages/zig/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 34. Nim
+        // ".nim": "bash $workspaceRoot/languages/nim/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 35. Odin
+        // ".odin": "bash $workspaceRoot/languages/odin/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 36. C++ (C Plus Plus)
+        "cpp": "bash $workspaceRoot/languages/c-plus-plus/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 37. Objective C
+        "objective-c": "bash $workspaceRoot/languages/objective-c/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 38. Smalltalk
+        // ".st": "bash $workspaceRoot/languages/smalltalk/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 39. ActionScript
+        // ".as": "bash $workspaceRoot/languages/actionscript/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 40. Groovy
+        "groovy": "bash $workspaceRoot/languages/groovy/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 41. Cangjie
+        // ".cj": "bash $workspaceRoot/languages/cangjie/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 42. C3
+        // ".c3": "bash $workspaceRoot/languages/c3/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 43. C
+        "c": "bash $workspaceRoot/languages/c/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 44. D
+        // ".d": "bash $workspaceRoot/languages/d/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 45. V
+        // ".v": "bash $workspaceRoot/languages/v/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 46. Vala
+        // ".vala": "bash $workspaceRoot/languages/vala/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 47. Crystal
+        // ".cr": "bash $workspaceRoot/languages/crystal/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 48. Wren
+        // ".wren": "bash $workspaceRoot/languages/wren/runner.sh $dirWithoutTrailingSlash/$fileName",
+
+        // 49. Pike
+        // ".pike": "bash $workspaceRoot/languages/pike/runner.sh $dirWithoutTrailingSlash/$fileName",
+    },
+    "java.project.resourceFilters": [
+        "node_modules",
+        ".git",
+        "codes",
+        "codes_trial"
+    ],
+    // "java.import.exclusions": [
+    //     "**/node_modules/**",
+    //     "**/codes/**",
+    //     "**/codes_trial/**"
+    // ],
+    "java.project.sourcePaths": [
+        "output\\java"
+    ],
+    "rubyLsp.rubyVersionManager": {
+        "identifier": "none"
+    },
+    "MATLAB.matlabConnectionTiming": "never",
+    "MATLAB.telemetry": false,
+    "lldb.library": "/mnt/c/WSL_Documents/Swift/swift-5.9.1-RELEASE-ubuntu22.04/usr/lib/liblldb.so",
+    "lldb.launch.expressions": "native",
+    "terminal.integrated.env.windows": {},
+    "console-ninja.featureSet": "Community",
+    "editor.stickyScroll.enabled": false,
+    "godotTools.editorPath.godot3": "\"D:\\Programs_Portable\\Godot_v3.5.3-stable_win64.exe\\godot.exe\"",
+    "godotTools.editorPath.godot4": "\"D:\\Programs_Portable\\Godot_v4.2.1-stable_win64\\godot.exe\"",
+    "Lua.diagnostics.disable": [
+        "lowercase-global",
+        "assign-type-mismatch"
+    ],
+    "editor.multiCursorLimit": 100000,
+    "editor.minimap.enabled": true,
+    "java.project.referencedLibraries": [],
+    "tclLsp.dialect": "tcl9.0",
+    "[*]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[gdscript]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[elixir]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[ocaml]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[nix]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[c3]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[nim]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[dart]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "[go]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": false
+    },
+    "[markdown]": {
+        "editor.wordWrap": "off",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "liveServer.settings.donotVerifyTags": true,
+    "lldb.suppressUpdateNotifications": true,
+    "liveServer.settings.CustomBrowser": "chrome",
+    "editor.selectionClipboard": false,
+    "diffEditor.maxComputationTime": 0,
+    "diffEditor.experimental.showMoves": true,
+    "diffEditor.renderSideBySide": true,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "application.shellEnvironmentResolutionTimeout": 100,
+    "chat.disableAIFeatures": true,
+    "tclLsp.features.signatureHelp": false,
+    "tclLsp.features.inlayHints": null,
+    "tclLsp.formatting.spaceBetweenBraces": false,
+    "tclLsp.ai.enabled": false,
+    "window.newWindowProfile": "Default",
+    "julia.juliaup.install.hint": false,
+    "[plaintext]": {
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.unicodeHighlight.invisibleCharacters": false
+    },
+    "kotlin.languageServer.enabled": false,
+    "kotlin.debugAdapter.enabled": false,
+    "window.titleSeparator": " | ",
+    "zig.zls.enabled": "off",
+    "groovyLint.enable": false,
+    "groovyLint.fix.enable": false,
+    "groovyLint.format.enable": false,
+    "groovyLint.format.useDocumentIndentSize": false,
+    "groovyLint.lint.trigger": "user",
+    "perlnavigator.perlCompileEnabled": false,
+    "julia.juliaup.customDepot": false,
+    "julia.promptToInstall": false,
+    "julia.executablePath": "/usr/local/julia/bin/julia",
+    "workbench.notifications.position": "bottom-left",
+    "notification.statusMode": "off",
+    "c3.lsp.enable": false,
+    "c3.lsp.checkForUpdate": false,
+    "zenMode.silentNotifications": true,
+    // "workbench.notification.extensionHidingList": [
+    //     "c3.vscode-c3"
+    // ],
+}
