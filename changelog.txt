@@ -1,3 +1,8 @@
+[Last updated: 02 Sep 2026 @ 04:29 AM][version: 0.0.3]
+update linux-mintx;
+update mindora-linux;
+add linux/SPRM.sh;
+
 [Last updated: 02 Sep 2026 @ 03:16 AM][version: 0.0.2]
 update lemonbar-simple-resource-monitor.sh;
 update yabar-simple-resource-monitor.sh;

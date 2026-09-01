@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SPRM (Simple Panel Resource Monitor)
+
 NET_INTERFACE="wlp3s0"
 INTERVAL=2
 
