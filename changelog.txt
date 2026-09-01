@@ -1,3 +1,6 @@
+[Last updated: 02 Sep 2026 @ 04:40 AM][version: 0.0.4]
+small fix in linux-mintx;
+
 [Last updated: 02 Sep 2026 @ 04:29 AM][version: 0.0.3]
 update linux-mintx;
 update mindora-linux;
