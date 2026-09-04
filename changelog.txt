@@ -1,3 +1,6 @@
+[Last updated: 04 Sep 2026 @ 04:11 PM][version: 0.0.8]
+remove Besgnulinux, SparkyLinux, BunsenLabs Linux, nakeDeb;
+
 [Last updated: 04 Sep 2026 @ 04:09 PM][version: 0.0.7]
 remove linux minx IceWM;
 remove mindora linux Labwc;

@@ -187,11 +187,7 @@ Debian MX Linux          | [XFCE]                             | DE   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
-Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
-Debian SparkyLinux       | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
-Debian BunsenLabs Linux  | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
-Debian nakeDeb           | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
-Debian                   | [IceWM, JWM] via Netinstall        | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
+Debian                   | [IceWM] via Netinstall             | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Fedora Everything        | [Labwc] via Netinstall             | WM   | stable but newer and ultra lightweight but with systemd        | Best for Older Hardware and Newer Hardware
 Debian MX Linux          | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with hybrid systemd | Best for Older Hardware
 Debian Antix             | [IceWM, JVM, Fluxbox]              | WM   | stable but older and ultra lightweight but no systemd          | Best for Older Hardware
