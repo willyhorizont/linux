@@ -1,3 +1,7 @@
+[Last updated: 04 Sep 2026 @ 04:09 PM][version: 0.0.7]
+remove linux minx IceWM;
+remove mindora linux Labwc;
+
 [Last updated: 04 Sep 2026 @ 04:09 PM][version: 0.0.6]
 remove linux minx IceWM;
 remove mindora linux Labwc;
