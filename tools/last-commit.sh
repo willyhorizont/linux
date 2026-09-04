@@ -12,7 +12,8 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update mindora-linux part 1;
+remove linux minx IceWM;
+remove mindora linux Labwc;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H

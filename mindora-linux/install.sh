@@ -7,6 +7,7 @@
 
 sudo dnf install --setopt=install_weak_deps=False -y \
     labwc \
+    sddm \
     sddm-wayland-plasma \
     gvfs \
     adwaita-icon-theme \
