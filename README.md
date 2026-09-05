@@ -179,7 +179,7 @@ Debian                   | [LXDE]                             | DE   | stable bu
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Ubuntu Linux Mint | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~990MB
 Debian                   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
-Debian                   | [LXQt]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~670MB
+Debian                   | [LXQt]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~670MB
 Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~700MB
 Debian                   | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~650MB
 Debian Ubuntu Linux Mint | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
