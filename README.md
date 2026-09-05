@@ -36,11 +36,11 @@
 ```
 Name                                     | Languages                                                  | Core Aura| Toolkit and Version            | Wayland                           | X11           | Users Count | Rank By Users Count| Rank By Me
 Cinnamon (Mint)                          | [GTK / GObject / GNOME, C] (Core), Vala, Python, JavaScript| +100     | GTK 3 / GTK 4 (no Libadwaita)  | Wayland                           | X11 Support   | ~3.2 - 4 M  |                   3|          1
-KDE Plasma                               | [Qt / QML, C++] (Core), JavaScript                         | +100     | Qt 6                           | Wayland-Only (default)            | No X11 Support| ~12 - 16 M+ |                   2|          2
-Trinity (Fork KDE Plasma 3 / Qt 3)       | [Qt / QML, C++, TQt] (Core)                                | +100     | TQt (Fork KDE Plasma 3 / Qt 3) | No Wayland                        | X11-Only      | ~5 - 8 K    |                  17|          3
-LXDE (GTK 2)                             | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 2                          | No Wayland                        | X11-Only      | ~80 - 150 K |                  12|          4
-LXQt                                     | [Qt / QML, C++] (Core)                                     | +100     | Qt 6                           | Wayland (default)                 | X11 Support   | ~400 - 600 K|                   8|          5
-XFCE                                     | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~2.5 - 3.5 M|                   4|          6
+XFCE                                     | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~2.5 - 3.5 M|                   4|          2
+KDE Plasma                               | [Qt / QML, C++] (Core), JavaScript                         | +100     | Qt 6                           | Wayland-Only (default)            | No X11 Support| ~12 - 16 M+ |                   2|          3
+Trinity (Fork KDE Plasma 3 / Qt 3)       | [Qt / QML, C++, TQt] (Core)                                | +100     | TQt (Fork KDE Plasma 3 / Qt 3) | No Wayland                        | X11-Only      | ~5 - 8 K    |                  17|          4
+LXDE (GTK 2)                             | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 2                          | No Wayland                        | X11-Only      | ~80 - 150 K |                  12|          5
+LXQt                                     | [Qt / QML, C++] (Core)                                     | +100     | Qt 6                           | Wayland (default)                 | X11 Support   | ~400 - 600 K|                   8|          6
 Mate (GNOME 2)                           | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~500 - 800 K|                   7|          7
 Cosmic (PopOS)                           | [Rust] (Core)                                              | +100     | Iced / Smithay                 | Wayland-Only                      | No X11 Support| ~300 - 500 K|                   9|          8
 Unity 7                                  | [GTK / GObject / GNOME, C++] (Core)                        | +100     | GTK 3                          | Wayland Experimental              | X11 (default) | ~50 - 90 K  |                  13|          9
@@ -175,12 +175,12 @@ Mandriva Mageia          | [KDE Plasma]                       | DE   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
+Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~700MB
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Ubuntu Linux Mint | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~990MB
 Debian                   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
 Debian                   | [LXQt]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~670MB
-Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~700MB
 Debian                   | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~650MB
 Debian Ubuntu Linux Mint | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~810MB
 Debian Ubuntu Linux Mint | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
@@ -223,6 +223,7 @@ Debian nakeDeb           | [Fluxbox]                          | WM   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
+Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware
 Fedora                   | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware

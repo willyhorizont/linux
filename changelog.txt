@@ -1,3 +1,6 @@
+[Last updated: 05 Sep 2026 @ 10:12 PM][version: 0.0.20]
+add Debian XFCE to the top;
+
 [Last updated: 05 Sep 2026 @ 04:24 PM][version: 0.0.19]
 update list;
 
