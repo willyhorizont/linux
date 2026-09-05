@@ -35,26 +35,26 @@
 ## Top Best Linux Desktop Environments 2026 Q3
 ```
 Name                                     | Languages                                                  | Core Aura| Toolkit and Version            | Wayland                           | X11           | Users Count | Rank By Users Count| Rank By Me
-Cinnamon (Mint)                          | [GTK / GObject / GNOME, C] (Core), Vala, Python, JavaScript| +100     | GTK 3 / GTK 4 (no Libadwaita)  | Wayland                           | X11 Support   | ~3.2 - 4 M  |                   3|          1
-XFCE                                     | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~2.5 - 3.5 M|                   4|          2
-KDE Plasma                               | [Qt / QML, C++] (Core), JavaScript                         | +100     | Qt 6                           | Wayland-Only (default)            | No X11 Support| ~12 - 16 M+ |                   2|          3
-Trinity (Fork KDE Plasma 3 / Qt 3)       | [Qt / QML, C++, TQt] (Core)                                | +100     | TQt (Fork KDE Plasma 3 / Qt 3) | No Wayland                        | X11-Only      | ~5 - 8 K    |                  17|          4
-LXDE (GTK 2)                             | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 2                          | No Wayland                        | X11-Only      | ~80 - 150 K |                  12|          5
+XFCE                                     | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~2.5 - 3.5 M|                   4|          1
+LXDE (GTK 2)                             | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 2                          | No Wayland                        | X11-Only      | ~80 - 150 K |                  12|          2
+Cinnamon (Mint)                          | [GTK / GObject / GNOME, C] (Core), Vala, Python, JavaScript| +100     | GTK 3 / GTK 4 (no Libadwaita)  | Wayland                           | X11 Support   | ~3.2 - 4 M  |                   3|          3
+KDE Plasma                               | [Qt / QML, C++] (Core), JavaScript                         | +100     | Qt 6                           | Wayland-Only (default)            | No X11 Support| ~12 - 16 M+ |                   2|          4
+Trinity (Fork KDE Plasma 3 / Qt 3)       | [Qt / QML, C++, TQt] (Core)                                | +100     | TQt (Fork KDE Plasma 3 / Qt 3) | No Wayland                        | X11-Only      | ~5 - 8 K    |                  17|          5
 LXQt                                     | [Qt / QML, C++] (Core)                                     | +100     | Qt 6                           | Wayland (default)                 | X11 Support   | ~400 - 600 K|                   8|          6
 Mate (GNOME 2)                           | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~500 - 800 K|                   7|          7
 Cosmic (PopOS)                           | [Rust] (Core)                                              | +100     | Iced / Smithay                 | Wayland-Only                      | No X11 Support| ~300 - 500 K|                   9|          8
 Unity 7                                  | [GTK / GObject / GNOME, C++] (Core)                        | +100     | GTK 3                          | Wayland Experimental              | X11 (default) | ~50 - 90 K  |                  13|          9
 Budgie (Solus)                           | [Qt / QML, C++] (Core)                                     | +100     | Qt 6                           | Wayland-Only (default)            | No X11 Support| ~200 - 350 K|                  10|         10
 Pantheon (ElementaryOS)                  | [GTK / GObject / GNOME, C, Vala] (Core)                    | +100     | GTK 3 / GTK 4                  | Wayland Transition (X11 Dependent)| X11 (default) | ~150 - 250 K|                  11|         11
-Enlightenment (Bodhi Linux)              | [C, EFL / Elementary] (Core)                               | +100     | EFL (Not GTK / Qt)             | Wayland-Only (default)            | No X11 Support| ~30 - 50 K  |                  14|         12
+Enlightenment (Bodhi Linux)              | [C, EFL / Elementary] (Core)                               | +100     | EFL                            | Wayland-Only (default)            | No X11 Support| ~30 - 50 K  |                  14|         12
 Lomiri (Unity 8)                         | [Qt / QML, C++] (Core)                                     | +100     | Qt 5 / Qt 6                    | Wayland (Mir)                     | X11 Support   | ~20 - 40 K  |                  16|         13
 Lumina                                   | [Qt / QML, C++] (Core)                                     | +100     | Qt 5                           | No Wayland                        | X11-Only      | ~1.5 - 3 K  |                  20|         14
-Moksha (Bodhi Linux)                     | [C, EFL / Elementary] (Core)                               | +100     | EFL (Not GTK / Qt)             | Wayland Experimental              | X11-Only      | ~4 - 7 K    |                  18|         15
-WindowMaker DE (NeXTSTEP)                | [Objective-C, C, GNUstep] (Core)                           | +100     | WINGs (Not GTK / Qt)           | No Wayland                        | X11-Only      | ~2 - 5 K    |                  19|         16
-CDE (Common DE) (1993)                   | [C, Motif] (Core)                                          | +100     | Motif (Not GTK / Qt)           | No Wayland                        | X11-Only      | < 1 K       |                  22|         17
-NSCDE (Not So Common DE) (retro Unix 90s)| [C, FVWM] (Core), Python                                   | +100     | FVWM (Not GTK / Qt)            | No Wayland                        | X11-Only      | ~1 - 2.5 K  |                  21|         18
+Moksha (Bodhi Linux)                     | [C, EFL / Elementary] (Core)                               | +100     | EFL                            | Wayland Experimental              | X11-Only      | ~4 - 7 K    |                  18|         15
+WindowMaker DE (NeXTSTEP)                | [Objective-C, C, GNUstep] (Core)                           | +100     | WINGs                          | No Wayland                        | X11-Only      | ~2 - 5 K    |                  19|         16
+CDE (Common DE) (1993)                   | [C, Motif] (Core)                                          | +100     | Motif                          | No Wayland                        | X11-Only      | < 1 K       |                  22|         17
+NSCDE (Not So Common DE) (retro Unix 90s)| [C, FVWM] (Core), Python                                   | +100     | FVWM                           | No Wayland                        | X11-Only      | ~1 - 2.5 K  |                  21|         18
 ROX --dead                               | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 2                          | No Wayland                        | X11-Only      | < 500       |                  23|         19
-EDE (Equinox DE) --dead                  | [C++, FLTK] (Core)                                         | +100     | FLTK (Not GTK / Qt)            | No Wayland                        | X11-Only      | < 500       |                  24|         20
+EDE (Equinox DE) --dead                  | [C++, FLTK] (Core)                                         | +100     | FLTK                           | No Wayland                        | X11-Only      | < 500       |                  24|         20
 GNOME                                    | [JavaScript, GTK / GObject / GNOME, C] (Core)              | -100     | GTK 4 (Libadwaita)             | Wayland-Only (default)            | No X11 Support| ~15 - 20 M+ |                   1|         21
 Deepin                                   | [Qt / QML, C++, DTK, JavaScript] (Core)                    | -100     | Qt 6 (via DTK)                 | Wayland                           | X11 Support   | ~600 - 900 K|                   5|         22
 UKUI (Ultimate Kylin User Interface)     | [Qt / QML, C++, DTK, JavaScript] (Core)                    | -100     | Qt 6                           | Wayland Transition (X11 Dependent)| X11 (default) | ~500 - 800 K|                   6|         23
@@ -154,30 +154,39 @@ Cardboard                               | [C++] (Core)             | +100     | 
 ## Top Best Linux Distro for Newer Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
+Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware
+Fedora                   | [XFCE]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
+OpenSUSE Tumbleweed      | [XFCE]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
+Mandriva Mageia          | [XFCE]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
 Fedora                   | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
-Arch CachyOS             | [KDE Plasma]                       | DE   | stable but newest                                              | Best for Newer Hardware
 OpenSUSE Tumbleweed      | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [KDE Plasma]                       | DE   | stable but older                                               | Best for Older and Newer Hardware
+Arch CachyOS             | [KDE Plasma]                       | DE   | stable but newest                                              | Best for Newer Hardware
 ```
 
 ## Top Best Linux Distro for Older and Newer Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
+Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware
+Fedora                   | [XFCE]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
+OpenSUSE Tumbleweed      | [XFCE]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
+Mandriva Mageia          | [XFCE]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
 Debian Ubuntu Linux Mint | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
 Debian                   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
 Fedora                   | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
 OpenSUSE Tumbleweed      | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [KDE Plasma]                       | DE   | stable but older                                               | Best for Older and Newer Hardware
+Arch CachyOS             | [KDE Plasma]                       | DE   | stable but newest                                              | Best for Newer Hardware
 ```
 
 ## Top Best Linux Distro for Older Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
-Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
 Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~700MB
-Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
+Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
+Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
 Debian Ubuntu Linux Mint | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~990MB
 Debian                   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
 Debian                   | [LXQt]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~670MB
@@ -189,17 +198,15 @@ Debian Besgnulinux       | [JWM]                              | WM   | stable bu
 Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
 Debian Synex             | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
 Debian Synex             | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
-~~Fedora                   | [LXDE, Cinnamon, LXQt, XFCE, Mate] | DE   | stable but newer                                               | Best for Older and Newer Hardware~~
-~~OpenSUSE Tumbleweed      | [XFCE]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware~~
-~~Mandriva Mageia          | [XFCE]                             | DE   | stable but older                                               | Best for Older and Newer Hardware~~
+~~Fedora                   | [LXDE, Cinnamon, LXQt, Mate]       | DE   | stable but newer                                               | Best for Older and Newer Hardware~~
 ~~Debian MX Linux          | [XFCE]                             | DE   | stable but older but with hybrid systemd                       | Best for Older Hardware~~
 ```
 
 ## Top Best Linux Distro Ultra Lightweight Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
-Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
+Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
 Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
@@ -219,13 +226,24 @@ Debian nakeDeb           | [Fluxbox]                          | WM   | stable bu
 ~~Debian Antix             | [IceWM, JVM, Fluxbox]              | WM   | stable but older and ultra lightweight but no systemd          | Best for Older Hardware~~
 ```
 
-## Top Best Linux Distro Overall Filtered by Requirements 2026 Q3
+## Top Best Beginner Friendly Linux Distro that Just Works For Everyone Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
-Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware
+Debian Ubuntu Linux Mint | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
+Debian                   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
 Fedora                   | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
+OpenSUSE Tumbleweed      | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
+Mandriva Mageia          | [KDE Plasma]                       | DE   | stable but older                                               | Best for Older and Newer Hardware
+Mandriva Mageia          | [XFCE]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
+```
+
+## Top Best Beginner Friendly Linux Distro that Just Works For Everyone With More Experiences Filtered by Requirements 2026 Q3
+```
+Distro                   | Editions                           | Type | Description                                                    | Hardware Use
+Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 ```
 
