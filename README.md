@@ -164,6 +164,8 @@ Mandriva Mageia          | [KDE Plasma]                       | DE   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
+Debian Ubuntu Linux Mint | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
+Debian                   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
 Fedora                   | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
 OpenSUSE Tumbleweed      | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [KDE Plasma]                       | DE   | stable but older                                               | Best for Older and Newer Hardware
@@ -171,30 +173,50 @@ Mandriva Mageia          | [KDE Plasma]                       | DE   | stable bu
 
 ## Top Best Linux Distro for Older Hardware Filtered by Requirements 2026 Q3
 ```
-Distro                   | Editions                           | Type | Description                                                    | Hardware Use
-Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
-Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older                                               | Best for Older Hardware
-Debian Synex             | [LXDE, XFCE, Mate]                 | DE   | stable but older                                               | Best for Older Hardware
-Debian Ubuntu Linux Mint | [Cinnamon, XFCE, Mate]             | DE   | stable but older                                               | Best for Older Hardware
-Debian                   | [LXDE, Cinnamon, LXQt, XFCE, Mate] | DE   | stable but older                                               | Best for Older Hardware
-Fedora                   | [LXDE, Cinnamon, LXQt, XFCE, Mate] | DE   | stable but newer                                               | Best for Older and Newer Hardware
-OpenSUSE Tumbleweed      | [XFCE]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
-Mandriva Mageia          | [XFCE]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
-Debian MX Linux          | [XFCE]                             | DE   | stable but older but with hybrid systemd                       | Best for Older Hardware
+Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
+Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
+Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
+Debian Ubuntu Linux Mint | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~990MB
+Debian                   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
+Debian                   | [LXQt]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~670MB
+Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~700MB
+Debian                   | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~650MB
+Debian Ubuntu Linux Mint | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
+Debian Ubuntu Linux Mint | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
+Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
+Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
+Debian Synex             | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
+Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
+Debian Synex             | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
+Debian Synex             | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
+~~Fedora                   | [LXDE, Cinnamon, LXQt, XFCE, Mate] | DE   | stable but newer                                               | Best for Older and Newer Hardware~~
+~~OpenSUSE Tumbleweed      | [XFCE]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware~~
+~~Mandriva Mageia          | [XFCE]                             | DE   | stable but older                                               | Best for Older and Newer Hardware~~
+~~Debian MX Linux          | [XFCE]                             | DE   | stable but older but with hybrid systemd                       | Best for Older Hardware~~
 ```
 
 ## Top Best Linux Distro Ultra Lightweight Filtered by Requirements 2026 Q3
 ```
+Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
+Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
+Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
+Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
+Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
+Debian                   | [IceWM] via Netinstall             | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~390MB
+Debian                   | [JWM] via Netinstall               | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
+Fedora Everything        | [Labwc] via Netinstall             | WM   | stable but newer and ultra lightweight but with systemd        | Best for Older Hardware and Newer Hardware     | ~520MB
+```
+
+## Top Best Linux Distro Ultra Lightweight Honorable Mention Filtered by Requirements 2026 Q3
+```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
-Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
-Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian SparkyLinux       | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian BunsenLabs Linux  | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian nakeDeb           | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
-Debian                   | [IceWM, JWM] via Netinstall        | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
-Fedora Everything        | [Labwc] via Netinstall             | WM   | stable but newer and ultra lightweight but with systemd        | Best for Older Hardware and Newer Hardware
-Debian MX Linux          | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with hybrid systemd | Best for Older Hardware
-Debian Antix             | [IceWM, JVM, Fluxbox]              | WM   | stable but older and ultra lightweight but no systemd          | Best for Older Hardware
+~~Debian MX Linux          | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with hybrid systemd | Best for Older Hardware~~
+~~Debian Antix             | [IceWM, JVM, Fluxbox]              | WM   | stable but older and ultra lightweight but no systemd          | Best for Older Hardware~~
 ```
 
 ## Top Best Linux Distro Overall Filtered by Requirements 2026 Q3
@@ -202,5 +224,6 @@ Debian Antix             | [IceWM, JVM, Fluxbox]              | WM   | stable bu
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
 Fedora                   | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
-Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
+Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 ```
