@@ -182,7 +182,7 @@ Debian                   | [Cinnamon]                         | DE   | stable bu
 Debian                   | [LXQt]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~670MB
 Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~700MB
 Debian                   | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~650MB
-Debian Ubuntu Linux Mint | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
+Debian Ubuntu Linux Mint | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~810MB
 Debian Ubuntu Linux Mint | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
 Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
