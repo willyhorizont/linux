@@ -1,3 +1,7 @@
+[Last updated: 06 Sep 2026 @ 03:43 AM][version: 0.0.23]
+change from Fedora KDE to Debian XFCE and from LMDE Cinnamon to Debian LXDE;
+update README;
+
 [Last updated: 06 Sep 2026 @ 02:17 AM][version: 0.0.22]
 change from Fedora KDE to Debian XFCE and from LMDE Cinnamon to Debian LXDE;
 

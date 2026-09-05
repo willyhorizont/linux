@@ -236,6 +236,7 @@ Fedora                   | [KDE Plasma]                       | DE   | stable bu
 OpenSUSE Tumbleweed      | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [KDE Plasma]                       | DE   | stable but older                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [XFCE]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
+Debian                   | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 ```
