@@ -25,17 +25,23 @@
 * Any effect off
 * I only use 60hz
 * I only use HD to Full-HD resolution
+* Below Distro Sorted by **from** ```prefered``` **to** ```least prefered``` **from** ```top``` **to** ```bottom```  
+* Below Desktop Sorted by **from** ```prefered``` **to** ```least prefered``` **from** ```left``` **to** ```right```  
+
+## Links
+* [https://en.wikipedia.org/wiki/Stacking_window_manager](https://en.wikipedia.org/wiki/Stacking_window_manager)  
+* [https://wiki.archlinux.org/title/Window_manager](https://wiki.archlinux.org/title/Window_manager)  
 
 ## Top Best Linux Desktop Environments 2026 Q3
 ```
 Name                                     | Languages                                                  | Core Aura| Toolkit and Version            | Wayland                           | X11           | Users Count | Rank By Users Count| Rank By Me
 Cinnamon (Mint)                          | [GTK / GObject / GNOME, C] (Core), Vala, Python, JavaScript| +100     | GTK 3 / GTK 4 (no Libadwaita)  | Wayland                           | X11 Support   | ~3.2 - 4 M  |                   3|          1
 KDE Plasma                               | [Qt / QML, C++] (Core), JavaScript                         | +100     | Qt 6                           | Wayland-Only (default)            | No X11 Support| ~12 - 16 M+ |                   2|          2
-LXQt                                     | [Qt / QML, C++] (Core)                                     | +100     | Qt 6                           | Wayland (default)                 | X11 Support   | ~400 - 600 K|                   8|          3
-XFCE                                     | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~2.5 - 3.5 M|                   4|          4
-Mate (GNOME 2)                           | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~500 - 800 K|                   7|          5
-LXDE (GTK 2)                             | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 2                          | No Wayland                        | X11-Only      | ~80 - 150 K |                  12|          6
-Trinity (Fork KDE Plasma 3 / Qt 3)       | [Qt / QML, C++, TQt] (Core)                                | +100     | TQt (Fork KDE Plasma 3 / Qt 3) | No Wayland                        | X11-Only      | ~5 - 8 K    |                  17|          7
+Trinity (Fork KDE Plasma 3 / Qt 3)       | [Qt / QML, C++, TQt] (Core)                                | +100     | TQt (Fork KDE Plasma 3 / Qt 3) | No Wayland                        | X11-Only      | ~5 - 8 K    |                  17|          3
+LXDE (GTK 2)                             | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 2                          | No Wayland                        | X11-Only      | ~80 - 150 K |                  12|          4
+LXQt                                     | [Qt / QML, C++] (Core)                                     | +100     | Qt 6                           | Wayland (default)                 | X11 Support   | ~400 - 600 K|                   8|          5
+XFCE                                     | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~2.5 - 3.5 M|                   4|          6
+Mate (GNOME 2)                           | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~500 - 800 K|                   7|          7
 Cosmic (PopOS)                           | [Rust] (Core)                                              | +100     | Iced / Smithay                 | Wayland-Only                      | No X11 Support| ~300 - 500 K|                   9|          8
 Unity 7                                  | [GTK / GObject / GNOME, C++] (Core)                        | +100     | GTK 3                          | Wayland Experimental              | X11 (default) | ~50 - 90 K  |                  13|          9
 Budgie (Solus)                           | [Qt / QML, C++] (Core)                                     | +100     | Qt 6                           | Wayland-Only (default)            | No X11 Support| ~200 - 350 K|                  10|         10
@@ -56,8 +62,6 @@ SOAS (Sugar)                             | [Python, GTK / GObject / GNOME] (Core
 ```
 
 ## Top Best Linux Stacking / Floating Window Manager 2026 Q3
-[https://en.wikipedia.org/wiki/Stacking_window_manager](https://en.wikipedia.org/wiki/Stacking_window_manager)  
-[https://wiki.archlinux.org/title/Window_manager](https://wiki.archlinux.org/title/Window_manager)  
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
 IceWM                                   | [C++] (Core), C, Shell   | +100     | X11-Only             | Both                                    | ~400 - 550 K| 2                  | 1          | No         | Extreme Lightweight| Lightweight
@@ -147,10 +151,6 @@ Niri                                    | [Rust] (Core)            | +100     | 
 Cardboard                               | [C++] (Core)             | +100     | Wayland-Only         | Keyboard-driven                         | ~2 - 5 K    | 2                  | 2          | Yes        | Lightweight        | Lightweight
 ```
 
-## Notes for list below
-* Below Distro Sorted by **from** ```prefered``` **to** ```least prefered``` **from** ```top``` **to** ```bottom```  
-* Below Desktop Sorted by **from** ```prefered``` **to** ```least prefered``` **from** ```left``` **to** ```right```  
-
 ## Top Best Linux Distro for Newer Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
@@ -175,8 +175,8 @@ Mandriva Mageia          | [KDE Plasma]                       | DE   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
-Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Ubuntu Linux Mint | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~990MB
 Debian                   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
 Debian                   | [LXQt]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~670MB
@@ -186,7 +186,6 @@ Debian Ubuntu Linux Mint | [XFCE]                             | DE   | stable bu
 Debian Ubuntu Linux Mint | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
 Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
-Debian Synex             | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
 Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
 Debian Synex             | [XFCE]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
 Debian Synex             | [Mate]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~?MB
@@ -199,8 +198,8 @@ Debian Synex             | [Mate]                             | DE   | stable bu
 ## Top Best Linux Distro Ultra Lightweight Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
-Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
 Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
@@ -212,6 +211,7 @@ Fedora Everything        | [Labwc] via Netinstall             | WM   | stable bu
 ## Top Best Linux Distro Ultra Lightweight Honorable Mention Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
+Debian Synex             | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian SparkyLinux       | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian BunsenLabs Linux  | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian nakeDeb           | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
@@ -224,6 +224,6 @@ Debian nakeDeb           | [Fluxbox]                          | WM   | stable bu
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
 Fedora                   | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
-Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 ```
