@@ -11,12 +11,12 @@ CACHE_FILE = "/tmp/sprm_cache.json"
 def pad(s, length):
     return str(s).rjust(length, ' ')
 
-def fmt(bytes_per_sec):
-    if bytes_per_sec <= 0:
+def fmt(bytesps):
+    if bytesps <= 0:
         return "      0B/s"
     units = ["B/s", "KB/s", "MB/s"]
     i = 0
-    v = float(bytes_per_sec)
+    v = float(bytesps)
     while v >= 1024 and i < len(units) - 1:
         v /= 1024
         i += 1
@@ -36,25 +36,25 @@ def get_system_data():
     try:
         temp_out = subprocess.check_output("sensors 2>/dev/null", shell=True).decode()
         temp_v = 0.0
-        count = 0
-        for line in temp_out.split('\n'):
-            if 'Tctl' in line or 'Tdie' in line or 'Edge' in line or 'Core' in line:
-                parts = line.split()
+        i = 0
+        for ln in temp_out.split('\n'):
+            if 'Tctl' in ln or 'Tdie' in ln or 'Edge' in ln or 'Core' in ln:
+                parts = ln.split()
                 for p in parts:
                     if '+' in p and '°C' in p:
                         val = float(p.replace('+', '').replace('°C', ''))
                         temp_v += val
-                        count += 1
+                        i += 1
                         break
-        temp_val = temp_v / count if count > 0 else 0.0
+        temp_val = temp_v / i if i > 0 else 0.0
     except:
         temp_val = 0.0
 
     try:
         with open("/proc/stat", "r") as f:
-            for line in f:
-                if line.startswith("cpu "):
-                    parts = [int(x) for x in line.split()[1:8]]
+            for ln in f:
+                if ln.startswith("cpu "):
+                    parts = [int(x) for x in ln.split()[1:8]]
                     break
     except:
         parts = [0, 0, 0, 0, 0, 0, 0]
@@ -68,30 +68,30 @@ def get_system_data():
     try:
         mem_t, mem_a = 0, 0
         with open("/proc/meminfo", "r") as f:
-            for line in f:
-                if "MemTotal" in line:
-                    mem_t = int(line.split()[1])
-                elif "MemAvailable" in line:
-                    mem_a = int(line.split()[1])
+            for ln in f:
+                if "MemTotal" in ln:
+                    mem_t = int(ln.split()[1])
+                elif "MemAvailable" in ln:
+                    mem_a = int(ln.split()[1])
         ram_used = (mem_t - mem_a) / 1024 / 1024
-        ram_total = mem_t / 1024 / 1024
+        ram_tot = mem_t / 1024 / 1024
     except:
-        ram_used, ram_total = 0.0, 0.0
+        ram_used, ram_tot = 0.0, 0.0
 
     try:
         st = os.statvfs('/')
-        d_total = st.f_blocks * st.f_frsize
+        d_tot = st.f_blocks * st.f_frsize
         d_avail = st.f_bavail * st.f_frsize
-        d_free_gb = d_avail / 1e9
-        d_tot_gb = d_total / 1e9
+        d_free_GB = d_avail / 1e9
+        d_tot_GB = d_tot / 1e9
     except:
-        d_free_gb, d_tot_gb = 0.0, 0.0
+        d_free_GB, d_tot_GB = 0.0, 0.0
 
     try:
         r_io, w_io = 0, 0
         with open("/proc/diskstats", "r") as f:
-            for line in f:
-                p = line.split()
+            for ln in f:
+                p = ln.split()
                 if any(x in p[2] for x in ['sd', 'nvme']):
                     r_io += int(p[5])
                     w_io += int(p[9])
@@ -103,20 +103,20 @@ def get_system_data():
     try:
         cur_net_down, cur_net_up = 0, 0
         with open("/proc/net/dev", "r") as f:
-            for line in f:
-                if NET_INTRF in line:
-                    p = line.split()
+            for ln in f:
+                if NET_INTRF in ln:
+                    p = ln.split()
                     cur_net_down = int(p[1])
                     cur_net_up = int(p[9])
                     break
     except:
         cur_net_down, cur_net_up = 0, 0
 
-    return temp_val, parts, gpu_val, ram_used, ram_total, d_free_gb, d_tot_gb, cur_d_r, cur_d_w, cur_net_down, cur_net_up
+    return temp_val, parts, gpu_val, ram_used, ram_tot, d_free_GB, d_tot_GB, cur_d_r, cur_d_w, cur_net_down, cur_net_up
 
 def main():
     now_time = time.monotonic()
-    temp_val, cpu_parts, gpu_val, ram_used, ram_total, d_free_gb, d_tot_gb, cur_d_r, cur_d_w, cur_net_down, cur_net_up = get_system_data()
+    temp_val, cpu_parts, gpu_val, ram_used, ram_tot, d_free_GB, d_tot_GB, cur_d_r, cur_d_w, cur_net_down, cur_net_up = get_system_data()
 
     if os.path.exists(CACHE_FILE):
         try:
@@ -165,9 +165,9 @@ def main():
     temp_str = "9999" if temp_val >= 100.0 else f"{temp_val:.1f}"
     gpu_fmt = pad(f"{gpu_val:.1f}", 4)
     ram_used_str = pad(f"{ram_used:.2f}", 5)
-    ram_tot_str = f"{ram_total:.2f}"
-    d_free_str = f"{d_free_gb:.2f}"
-    d_tot_str = f"{d_tot_gb:.2f}"
+    ram_tot_str = f"{ram_tot:.2f}"
+    d_free_str = f"{d_free_GB:.2f}"
+    d_tot_str = f"{d_tot_GB:.2f}"
 
     f_r = fmt(r_rt)
     f_w = fmt(w_rt)
