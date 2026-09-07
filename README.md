@@ -248,9 +248,11 @@ Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable bu
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
 Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB                  | LXDE but lxpanel replaced with Xfce4-panel
-CachyOS                  | [Xfce Wayland session + Labwc]     | DE   | stable but newest and ultra lightweight but with systemd       | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
-Fedora                   | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
 Debian                   | [Xfce Wayland session + Labwc]     | DE   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
+Fedora                   | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
+OpenSUSE Tumbleweed      | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
+Mandriva Mageia          | [Xfce Wayland session + Labwc]     | DE   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
+Arch CachyOS             | [Xfce Wayland session + Labwc]     | DE   | stable but newest and ultra lightweight but with systemd       | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
 ```
 
 ## Fedora 44 KDE ➡️ Fedora 45 KDE
