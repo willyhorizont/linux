@@ -27,26 +27,3 @@ sudo apt install gh git
 git config --global init.defaultBranch main
 gh auth login
 ```
-
-## B
-
-1. Install Cursor theme
-```
-sudo apt install dmz-cursor-theme -y
-sudo apt install breeze-cursor-theme -y
-```
-
-2. Install Icon theme
-```
-sudo apt install papirus-icon-theme
-```
-
-3. Install Widget Style theme
-```
-sudo apt install yaru-theme-gtk
-```
-
-4. Install Window Border theme
-```
-sudo apt install greybird-gtk-theme -y
-```

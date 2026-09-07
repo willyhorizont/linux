@@ -1,3 +1,8 @@
+[Last updated: 07 Sep 2026 @ 04:20 PM][version: 0.0.28]
+add themes > gtk3;
+add themes > gtk2;
+add themes > general;
+
 [Last updated: 07 Sep 2026 @ 03:05 PM][version: 0.0.27]
 add post-install > debian-apt;
 
