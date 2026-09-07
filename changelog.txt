@@ -1,3 +1,6 @@
+[Last updated: 07 Sep 2026 @ 11:45 PM][version: 0.0.30]
+update closst fastest mirror;
+
 [Last updated: 07 Sep 2026 @ 08:57 PM][version: 0.0.29]
 add rm ~/.local/share/keyrings/login.keyring;
 

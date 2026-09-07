@@ -11,7 +11,7 @@ passwd "$USER"
 exit
 ```
 
-2. change closest faster mirror
+2. change closest fastest mirror ```https://www.debian.org/mirror/list```
 ```
 /etc/apt/sources.list
 ```
