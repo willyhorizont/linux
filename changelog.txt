@@ -1,3 +1,8 @@
+[Last updated: 08 Sep 2026 @ 04:50 AM][version: 0.0.33]
+add BunsenLabs Linux Openbox to the top of the list;
+add OpenSUSE IceWM to the top of the list;
+add Xfce Wayland session + Labwc to the top of the list;
+
 [Last updated: 08 Sep 2026 @ 03:05 AM][version: 0.0.32]
 update cheatsheet > debian-apt;
 
