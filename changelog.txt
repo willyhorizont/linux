@@ -1,3 +1,7 @@
+[Last updated: 07 Sep 2026 @ 02:30 PM][version: 0.0.26]
+add post-install;
+add cheatsheet;
+
 [Last updated: 07 Sep 2026 @ 04:18 AM][version: 0.0.25]
 add SPRM.pl;
 update SPRM.py;
