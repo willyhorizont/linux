@@ -1,3 +1,6 @@
+[Last updated: 08 Sep 2026 @ 03:05 AM][version: 0.0.32]
+update cheatsheet > debian-apt;
+
 [Last updated: 08 Sep 2026 @ 01:35 AM][version: 0.0.31]
 add SuckMyClock.pl;
 add SuckMyClock.py;

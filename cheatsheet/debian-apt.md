@@ -6,7 +6,10 @@
 ## Install a new package
 ```sudo apt install <package>```
 
-## Remove a package
+## Remove a package and remove its config
+```sudo apt purge <package> && sudo apt autoremove```
+
+## Remove a package and keeping its config
 ```sudo apt remove <package> && sudo apt autoremove```
 
 ## Remove orphaned or unused dependencies
