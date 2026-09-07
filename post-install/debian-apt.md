@@ -41,12 +41,12 @@ sudo apt install breeze-cursor-theme -y
 sudo apt install papirus-icon-theme
 ```
 
-3. Install Style theme
+3. Install Widget Style theme
 ```
 sudo apt install yaru-theme-gtk
 ```
 
-4. Install Window theme
+4. Install Window Border theme
 ```
 sudo apt install greybird-gtk-theme -y
 ```
