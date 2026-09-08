@@ -1,3 +1,6 @@
+[Last updated: 09 Sep 2026 @ 01:13 AM][version: 0.0.36]
+add components;
+
 [Last updated: 08 Sep 2026 @ 07:40 AM][version: 0.0.35]
 update themes > gtk2;
 
