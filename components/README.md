@@ -9,9 +9,9 @@
 ### panel
 * xfce4-panel
 * mate-panel
-* lxpanel
-* plank
 * tint2
+* plank
+* lxpanel
 * polybar
 * fbpanel
 * ~~lxqt-panel~~
