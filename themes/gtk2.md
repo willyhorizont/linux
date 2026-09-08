@@ -13,10 +13,12 @@ sudo apt install papirus-icon-theme
 
 ## Widget Style theme
 ```
-TODO
+https://github.com/B00merang-Project/macOS
+https://bitbucket.org/newhoa/victory-gtk-theme
+https://github.com/dindinG41TR3/xenta-lx
 ```
 
 ## Window Border theme
 ```
-TODO
+https://github.com/B00merang-Project/Windows-10
 ```

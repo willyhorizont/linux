@@ -1,3 +1,6 @@
+[Last updated: 08 Sep 2026 @ 07:40 AM][version: 0.0.35]
+update themes > gtk2;
+
 [Last updated: 08 Sep 2026 @ 06:35 AM][version: 0.0.34]
 add Xfce Wayland session + Labwc to the top of the list;
 
