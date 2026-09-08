@@ -2,28 +2,19 @@
 
 ## A
 
-1. Change password
-```
-sudo -i
-passwd
-exit
-passwd "$USER"
-exit
-```
-
-2. change closest fastest mirror ```https://www.debian.org/mirror/list```
+1. change closest fastest mirror ```https://www.debian.org/mirror/list```
 ```
 /etc/apt/sources.list
 ```
 
-3. Refresh metadata and upgrade all system packages
+2. Refresh metadata and upgrade all system packages
 ```
-sudo apt update && sudo apt upgrade
+sudo apt update -y && sudo apt upgrade -y
 ```
 
-4. Github login
+3. Github login
 ```
-sudo apt install gh git
+sudo apt install gh git -y
 git config --global init.defaultBranch main
 gh auth login
 ```
