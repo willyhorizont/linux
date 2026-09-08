@@ -14,8 +14,15 @@
 * tint2
 * polybar
 * fbpanel
-* dockbarx
 * ~~lxqt-panel~~
+
+### menu
+* xfce4-whiskermenu-plugin
+* jgmenu
+* rofi
+
+### app tray (pinned+opened)
+* xfce4-docklike-plugin
 
 ### dock
 * cariro-dock
