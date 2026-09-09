@@ -1,3 +1,7 @@
+[Last updated: 10 Sep 2026 @ 05:00 AM][version: 0.0.44]
+add Labwc+nocatlia to the list;
+add Crunchbangplusplus to the list, because I tought I already added it;
+
 [Last updated: 09 Sep 2026 @ 12:00 PM][version: 0.0.43]
 add more cool cli app list;
 

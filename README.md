@@ -212,12 +212,13 @@ Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable bu
 Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
 Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
-Debian                   | [IceWM] via Netinstall             | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~390MB
-Debian                   | [JWM] via Netinstall               | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
-Fedora Everything        | [Labwc] via Netinstall             | WM   | stable but newer and ultra lightweight but with systemd        | Best for Older Hardware and Newer Hardware     | ~520MB
 Debian Synex             | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
 Debian SparkyLinux       | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
 Debian BunsenLabs Linux  | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
+Debian Crunchbangplusplus| [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
+Debian                   | [IceWM] via Netinstall             | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~390MB
+Debian                   | [JWM] via Netinstall               | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
+Fedora Everything        | [Labwc] via Netinstall             | WM   | stable but newer and ultra lightweight but with systemd        | Best for Older Hardware and Newer Hardware     | ~520MB
 ```
 
 ## Top Best Linux Distro Ultra Lightweight Honorable Mention Filtered by Requirements 2026 Q3
@@ -247,12 +248,17 @@ Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
-Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB                  | LXDE but lxpanel replaced with Xfce4-panel
-Debian                   | [Xfce Wayland session + Labwc]     | DE   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
-Fedora                   | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
-OpenSUSE Tumbleweed      | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
-Mandriva Mageia          | [Xfce Wayland session + Labwc]     | DE   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
-Arch CachyOS             | [Xfce Wayland session + Labwc]     | DE   | stable but newest and ultra lightweight but with systemd       | Best for Newer Hardware                        | ~?MB                    | Xfce Wayland session but Xfwm4 replaced with Labwc
+Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
+Debian                   | [Xfce Wayland session + Labwc]     | DE   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
+Fedora                   | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
+OpenSUSE Tumbleweed      | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
+Mandriva Mageia          | [Xfce Wayland session + Labwc]     | DE   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
+Arch CachyOS             | [Xfce Wayland session + Labwc]     | DE   | stable but newest and ultra lightweight but with systemd       | Best for Newer Hardware                        | ~?MB
+Debian                   | [Labwc + Noctalia]                 | WM   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
+Fedora                   | [Labwc + Noctalia]                 | WM   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
+OpenSUSE Tumbleweed      | [Labwc + Noctalia]                 | WM   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
+Mandriva Mageia          | [Labwc + Noctalia]                 | WM   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
+Arch CachyOS             | [Labwc + Noctalia]                 | WM   | stable but newest and ultra lightweight but with systemd       | Best for Newer Hardware                        | ~?MB
 ```
 
 ## Fedora 44 KDE ➡️ Fedora 45 KDE
