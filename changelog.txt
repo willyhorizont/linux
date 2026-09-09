@@ -1,3 +1,7 @@
+[Last updated: 09 Sep 2026 @ 09:50 AM][version: 0.0.40]
+update post-install/debian-apt;
+update gtk2;
+
 [Last updated: 09 Sep 2026 @ 06:50 AM][version: 0.0.39]
 update post-install/;
 
