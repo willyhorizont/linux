@@ -23,3 +23,23 @@ git config --global init.defaultBranch main
 sudo apt install gh -y
 gh auth login
 ```
+
+## Cool CLI apps
+
+### startup:
+* fastfetch
+* figlet
+
+### code editor:
+* https://getfresh.dev/ or https://github.com/sinelaw/fresh
+
+### task manager:
+* btop
+
+### screensaver
+```sudo apt install xscreensaver xscreensaver-gl-extra xscreensaver-data-extra -y```
+* https://github.com/cmatsuoka/asciiquarium/blob/master/asciiquarium
+* cmatrix
+* hollywood
+* pipes-sh
+* cbonsai

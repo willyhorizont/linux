@@ -1,3 +1,6 @@
+[Last updated: 09 Sep 2026 @ 11:44 AM][version: 0.0.41]
+add screensaver;
+
 [Last updated: 09 Sep 2026 @ 09:50 AM][version: 0.0.40]
 update post-install/debian-apt;
 update gtk2;
