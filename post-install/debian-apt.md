@@ -25,6 +25,10 @@ gh auth login
 ```
 
 ## Cool CLI apps
+* https://github.com/agarrharr/awesome-cli-apps
+* https://terminaltrove.com/
+* https://www.reddit.com/r/linux/comments/1iy47hq/i_want_some_different_terminal_based_programs_to/
+* https://www.linux.org/threads/what-are-your-top-command-line-apps.27649/
 
 ### startup:
 * fastfetch
