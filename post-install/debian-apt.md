@@ -35,6 +35,7 @@ gh auth login
 
 ### task manager:
 * btop
+* https://github.com/clementtsang/bottom
 
 ### screensaver
 ```sudo apt install xscreensaver xscreensaver-gl-extra xscreensaver-data-extra -y```
