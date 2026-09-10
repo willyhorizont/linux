@@ -16,6 +16,8 @@ sudo apt update -y && sudo apt upgrade -y
 ```
 sudo apt install git -y
 git config --global init.defaultBranch main
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
 ```
 
 3. Github login

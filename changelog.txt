@@ -1,3 +1,6 @@
+[Last updated: 11 Sep 2026 @ 02:27 AM][version: 0.0.46]
+add github command;
+
 [Last updated: 10 Sep 2026 @ 11:42 AM][version: 0.0.45]
 add Flubox to the list;
 
