@@ -208,10 +208,11 @@ Debian Synex             | [Mate]                             | DE   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
+Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
-Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
+Debian nakeDeb           | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
 Debian Synex             | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
 Debian SparkyLinux       | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
 Debian BunsenLabs Linux  | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
@@ -224,7 +225,6 @@ Fedora Everything        | [Labwc] via Netinstall             | WM   | stable bu
 ## Top Best Linux Distro Ultra Lightweight Honorable Mention Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
-Debian nakeDeb           | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 ~~Debian MX Linux          | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with hybrid systemd | Best for Older Hardware~~
 ~~Debian Antix             | [IceWM, JVM, Fluxbox]              | WM   | stable but older and ultra lightweight but no systemd          | Best for Older Hardware~~
 ```

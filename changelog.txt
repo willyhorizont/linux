@@ -1,3 +1,6 @@
+[Last updated: 10 Sep 2026 @ 11:42 AM][version: 0.0.45]
+add Flubox to the list;
+
 [Last updated: 10 Sep 2026 @ 05:00 AM][version: 0.0.44]
 add Labwc+nocatlia to the list;
 add Crunchbangplusplus to the list, because I tought I already added it;
