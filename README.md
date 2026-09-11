@@ -154,7 +154,7 @@ Cardboard                               | [C++] (Core)             | +100     | 
 ## Top Best Linux Distro for Newer Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
-Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware
+Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
 Fedora                   | [Xfce]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
 OpenSUSE Tumbleweed      | [Xfce]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [Xfce]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
@@ -167,7 +167,7 @@ Arch CachyOS             | [KDE Plasma]                       | DE   | stable bu
 ## Top Best Linux Distro for Older and Newer Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
-Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware
+Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
 Fedora                   | [Xfce]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
 OpenSUSE Tumbleweed      | [Xfce]                             | DE   | stable but newer                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [Xfce]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
@@ -183,7 +183,8 @@ Arch CachyOS             | [KDE Plasma]                       | DE   | stable bu
 ## Top Best Linux Distro for Older Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
-Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~700MB
+Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
+Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
@@ -207,16 +208,15 @@ Debian Synex             | [Mate]                             | DE   | stable bu
 ## Top Best Linux Distro Ultra Lightweight Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
+Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Synex             | [IceWM]                            | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Besgnulinux       | [JWM]                              | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~300MB
-Debian nakeDeb           | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
-Debian Synex             | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
-Debian SparkyLinux       | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
-Debian BunsenLabs Linux  | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
-Debian Crunchbangplusplus| [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
+Debian Synex             | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~590MB
+Debian SparkyLinux       | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~530MB
+Debian Crunchbangplusplus| [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~540MB
 Debian                   | [IceWM] via Netinstall             | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~390MB
 Debian                   | [JWM] via Netinstall               | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~?MB
 Fedora Everything        | [Labwc] via Netinstall             | WM   | stable but newer and ultra lightweight but with systemd        | Best for Older Hardware and Newer Hardware     | ~520MB
@@ -225,6 +225,8 @@ Fedora Everything        | [Labwc] via Netinstall             | WM   | stable bu
 ## Top Best Linux Distro Ultra Lightweight Honorable Mention Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
+~~Debian BunsenLabs Linux  | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware~~
+~~Debian nakeDeb           | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~490MB~~
 ~~Debian MX Linux          | [Fluxbox]                          | WM   | stable but older and ultra lightweight but with hybrid systemd | Best for Older Hardware~~
 ~~Debian Antix             | [IceWM, JVM, Fluxbox]              | WM   | stable but older and ultra lightweight but no systemd          | Best for Older Hardware~~
 ```
@@ -239,7 +241,8 @@ Fedora                   | [KDE Plasma]                       | DE   | stable bu
 OpenSUSE Tumbleweed      | [KDE Plasma]                       | DE   | stable but newer                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [KDE Plasma]                       | DE   | stable but older                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [Xfce]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
-Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware
+Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
+Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 ```

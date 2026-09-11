@@ -1,3 +1,6 @@
+[Last updated: 12 Sep 2026 @ 02:55 AM][version: 0.0.47]
+move nakeDeb and BunsenLabs out of the list;
+
 [Last updated: 11 Sep 2026 @ 02:27 AM][version: 0.0.46]
 add github command;
 
