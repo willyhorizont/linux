@@ -1,7 +1,28 @@
 #!/bin/bash
 
-NET_INTRF="wlp3s0"
 CACHE_FILE="/tmp/sprm_bash_cache.txt"
+
+NET_INTRF="lo"
+if [ -f "/proc/net/route" ]; then
+    while read -r iface dest gw flags ref cnt use mask mtu window irtt; do
+        if [ "$dest" = "00000000" ] && [ "$iface" != "lo" ]; then
+            NET_INTRF="$iface"
+            break
+        fi
+    done < <(tail -n +2 /proc/net/route)
+fi
+
+if [ "$NET_INTRF" = "lo" ] && [ -f "/proc/net/dev" ]; then
+    while IFS= read -r line; do
+        if [[ "$line" =~ ^[[:space:]]*([a-zA-Z0-9_-]+): ]]; then
+            candidate="${BASH_REMATCH[1]}"
+            if [ "$candidate" != "lo" ] && [[ ! "$candidate" =~ ^(sit|docker|veth|br-|virbr) ]]; then
+                NET_INTRF="$candidate"
+                break
+            fi
+        fi
+    done < /proc/net/dev
+fi
 
 _pad() {
     printf "%*s" "$2" "$1"
@@ -42,14 +63,31 @@ _fmt() {
     echo "${padded_fp}.${b_p}${units[$i]}"
 }
 
-TEMP=$(sensors 2>/dev/null | awk '/Tctl|Tdie|Edge|Core/ {for(i=1;i<=NF;i++) if($i ~ /\+/ && $i ~ /°C/) {gsub(/[+°C]/,"",$i); print $i; exit}}')
-[ -z "$TEMP" ] && TEMP="0.0"
+TEMP="0.0"
+for zone in {0..5}; do
+    if [ -f "/sys/class/thermal/thermal_zone${zone}/temp" ]; then
+        t_raw=$(cat "/sys/class/thermal/thermal_zone${zone}/temp")
+        if [ "$t_raw" -gt 0 ] 2>/dev/null; then
+            TEMP=$(echo "scale=1; $t_raw / 1000" | bc -l)
+            break
+        fi
+    fi
+done
 
 CPU_RAW=$(awk '/^cpu / {print $2" "$3" "$4" "$5" "$6" "$7" "$8}' /proc/stat)
-GPU=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo "0")
+
+GPU="0.0"
+if [ -f "/sys/class/drm/card0/device/gpu_busy_percent" ]; then # AMD
+    GPU=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo "0")
+elif [ -f "/sys/class/drm/card0/gt_act_freq_mhz" ] && [ -f "/sys/class/drm/card0/gt_max_freq_mhz" ]; then # Intel
+    act=$(cat /sys/class/drm/card0/gt_act_freq_mhz 2>/dev/null || echo "0")
+    max_f=$(cat /sys/class/drm/card0/gt_max_freq_mhz 2>/dev/null || echo "1")
+    GPU=$(echo "scale=1; ($act / $max_f) * 100" | bc -l)
+fi
+
 RAM=$(awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf "%.2f/%.2f", (t-a)/1024/1024, t/1024/1024}' /proc/meminfo)
 DISK=$(df -B1 / | awk 'NR==2 {printf "%s/%s", $2, $4}')
-DISK_IO=$(awk '/ss/ || /sd/ || /nvme/ {r+=$6; w+=$10} END {print r" "w}' /proc/diskstats)
+DISK_IO=$(awk '/sd[a-z]/ || /nvme[0-9]/ || /mmcblk[0-9]/ || /vd[a-z]/ {r+=$6; w+=$10} END {print r" "w}' /proc/diskstats)
 NET_IO=$(awk -F: "/$NET_INTRF/ {print \$2}" /proc/net/dev | awk '{print $1" "$9}')
 [ -z "$NET_IO" ] && NET_IO="0 0"
 

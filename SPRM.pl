@@ -3,8 +3,33 @@ use strict;
 use warnings;
 use Time::HiRes qw(time);
 
-my $NET_INTRF = "wlp3s0";
 my $CACHE_FILE = "/tmp/sprm_perl_cache.json";
+
+my $NET_INTRF = "lo";
+if (open(my $fh, "<", "/proc/net/route")) {
+    <$fh>;
+    while (<$fh>) {
+        my @fields = split;
+        if (defined $fields[0] && defined $fields[1] && $fields[1] eq "00000000" && $fields[0] ne "lo") {
+            $NET_INTRF = $fields[0];
+            last;
+        }
+    }
+    close($fh);
+}
+
+if ($NET_INTRF eq "lo" && open(my $fh, "<", "/proc/net/dev")) {
+    while (<$fh>) {
+        if (/^\s*([a-zA-Z0-9_-]+):/) {
+            my $candidate = $1;
+            if ($candidate ne "lo" && $candidate !~ /^(sit|docker|veth|br-|virbr)/) {
+                $NET_INTRF = $candidate;
+                last;
+            }
+        }
+    }
+    close($fh);
+}
 
 sub pad {
     my ($str, $len) = @_;
@@ -36,16 +61,16 @@ sub fmt {
 }
 
 my $temp = 0.0;
-if (open(my $fh, "-|", "sensors 2>/dev/null")) {
-    while (<$fh>) {
-        if (/Tctl|Tdie|Edge|Core/) {
-            if (/ \+?(\d+\.\d+)°C/) {
-                $temp = $1;
-                last;
-            }
+for my $zone (0..5) {
+    if (open(my $fh, "<", "/sys/class/thermal/thermal_zone$zone/temp")) {
+        my $t = <$fh>;
+        chomp($t);
+        close($fh);
+        if ($t > 0) {
+            $temp = $t / 1000;
+            last;
         }
     }
-    close($fh);
 }
 
 my @cpu_parts = (0) * 7;
@@ -60,10 +85,25 @@ if (open(my $fh, "<", "/proc/stat")) {
 }
 
 my $gpu = 0.0;
-if (open(my $fh, "<", "/sys/class/drm/card0/device/gpu_busy_percent")) {
-    $gpu = <$fh>;
-    chomp($gpu);
-    close($fh);
+if (-e "/sys/class/drm/card0/device/gpu_busy_percent") { # AMD
+    if (open(my $fh, "<", "/sys/class/drm/card0/device/gpu_busy_percent")) {
+        $gpu = <$fh>;
+        chomp($gpu);
+        close($fh);
+    }
+} elsif (-e "/sys/class/drm/card0/gt_act_freq_mhz" && -e "/sys/class/drm/card0/gt_max_freq_mhz") { # Intel
+    my ($act, $max) = (0, 1);
+    if (open(my $fh, "<", "/sys/class/drm/card0/gt_act_freq_mhz")) {
+        $act = <$fh>;
+        chomp($act);
+        close($fh);
+    }
+    if (open(my $fh, "<", "/sys/class/drm/card0/gt_max_freq_mhz")) {
+        $max = <$fh>;
+        chomp($max);
+        close($fh);
+    }
+    $gpu = ($max > 0) ? ($act / $max) * 100 : 0.0;
 }
 
 my ($mem_t, $mem_a) = (0, 0);
@@ -92,7 +132,7 @@ my ($cur_d_r, $cur_d_w) = (0, 0);
 if (open(my $fh, "<", "/proc/diskstats")) {
     while (<$fh>) {
         my @p = split;
-        if ($p[2] =~ /sd|nvme/) {
+        if (defined $p[2] && $p[2] =~ /^(sd[a-z]|nvme\d+n\d+|mmcblk\d+|vd[a-z])$/) {
             $cur_d_r += $p[5];
             $cur_d_w += $p[9];
         }

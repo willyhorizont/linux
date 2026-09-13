@@ -3,10 +3,39 @@
 import os
 import time
 import json
-import subprocess
+import re
 
-NET_INTRF = "wlp3s0"
 CACHE_FILE = "/tmp/sprm_cache.json"
+
+def get_active_net_interf():
+    net_interf = "lo"
+    
+    if os.path.exists("/proc/net/route"):
+        try:
+            with open("/proc/net/route", "r") as f:
+                next(f)
+                for ln in f:
+                    parts = ln.split()
+                    if len(parts) > 2:
+                        if parts[1] == "00000000" and parts[0] != "lo":
+                            net_interf = parts[0]
+                            break
+        except:
+            pass
+
+    if net_interf == "lo" and os.path.exists("/proc/net/dev"):
+        try:
+            with open("/proc/net/dev", "r") as f:
+                for ln in f:
+                    if ":" in ln:
+                        candidate = ln.split(":")[0].strip()
+                        if not re.compile(r"^(lo|sit|docker|veth|br-|virbr)").match(candidate):
+                            net_interf = candidate
+                            break
+        except:
+            pass
+            
+    return net_interf
 
 def pad(s, length):
     return str(s).rjust(length, ' ')
@@ -33,22 +62,19 @@ def fmt(bytesps):
     return f"{pad(f_p, 3)}.{b_p}{units[i]}"
 
 def get_system_data():
-    try:
-        temp_out = subprocess.check_output("sensors 2>/dev/null", shell=True).decode()
-        temp_v = 0.0
-        i = 0
-        for ln in temp_out.split('\n'):
-            if 'Tctl' in ln or 'Tdie' in ln or 'Edge' in ln or 'Core' in ln:
-                parts = ln.split()
-                for p in parts:
-                    if '+' in p and '°C' in p:
-                        val = float(p.replace('+', '').replace('°C', ''))
-                        temp_v += val
-                        i += 1
+    net_intrf = get_active_net_interf()
+    temp_val = 0.0
+    for zone in range(6):
+        t_path = f"/sys/class/thermal/thermal_zone{zone}/temp"
+        if os.path.exists(t_path):
+            try:
+                with open(t_path, "r") as f:
+                    t = float(f.read().strip())
+                    if t > 0:
+                        temp_val = t / 1000.0
                         break
-        temp_val = temp_v / i if i > 0 else 0.0
-    except:
-        temp_val = 0.0
+            except:
+                pass
 
     try:
         with open("/proc/stat", "r") as f:
@@ -59,11 +85,22 @@ def get_system_data():
     except:
         parts = [0, 0, 0, 0, 0, 0, 0]
 
-    try:
-        with open("/sys/class/drm/card0/device/gpu_busy_percent", "r") as f:
-            gpu_val = float(f.read().strip())
-    except:
-        gpu_val = 0.0
+    gpu_val = 0.0
+    if os.path.exists("/sys/class/drm/card0/device/gpu_busy_percent"): # AMD
+        try:
+            with open("/sys/class/drm/card0/device/gpu_busy_percent", "r") as f:
+                gpu_val = float(f.read().strip())
+        except:
+            pass
+    elif os.path.exists("/sys/class/drm/card0/gt_act_freq_mhz") and os.path.exists("/sys/class/drm/card0/gt_max_freq_mhz"): # Intel
+        try:
+            with open("/sys/class/drm/card0/gt_act_freq_mhz", "r") as f:
+                act = float(f.read().strip())
+            with open("/sys/class/drm/card0/gt_max_freq_mhz", "r") as f:
+                max_f = float(f.read().strip())
+            gpu_val = (act / max_f) * 100.0 if max_f > 0 else 0.0
+        except:
+            pass
 
     try:
         mem_t, mem_a = 0, 0
@@ -92,7 +129,7 @@ def get_system_data():
         with open("/proc/diskstats", "r") as f:
             for ln in f:
                 p = ln.split()
-                if any(x in p[2] for x in ['sd', 'nvme']):
+                if len(p) > 9 and re.compile(r"^(sd[a-z]|nvme\d+n\d+|mmcblk\d+|vd[a-z])$").match(p[2]):
                     r_io += int(p[5])
                     w_io += int(p[9])
         cur_d_r = r_io * 512
@@ -104,10 +141,14 @@ def get_system_data():
         cur_net_down, cur_net_up = 0, 0
         with open("/proc/net/dev", "r") as f:
             for ln in f:
-                if NET_INTRF in ln:
+                if net_intrf in ln:
                     p = ln.split()
-                    cur_net_down = int(p[1])
-                    cur_net_up = int(p[9])
+                    if ":" in p[0]:
+                        cur_net_down = int(p[1])
+                        cur_net_up = int(p[9])
+                    else:
+                        cur_net_down = int(p[1])
+                        cur_net_up = int(p[9])
                     break
     except:
         cur_net_down, cur_net_up = 0, 0
@@ -159,8 +200,11 @@ def main():
     d_rt = max(0.0, d_rt)
     u_rt = max(0.0, u_rt)
 
-    with open(CACHE_FILE, "w") as f:
-        json.dump({"time": now_time, "cpu": cpu_parts, "d_r": cur_d_r, "d_w": cur_d_w, "n_d": cur_net_down, "n_u": cur_net_up}, f)
+    try:
+        with open(CACHE_FILE, "w") as f:
+            json.dump({"time": now_time, "cpu": cpu_parts, "d_r": cur_d_r, "d_w": cur_d_w, "n_d": cur_net_down, "n_u": cur_net_up}, f)
+    except:
+        pass
 
     temp_str = "9999" if temp_val >= 100.0 else f"{temp_val:.1f}"
     gpu_fmt = pad(f"{gpu_val:.1f}", 4)
