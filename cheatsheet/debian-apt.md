@@ -4,16 +4,10 @@
 ```sudo apt update && sudo apt upgrade```
 
 ## Install a new package
-```sudo apt install <package>```
+```sudo apt install -y <package>```
 
 ## Remove a package and remove its config
-```sudo apt purge <package> && sudo apt autoremove```
-
-## Remove a package and keeping its config
-```sudo apt remove <package> && sudo apt autoremove```
-
-## Remove orphaned or unused dependencies
-```sudo apt autoremove```
+```sudo apt purge -y <package> && sudo apt autoremove -y --purge```
 
 ## Search for a package in the repository
 ```apt search <package>```
