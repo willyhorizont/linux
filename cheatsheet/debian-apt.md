@@ -35,3 +35,8 @@
 find /usr/share/icons/ -name "*<distro>*"
 find /usr/share/icons/ -name "*distributor-logo-<distro>*"
 ```
+
+## Set max audio volume
+```
+pactl set-sink-volume @DEFAULT_SINK@ 100%
+```
