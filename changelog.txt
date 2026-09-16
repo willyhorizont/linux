@@ -1,3 +1,6 @@
+[Last updated: 16 Sep 2026 @ 10:02 PM][version: 0.0.52]
+update cheatsheet > debian-apt;
+
 [Last updated: 14 Sep 2026 @ 10:51 AM][version: 0.0.50]
 update cheatsheet;
 
