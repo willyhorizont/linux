@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.0.55" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.0.56" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -25,5 +25,5 @@ git add .
 git commit -m "$M"
 git tag -d "$V" 2>/dev/null
 git tag -a "$V" -m "$M"
-git push origin main
-git push origin --tags
+git push origin main -f
+git push origin --tags -f
