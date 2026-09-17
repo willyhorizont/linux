@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.0.54" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!!
+V="0.0.55" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,7 +12,9 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-add btop.conf;
+add RunningText.pl;
+add RunningText.sh;
+add RunningText.py;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H
