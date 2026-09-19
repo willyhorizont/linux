@@ -25,28 +25,3 @@ git config --global user.name "Your Name"
 sudo apt install gh -y
 gh auth login
 ```
-
-## Cool CLI apps
-* https://github.com/agarrharr/awesome-cli-apps
-* https://terminaltrove.com/
-* https://www.reddit.com/r/linux/comments/1iy47hq/i_want_some_different_terminal_based_programs_to/
-* https://www.linux.org/threads/what-are-your-top-command-line-apps.27649/
-
-### startup:
-* fastfetch
-* figlet
-
-### code editor:
-* https://getfresh.dev/ or https://github.com/sinelaw/fresh
-
-### task manager:
-* btop
-* https://github.com/clementtsang/bottom
-
-### screensaver
-```sudo apt install xscreensaver xscreensaver-gl-extra xscreensaver-data-extra -y```
-* https://github.com/cmatsuoka/asciiquarium/blob/master/asciiquarium
-* cmatrix
-* hollywood
-* pipes-sh
-* cbonsai
