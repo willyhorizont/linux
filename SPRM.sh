@@ -124,7 +124,7 @@ if [ $TOT_DELTA -gt 0 ]; then
     CPU_PCENT=$(echo "scale=2; (($TOT_DELTA - $IDLE_DELTA) / $TOT_DELTA) * 100" | bc -l)
 fi
 CPU_STR=$(printf "%.1f" "$CPU_PCENT")
-CPU_FMT=$(_pad "$CPU_STR" 4)
+CPU_FMT=$(_pad "$CPU_STR" 5)
 
 read -r cur_r cur_w <<< "$DISK_IO"
 cur_d_r=$((cur_r * 512))
@@ -157,7 +157,7 @@ else
     TEMP_STR=$(printf "%.1f" "$TEMP")
 fi
 
-GPU_FMT=$(_pad "$(printf "%.1f" "$GPU")" 4)
+GPU_FMT=$(_pad "$(printf "%.1f" "$GPU")" 5)
 
 read -r r_used r_tot <<< $(echo "$RAM" | tr '/' ' ')
 RAM_USED_STR=$(_pad "$(printf "%.2f" "$r_used")" 5)

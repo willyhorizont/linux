@@ -188,7 +188,7 @@ def main():
     if tot_delta > 0:
         cpu_pcent = ((tot_delta - idle_delta) / tot_delta) * 100
     cpu_str = f"{cpu_pcent:.1f}"
-    cpu_fmt = pad(cpu_str, 4)
+    cpu_fmt = pad(cpu_str, 5)
 
     r_rt = (cur_d_r - old.get("d_r", cur_d_r)) / time_d if "d_r" in old else 0
     w_rt = (cur_d_w - old.get("d_w", cur_d_w)) / time_d if "d_w" in old else 0
@@ -207,7 +207,7 @@ def main():
         pass
 
     temp_str = "9999" if temp_val >= 100.0 else f"{temp_val:.1f}"
-    gpu_fmt = pad(f"{gpu_val:.1f}", 4)
+    gpu_fmt = pad(f"{gpu_val:.1f}", 5)
     ram_used_str = pad(f"{ram_used:.2f}", 5)
     ram_tot_str = f"{ram_tot:.2f}"
     d_free_str = f"{d_free_GB:.2f}"

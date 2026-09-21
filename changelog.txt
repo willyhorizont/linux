@@ -1,3 +1,6 @@
+[Last updated: 21 Sep 2026 @ 01:49 PM][version: 0.0.60]
+small fix in SPRM;
+
 [Last updated: 19 Sep 2026 @ 10:12 PM][version: 0.0.59]
 add cool tui/cli app list;
 

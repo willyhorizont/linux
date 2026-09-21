@@ -197,7 +197,7 @@ my $cpu_pcent = 0.0;
 if ($tot_delta > 0) {
     $cpu_pcent = (($tot_delta - $idle_delta) / $tot_delta) * 100;
 }
-my $cpu_fmt = pad(sprintf("%.1f", $cpu_pcent), 4);
+my $cpu_fmt = pad(sprintf("%.1f", $cpu_pcent), 5);
 
 my $r_rt = exists $old{d_r} ? (($cur_d_r - $old{d_r}) / $time_d) : 0;
 my $w_rt = exists $old{d_w} ? (($cur_d_w - $old{d_w}) / $time_d) : 0;
@@ -214,7 +214,7 @@ if (open(my $fh, ">", $CACHE_FILE)) {
 }
 
 my $temp_str = ($temp >= 100.0) ? "9999" : sprintf("%.1f", $temp);
-my $gpu_fmt = pad(sprintf("%.1f", $gpu), 4);
+my $gpu_fmt = pad(sprintf("%.1f", $gpu), 5);
 my $ram_used_str = pad(sprintf("%.2f", $ram_used), 5);
 my $ram_tot_str = sprintf("%.2f", $ram_tot);
 my $d_free_str = sprintf("%.2f", $d_free_GB);
