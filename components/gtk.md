@@ -37,3 +37,8 @@
 
 ### text editor
 * mousepad
+
+### video player
+* mpv
+* celluloid
+* parole
