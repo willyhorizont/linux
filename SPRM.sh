@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 CACHE_FILE="/tmp/sprm-dash-cache.json"
 

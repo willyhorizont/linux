@@ -1,3 +1,16 @@
+[Last updated: 28 Sep 2026 @ 12:33 AM][version: 0.0.64]
+add indicator-bt.sh
+add indicator-cam.sh
+add indicator-mic.sh
+add indicator-net.sh
+add indicator-powr.sh
+add indicator-vol.sh
+add tui-bt.sh
+add tui-net.sh
+add tui-powr-pfl.sh
+small update in SPRM.sh
+small update in SuckMyClock.sh
+
 [Last updated: 27 Sep 2026 @ 09:36 PM][version: 0.0.63]
 update README.md, add Top Best Setup;
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 MONTH_NUM=$(date +"%m")
 DAY_NUM=$(date +"%d")
