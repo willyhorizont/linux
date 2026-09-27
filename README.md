@@ -64,51 +64,53 @@ SOAS (Sugar)                             | [Python, GTK / GObject / GNOME] (Core
 ## Top Best Linux Stacking / Floating Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
-IceWM                                   | [C++] (Core), C, Shell   | +100     | X11-Only             | Both                                    | ~400 - 550 K| 2                  | 1          | No         | Extreme Lightweight| Lightweight
+Openbox                                 | [C] (Core), Python, Perl | +100     | X11-Only             | Mouse-friendly                          | ~250 - 400 K| 4                  | 1          | No         | Extreme Lightweight| Lightweight
 JWM                                     | [C] (Core), XML          | +100     | X11-Only             | Mouse-friendly                          | ~300 - 450 K| 3                  | 2          | No         | Extreme Lightweight| Lightweight
-Openbox                                 | [C] (Core), Python, Perl | +100     | X11-Only             | Mouse-friendly                          | ~250 - 400 K| 4                  | 3          | No         | Extreme Lightweight| Lightweight
+IceWM                                   | [C++] (Core), C, Shell   | +100     | X11-Only             | Both                                    | ~400 - 550 K| 2                  | 3          | No         | Extreme Lightweight| Lightweight
 Fluxbox                                 | [C++] (Core), Shell      | +100     | X11-Only             | Mouse-friendly                          | ~35 - 60 K  | 8                  | 4          | No         | Extreme Lightweight| Lightweight
 PekWM                                   | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | ~8 - 15 K   | 12                 | 5          | No         | Extreme Lightweight| Lightweight
-Xfwm                                    | [C] (Core)               | +100     | X11-Only             | Both                                    | ~1 - 2 M    | 1                  | 6          | Partial    | Lightweight        | Lightweight
-Labwc                                   | [C] (Core), Python, Shell| +100     | Wayland-Only         | Both                                    | ~180 - 280 K| 5                  | 7          | Yes        | Lightweight        | Lightweight
-Enlightenment                           | [C] (Core), Lua          | +100     | X11 / Wayland        | Both                                    | ~20 - 45 K  | 9                  | 8          | Full       | Lightweight        | Lightweight
-Steppewm                                | [Lua] (Core), C, Make    | -100     | Wayland-Only         | Mouse-friendly                          | ~1 - 3 K    | 14                 | 9          | Yes        | Lightweight        | Lightweight
-Waybox                                  | [C] (Core), Meson        | +100     | Wayland-Only         | Mouse-friendly                          | ~15 - 30 K  | 10                 | 10         | Yes        | Lightweight        | Lightweight
-Hikari                                  | [C] (Core), Jansson      | +100     | Wayland-Only         | Keyboard-driven                         | ~50 - 75 K  | 7                  | 11         | Yes        | Lightweight        | Lightweight
-Blackbox                                | [C++] (Core), Shell      | +100     | X11-Only             | Mouse-friendly                          | ~5 - 10 K   | 13                 | 12         | No         | Extreme Lightweight| Lightweight
-Wayfire                                 | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~60 - 90 K  | 6                  | 13         | Full       | OK                 | Lightweight
-Compiz                                  | [C++] (Core)             | +100     | X11-Only             | Both                                    | ~15 - 30 K  | 11                 | 14         | Full       | Heavy              | Lightweight
-E16 (Enlightenment v16)                 | [C] (Core)               | +100     | X11-Only             | Both                                    | ~1 - 3 K    | 15                 | 15         | Partial    | Lightweight        | Lightweight
-Window Maker                            | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | ~1 - 3 K    | 16                 | 16         | No         | Extreme Lightweight| Lightweight
-AfterStep                               | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 1 K       | 17                 | 17         | No         | Extreme Lightweight| Lightweight
-FLWM                                    | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 500       | 18                 | 18         | No         | Extreme Lightweight| Lightweight
-EMWM (Enhanced Motif WM)                | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 500       | 19                 | 19         | No         | Extreme Lightweight| Lightweight
-amiwm                                   | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 200       | 20                 | 20         | No         | Extreme Lightweight| Lightweight
-MWM (Motif Window Manager)              | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 21                 | 21         | No         | Extreme Lightweight| Lightweight
-9wm                                     | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 22                 | 22         | No         | Extreme Lightweight| Lightweight
-worm                                    | [Go] (Core)              | +100     | X11-Only             | Both                                    | < 100       | 23                 | 23         | No         | Extreme Lightweight| Lightweight
-sowm                                    | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 24                 | 24         | No         | Extreme Lightweight| Lightweight
-evilwm                                  | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 25                 | 25         | No         | Extreme Lightweight| Lightweight
-aewm++                                  | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 100       | 26                 | 26         | No         | Extreme Lightweight| Lightweight
-progman                                 | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 27                 | 27         | No         | Extreme Lightweight| Lightweight
-MLVWM                                   | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 28                 | 28         | No         | Extreme Lightweight| Lightweight
-FrankenWM                               | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 29                 | 29         | No         | Extreme Lightweight| Lightweight
-Goomwwm                                 | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 30                 | 30         | No         | Extreme Lightweight| Lightweight
-Hackedbox                               | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 100       | 31                 | 31         | No         | Extreme Lightweight| Lightweight
-WindowLab                               | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 32                 | 32         | No         | Extreme Lightweight| Lightweight
-wm2                                     | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 100       | 33                 | 33         | No         | Extreme Lightweight| Lightweight
-wmx                                     | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 100       | 34                 | 34         | No         | Extreme Lightweight| Lightweight
-TinyWM                                  | [C] (Core)               | +100     | X11-Only             | Both                                    | < 50        | 35                 | 35         | No         | Extreme Lightweight| Lightweight
-FVWM95                                  | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 50        | 36                 | 36         | No         | Extreme Lightweight| Lightweight
-Qvwm (qpwm)                             | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 50        | 37                 | 37         | No         | Extreme Lightweight| Lightweight
+Blackbox                                | [C++] (Core), Shell      | +100     | X11-Only             | Mouse-friendly                          | ~5 - 10 K   | 13                 | 6          | No         | Extreme Lightweight| Lightweight
+Window Maker                            | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | ~1 - 3 K    | 16                 | 7          | No         | Extreme Lightweight| Lightweight
+AfterStep                               | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 1 K       | 17                 | 8          | No         | Extreme Lightweight| Lightweight
+FLWM                                    | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 500       | 18                 | 9          | No         | Extreme Lightweight| Lightweight
+EMWM (Enhanced Motif WM)                | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 500       | 19                 | 10         | No         | Extreme Lightweight| Lightweight
+MWM (Motif Window Manager)              | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 21                 | 11         | No         | Extreme Lightweight| Lightweight
+9wm                                     | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 22                 | 12         | No         | Extreme Lightweight| Lightweight
+worm                                    | [Go] (Core)              | +100     | X11-Only             | Both                                    | < 100       | 23                 | 13         | No         | Extreme Lightweight| Lightweight
+sowm                                    | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 24                 | 14         | No         | Extreme Lightweight| Lightweight
+evilwm                                  | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 25                 | 15         | No         | Extreme Lightweight| Lightweight
+aewm++                                  | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 100       | 26                 | 16         | No         | Extreme Lightweight| Lightweight
+progman                                 | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 27                 | 17         | No         | Extreme Lightweight| Lightweight
+FrankenWM                               | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 29                 | 18         | No         | Extreme Lightweight| Lightweight
+Goomwwm                                 | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 30                 | 19         | No         | Extreme Lightweight| Lightweight
+Hackedbox                               | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 100       | 31                 | 20         | No         | Extreme Lightweight| Lightweight
+WindowLab                               | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 32                 | 21         | No         | Extreme Lightweight| Lightweight
+wm2                                     | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 100       | 33                 | 22         | No         | Extreme Lightweight| Lightweight
+wmx                                     | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 100       | 34                 | 23         | No         | Extreme Lightweight| Lightweight
+TinyWM                                  | [C] (Core)               | +100     | X11-Only             | Both                                    | < 50        | 35                 | 24         | No         | Extreme Lightweight| Lightweight
+FVWM95                                  | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 50        | 36                 | 25         | No         | Extreme Lightweight| Lightweight
+Qvwm (qpwm)                             | [C++] (Core)             | +100     | X11-Only             | Mouse-friendly                          | < 50        | 37                 | 26         | No         | Extreme Lightweight| Lightweight
+Compiz                                  | [C++] (Core)             | +100     | X11-Only             | Both                                    | ~15 - 30 K  | 11                 | 27         | Full       | Heavy              | Lightweight
+<!-- may load some Desktop Environtment dependencies -->
+Xfwm4                                   | [C] (Core)               | +100     | X11-Only             | Both                                    | ~1 - 2 M    | 1                  | 28         | Partial    | Lightweight        | Lightweight
+Enlightenment                           | [C] (Core), Lua          | +100     | X11 / Wayland        | Both                                    | ~20 - 45 K  | 9                  | 29         | Full       | Lightweight        | Lightweight
+E16 (Enlightenment v16)                 | [C] (Core)               | +100     | X11-Only             | Both                                    | ~1 - 3 K    | 15                 | 30         | Partial    | Lightweight        | Lightweight
+MLVWM                                   | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 28                 | 31         | No         | Extreme Lightweight| Lightweight
+amiwm                                   | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 200       | 20                 | 32         | No         | Extreme Lightweight| Lightweight
+<!-- Wayland Compositor -->
+Labwc                                   | [C] (Core), Python, Shell| +100     | Wayland-Only         | Both                                    | ~180 - 280 K| 5                  | 33         | Yes        | Lightweight        | Lightweight
+Steppewm                                | [Lua] (Core), C, Make    | -100     | Wayland-Only         | Mouse-friendly                          | ~1 - 3 K    | 14                 | 34         | Yes        | Lightweight        | Lightweight
+Waybox                                  | [C] (Core), Meson        | +100     | Wayland-Only         | Mouse-friendly                          | ~15 - 30 K  | 10                 | 35         | Yes        | Lightweight        | Lightweight
+Hikari                                  | [C] (Core), Jansson      | +100     | Wayland-Only         | Keyboard-driven                         | ~50 - 75 K  | 7                  | 36         | Yes        | Lightweight        | Lightweight
+Wayfire                                 | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~60 - 90 K  | 6                  | 37         | Full       | OK                 | Lightweight
 ```
 
 ## Top Best Linux Automated / Dynamic / Dwindle / Spiral / Algorithmic Tiling Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
-Hyprland                                | [C++] (Core), Lua        | +100     | Wayland-Only         | Both                                    | ~450 - 650 K| 1                  | 1          | Full       | OK                 | Lightweight
-Miracle-WM                              | [C++] (Core), YAML       | +100     | Wayland-Only         | Both                                    | ~25 - 40 K  | 2                  | 2          | Full       | Heavy              | Medium
-LeftWM                                  | [Rust] (Core)            | +100     | X11-Only             | Keyboard-driven                         | ~20 - 35 K  | 3                  | 3          | No         | Extreme Lightweight| Lightweight
+LeftWM                                  | [Rust] (Core)            | +100     | X11-Only             | Keyboard-driven                         | ~20 - 35 K  | 3                  | 1          | No         | Extreme Lightweight| Lightweight
+Hyprland                                | [C++] (Core), Lua        | +100     | Wayland-Only         | Both                                    | ~450 - 650 K| 1                  | 2          | Full       | OK                 | Lightweight
+Miracle-WM                              | [C++] (Core), YAML       | +100     | Wayland-Only         | Both                                    | ~25 - 40 K  | 2                  | 3          | Full       | Heavy              | Medium
 qtile-Wayland                           | [Python] (Core)          | -100     | Wayland-Only         | Both                                    | ~2.5 - 4.5 K| 4                  | 4          | Yes        | OK                 | Lightweight
 qtile-X11                               | [Python] (Core)          | -100     | X11-Only             | Both                                    | ~1.5 - 3 K  | 5                  | 5          | No         | Extreme Lightweight| Lightweight
 ```
@@ -116,10 +118,10 @@ qtile-X11                               | [Python] (Core)          | -100     | 
 ## Top Best Linux Master & Linear Stack Tiling Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
-MangoWM                                 | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~30 - 45 K  | 1                  | 1          | Yes        | Lightweight        | Lightweight
-Dwl (Dynamic Window Manager for Wayland)| [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~40 - 65 K  | 3                  | 2          | Minimal    | Lightweight        | Lightweight
-dwm                                     | [C] (Core)               | +100     | X11-Only             | Both                                    | ~4 - 7 K    | 6                  | 3          | No         | Lightweight        | Lightweight
-AwesomeWM                               | [C] (Core), Lua          | +100     | X11-Only             | Both                                    | ~3.5 - 6 K  | 7                  | 4          | No         | Lightweight        | Lightweight
+dwm                                     | [C] (Core)               | +100     | X11-Only             | Both                                    | ~4 - 7 K    | 6                  | 1          | No         | Lightweight        | Lightweight
+AwesomeWM                               | [C] (Core), Lua          | +100     | X11-Only             | Both                                    | ~3.5 - 6 K  | 7                  | 2          | No         | Lightweight        | Lightweight
+MangoWM                                 | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~30 - 45 K  | 1                  | 3          | Yes        | Lightweight        | Lightweight
+Dwl (Dynamic Window Manager for Wayland)| [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~40 - 65 K  | 3                  | 4          | Minimal    | Lightweight        | Lightweight
 River                                   | [Zig] (Core)             | +100     | Wayland-Only         | Keyboard-driven                         | ~50 - 75 K  | 2                  | 5          | Yes        | Lightweight        | Lightweight
 Vivarium                                | [C] (Core)               | +100     | Wayland-Only         | Keyboard-driven                         | ~8 - 15 K   | 4                  | 6          | Yes        | Lightweight        | Lightweight
 Gogh                                    | [Nim] (Core)             | +100     | Wayland-Only         | Keyboard-driven                         | ~5 - 10 K   | 5                  | 7          | Yes        | Lightweight        | Lightweight
@@ -128,20 +130,20 @@ Gogh                                    | [Nim] (Core)             | +100     | 
 ## Top Best Linux Manual / Tree Tiling Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
-Sway                                    | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~250 - 350 K| 1                  | 1          | Minimal    | Lightweight        | Lightweight
-i3wm                                    | [C] (Core)               | +100     | X11-Only             | Both                                    | ~150 - 220 K| 2                  | 2          | No         | Lightweight        | Lightweight
+i3wm                                    | [C] (Core)               | +100     | X11-Only             | Both                                    | ~150 - 220 K| 2                  | 1          | No         | Lightweight        | Lightweight
+bspwm                                   | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | ~5 - 8 K    | 4                  | 2          | No         | Lightweight        | Lightweight
 herbstluftwm                            | [C++] (Core), Shell      | +100     | X11-Only             | Both                                    | ~15 - 25 K  | 3                  | 3          | No         | Lightweight        | Lightweight
-bspwm                                   | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | ~5 - 8 K    | 4                  | 4          | No         | Lightweight        | Lightweight
+Sway                                    | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~250 - 350 K| 1                  | 4          | Minimal    | Lightweight        | Lightweight
 ```
 
 ## Top Best Linux Tabbed / Framing Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
-Sway (Tabbed Mode)                      | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~250 - 350 K| 1                  | 1          | Minimal    | Lightweight        | Lightweight
-i3wm (Tabbed Mode)                      | [C] (Core)               | +100     | X11-Only             | Both                                    | ~150 - 220 K| 2                  | 2          | No         | Lightweight        | Lightweight
-Notion                                  | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | ~4 - 8 K    | 3                  | 3          | No         | Lightweight        | Lightweight
-Ion3 (Archived / Legacy)                | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | < 500       | 4                  | 4          | No         | Lightweight        | Lightweight
-PWM (Attachable Window Manager)         | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 5                  | 5          | No         | Lightweight        | Lightweight
+i3wm (Tabbed Mode)                      | [C] (Core)               | +100     | X11-Only             | Both                                    | ~150 - 220 K| 2                  | 1          | No         | Lightweight        | Lightweight
+Notion                                  | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | ~4 - 8 K    | 3                  | 2          | No         | Lightweight        | Lightweight
+PWM (Attachable Window Manager)         | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 5                  | 3          | No         | Lightweight        | Lightweight
+Sway (Tabbed Mode)                      | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~250 - 350 K| 1                  | 4          | Minimal    | Lightweight        | Lightweight
+Ion3 (Archived / Legacy)                | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | < 500       | 4                  | 5          | No         | Lightweight        | Lightweight
 ```
 
 ## Top Best Linux Scrolling Window Manager 2026 Q3
@@ -184,7 +186,7 @@ Arch CachyOS             | [KDE Plasma]                       | DE   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
-Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
@@ -208,7 +210,7 @@ Debian Synex             | [Mate]                             | DE   | stable bu
 ## Top Best Linux Distro Ultra Lightweight Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
-Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~355MB
 Debian Synex             | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~580MB
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~400MB
@@ -242,7 +244,7 @@ OpenSUSE Tumbleweed      | [KDE Plasma]                       | DE   | stable bu
 Mandriva Mageia          | [KDE Plasma]                       | DE   | stable but older                                               | Best for Older and Newer Hardware
 Mandriva Mageia          | [Xfce]                             | DE   | stable but older                                               | Best for Older and Newer Hardware
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
-Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 ```
@@ -251,7 +253,7 @@ Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable bu
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
-Debian                   | [LXfcDE (LXDE + Xfce)]             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
+Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
 Debian                   | [Xfce Wayland session + Labwc]     | DE   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
 Fedora                   | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
 OpenSUSE Tumbleweed      | [Xfce Wayland session + Labwc]     | DE   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
@@ -262,6 +264,25 @@ Fedora                   | [Labwc + Noctalia]                 | WM   | stable bu
 OpenSUSE Tumbleweed      | [Labwc + Noctalia]                 | WM   | stable but newer and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
 Mandriva Mageia          | [Labwc + Noctalia]                 | WM   | stable but older and ultra lightweight but with systemd        | Best for Newer Hardware                        | ~?MB
 Arch CachyOS             | [Labwc + Noctalia]                 | WM   | stable but newest and ultra lightweight but with systemd       | Best for Newer Hardware                        | ~?MB
+```
+
+## Top Best Lightweight Beginner Friendly Linux Setup that Just Works For Everyone With More Experiences Filtered by Requirements 2026 Q3
+```
+Base        | install                                                                                                   | purge           | tested by me   |
+<!-- floating/stacking -->
+Debian LXDE | openbox tint2 plank jgmenu                                                                                | lxpanel         | yes            |
+Debian LXDE | jwm tint2 plank jgmenu                                                                                    | lxpanel openbox | no             |
+Debian LXDE | icewm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |
+Debian LXDE | fluxbox tint2 plank jgmenu                                                                                | lxpanel openbox | no             |
+Debian LXDE | pekwm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |
+Debian LXDE | openbox xfce4-panel xfce4-docklike-plugin xfce4-whiskermenu-plugin                                        | lxpanel         | yes            |
+<!-- tiling -->
+Debian LXDE | i3wm tint2 plank jgmenu                                                                                   | lxpanel openbox | no             |
+Debian LXDE | bspwm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |
+Debian LXDE | herbstluftwm tint2 plank jgmenu                                                                           | lxpanel openbox | no             |
+Debian LXDE | dwm tint2 plank jgmenu                                                                                    | lxpanel openbox | no             |
+Debian LXDE | awesomewm tint2 plank jgmenu                                                                              | lxpanel openbox | no             |
+Debian LXDE | leftwm tint2 plank jgmenu                                                                                 | lxpanel openbox | no             |
 ```
 
 ## Fedora 44 KDE ➡️ Fedora 45 KDE
