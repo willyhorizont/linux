@@ -19,7 +19,7 @@ def main():
 
     simple_clock = f"| {month_num}/12 months | {day_num}/{total_days} days | {date_string} | {time_24} | {time_12} "
 
-    print(simple_clock)
+    print(simple_clock, end="")
 
 
 if __name__ == "__main__":

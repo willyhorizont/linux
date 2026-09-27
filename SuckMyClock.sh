@@ -13,4 +13,4 @@ TIME_12=$(date +"%I:%M:%S %p")
 
 SIMPLE_CLOCK="| ${MONTH_NUM}/12 months | ${DAY_NUM}/${TOTAL_DAYS} days | ${DATE_STRING} | ${TIME_24} | ${TIME_12} "
 
-echo -e "$SIMPLE_CLOCK"
+echo -n "$SIMPLE_CLOCK"

@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Time::HiRes qw(time);
 
-my $CACHE_FILE = "/tmp/sprm_perl_cache.json";
+my $CACHE_FILE = "/tmp/sprm-perl-cache.json";
 
 my $NET_INTRF = "lo";
 if (open(my $fh, "<", "/proc/net/route")) {

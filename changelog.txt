@@ -1,3 +1,15 @@
+[Last updated: 27 Sep 2026 @ 06:11 PM][version: 0.0.62]
+add SPRM.c;
+add SPRM.cpp;
+add SPRM.awk;
+update SPRM.sh;
+add SuckMyClock.c;
+add SuckMyClock.cpp;
+add SuckMyClock.awk;
+update SuckMyClock.pl;
+update SuckMyClock.py;
+update SuckMyClock.sh;
+
 [Last updated: 23 Sep 2026 @ 11:04 AM][version: 0.0.61]
 add video player list;
 

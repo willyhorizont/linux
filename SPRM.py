@@ -5,7 +5,7 @@ import time
 import json
 import re
 
-CACHE_FILE = "/tmp/sprm_cache.json"
+CACHE_FILE = "/tmp/sprm-python-cache.json"
 
 def get_active_net_interf():
     net_interf = "lo"
@@ -225,7 +225,7 @@ def main():
     out_u = "999999GB/s" if "999999" in f_u else f_u
 
     rr = f" T {out_t} | C {cpu_fmt}% | G {gpu_fmt}% | M {ram_used_str}/{ram_tot_str}GB | D {d_free_str}/{d_tot_str}GB | R {out_r} | W {out_w} | ▼ {out_d} | ▲ {out_u} |"
-    print(rr)
+    print(rr, end="")
 
 if __name__ == "__main__":
     main()

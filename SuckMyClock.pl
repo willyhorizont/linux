@@ -14,4 +14,4 @@ my $time_12 = $t->strftime('%I:%M:%S %p');
 
 my $simple_clock = "| $month_num/12 months | $day_num/$total_days days | $date_string | $time_24 | $time_12 ";
 
-print "$simple_clock\n";
+print "$simple_clock";
