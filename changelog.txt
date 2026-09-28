@@ -1,3 +1,6 @@
+[Last updated: 29 Sep 2026 @ 01:04 AM][version: 0.0.70]
+undo update tux-d.sh;
+
 [Last updated: 29 Sep 2026 @ 01:01 AM][version: 0.0.69]
 update tui-d.sh;
 

@@ -12,7 +12,7 @@ while true; do
         else
             if ! pidof xpenguins > /dev/null; then
                 echo "Maximized Window Not Found. Unleashing xpenguins..."
-                xpenguins --nomenu --hidemenu --no-blood --no-angels --nodoublebuffer --squish --penguins 8 --lift 56 &
+                xpenguins --nomenu --hidemenu --no-blood --no-angels --nodoublebuffer --penguins 8 --lift 56 &
             fi
         fi
     fi
