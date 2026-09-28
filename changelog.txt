@@ -1,3 +1,6 @@
+[Last updated: 29 Sep 2026 @ 01:01 AM][version: 0.0.69]
+update tui-d.sh;
+
 [Last updated: 28 Sep 2026 @ 06:40 PM][version: 0.0.68]
 update btop.conf, update_ms;
 
