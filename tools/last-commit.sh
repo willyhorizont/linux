@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.0.64" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.0.65" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,17 +12,10 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-add indicator-bt.sh
-add indicator-cam.sh
-add indicator-mic.sh
-add indicator-net.sh
-add indicator-powr.sh
-add indicator-vol.sh
-add tui-bt.sh
-add tui-net.sh
-add tui-powr-pfl.sh
-small update in SPRM.sh
-small update in SuckMyClock.sh
+add .bashrc;
+add indicator-tux.sh;
+add tux-d.sh;
+add sync.sh;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H
