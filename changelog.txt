@@ -1,3 +1,7 @@
+[Last updated: 28 Sep 2026 @ 05:37 PM][version: 0.0.66]
+update tux-d.sh;
+add more items to cool-packages list;
+
 [Last updated: 28 Sep 2026 @ 04:00 PM][version: 0.0.65]
 add .bashrc;
 add indicator-tux.sh;

@@ -5,8 +5,14 @@ https://getfresh.dev/ or https://github.com/sinelaw/fresh                       
 btop                                                                                             ; task-manager, system-resource-monitor
 https://github.com/clementtsang/bottom                                                           ; task-manager, system-resource-monitor
 https://github.com/lm-sensors/lm-sensors                                                         ; task-manager, system-resource-monitor
+xpenguins                                                                                        ; screensaver, pet
+oneko                                                                                            ; screensaver, pet, cursor-theme
+xsnow                                                                                            ; screensaver
+sl                                                                                               ; startup
+gti                                                                                              ; startup
 https://github.com/cmatsuoka/asciiquarium/blob/master/asciiquarium                               ; screensaver
 cmatrix                                                                                          ; screensaver
+tmatrix                                                                                          ; screensaver
 hollywood                                                                                        ; screensaver
 pipes-sh                                                                                         ; screensaver
 cbonsai                                                                                          ; screensaver
