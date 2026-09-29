@@ -1,3 +1,6 @@
+[Last updated: 29 Sep 2026 @ 09:58 PM][version: 0.0.72]
+add tuxcursor cursor theme;
+
 [Last updated: 29 Sep 2026 @ 01:31 AM][version: 0.0.71]
 optimise tux-d.sh;
 
