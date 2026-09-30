@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "mic=?      | "
+
 MIC_VOL=$(pactl get-source-volume @DEFAULT_SOURCE@ 2>/dev/null | awk '{print $5}' | tr -d '%')
 MIC_MUTE=$(pactl get-source-mute @DEFAULT_SOURCE@ 2>/dev/null | awk '{print $2}')
 

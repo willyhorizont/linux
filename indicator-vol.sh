@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "vol=?      | "
+
 VOL=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk '{print $5}' | tr -d '%')
 SINK_MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{print $2}')
 

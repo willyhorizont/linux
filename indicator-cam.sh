@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "cam=? | "
+
 STATUS_FILE="/sys/class/video4linux/video0/device/power/runtime_status"
 
 if [ -f "$STATUS_FILE" ]; then

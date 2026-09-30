@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "AC=? BAT=?      "
+
 if [ ! -d /sys/class/power_supply ] || [ -z "$(ls /sys/class/power_supply/ | grep -E '^BAT|^battery')" ]; then
     echo "AC=Y BAT=N      "
     exit 0

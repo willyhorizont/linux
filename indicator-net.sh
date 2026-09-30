@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "net=?         | "
+
 CON_TYPE=$(nmcli -t -f TYPE,STATE dev | awk -F: '$2=="connected" {print $1; exit}')
 
 if [ "$CON_TYPE" = "ethernet" ]; then
