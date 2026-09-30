@@ -1,3 +1,6 @@
+[Last updated: 01 Oct 2026 @ 02:20 AM][version: 0.0.73]
+update upgrayedd command;
+
 [Last updated: 29 Sep 2026 @ 09:58 PM][version: 0.0.72]
 add tuxcursor cursor theme;
 

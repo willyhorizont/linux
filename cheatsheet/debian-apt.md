@@ -1,7 +1,7 @@
 # cheatsheet > debian-apt
 
 ## Refresh metadata and upgrade all system packages
-```sudo apt update -y && sudo apt upgrade -y```
+```sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y --purge```
 
 ## Install a new package
 ```sudo apt install -y <package>```

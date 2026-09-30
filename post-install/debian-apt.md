@@ -9,7 +9,7 @@
 
 2. Refresh metadata and upgrade all system packages
 ```
-sudo apt update -y && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y --purge
 ```
 
 3. Install Github
