@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+
+import sys
 import datetime
 import calendar
 
@@ -17,9 +19,14 @@ def main():
     time_24 = now.strftime("%H:%M:%S")
     time_12 = now.strftime("%I:%M:%S %p")
 
-    simple_clock = f"| {month_num}/12 months | {day_num}/{total_days} days | {date_string} | {time_24} | {time_12} "
+    print(f"| {month_num}/12 months | {day_num}/{total_days} days | {date_string} | {time_24} | {time_12} ", end="")
 
-    print(simple_clock, end="")
+    print("""
+`                      
+     SuckMyClock       
+  * Python version *   
+                      .
+    """, file=sys.stderr)
 
 
 if __name__ == "__main__":

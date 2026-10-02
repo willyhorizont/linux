@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import time
 import json
 import re
 
 CACHE_FILE = "/tmp/sprm-python-cache.json"
+
 
 def get_active_net_interf():
     net_interf = "lo"
@@ -37,8 +39,10 @@ def get_active_net_interf():
             
     return net_interf
 
+
 def pad(s, length):
     return str(s).rjust(length, ' ')
+
 
 def fmt(bytesps):
     if bytesps <= 0:
@@ -60,6 +64,7 @@ def fmt(bytesps):
     if len(f_p) > 3:
         return "999999GB/s"
     return f"{pad(f_p, 3)}.{b_p}{units[i]}"
+
 
 def get_system_data():
     net_intrf = get_active_net_interf()
@@ -155,6 +160,7 @@ def get_system_data():
 
     return temp_val, parts, gpu_val, ram_used, ram_tot, d_free_GB, d_tot_GB, cur_d_r, cur_d_w, cur_net_down, cur_net_up
 
+
 def main():
     now_time = time.monotonic()
     temp_val, cpu_parts, gpu_val, ram_used, ram_tot, d_free_GB, d_tot_GB, cur_d_r, cur_d_w, cur_net_down, cur_net_up = get_system_data()
@@ -226,6 +232,25 @@ def main():
 
     rr = f" T {out_t} | C {cpu_fmt}% | G {gpu_fmt}% | M {ram_used_str}/{ram_tot_str}GB | D {d_free_str}/{d_tot_str}GB | R {out_r} | W {out_w} | ▼ {out_d} | ▲ {out_u} |"
     print(rr, end="")
+    print("""
+`                                       
+  SPRM (Simple Panel Resource Monitor)  
+           * Python version *           
+                                        
+        T = Temperature                 
+        C = Total CPU Usage             
+        G = Total GPU Usage             
+        M = Total Memory Usage          
+        D = Total Disk Usage            
+        R = Total Disk Read             
+        W = Total Disk Write            
+        ▼ = Average Download Rate       
+        ▲ = Average Upload Rate         
+                                        
+           click to open btop           
+                                       .
+    """, file=sys.stderr)
+
 
 if __name__ == "__main__":
     main()

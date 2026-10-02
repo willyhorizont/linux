@@ -230,3 +230,22 @@ my $out_d = ($f_d =~ /999999/) ? "999999GB/s" : $f_d;
 my $out_u = ($f_u =~ /999999/) ? "999999GB/s" : $f_u;
 
 print " T $out_t | C $cpu_fmt% | G $gpu_fmt% | M $ram_used_str/${ram_tot_str}GB | D $d_free_str/${d_tot_str}GB | R $out_r | W $out_w | ▼ $out_d | ▲ $out_u |";
+
+print STDERR <<'EOF';
+`                                       
+  SPRM (Simple Panel Resource Monitor)  
+            * Perl version *            
+                                        
+        T = Temperature                 
+        C = Total CPU Usage             
+        G = Total GPU Usage             
+        M = Total Memory Usage          
+        D = Total Disk Usage            
+        R = Total Disk Read             
+        W = Total Disk Write            
+        ▼ = Average Download Rate       
+        ▲ = Average Upload Rate         
+                                        
+           click to open btop           
+                                       .
+EOF

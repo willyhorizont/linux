@@ -30,6 +30,12 @@ int main() {
     strftime(time_12, sizeof(time_12), "%I:%M:%S %p", tm_info);
 
     printf("| %s/12 months | %s/%d days | %s | %s | %s ", month_num, day_num, total_days, date_string, time_24, time_12);
+    fprintf(stderr,
+        "`                 \n"
+        "   SuckMyClock    \n"
+        "  * C version *   \n"
+        "                 .\n"
+    );
 
     return 0;
 }

@@ -11,6 +11,12 @@ DATE_STRING=$(date +"%a, %d %b %Y")
 TIME_24=$(date +"%H:%M:%S")
 TIME_12=$(date +"%I:%M:%S %p")
 
-SIMPLE_CLOCK="| ${MONTH_NUM}/12 months | ${DAY_NUM}/${TOTAL_DAYS} days | ${DATE_STRING} | ${TIME_24} | ${TIME_12} "
 
-echo -n "$SIMPLE_CLOCK"
+echo -n "| ${MONTH_NUM}/12 months | ${DAY_NUM}/${TOTAL_DAYS} days | ${DATE_STRING} | ${TIME_24} | ${TIME_12} "
+
+cat << EOF 1>&2
+\`                    
+     SuckMyClock      
+  * Shell version *   
+                     .
+EOF

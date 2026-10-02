@@ -136,14 +136,24 @@ BEGIN {
     
     if ((getline < CACHE_FILE) > 0) {
         ctx = $0
-        if (ctx ~ /"time":/) {
-            match(ctx, /"time":([0-9.]+)/, m) ; old_time = m[1]; has_time = 1
-            match(ctx, /"d_r":([0-9]+)/, m) ; old_d_r = m[1]; has_dr = 1
-            match(ctx, /"d_w":([0-9]+)/, m) ; old_d_w = m[1]; has_dw = 1
-            match(ctx, /"n_d":([0-9]+)/, m) ; old_n_d = m[1]; has_nd = 1
-            match(ctx, /"n_u":([0-9]+)/, m) ; old_n_u = m[1]; has_nu = 1
-            match(ctx, /"cpu":\[([0-9,]+)\]/, m)
-            split(m[1], old_cpu, ",")
+        if (match(ctx, /"time":[0-9.]+/)) {
+            old_time = substr(ctx, RSTART + 7, RLENGTH - 7); has_time = 1
+        }
+        if (match(ctx, /"d_r":[0-9]+/)) {
+            old_d_r = substr(ctx, RSTART + 6, RLENGTH - 6); has_dr = 1
+        }
+        if (match(ctx, /"d_w":[0-9]+/)) {
+            old_d_w = substr(ctx, RSTART + 6, RLENGTH - 6); has_dw = 1
+        }
+        if (match(ctx, /"n_d":[0-9]+/)) {
+            old_n_d = substr(ctx, RSTART + 6, RLENGTH - 6); has_nd = 1
+        }
+        if (match(ctx, /"n_u":[0-9]+/)) {
+            old_n_u = substr(ctx, RSTART + 6, RLENGTH - 6); has_nu = 1
+        }
+        if (match(ctx, /"cpu":\[[0-9,]+\]/)) {
+            cpu_block = substr(ctx, RSTART + 7, RLENGTH - 8)
+            split(cpu_block, old_cpu, ",")
         }
     }
     close(CACHE_FILE)
@@ -191,4 +201,22 @@ BEGIN {
     out_u = (f_u ~ /999999/) ? "999999GB/s" : f_u
     
     printf " T %s | C %s%% | G %s%% | M %s/%sGB | D %s/%sGB | R %s | W %s | ▼ %s | ▲ %s |", out_t, cpu_fmt, gpu_fmt, ram_used_str, ram_tot_str, d_free_str, d_tot_str, out_r, out_w, out_d, out_u
+    print "\n" \
+        "`                                        \n" \
+        "   SPRM (Simple Panel Resource Monitor)  \n" \
+        "             * Awk version *             \n" \
+        "                                         \n" \
+        "         T = Temperature                 \n" \
+        "         C = Total CPU Usage             \n" \
+        "         G = Total GPU Usage             \n" \
+        "         M = Total Memory Usage          \n" \
+        "         D = Total Disk Usage            \n" \
+        "         R = Total Disk Read             \n" \
+        "         W = Total Disk Write            \n" \
+        "         ▼ = Average Download Rate       \n" \
+        "         ▲ = Average Upload Rate         \n" \
+        "                                         \n" \
+        "            click to open btop           \n" \
+        "                                         \n" \
+        "                                        .\n" > "/dev/stderr"
 }

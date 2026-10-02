@@ -1,3 +1,34 @@
+[Last updated: 02 Oct 2026 @ 02:52 PM][version: 0.1.0]
+update indic0-tux.sh;
+update indic1-bt.sh;
+update indic2-net.sh;
+update indic3-cam.sh;
+update indic4-mic.sh;
+update indic5-vol.sh;
+update indic6-powr.sh;
+add tui-bat-lenovo-thinkpad.sh;
+add tui0-tux.sh;
+update tui1-bt.sh;
+update tui2-net.sh;
+add tui3-cam.sh;
+add tui4-mic.sh;
+add tui5-vol.sh;
+add tui6-powr.sh;
+update SPRM.c, add tooltip via stderr;
+update SPRM.cpp, add tooltip via stderr;
+update and fix SPRM.awk, add tooltip via stderr;
+update SPRM.pl, add tooltip via stderr;
+update SPRM.py, add tooltip via stderr;
+update SPRM.sh, add tooltip via stderr;
+update SuckMyClock.c, add tooltip via stderr;
+update SuckMyClock.cpp, add tooltip via stderr;
+update SuckMyClock.awk, add tooltip via stderr;
+update SuckMyClock.pl, add tooltip via stderr;
+update SuckMyClock.py, add tooltip via stderr;
+update SuckMyClock.sh, add tooltip via stderr;
+update indic*, add tooltip via stderr;
+update README.md, add SPRM SuckMyClock indic* tui*;
+
 [Last updated: 01 Oct 2026 @ 04:29 AM][version: 0.0.77]
 fix indicator;
 

@@ -194,3 +194,22 @@ out_d=$f_d; [ -n "$(echo "$f_d" | grep 999999)" ] && out_d="999999GB/s"
 out_u=$f_u; [ -n "$(echo "$f_u" | grep 999999)" ] && out_u="999999GB/s"
 
 printf " T %s | C %5.1f%% | G %5.1f%% | M %5.2f/%sGB | D %s/%sGB | R %s | W %s | ▼ %s | ▲ %s |" "$out_t" "$cpu_pcent" "$gpu_pcent" "$ram_used" "$ram_tot" "$d_free_GB" "$d_tot_GB" "$out_r" "$out_w" "$out_d" "$out_u"
+
+cat << EOF 1>&2
+\`                                       
+  SPRM (Simple Panel Resource Monitor)  
+           * Shell version *            
+                                        
+        T = Temperature                 
+        C = Total CPU Usage             
+        G = Total GPU Usage             
+        M = Total Memory Usage          
+        D = Total Disk Usage            
+        R = Total Disk Read             
+        W = Total Disk Write            
+        ▼ = Average Download Rate       
+        ▲ = Average Upload Rate         
+                                        
+           click to open btop           
+                                       .
+EOF

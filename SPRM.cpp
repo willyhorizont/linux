@@ -255,6 +255,24 @@ int main() {
     std::string out_d = (f_d.find("999999") != std::string::npos) ? "999999GB/s" : f_d;
     std::string out_u = (f_u.find("999999") != std::string::npos) ? "999999GB/s" : f_u;
     std::cout << " T " << out_t << " | C " << cpu_fmt << "% | G " << gpu_fmt << "% | M " << ram_used_str << "/" << rt_ss.str() << "GB | D " << df_ss.str() << "/" << dt_ss.str() << "GB | R " << out_r << " | W " << out_w << " | ▼ " << out_d << " | ▲ " << out_u << " |";
+    std::cerr << R"(
+`                                       
+  SPRM (Simple Panel Resource Monitor)  
+            * C++ version *             
+                                        
+        T = Temperature                 
+        C = Total CPU Usage             
+        G = Total GPU Usage             
+        M = Total Memory Usage          
+        D = Total Disk Usage            
+        R = Total Disk Read             
+        W = Total Disk Write            
+        ▼ = Average Download Rate       
+        ▲ = Average Upload Rate         
+                                        
+           click to open btop           
+                                       .
+)";
     return 0;
 }
 

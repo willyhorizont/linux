@@ -1,38 +1,71 @@
-# Top Best Linux Distro
+# Linux
+![Debian LXDE Screenshot](https://github.com/willyhorizont/linux-debian-lxde/blob/main/screenshot.jpg)  
 
-## Requirements:
+## Scripts
+* SPRM (Simple Panel Resource Monitor)
+* SuckMyClock
+* indic1-bt
+* indic2-net
+* indic3-cam
+* indic4-mic
+* indic5-vol
+* indic6-powr
+* tui1-bt
+* tui2-net
+* tui3-cam
+* tui4-mic
+* tui5-vol
+* tui6-powr
+* tui-powr-pfl
+* tui-bat-lenovo-thinkpad
+
+### Choose your own localization
+* [SPRM](https://github.com/willyhorizont/linux/blob/main/SPRM.c) is available in [C](https://github.com/willyhorizont/linux/blob/main/SPRM.c), [C++](https://github.com/willyhorizont/linux/blob/main/SPRM.cpp), [Awk](https://github.com/willyhorizont/linux/blob/main/SPRM.awk), [Perl](https://github.com/willyhorizont/linux/blob/main/SPRM.pl), [Python](https://github.com/willyhorizont/linux/blob/main/SPRM.py), [Shell](https://github.com/willyhorizont/linux/blob/main/SPRM.sh)
+* [SuckMyClock](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.c) is available in [C](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.c), [C++](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.cpp), [Awk](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.awk), [Perl](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.pl), [Python](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.py), [Shell](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.sh)
+
+### SPRM output example (self explanatory)
+```
+ T 59.0°C | C   9.6% | G  28.0% | M  3.25/15.45GB | D 158.19/250.39GB | R       0B/s | W       0B/s | ▼       0B/s | ▲       0B/s |
+```
+
+### SuckMyClock output example (self explanatory)
+```
+| 10/12 months | 02/31 days | Fri, 02 Oct 2026 | 04:01:49 | 04:01:49 AM 
+```
+
+----
+
+## Top Best Linux Distro
+
+### Notes
 * Core engine must in compiled language not interpreted
 * No BSD exclusive
 * No mobile / touch exclusive
 * No Ubuntu based (apt / deb -> snap swaps)
-* No Windows tranlation / emulator
+* No Windows translation / emulator
 * No Snap
 * Flatpak ok if exist or not, can be disabled is a plus
+* Nvidia is ignored
+* Gaming is ignored
+* Focus on Docker Engine, Vscode, [Brave, Vivaldi, Chrome, Firefox] (Browser)
+* Prefer non GPU-driven
+* Any blur/animation/transition/effect off
+* 60hz only
+* HD to Full-HD resolution only
+* Below Distro Sorted by **from** ```prefered``` **to** ```least prefered``` **from** ```top``` **to** ```bottom```  
+* Below Desktop Sorted by **from** ```prefered``` **to** ```least prefered``` **from** ```left``` **to** ```right```  
 
-## Hardware Specs
+### Hardware Specs
 * RAM >= 16GB
 * Storage Type = SSD
 * Storage Caps >= 256GB
 * [Intel Gen 3] (Minimum Oldest) or [Intel Gen 8, AMD Ryzen] (Newer Minimum)
 
-## Notes:
-* I don't care about Nvidia
-* I don't care about gaming
-* All I need are Docker Engine, Vscode, [Brave, Vivaldi, Chrome, Firefox] (Browser)
-* Prefer non GPU-driven
-* Any animation off
-* Any blur off
-* Any effect off
-* I only use 60hz
-* I only use HD to Full-HD resolution
-* Below Distro Sorted by **from** ```prefered``` **to** ```least prefered``` **from** ```top``` **to** ```bottom```  
-* Below Desktop Sorted by **from** ```prefered``` **to** ```least prefered``` **from** ```left``` **to** ```right```  
-
-## Links
+### Links
 * [https://en.wikipedia.org/wiki/Stacking_window_manager](https://en.wikipedia.org/wiki/Stacking_window_manager)  
 * [https://wiki.archlinux.org/title/Window_manager](https://wiki.archlinux.org/title/Window_manager)  
 
-## Top Best Linux Desktop Environments 2026 Q3
+### Top Best Linux Desktop Environments 2026 Q3
 ```
 Name                                     | Languages                                                  | Core Aura| Toolkit and Version            | Wayland                           | X11           | Users Count | Rank By Users Count| Rank By Me
 Xfce                                     | [GTK / GObject / GNOME, C] (Core)                          | +100     | GTK 3                          | Wayland Experimental              | X11-Only      | ~2.5 - 3.5 M|                   4|          1
@@ -61,7 +94,7 @@ UKUI (Ultimate Kylin User Interface)     | [Qt / QML, C++, DTK, JavaScript] (Cor
 SOAS (Sugar)                             | [Python, GTK / GObject / GNOME] (Core)                     | -100     | GTK 3                          | Wayland Transition                | X11-Only      | ~25 - 45 K  |                  15|         24
 ```
 
-## Top Best Linux Stacking / Floating Window Manager 2026 Q3
+### Top Best Linux Stacking / Floating Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
 Openbox                                 | [C] (Core), Python, Perl | +100     | X11-Only             | Mouse-friendly                          | ~250 - 400 K| 4                  | 1          | No         | Extreme Lightweight| Lightweight
@@ -105,7 +138,7 @@ Hikari                                  | [C] (Core), Jansson      | +100     | 
 Wayfire                                 | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~60 - 90 K  | 6                  | 37         | Full       | OK                 | Lightweight
 ```
 
-## Top Best Linux Automated / Dynamic / Dwindle / Spiral / Algorithmic Tiling Window Manager 2026 Q3
+### Top Best Linux Automated / Dynamic / Dwindle / Spiral / Algorithmic Tiling Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
 LeftWM                                  | [Rust] (Core)            | +100     | X11-Only             | Keyboard-driven                         | ~20 - 35 K  | 3                  | 1          | No         | Extreme Lightweight| Lightweight
@@ -115,7 +148,7 @@ qtile-Wayland                           | [Python] (Core)          | -100     | 
 qtile-X11                               | [Python] (Core)          | -100     | X11-Only             | Both                                    | ~1.5 - 3 K  | 5                  | 5          | No         | Extreme Lightweight| Lightweight
 ```
 
-## Top Best Linux Master & Linear Stack Tiling Window Manager 2026 Q3
+### Top Best Linux Master & Linear Stack Tiling Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
 dwm                                     | [C] (Core)               | +100     | X11-Only             | Both                                    | ~4 - 7 K    | 6                  | 1          | No         | Lightweight        | Lightweight
@@ -127,7 +160,7 @@ Vivarium                                | [C] (Core)               | +100     | 
 Gogh                                    | [Nim] (Core)             | +100     | Wayland-Only         | Keyboard-driven                         | ~5 - 10 K   | 5                  | 7          | Yes        | Lightweight        | Lightweight
 ```
 
-## Top Best Linux Manual / Tree Tiling Window Manager 2026 Q3
+### Top Best Linux Manual / Tree Tiling Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
 i3wm                                    | [C] (Core)               | +100     | X11-Only             | Both                                    | ~150 - 220 K| 2                  | 1          | No         | Lightweight        | Lightweight
@@ -136,7 +169,7 @@ herbstluftwm                            | [C++] (Core), Shell      | +100     | 
 Sway                                    | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~250 - 350 K| 1                  | 4          | Minimal    | Lightweight        | Lightweight
 ```
 
-## Top Best Linux Tabbed / Framing Window Manager 2026 Q3
+### Top Best Linux Tabbed / Framing Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
 i3wm (Tabbed Mode)                      | [C] (Core)               | +100     | X11-Only             | Both                                    | ~150 - 220 K| 2                  | 1          | No         | Lightweight        | Lightweight
@@ -146,14 +179,14 @@ Sway (Tabbed Mode)                      | [C] (Core)               | +100     | 
 Ion3 (Archived / Legacy)                | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | < 500       | 4                  | 5          | No         | Lightweight        | Lightweight
 ```
 
-## Top Best Linux Scrolling Window Manager 2026 Q3
+### Top Best Linux Scrolling Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
 Niri                                    | [Rust] (Core)            | +100     | Wayland-Only         | Keyboard-driven                         | ~120 - 180 K| 1                  | 1          | Yes        | Lightweight        | Lightweight
 Cardboard                               | [C++] (Core)             | +100     | Wayland-Only         | Keyboard-driven                         | ~2 - 5 K    | 2                  | 2          | Yes        | Lightweight        | Lightweight
 ```
 
-## Top Best Linux Distro for Newer Hardware Filtered by Requirements 2026 Q3
+### Top Best Linux Distro for Newer Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
@@ -166,7 +199,7 @@ Mandriva Mageia          | [KDE Plasma]                       | DE   | stable bu
 Arch CachyOS             | [KDE Plasma]                       | DE   | stable but newest                                              | Best for Newer Hardware
 ```
 
-## Top Best Linux Distro for Older and Newer Hardware Filtered by Requirements 2026 Q3
+### Top Best Linux Distro for Older and Newer Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
@@ -182,7 +215,7 @@ Mandriva Mageia          | [KDE Plasma]                       | DE   | stable bu
 Arch CachyOS             | [KDE Plasma]                       | DE   | stable but newest                                              | Best for Newer Hardware
 ```
 
-## Top Best Linux Distro for Older Hardware Filtered by Requirements 2026 Q3
+### Top Best Linux Distro for Older Hardware Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
@@ -207,7 +240,7 @@ Debian Synex             | [Mate]                             | DE   | stable bu
 ~~Debian MX Linux          | [Xfce]                             | DE   | stable but older but with hybrid systemd                       | Best for Older Hardware~~
 ```
 
-## Top Best Linux Distro Ultra Lightweight Filtered by Requirements 2026 Q3
+### Top Best Linux Distro Ultra Lightweight Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use                                   | Idle RAM Usage
 Debian                   | [LXDE]                             | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware                        | ~700MB
@@ -224,7 +257,7 @@ Debian                   | [JWM] via Netinstall               | WM   | stable bu
 Fedora Everything        | [Labwc] via Netinstall             | WM   | stable but newer and ultra lightweight but with systemd        | Best for Older Hardware and Newer Hardware     | ~520MB
 ```
 
-## Top Best Linux Distro Ultra Lightweight Honorable Mention Filtered by Requirements 2026 Q3
+### Top Best Linux Distro Ultra Lightweight Honorable Mention Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 ~~Debian BunsenLabs Linux  | [Openbox]                          | WM   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware~~
@@ -233,7 +266,7 @@ Distro                   | Editions                           | Type | Descripti
 ~~Debian Antix             | [IceWM, JVM, Fluxbox]              | WM   | stable but older and ultra lightweight but no systemd          | Best for Older Hardware~~
 ```
 
-## Top Best Beginner Friendly Linux Distro that Just Works For Everyone Filtered by Requirements 2026 Q3
+### Top Best Beginner Friendly Linux Distro that Just Works For Everyone Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian Linux Mint LMDE   | [Cinnamon]                         | DE   | stable but older                                               | Best for Older Hardware
@@ -249,7 +282,7 @@ Debian                   | [LXDE]                             | DE   | stable bu
 Debian Q4OS/+XPQ4        | [Trinity]                          | DE   | stable but older and ultra lightweight but with systemd        | Best for Older Hardware
 ```
 
-## Top Best Beginner Friendly Linux Distro that Just Works For Everyone With More Experiences Filtered by Requirements 2026 Q3
+### Top Best Beginner Friendly Linux Distro that Just Works For Everyone With More Experiences Filtered by Requirements 2026 Q3
 ```
 Distro                   | Editions                           | Type | Description                                                    | Hardware Use
 Debian                   | [Xfce]                             | DE   | stable but older                                               | Best for Older Hardware                        | ~1.2GB
@@ -266,7 +299,7 @@ Mandriva Mageia          | [Labwc + Noctalia]                 | WM   | stable bu
 Arch CachyOS             | [Labwc + Noctalia]                 | WM   | stable but newest and ultra lightweight but with systemd       | Best for Newer Hardware                        | ~?MB
 ```
 
-## Top Best Lightweight Beginner Friendly Linux Setup that Just Works For Everyone With More Experiences Filtered by Requirements 2026 Q3
+### Top Best Lightweight Beginner Friendly Linux Setup that Just Works For Everyone With More Experiences Filtered by Requirements 2026 Q3
 ```
 Base        | install                                                                                                   | purge           | tested by me   |
 <!-- floating/stacking -->
@@ -285,7 +318,7 @@ Debian LXDE | awesomewm tint2 plank jgmenu                                      
 Debian LXDE | leftwm tint2 plank jgmenu                                                                                 | lxpanel openbox | no             |
 ```
 
-## Fedora 44 KDE ➡️ Fedora 45 KDE
+### Fedora 44 KDE ➡️ Fedora 45 KDE
 ```
 sudo dnf upgrade --refresh -y
 sudo reboot
@@ -296,14 +329,14 @@ sudo dnf system-upgrade download --releasever=45 --allowerasing -y
 sudo dnf system-upgrade reboot
 ```
 
-## LMDE 7 Cinnamon ➡️ LMDE 8 Cinnamon
+### LMDE 7 Cinnamon ➡️ LMDE 8 Cinnamon
 ```
 sudo apt update && sudo apt full-upgrade -y
 sudo apt install mintupgrade -y
 sudo mintupgrade
 ```
 
-## Debian 13 Xfce ➡️ Debian 14 Xfce
+### Debian 13 Xfce ➡️ Debian 14 Xfce
 ```
 sudo apt update && sudo apt full-upgrade -y
 sudo apt autoremove -y

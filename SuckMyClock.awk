@@ -25,4 +25,9 @@ BEGIN {
     time_12     = strftime("%I:%M:%S %p", now)
     
     printf "| %s/12 months | %s/%d days | %s | %s | %s ", month_num, day_num, total_days, date_string, time_24, time_12
+    print "\n" \
+        "`                  \n" \
+        "    SuckMyClock    \n" \
+        "  * Awk version *  \n" \
+        "                  .\n" > "/dev/stderr"
 }

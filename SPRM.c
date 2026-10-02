@@ -285,6 +285,24 @@ int main() {
     if (strstr(f_d, "999999")) strcpy(out_d, "999999GB/s"); else strcpy(out_d, f_d);
     if (strstr(f_u, "999999")) strcpy(out_u, "999999GB/s"); else strcpy(out_u, f_u);
     printf(" T %s | C %s%% | G %s%% | M %s/%sGB | D %s/%sGB | R %s | W %s | ▼ %s | ▲ %s |", out_t, cpu_fmt, gpu_fmt, ram_used_str, ram_tot_str, d_free_str, d_tot_str, out_r, out_w, out_d, out_u);
+    fprintf(stderr,
+        "`                                       \n"
+        "  SPRM (Simple Panel Resource Monitor)  \n"
+        "             * C version *              \n"
+        "                                        \n"
+        "        T = Temperature                 \n"
+        "        C = Total CPU Usage             \n"
+        "        G = Total GPU Usage             \n"
+        "        M = Total Memory Usage          \n"
+        "        D = Total Disk Usage            \n"
+        "        R = Total Disk Read             \n"
+        "        W = Total Disk Write            \n"
+        "        ▼ = Average Download Rate       \n"
+        "        ▲ = Average Upload Rate         \n"
+        "                                        \n"
+        "           click to open btop           \n"
+        "                                       .\n"
+    );
     return 0;
 }
 

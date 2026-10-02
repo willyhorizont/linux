@@ -37,6 +37,12 @@ int main() {
     std::string time_12 = format_time(tm_info, "%I:%M:%S %p");
 
     std::cout << "| " << month_num << "/12 months | " << day_num << "/" << total_days << " days | " << date_string << " | " << time_24 << " | " << time_12 << " ";
+    std::cerr << R"(
+`                   
+    SuckMyClock     
+  * C++ version *   
+                   .
+)";
 
     return 0;
 }
