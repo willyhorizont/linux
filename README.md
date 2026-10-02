@@ -1,31 +1,40 @@
 # Linux
 ![Debian LXDE Screenshot](https://github.com/willyhorizont/linux-debian-lxde/blob/main/screenshot.jpg)  
 
-## Scripts
-* SPRM (Simple Panel Resource Monitor)
-* SuckMyClock
-* indic1-bt
-* indic2-net
-* indic3-cam
-* indic4-mic
-* indic5-vol
-* indic6-powr
-* tui1-bt
-* tui2-net
-* tui3-cam
-* tui4-mic
-* tui5-vol
-* tui6-powr
-* tui-powr-pfl
-* tui-bat-lenovo-thinkpad
-
-### Choose your own localization
-* [SPRM](https://github.com/willyhorizont/linux/blob/main/SPRM.c) is available in [C](https://github.com/willyhorizont/linux/blob/main/SPRM.c), [C++](https://github.com/willyhorizont/linux/blob/main/SPRM.cpp), [Awk](https://github.com/willyhorizont/linux/blob/main/SPRM.awk), [Perl](https://github.com/willyhorizont/linux/blob/main/SPRM.pl), [Python](https://github.com/willyhorizont/linux/blob/main/SPRM.py), [Shell](https://github.com/willyhorizont/linux/blob/main/SPRM.sh)
+## Program/Scripts (Choose your own localization/flavour)
+* [SPRM (Simple Panel Resource Monitor)](https://github.com/willyhorizont/linux/blob/main/SPRM.c) is available in [C](https://github.com/willyhorizont/linux/blob/main/SPRM.c), [C++](https://github.com/willyhorizont/linux/blob/main/SPRM.cpp), [Awk](https://github.com/willyhorizont/linux/blob/main/SPRM.awk), [Perl](https://github.com/willyhorizont/linux/blob/main/SPRM.pl), [Python](https://github.com/willyhorizont/linux/blob/main/SPRM.py), [Shell](https://github.com/willyhorizont/linux/blob/main/SPRM.sh)
 * [SuckMyClock](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.c) is available in [C](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.c), [C++](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.cpp), [Awk](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.awk), [Perl](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.pl), [Python](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.py), [Shell](https://github.com/willyhorizont/linux/blob/main/SuckMyClock.sh)
+* [indic1-bt](https://github.com/willyhorizont/linux/blob/main/indic1-bt.sh)
+* [indic2-net](https://github.com/willyhorizont/linux/blob/main/indic2-net.sh)
+* [indic3-cam](https://github.com/willyhorizont/linux/blob/main/indic3-cam.sh)
+* [indic4-mic](https://github.com/willyhorizont/linux/blob/main/indic4-mic.sh)
+* [indic5-vol](https://github.com/willyhorizont/linux/blob/main/indic5-vol.sh)
+* [indic6-powr](https://github.com/willyhorizont/linux/blob/main/indic6-powr.sh)
+* [tui1-bt](https://github.com/willyhorizont/linux/blob/main/tui1-bt.sh)
+* [tui2-net](https://github.com/willyhorizont/linux/blob/main/tui2-net.sh)
+* [tui3-cam](https://github.com/willyhorizont/linux/blob/main/tui3-cam.sh)
+* [tui4-mic](https://github.com/willyhorizont/linux/blob/main/tui4-mic.sh)
+* [tui5-vol](https://github.com/willyhorizont/linux/blob/main/tui5-vol.sh)
+* [tui6-powr](https://github.com/willyhorizont/linux/blob/main/tui6-powr.sh)
+* [tui-powr-pfl](https://github.com/willyhorizont/linux/blob/main/tui-powr-pfl.sh)
+* [tui-bat-lenovo-thinkpad](https://github.com/willyhorizont/linux/blob/main/tui-bat-lenovo-thinkpad.sh)
+* [MusiCSV-Player](https://github.com/willyhorizont/MusiCSV-Player)
+* [xlrun (X Language Code Runner) *Dockerized*](https://github.com/willyhorizont/cross-language-programming-concepts/blob/main/xlrun.sh)
 
 ### SPRM output example (self explanatory)
 ```
  T 59.0°C | C   9.6% | G  28.0% | M  3.25/15.45GB | D 158.19/250.39GB | R       0B/s | W       0B/s | ▼       0B/s | ▲       0B/s |
+```
+```
+        T = Temperature                 
+        C = Total CPU Usage             
+        G = Total GPU Usage             
+        M = Total Memory Usage          
+        D = Total Disk Usage            
+        R = Total Disk Read             
+        W = Total Disk Write            
+        ▼ = Average Download Rate       
+        ▲ = Average Upload Rate         
 ```
 
 ### SuckMyClock output example (self explanatory)
