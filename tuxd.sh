@@ -13,6 +13,7 @@ IDLE_TIME_SEC=10
 IDLE_TIME_MS=$((IDLE_TIME_SEC * 1000))
 TERMINAL_PID=""
 IS_IDLE=false
+PENGUINS_ALIVE=false
 
 while true; do
     cur_actv_win_id=$(xdotool getactivewindow 2>/dev/null)
@@ -31,30 +32,33 @@ while true; do
     fi
 
     if [ "$IS_MAXIMIZED" = true ] && [ "$CURRENT_IDLE" -lt "$IDLE_TIME_MS" ]; then
-        if pidof xpenguins > /dev/null; then
+        if [ "$PENGUINS_ALIVE" = true ] || pidof xpenguins > /dev/null; then
             echo "User activity detected. Killing xpenguins..."
             pkill -x xpenguins 2>/dev/null
+            PENGUINS_ALIVE=false
         fi
         
         if [ "$XTERM_ALIVE" = true ]; then
-            kill "$TERMINAL_PID"
+            kill "$TERMINAL_PID" 2>/dev/null
             IS_IDLE=false
         fi
     else
-        if ! pidof xpenguins > /dev/null; then
+        if [ "$PENGUINS_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
             echo "Idle detected. Unleashing xpenguins..."
             xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 120 --penguins 8 --lift 56 &
+            PENGUINS_ALIVE=true
         fi
 
         if [ "$CURRENT_IDLE" -ge "$IDLE_TIME_MS" ] && [ "$XTERM_ALIVE" = false ]; then
             TOTAL_XTERM=$(pgrep -x "xterm" | wc -l)
             if [ "$TOTAL_XTERM" -eq 0 ] && ! pgrep -x "lxterminal" >/dev/null && ! pgrep -x "st" >/dev/null; then
-                CH=$((RANDOM % 2))
-                if [ "$CH" -eq 0 ]; then
-                    xterm -geometry 88x25 -bg black -fg white -fa Monospace -fs 8 -bc -uc -hold -e fastfetch &
-                else
-                    xterm -geometry 88x25 -bg black -fg white -fa Monospace -fs 8 -bc -uc -e cmatrix -s &
-                fi
+                xterm -geometry 88x25 -bg black -fg white -fa Monospace -fs 8 -bc -uc -hold -e fastfetch &
+                # CH=$((RANDOM % 2))
+                # if [ "$CH" -eq 0 ]; then
+                #     xterm -geometry 88x25 -bg black -fg white -fa Monospace -fs 8 -bc -uc -hold -e fastfetch &
+                # else
+                #     xterm -geometry 88x25 -bg black -fg white -fa Monospace -fs 8 -bc -uc -e cmatrix -s -u 10 -a &
+                # fi
                 TERMINAL_PID=$!
                 IS_IDLE=true
             fi
