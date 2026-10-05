@@ -1,3 +1,6 @@
+[Last updated: 05 Oct 2026 @ 09:14 AM][version: 0.1.6]
+update screenlockerd.sh, add install xprintidle;
+
 [Last updated: 05 Oct 2026 @ 07:52 AM][version: 0.1.5]
 replace tuxd.sh with screenlockerd.sh;
 now can adjust Idle Timeout, Auto-Lock Timeout, Show Tux for screenlockerd.sh via tui0-screenlocker.sh or via --lock-mnt --idle-sec --show-tux;

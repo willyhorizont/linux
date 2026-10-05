@@ -82,6 +82,11 @@ SHW_TUX=${FLAG_TUX:-${CFG_TUX:-$DFLT_SHW_TUX}}
 IDLE_TM_MS=$((IDLE_TM_SEC * 1000))
 LOCK_TM_MS=$((LOCK_TM_MNT * 60 * 1000))
 
+if ! command -v xprintidle >/dev/null 2>&1; then
+    echo "[!] xprintidle not found. Installing xprintidle..."
+    sudo apt update && sudo apt install xprintidle -y
+fi
+
 echo "=== $CUR_SCPT Initialization ==="
 echo " Idle Timeout      : $IDLE_TM_SEC sec"
 echo " Auto-Lock Timeout : $LOCK_TM_MNT min"
