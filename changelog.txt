@@ -1,3 +1,7 @@
+[Last updated: 05 Oct 2026 @ 06:09 PM][version: 0.1.7]
+add get-calendar-ics;
+update SuckMyClock tooltip, add calcurse;
+
 [Last updated: 05 Oct 2026 @ 09:14 AM][version: 0.1.6]
 update screenlockerd.sh, add install xprintidle;
 

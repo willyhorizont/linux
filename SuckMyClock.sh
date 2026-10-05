@@ -15,8 +15,11 @@ TIME_12=$(date +"%I:%M:%S %p")
 echo -n "| ${MONTH_NUM}/12 months | ${DAY_NUM}/${TOTAL_DAYS} days | ${DATE_STRING} | ${TIME_24} | ${TIME_12} "
 
 cat << EOF 1>&2
-\`                    
-     SuckMyClock      
-  * Shell version *   
-                     .
+\`                         
+        SuckMyClock        
+     * Shell version *     
+                           
+  click to open calcurse   
+                           
+                          .
 EOF

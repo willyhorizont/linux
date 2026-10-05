@@ -38,10 +38,13 @@ int main() {
 
     std::cout << "| " << month_num << "/12 months | " << day_num << "/" << total_days << " days | " << date_string << " | " << time_24 << " | " << time_12 << " ";
     std::cerr << R"(
-`                   
-    SuckMyClock     
-  * C++ version *   
-                   .
+`                          
+        SuckMyClock        
+      * C++ version *      
+                           
+  click to open calcurse   
+                           
+                          .
 )";
 
     return 0;

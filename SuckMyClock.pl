@@ -16,7 +16,10 @@ print "| $month_num/12 months | $day_num/$total_days days | $date_string | $time
 
 print STDERR <<'EOF';
 `                                       
-    SuckMyClock      
-  * Perl version *   
-                    .
+       SuckMyClock         
+     * Perl version *      
+                           
+  click to open calcurse   
+                           
+                          .
 EOF

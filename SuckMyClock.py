@@ -22,10 +22,13 @@ def main():
     print(f"| {month_num}/12 months | {day_num}/{total_days} days | {date_string} | {time_24} | {time_12} ", end="")
 
     print("""
-`                      
-     SuckMyClock       
-  * Python version *   
-                      .
+`                          
+       SuckMyClock         
+    * Python version *     
+                           
+  click to open calcurse   
+                           
+                          .
     """, file=sys.stderr)
 
 

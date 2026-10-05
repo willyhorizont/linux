@@ -26,8 +26,11 @@ BEGIN {
     
     printf "| %s/12 months | %s/%d days | %s | %s | %s ", month_num, day_num, total_days, date_string, time_24, time_12
     print "\n" \
-        "`                  \n" \
-        "    SuckMyClock    \n" \
-        "  * Awk version *  \n" \
-        "                  .\n" > "/dev/stderr"
+        "`                          \n" \
+        "       SuckMyClock         \n" \
+        "     * Awk version *       \n" \
+        "                           \n" \
+        "  click to open calcurse   \n" \
+        "                           \n" \
+        "                          .\n" > "/dev/stderr"
 }
