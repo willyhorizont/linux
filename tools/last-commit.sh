@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.1.4" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.1.5" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,7 +12,8 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-add screen locker to tuxd.sh;
+replace tuxd.sh with screenlockerd.sh;
+now can adjust Idle Timeout, Auto-Lock Timeout, Show Tux for screenlockerd.sh via tui0-screenlocker.sh or via --lock-mnt --idle-sec --show-tux;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H

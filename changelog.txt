@@ -1,3 +1,7 @@
+[Last updated: 05 Oct 2026 @ 07:52 AM][version: 0.1.5]
+replace tuxd.sh with screenlockerd.sh;
+now can adjust Idle Timeout, Auto-Lock Timeout, Show Tux for screenlockerd.sh via tui0-screenlocker.sh or via --lock-mnt --idle-sec --show-tux;
+
 [Last updated: 03 Oct 2026 @ 04:06 PM][version: 0.1.4]
 add screen locker to tuxd.sh;
 
