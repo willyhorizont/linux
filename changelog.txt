@@ -1,3 +1,6 @@
+[Last updated: 07 Oct 2026 @ 01:18 AM][version: 0.1.9]
+update screenlockerd, not killing on xtrlock;
+
 [Last updated: 05 Oct 2026 @ 07:44 PM][version: 0.1.8]
 update README.md, add screenlockerd, add tui0-screenlocker.sh;
 

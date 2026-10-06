@@ -113,7 +113,7 @@ while true; do
         XTERM_ALIVE=true
     fi
 
-    if [ "$IS_MAXED" = true ] && [ "$CUR_IDLE_MS" -lt "$IDLE_TM_MS" ]; then
+    if [ "$IS_MAXED" = true ] && [ "$CUR_IDLE_MS" -lt "$IDLE_TM_MS" ] && ! pgrep -x "xtrlock" >/dev/null; then
         if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
             echo "User activity detected. Killing xpenguins..."
             pkill -x xpenguins 2>/dev/null
@@ -141,7 +141,7 @@ while true; do
         fi
     fi
 
-    if [ "$XTERM_ALIVE" = true ] && [ "$CUR_IDLE_MS" -lt "$IDLE_TM_MS" ]; then
+    if [ "$XTERM_ALIVE" = true ] && [ "$CUR_IDLE_MS" -lt "$IDLE_TM_MS" ] && ! pgrep -x "xtrlock" >/dev/null; then
         echo "User activity detected. Killing xterm..."
         kill "$XTERM_PID" 2>/dev/null
         IS_IDLE=false
