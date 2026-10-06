@@ -10,7 +10,7 @@
 * [indic4-mic](https://github.com/willyhorizont/linux/blob/main/indic4-mic.sh)
 * [indic5-vol](https://github.com/willyhorizont/linux/blob/main/indic5-vol.sh)
 * [indic6-powr](https://github.com/willyhorizont/linux/blob/main/indic6-powr.sh)
-* [tui0-screenlocker](https://github.com/willyhorizont/linux/blob/main/tui0-screenlocker.sh.sh)
+* [tui0-locker](https://github.com/willyhorizont/linux/blob/main/tui0-locker.sh.sh)
 * [tui1-bt](https://github.com/willyhorizont/linux/blob/main/tui1-bt.sh)
 * [tui2-net](https://github.com/willyhorizont/linux/blob/main/tui2-net.sh)
 * [tui3-cam](https://github.com/willyhorizont/linux/blob/main/tui3-cam.sh)
@@ -19,7 +19,7 @@
 * [tui6-powr](https://github.com/willyhorizont/linux/blob/main/tui6-powr.sh)
 * [tui-powr-pfl](https://github.com/willyhorizont/linux/blob/main/tui-powr-pfl.sh)
 * [tui-bat-lenovo-thinkpad](https://github.com/willyhorizont/linux/blob/main/tui-bat-lenovo-thinkpad.sh)
-* [screenlockerd](https://github.com/willyhorizont/linux/blob/main/screenlockerd.sh)
+* [lockerd](https://github.com/willyhorizont/linux/blob/main/lockerd.sh)
 * [MusiCSV-Player](https://github.com/willyhorizont/MusiCSV-Player)
 * [xlrun (Cross Language Code Runner) *Dockerized*](https://github.com/willyhorizont/cross-language-programming-concepts/blob/main/xlrun.sh)
 

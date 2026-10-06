@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DAEMON_SCRIPT="$HOME/willyhorizont.github.io/linux/screenlockerd.sh"
-CFG="$HOME/willyhorizont.github.io/.config/screenlockerd.conf"
+LOKD="$HOME/willyhorizont.github.io/linux/lockerd.sh"
+CFG="$HOME/willyhorizont.github.io/.config/lockerd.conf"
 CFG_DIR=$(dirname "$CFG")
 
 init_conf() {
@@ -23,12 +23,12 @@ read_conf() {
 }
 
 re_dmn() {
-    if pgrep -f "$DAEMON_SCRIPT" >/dev/null; then
+    if pgrep -f "$LOKD" >/dev/null; then
         echo "[!] Active daemon detected. Reloading with new configuration..."
-        pkill -f "$DAEMON_SCRIPT" 2>/dev/null
+        pkill -f "$LOKD" 2>/dev/null
         pkill -x "xterm" 2>/dev/null
         pkill -x "xpenguins" 2>/dev/null
-        nohup bash "$DAEMON_SCRIPT" >/dev/null 2>&1 &
+        nohup bash -c "$LOKD" >/dev/null 2>&1 &
         echo "[+] Daemon reloaded successfully."
     fi
 }
@@ -38,12 +38,12 @@ while true; do
     read_conf
     
     DMN_STAT="[ 🔴 INACTIVE ]"
-    if pgrep -f "$DAEMON_SCRIPT" >/dev/null; then
+    if pgrep -f "$LOKD" >/dev/null; then
         DMN_STAT="[ 🟢 ACTIVE ]"
     fi
 
     echo "======================================="
-    echo "       SCREENLOCKER DAEMON TUI         "
+    echo "           LOCKER DAEMON TUI           "
     echo "======================================="
     echo " Daemon Status     : $DMN_STAT"
     echo " Idle Timeout      : $V_IDLE seconds"

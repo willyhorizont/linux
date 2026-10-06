@@ -1,3 +1,6 @@
+[Last updated: 07 Oct 2026 @ 06:47 AM][version: 0.1.10]
+rename *screenlocker* to *locker*;
+
 [Last updated: 07 Oct 2026 @ 01:18 AM][version: 0.1.9]
 update screenlockerd, not killing on xtrlock;
 

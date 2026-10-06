@@ -4,7 +4,7 @@ TOOLTIP_TXT=$(cat << EOF
 \`                              
       💡 indic0-tux.sh          
                                 
-    click to open tui0-screenlocker.sh   
+    click to open tui0-locker.sh   
                                .
 EOF
 )

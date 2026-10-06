@@ -8,7 +8,7 @@ if [ "$TOT_PROC" -gt 0 ]; then
     exit 1
 fi
 
-CFG="$HOME/willyhorizont.github.io/.config/screenlockerd.conf"
+CFG="$HOME/willyhorizont.github.io/.config/lockerd.conf"
 CFG_DIR=$(dirname "$CFG")
 
 DFLT_IDLE_SEC=120
@@ -94,6 +94,7 @@ echo " Show Tux          : $SHW_TUX"
 echo "=================================="
 
 XTERM_PID=""
+XTERM_ALIVE=false
 IS_IDLE=false
 TUX_ALIVE=false
 
@@ -113,6 +114,10 @@ while true; do
         XTERM_ALIVE=true
     fi
 
+    if xdotool search --class "XTerm" --name "welcome-script" >/dev/null 2>&1; then
+        XTERM_ALIVE=true
+    fi
+
     if [ "$IS_MAXED" = true ] && [ "$CUR_IDLE_MS" -lt "$IDLE_TM_MS" ] && ! pgrep -x "xtrlock" >/dev/null; then
         if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
             echo "User activity detected. Killing xpenguins..."
@@ -120,8 +125,10 @@ while true; do
             TUX_ALIVE=false
         fi
         
-        if [ "$XTERM_ALIVE" = true ]; then
+        if [ -n "$XTERM_PID" ]; then
             kill "$XTERM_PID" 2>/dev/null
+            XTERM_PID=""
+            XTERM_ALIVE=false
             IS_IDLE=false
         fi
     else
@@ -132,23 +139,26 @@ while true; do
         fi
 
         if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ] && [ "$XTERM_ALIVE" = false ]; then
-            TOT_XTERM=$(pgrep -x "xterm" | wc -l)
-            if [ "$TOT_XTERM" -eq 0 ] && ! pgrep -x "lxterminal" >/dev/null && ! pgrep -x "st" >/dev/null; then
-                xterm -geometry 88x24 -bg black -fg white -fa Monospace -fs 8 -bc -uc -hold -e fastfetch &
+            TOT_XTERM=$(xdotool search --class "XTerm" --name "idle-script" 2>/dev/null | wc -l)
+            if [ "$TOT_XTERM" -eq 0 ] && ! pgrep -x "lxterminal" >/dev/null; then
+                xterm -name "idle-script" -geometry 88x24 -bg black -fg white -fa Monospace -fs 8 -bc -uc -hold -e fastfetch &
                 XTERM_PID=$!
+                XTERM_ALIVE=true
                 IS_IDLE=true
             fi
         fi
     fi
 
-    if [ "$XTERM_ALIVE" = true ] && [ "$CUR_IDLE_MS" -lt "$IDLE_TM_MS" ] && ! pgrep -x "xtrlock" >/dev/null; then
+    if [ "$XTERM_ALIVE" = true ] && [ -n "$XTERM_PID" ] && [ "$CUR_IDLE_MS" -lt "$IDLE_TM_MS" ] && ! pgrep -x "xtrlock" >/dev/null; then
         echo "User activity detected. Killing xterm..."
         kill "$XTERM_PID" 2>/dev/null
+        XTERM_PID=""
+        XTERM_ALIVE=false
         IS_IDLE=false
     fi
 
-    if [ "$CUR_IDLE_MS" -ge "$LOCK_TM_MS" ] && ! pgrep -x "xtrlock" >/dev/null; then
-        echo "System idle for $LOCK_TM_MNT minutes. Locking screen..."
+    if [ "$XTERM_ALIVE" = true ] && [ "$CUR_IDLE_MS" -ge "$LOCK_TM_MS" ] && ! pgrep -x "xtrlock" >/dev/null; then
+        echo "System idle $LOCK_TM_MNT minutes. Locking..."
         xtrlock &
     fi
 

@@ -29,7 +29,7 @@ case "$CHOICE" in
         if [ -f "$POWR_PFL_SCRIPT" ]; then
             echo -e "\n[*] Launching Power Profiles TUI..."
             echo "---------------------------------------"
-            bash "$POWR_PFL_SCRIPT"
+            bash -c "$POWR_PFL_SCRIPT"
         else
             echo -e "\n[!] Error: $POWR_PFL_SCRIPT not found!"
             echo "---------------------------------------"
@@ -42,7 +42,7 @@ case "$CHOICE" in
             if [ -f "$THINKPAD_BAT_SCRIPT" ]; then
                 echo -e "\n[*] Launching ThinkPad Battery TUI..."
                 echo "---------------------------------------"
-                bash "$THINKPAD_BAT_SCRIPT"
+                bash -c "$THINKPAD_BAT_SCRIPT"
             else
                 echo -e "\n[!] Error: $THINKPAD_BAT_SCRIPT not found!"
                 echo "---------------------------------------"
