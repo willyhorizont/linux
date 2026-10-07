@@ -24,7 +24,6 @@ echo -e "\n[*] Launching nmtui..."
 echo "---------------------------------------"
 nmtui
 echo "---------------------------------------"
-
 read -rsp "Press any key to close this window..."
 echo ""
 exit 0

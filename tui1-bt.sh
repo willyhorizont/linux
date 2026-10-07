@@ -39,4 +39,5 @@ fi
 
 echo "---------------------------------------"
 read -rsp "Press Enter to close this window..."
+echo ""
 exit 0

@@ -63,3 +63,7 @@ case "$CHOICE" in
         exit 1
         ;;
 esac
+echo "---------------------------------------"
+read -rsp "Press Enter to close this window..."
+echo ""
+exit 0
