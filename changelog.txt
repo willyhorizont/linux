@@ -1,3 +1,6 @@
+[Last updated: 07 Oct 2026 @ 08:27 AM][version: 0.1.12]
+update tui1-bt.sh;
+
 [Last updated: 07 Oct 2026 @ 07:38 AM][version: 0.1.11]
 fix tui-bat-lenovo-thinkpad.sh;
 fix tui6-powr.sh;
