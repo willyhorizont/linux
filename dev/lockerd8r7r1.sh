@@ -114,7 +114,8 @@ echo " Show Tux          : $SHW_TUX"
 echo "=================================="
 
 while true; do
-    TOT_OPEN_WINS=$(wmctrl -l -x 2>/dev/null | awk '{print $3}' | grep -vE "plank\.Plank|tint2\.Tint2|xpenguins\.Xpenguins" | wc -l)
+    WMCTRL_DATA=$(wmctrl -l -x 2>/dev/null)
+    TOT_OPEN_WINS=$(echo "$WMCTRL_DATA" | awk '{print $3}' | grep -vE "plank\.Plank|tint2\.Tint2|xpenguins\.Xpenguins" | wc -l)
     CUR_IDLE_MS=$(xprintidle 2>/dev/null)
     CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
     IS_CUR_ACTV_WIN_MAXED=false
@@ -130,17 +131,21 @@ while true; do
     fi
 
     WELCOME_WIN_ALIVE=false
-    if xdotool search --classname "welcome-window" >/dev/null 2>&1; then
-        WELCOME_WIN_ALIVE=true
+    if echo "$WMCTRL_DATA" | grep -q "xterm\.XTerm"; then
+        if xdotool search --classname "welcome-window" >/dev/null 2>&1; then
+            WELCOME_WIN_ALIVE=true
+        fi
     fi
 
     IDLE_WIN_ALIVE=false
-    if xdotool search --classname "idle-window" >/dev/null 2>&1; then
-        IDLE_WIN_ALIVE=true
+    if echo "$WMCTRL_DATA" | grep -q "xterm\.XTerm"; then
+        if xdotool search --classname "idle-window" >/dev/null 2>&1; then
+            IDLE_WIN_ALIVE=true
+        fi
     fi
 
     if [ "$CUR_IDLE_MS" -lt 1000 ] && ! pgrep -x "xtrlock" >/dev/null; then
-        if [ "$TOT_OPEN_WINS" -gt 2 ]; then
+        if [ "$TOT_OPEN_WINS" -ge 2 ]; then
             if [ "$WELCOME_WIN_ALIVE" = true ]; then
                 echo "Closing welcome-window..."
                 pkill -f "xterm -name welcome-window" 2>/dev/null
@@ -151,22 +156,6 @@ while true; do
                 pkill -f "xterm -name idle-window" 2>/dev/null
                 IDLE_WIN_ALIVE=false
             fi
-            if [ "$IS_CUR_ACTV_WIN_MAXED" = true ]; then
-                if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
-                    echo "Killing tux..."
-                    pkill -x xpenguins 2>/dev/null
-                    TUX_ALIVE=false
-                fi
-            else
-                if [ -n "$CUR_ACTV_WIN_CLASS" ] && [ "$CUR_ACTV_WIN_CLASS" != "Plank" ] && [ "$CUR_ACTV_WIN_CLASS" != "Tint2" ]; then
-                    if [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
-                        echo "Deploying tux..."
-                        xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 56 &
-                        TUX_ALIVE=true
-                    fi
-                fi
-            fi
-        elif [ "$TOT_OPEN_WINS" -eq 2 ]; then
             if [ "$IS_CUR_ACTV_WIN_MAXED" = true ]; then
                 if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
                     echo "Killing tux..."
