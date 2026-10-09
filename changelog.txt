@@ -1,3 +1,6 @@
+[Last updated: 09 Oct 2026 @ 02:09 PM][version: 0.2.1]
+small fix in lockerd.sh;
+
 [Last updated: 09 Oct 2026 @ 02:00 PM][version: 0.2.0]
 update lockerd.sh;
 
