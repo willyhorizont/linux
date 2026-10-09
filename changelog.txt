@@ -1,3 +1,6 @@
+[Last updated: 09 Oct 2026 @ 02:00 PM][version: 0.2.0]
+update lockerd.sh;
+
 [Last updated: 07 Oct 2026 @ 08:27 AM][version: 0.1.12]
 update tui1-bt.sh;
 
