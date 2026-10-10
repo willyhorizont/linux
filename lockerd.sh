@@ -87,10 +87,20 @@ fi
 
 pkill -x xtrlock 2>/dev/null
 
-echo "Opening welcome-window..."
-xterm -name "welcome-window" -geometry 88x24 -bg black -fg white -fa Monospace -fs 8 -bc -uc -hold -e fastfetch &
-xdotool search --sync --classname "welcome-window" >/dev/null 2>&1
-WELCOME_WIN_ALIVE=true
+WELCOME_WIN_ALIVE=false
+if xdotool search --classname "welcome-window" >/dev/null 2>&1; then
+    WELCOME_WIN_ALIVE=true
+fi
+IDLE_WIN_ALIVE=false
+if xdotool search --classname "idle-window" >/dev/null 2>&1; then
+    IDLE_WIN_ALIVE=true
+fi
+if [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
+    echo "Opening welcome-window..."
+    xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "welcome-window" -hold -e fastfetch &
+    xdotool search --sync --classname "welcome-window" >/dev/null 2>&1
+    WELCOME_WIN_ALIVE=true
+fi
 
 TUX_ALIVE=false
 CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
@@ -195,7 +205,7 @@ while true; do
         if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ] && [ "$CUR_IDLE_MS" -lt "$LOCK_TM_MS" ]; then
             if [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
-                xterm -name "idle-window" -geometry 88x24 -bg black -fg white -fa Monospace -fs 8 -bc -uc -hold -e fastfetch &
+                xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
                 xdotool search --sync --classname "idle-window" >/dev/null 2>&1
                 IDLE_WIN_ALIVE=true
             fi
@@ -210,7 +220,7 @@ while true; do
         if [ "$CUR_IDLE_MS" -ge "$LOCK_TM_MS" ]; then
             if [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
-                xterm -name "idle-window" -geometry 88x24 -bg black -fg white -fa Monospace -fs 8 -bc -uc -hold -e fastfetch &
+                xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
                 xdotool search --sync --classname "idle-window" >/dev/null 2>&1
                 IDLE_WIN_ALIVE=true
             fi
