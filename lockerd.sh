@@ -1,5 +1,6 @@
 #!/bin/bash
 
+trap 'echo "Exit signal received"; exit 0' SIGTERM SIGINT
 TOT_PROC=$(pgrep -f "$0" | grep -v "$$" | grep -v "$PPID" | wc -l)
 if [ "$TOT_PROC" -gt 0 ]; then
     echo "$0 already running!"
@@ -85,7 +86,7 @@ if ! command -v xprintidle >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&
     sudo apt update && sudo apt install xprintidle wmctrl -y
 fi
 
-pkill -x xtrlock 2>/dev/null
+pkill -9 -x "xtrlock" 2>/dev/null
 
 WELCOME_WIN_ALIVE=false
 if xdotool search --classname "welcome-window" >/dev/null 2>&1; then
@@ -125,8 +126,7 @@ echo " Show Tux          : $SHW_TUX"
 echo "=================================="
 
 while true; do
-    OPEN_WINS=$(wmctrl -l -x | awk '!( ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") || ($3 == "plank.Plank" && $5 == "plank") || ($3 == "tint2.Tint2" && $5 == "tint2-top-bar") || ($3 == "tint2.Tint2" && $5 == "tint2-bottom-panel") || ($3 == "xpenguins.Xpenguins" && $5 == "Xpenguins-A") )' 2>/dev/null)
-    OPEN_WINS_COUNT=$(echo "$OPEN_WINS" | wc -l)
+    OPEN_WINS_COUNT=$(wmctrl -l -x | awk '!( ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") || ($3 == "plank.Plank" && $5 == "plank") || ($3 == "tint2.Tint2" && $5 == "tint2-top-bar") || ($3 == "tint2.Tint2" && $5 == "tint2-bottom-panel") || ($3 == "xpenguins.Xpenguins" && $5 == "Xpenguins-A") )' 2>/dev/null | grep -c .)
     CUR_IDLE_MS=$(xprintidle 2>/dev/null)
     CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
     IS_CUR_ACTV_WIN_MAXED=false
@@ -155,18 +155,18 @@ while true; do
         if [ "$OPEN_WINS_COUNT" -gt 1 ]; then
             if [ "$WELCOME_WIN_ALIVE" = true ]; then
                 echo "Closing welcome-window..."
-                pkill -f "xterm -name welcome-window" 2>/dev/null
+                pkill -9 -f "xterm.*-name welcome-window" 2>/dev/null
                 WELCOME_WIN_ALIVE=false
             fi
             if [ "$IDLE_WIN_ALIVE" = true ]; then
                 echo "Closing idle-window..."
-                pkill -f "xterm -name idle-window" 2>/dev/null
+                pkill -9 -f "xterm.*-name idle-window" 2>/dev/null
                 IDLE_WIN_ALIVE=false
             fi
             if [ "$IS_CUR_ACTV_WIN_MAXED" = true ]; then
                 if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
                     echo "Killing tux..."
-                    pkill -x xpenguins 2>/dev/null
+                    pkill -9 -x "xpenguins" 2>/dev/null
                     TUX_ALIVE=false
                 fi
             else
@@ -182,7 +182,7 @@ while true; do
             if [ "$IS_CUR_ACTV_WIN_MAXED" = true ]; then
                 if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
                     echo "Killing tux..."
-                    pkill -x xpenguins 2>/dev/null
+                    pkill -9 -x "xpenguins" 2>/dev/null
                     TUX_ALIVE=false
                 fi
             else

@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.2.4" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.3.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,19 +12,7 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-add blu-lght-fltr.sh;
-update lockerd.sh, update xterm call, update welcome-window initialization;
-update README.md, add tui6-2-brghtnss.sh, tui6-3-blu-lght-fltr.sh, tui6-3-blu-lght-fltr.sh, blu-lght-fltr.sh;
-update tui0-locker.sh;
-update tui1-bt.sh;
-update tui2-net.sh;
-update tui3-cam.sh;
-update tui6-1-powr-pfl.sh;
-add tui6-2-brghtnss.sh;
-add tui6-3-blu-lght-fltr.sh;
-add tui6-3-blu-lght-fltr.sh;
-update tui6-4-bat-lenovo-thinkpad.sh;
-update tui6-powr.sh;
+update lockerd.sh, now warranted killed;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H

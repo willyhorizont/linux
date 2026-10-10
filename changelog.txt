@@ -1,3 +1,6 @@
+[Last updated: 10 Oct 2026 @ 04:24 PM][version: 0.3.0]
+update lockerd.sh, now warranted killed;
+
 [Last updated: 10 Oct 2026 @ 01:56 PM][version: 0.2.4]
 add blu-lght-fltr.sh;
 update lockerd.sh, update xterm call, update welcome-window initialization;
