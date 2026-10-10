@@ -1,3 +1,6 @@
+[Last updated: 11 Oct 2026 @ 04:12 AM][version: 0.3.1]
+attempt to create cursor theme;
+
 [Last updated: 10 Oct 2026 @ 04:24 PM][version: 0.3.0]
 update lockerd.sh, now warranted killed;
 
