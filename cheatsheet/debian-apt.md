@@ -1,13 +1,13 @@
 # cheatsheet > debian-apt
 
 ## Refresh metadata and upgrade all system packages
-```sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y --purge```
+```sudo apt update && sudo apt upgrade -y && sudo apt autoremove --purge```
 
 ## Install a new package
 ```sudo apt install -y <package>```
 
 ## Remove a package and remove its config
-```sudo apt purge -y <package> && sudo apt autoremove -y --purge```
+```sudo apt purge -y <package> && sudo apt autoremove --purge```
 
 ## Search for a package in the repository
 ```apt search <package>```
