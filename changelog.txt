@@ -1,3 +1,6 @@
+[Last updated: 13 Oct 2026 @ 03:02 PM][version: 0.3.3]
+add i3wm-new-workspace.sh;
+
 [Last updated: 13 Oct 2026 @ 02:24 AM][version: 0.3.2]
 update purgex .bashrc command;
 

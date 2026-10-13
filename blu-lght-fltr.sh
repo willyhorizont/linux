@@ -29,19 +29,19 @@ on_mnt=$(date -d "$V_ON" +"%H*60+%M" | bc)
 off_mnt=$(date -d "$V_OFF" +"%H*60+%M" | bc)
 cur_mnt=$(date +"%H*60+%M" | bc)
 
-in_range=false
+in_rg=false
 
 if [ "$on_mnt" -lt "$off_mnt" ]; then
     if [ "$cur_mnt" -ge "$on_mnt" ] && [ "$cur_mnt" -lt "$off_mnt" ]; then
-        in_range=true
+        in_rg=true
     fi
 else
     if [ "$cur_mnt" -ge "$on_mnt" ] || [ "$cur_mnt" -lt "$off_mnt" ]; then
-        in_range=true
+        in_rg=true
     fi
 fi
 
-if $in_range; then
+if $in_rg; then
     xsct 3500 >/dev/null 2>&1
 else
     xsct 0 >/dev/null 2>&1
