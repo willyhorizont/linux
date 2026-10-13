@@ -13,10 +13,12 @@ CFG_DIR=$(dirname "$CFG")
 DFLT_IDLE_SEC=120
 DFLT_LOCK_MNT=4
 DFLT_SHW_TUX="true"
+DFLT_SHW_WIN="true"
 
 FLAG_IDLE=""
 FLAG_LOCK=""
 FLAG_TUX=""
+FLAG_WIN=""
 
 while [ "$#" -gt 0 ]; do
     case "$1" in
@@ -47,8 +49,17 @@ while [ "$#" -gt 0 ]; do
                 exit 1
             fi
             ;;
+        --shw-win)
+            if [ -n "$2" ] && echo "$2" | grep -qE -i '^(true|false)$'; then
+                FLAG_WIN=$(echo "$2" | tr '[:upper:]' '[:lower:]')
+                shift 2
+            else
+                echo "Error: Invalid --shw-win value!"
+                exit 1
+            fi
+            ;;
         *)
-            echo "Usage: lockerd.sh [--idle-sec <seconds>] [--lock-mnt <minutes>] [--show-tux <true|false>]"
+            echo "Usage: lockerd.sh [--idle-sec <seconds>] [--lock-mnt <minutes>] [--show-tux <true|false>] [--shw-win <true|false>]"
             exit 1
             ;;
     esac
@@ -60,23 +71,28 @@ if [ ! -f "$CFG" ]; then
     W_IDLE=${FLAG_IDLE:-$DFLT_IDLE_SEC}
     W_LOCK=${FLAG_LOCK:-$DFLT_LOCK_MNT}
     W_TUX=${FLAG_TUX:-$DFLT_SHW_TUX}
+    W_WIN=${FLAG_WIN:-$DFLT_SHW_WIN}
     
     if [ "$W_TUX" = "true" ]; then W_TUX_CAP="True"; else W_TUX_CAP="False"; fi
+    if [ "$W_WIN" = "true" ]; then W_WIN_CAP="True"; else W_WIN_CAP="False"; fi
 
     cat << EOF > "$CFG"
 idle_time_in_sec = $W_IDLE
 lock_time_in_minute = $W_LOCK
 show_tux = $W_TUX_CAP
+show_window = $W_WIN_CAP
 EOF
 fi
 
 CFG_IDLE=$(grep -E '^idle_time_in_sec[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
 CFG_LOCK=$(grep -E '^lock_time_in_minute[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
 CFG_TUX=$(grep -E '^show_tux[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2 | tr '[:upper:]' '[:lower:]')
+CFG_WIN=$(grep -E '^show_window[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2 | tr '[:upper:]' '[:lower:]')
 
 IDLE_TM_SEC=${FLAG_IDLE:-${CFG_IDLE:-$DFLT_IDLE_SEC}}
 LOCK_TM_MNT=${FLAG_LOCK:-${CFG_LOCK:-$DFLT_LOCK_MNT}}
 SHW_TUX=${FLAG_TUX:-${CFG_TUX:-$DFLT_SHW_TUX}}
+SHW_WIN=${FLAG_WIN:-${CFG_WIN:-$DFLT_SHW_WIN}}
 
 IDLE_TM_MS=$((IDLE_TM_SEC * 1000))
 LOCK_TM_MS=$((LOCK_TM_MNT * 60 * 1000))
@@ -96,7 +112,7 @@ IDLE_WIN_ALIVE=false
 if xdotool search --classname "idle-window" >/dev/null 2>&1; then
     IDLE_WIN_ALIVE=true
 fi
-if [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
+if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
     echo "Opening welcome-window..."
     xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "welcome-window" -hold -e fastfetch &
     xdotool search --sync --classname "welcome-window" >/dev/null 2>&1
@@ -123,6 +139,7 @@ echo "=================================="
 echo " Idle Timeout      : $IDLE_TM_SEC sec"
 echo " Auto-Lock Timeout : $LOCK_TM_MNT mnt"
 echo " Show Tux          : $SHW_TUX"
+echo " Show Window       : $SHW_WIN"
 echo "=================================="
 
 while true; do
@@ -203,7 +220,7 @@ while true; do
         fi
     else
         if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ] && [ "$CUR_IDLE_MS" -lt "$LOCK_TM_MS" ]; then
-            if [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
+            if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
                 xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
                 xdotool search --sync --classname "idle-window" >/dev/null 2>&1
@@ -218,7 +235,7 @@ while true; do
         fi
 
         if [ "$CUR_IDLE_MS" -ge "$LOCK_TM_MS" ]; then
-            if [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
+            if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
                 xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
                 xdotool search --sync --classname "idle-window" >/dev/null 2>&1

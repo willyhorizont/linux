@@ -11,6 +11,7 @@ init_conf() {
 idle_time_in_sec = 120
 lock_time_in_minute = 4
 show_tux = True
+show_window = True
 EOF
     fi
 }
@@ -20,6 +21,7 @@ read_conf() {
     V_IDLE=$(grep -E '^idle_time_in_sec' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
     V_LOCK=$(grep -E '^lock_time_in_minute' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
     V_TUX=$(grep -E '^show_tux' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
+    V_WIN=$(grep -E '^show_window' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
 }
 
 re_dmn() {
@@ -46,10 +48,12 @@ while true; do
     echo " Idle Timeout      : $V_IDLE sec"
     echo " Auto-Lock Timeout : $V_LOCK mnt"
     echo " Show Tux          : $V_TUX"
+    echo " Show Window       : $V_WIN"
     echo "---------------------------------------"
     echo " 1) Change Idle Timeout"
     echo " 2) Change Auto-Lock Timeout"
     echo " 3) Toggle Show Tux"
+    echo " 4) Toggle Show Window"
     echo " 0) Exit"
     echo "======================================="
     echo -n " Select choice: "
@@ -83,10 +87,20 @@ while true; do
         3)
             if [ "$V_TUX" = "True" ]; then
                 sed -i "s|^show_tux[[:space:]]*=.*|show_tux = False|" "$CFG"
-                echo -e "\n\n[-] Tux turned OFF."
+                echo -e "\n\n[-] Show Tux turned OFF."
             else
                 sed -i "s|^show_tux[[:space:]]*=.*|show_tux = True|" "$CFG"
-                echo -e "\n\n[+] Tux turned ON."
+                echo -e "\n\n[+] Show Tux turned ON."
+            fi
+            re_dmn
+            ;;
+        4)
+            if [ "$V_WIN" = "True" ]; then
+                sed -i "s|^show_window[[:space:]]*=.*|show_window = False|" "$CFG"
+                echo -e "\n\n[-] Show Window turned OFF."
+            else
+                sed -i "s|^show_window[[:space:]]*=.*|show_window = True|" "$CFG"
+                echo -e "\n\n[+] Show Window turned ON."
             fi
             re_dmn
             ;;

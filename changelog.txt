@@ -1,3 +1,7 @@
+[Last updated: 13 Oct 2026 @ 03:55 PM][version: 0.3.4]
+update lockerd.sh, add --shw-win;
+update tui0-locker.sh, add --shw-win;
+
 [Last updated: 13 Oct 2026 @ 03:02 PM][version: 0.3.3]
 add i3wm-new-workspace.sh;
 
