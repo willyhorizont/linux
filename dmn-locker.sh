@@ -7,7 +7,7 @@ if [ "$TOT_PROC" -gt 0 ]; then
     exit 1
 fi
 
-CFG="$HOME/willyhorizont.github.io/.config/lockerd.conf"
+CFG="$HOME/willyhorizont.github.io/.config/dmn-locker.conf"
 CFG_DIR=$(dirname "$CFG")
 
 DFLT_IDLE_SEC=120
@@ -59,7 +59,7 @@ while [ "$#" -gt 0 ]; do
             fi
             ;;
         *)
-            echo "Usage: lockerd.sh [--idle-sec <seconds>] [--lock-mnt <minutes>] [--show-tux <true|false>] [--shw-win <true|false>]"
+            echo "Usage: dmn-locker.sh [--idle-sec <seconds>] [--lock-mnt <minutes>] [--show-tux <true|false>] [--shw-win <true|false>]"
             exit 1
             ;;
     esac
@@ -98,8 +98,8 @@ IDLE_TM_MS=$((IDLE_TM_SEC * 1000))
 LOCK_TM_MS=$((LOCK_TM_MNT * 60 * 1000))
 
 if ! command -v xprintidle >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&1; then
-    echo "Installing missing dependencies 'xprintidle wmctrl'..."
-    sudo apt update && sudo apt install xprintidle wmctrl -y
+    echo "Error: missing dependencies 'xprintidle wmctrl'..."
+    exit 1
 fi
 
 pkill -9 -x "xtrlock" 2>/dev/null
@@ -143,7 +143,7 @@ echo " Show Window       : $SHW_WIN"
 echo "=================================="
 
 while true; do
-    OPEN_WINS_COUNT=$(wmctrl -l -x | awk '!( ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") || ($3 == "plank.Plank" && $5 == "plank") || ($3 == "tint2.Tint2" && $5 == "tint2-top-bar") || ($3 == "tint2.Tint2" && $5 == "tint2-bottom-panel") || ($3 == "xpenguins.Xpenguins" && $5 == "Xpenguins-A") )' 2>/dev/null | grep -c .)
+    OPEN_WINS_COUNT=$(wmctrl -l -x | awk '!( ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") || ($3 == "plank.Plank" && $5 == "plank") || ($3 == "tint2.Tint2" && $5 == "tint2-top-bar") || ($3 == "tint2.Tint2" && $5 == "tint2-bottom-panel") || ($3 == "tint2.Tint2" && $5 == "tint2-bottom-upper-panel") || ($3 == "xpenguins.Xpenguins" && $5 == "Xpenguins-A") )' 2>/dev/null | grep -c .)
     CUR_IDLE_MS=$(xprintidle 2>/dev/null)
     CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
     IS_CUR_ACTV_WIN_MAXED=false

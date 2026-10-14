@@ -1,3 +1,14 @@
+[Last updated: 15 Oct 2026 @ 02:26 AM][version: 0.3.5]
+add cln-trl-wrkspc.sh;
+add indic0-wrkspc.sh;
+add dmn-openbox-wrkspc.sh;
+add openbox-mov-win-to-wrkspc.sh;
+add openbox-nu-wrkspc.sh;
+add tile-cur-wrkspc.sh;
+update dmn-locker.sh, add tint2-bottom-upper-panel, change to throw error instead of install;
+update README.md, add dmn-openbox-wrkspc.sh;
+attempt 1 make lxde and openbox session work like i3 session, infinite workspace;
+
 [Last updated: 13 Oct 2026 @ 03:55 PM][version: 0.3.4]
 update lockerd.sh, add --shw-win;
 update tui0-locker.sh, add --shw-win;

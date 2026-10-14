@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.3.4" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.3.5" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,8 +12,15 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update lockerd.sh, add --shw-win;
-update tui0-locker.sh, add --shw-win;
+add cln-trl-wrkspc.sh;
+add indic0-wrkspc.sh;
+add dmn-openbox-wrkspc.sh;
+add openbox-mov-win-to-wrkspc.sh;
+add openbox-nu-wrkspc.sh;
+add tile-cur-wrkspc.sh;
+update dmn-locker.sh, add tint2-bottom-upper-panel, change to throw error instead of install;
+update README.md, add dmn-openbox-wrkspc.sh;
+attempt 1 make lxde and openbox session work like i3 session, infinite workspace;
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H

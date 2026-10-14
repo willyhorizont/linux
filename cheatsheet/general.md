@@ -30,3 +30,13 @@ dpkg -l diodon copyq parcellite rofi-greenclip clipster xclip xsel 2>/dev/null
 ```
 dpkg -l > "$HOME/willyhorizont.github.io/dpkg-l.txt"
 ```
+
+### Detect key symbol
+```
+xev | grep keysym
+```
+
+### Get Window Dimension
+```
+xwininfo | grep -E "Width|Height"
+```

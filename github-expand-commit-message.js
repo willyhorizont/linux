@@ -3,3 +3,6 @@
         btn.click();
     });
 })();
+// document.querySelectorAll('div[role="button"].l1LGWd').forEach((el) => {
+//     el.click();
+// });

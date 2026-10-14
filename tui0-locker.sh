@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LOKD="$HOME/willyhorizont.github.io/linux/lockerd.sh"
-CFG="$HOME/willyhorizont.github.io/.config/lockerd.conf"
+LOKD="$HOME/willyhorizont.github.io/linux/dmn-locker.sh"
+CFG="$HOME/willyhorizont.github.io/.config/dmn-locker.conf"
 CFG_DIR=$(dirname "$CFG")
 
 init_conf() {
