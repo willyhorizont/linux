@@ -5,57 +5,107 @@ if ! command -v wmctrl &> /dev/null || ! command -v xdotool &> /dev/null; then
     exit 1
 fi
 
-tile() {
-    local cur_win_i=$1
-    local x=$2; local y=$3
-    local w=$4; local h=$5
-    local o=$6
+cur_wrkspc=$(wmctrl -d | grep '*' | awk '{print $1}')
+OPEN_WINS=$(wmctrl -l -x | awk -v ws="$cur_wrkspc" '
+$2 == ws {
+    if ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") next;
+    if ($3 == "plank.Plank" && $5 == "plank") next;
+    if ($3 == "tint2.Tint2") next;
+    if ($3 == "xpenguins.Xpenguins") next;
+    if ($4 ~ /welcome-window|idle-window/) next;
+    print $1
+}')
 
-    if [ "$cur_win_i" -eq "$((OPEN_WINS_COUNT - 1))" ]; then
-        local win_id="${win_array[$cur_win_i]}"
-        wmctrl -i -r "$win_id" -b remove,maximized_vert,maximized_horz
-        xdotool windowsize "$win_id" "$w" "$h"
-        xdotool windowmove "$win_id" "$x" "$y"
-        return 0
-    fi
+WIN_ARRAY=($OPEN_WINS)
+WIN_COUNT=${#WIN_ARRAY[@]}
 
-    if [ "$o" = "v" ]; then
-        local sub_w=$((w / 2))
-        
-        local win_id="${win_array[$cur_win_i]}"
-        wmctrl -i -r "$win_id" -b remove,maximized_vert,maximized_horz
-        xdotool windowsize "$win_id" "$sub_w" "$h"
-        xdotool windowmove "$win_id" "$x" "$y"
-        
-        local nxt_x=$((x + sub_w))
-        tile "$((cur_win_i + 1))" "$nxt_x" "$y" "$sub_w" "$h" "h"
-    else
-        local sub_h=$((h / 2))
-        
-        local win_id="${win_array[$cur_win_i]}"
-        wmctrl -i -r "$win_id" -b remove,maximized_vert,maximized_horz
-        xdotool windowsize "$win_id" "$w" "$sub_h"
-        xdotool windowmove "$win_id" "$x" "$y"
-        
-        local nxt_y=$((y + sub_h))
-        tile "$((cur_win_i + 1))" "$x" "$nxt_y" "$w" "$sub_h" "v"
-    fi
+if [ "$WIN_COUNT" -eq 0 ]; then
+    exit 0
+fi
+
+tile_win() {
+    local wid=$1
+    local kb=$2
+    xdotool windowactivate --sync "$wid"
+    xdotool key "$kb"
 }
 
-cur_wrkspc=$(wmctrl -d | grep '*' | cut -d' ' -f1)
+LT="ctrl+super+q"          # C-W-q
+LT_L="ctrl+super+shift+q"  # C-W-S-q
+LT_R="ctrl+super+shift+1"  # C-W-S-1
+LB="ctrl+super+a"          # C-W-a
+LB_L="ctrl+super+shift+a"  # C-W-S-a
+LB_R="ctrl+super+shift+z"  # C-W-S-z
+RT="ctrl+super+w"          # C-W-w
+RT_L="ctrl+super+shift+2"  # C-W-S-2
+RT_R="ctrl+super+shift+w"  # C-W-S-w
+RB="ctrl+super+s"          # C-W-s
+RB_L="ctrl+super+shift+x"  # C-W-S-x
+RB_R="ctrl+super+shift+s"  # C-W-S-s
+CG="ctrl+super+g"          # C-W-g
+L="ctrl+super+Left"        # C-W-Left
+R="ctrl+super+Right"       # C-W-Right
 
-WORK_AREA=$(wmctrl -d | grep '*' | grep -oE 'WA: [0-9]+,[0-9]+ [0-9]+x[0-9]+')
-WA_W=$(echo "$WORK_AREA" | awk '{print $3}' | cut -d'x' -f1)
-WA_H=$(echo "$WORK_AREA" | awk '{print $3}' | cut -d'x' -f2)
-WA_X=$(echo "$WORK_AREA" | awk '{print $2}' | cut -d' ' -f1 | cut -d',' -f1)
-WA_Y=$(echo "$WORK_AREA" | awk '{print $2}' | cut -d' ' -f1 | cut -d',' -f2)
-
-OPEN_WINS=$(wmctrl -l -x | awk -v ws="$cur_wrkspc" '$2 == ws && !( ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") || ($3 == "plank.Plank" && $5 == "plank") || ($3 == "tint2.Tint2") ||  ($4 ~ /welcome-window|idle-window/) || ($3 == "xpenguins.Xpenguins") ) {print $1}')
-
-OPEN_WINS_COUNT=$(echo "$OPEN_WINS" | grep -c .)
-
-[ "$OPEN_WINS_COUNT" -eq 0 ] && exit 0
-
-read -r -a win_array <<< "$(echo "$OPEN_WINS" | tr '\n' ' ')"
-
-tile 0 "$WA_X" "$WA_Y" "$WA_W" "$WA_H" "v"
+case $WIN_COUNT in
+    1)
+        tile_win "${WIN_ARRAY[0]}" "$CG"
+        ;;
+    2)
+        tile_win "${WIN_ARRAY[0]}" "$L"
+        tile_win "${WIN_ARRAY[1]}" "$R"
+        ;;
+    3)
+        tile_win "${WIN_ARRAY[0]}" "$L"
+        tile_win "${WIN_ARRAY[1]}" "$RT"
+        tile_win "${WIN_ARRAY[2]}" "$RB"
+        ;;
+    4)
+        tile_win "${WIN_ARRAY[0]}" "$LT"
+        tile_win "${WIN_ARRAY[1]}" "$LB"
+        tile_win "${WIN_ARRAY[2]}" "$RT"
+        tile_win "${WIN_ARRAY[3]}" "$RB"
+        ;;
+    5)
+        tile_win "${WIN_ARRAY[0]}" "$LT"
+        tile_win "${WIN_ARRAY[1]}" "$LB"
+        tile_win "${WIN_ARRAY[2]}" "$RT"
+        tile_win "${WIN_ARRAY[3]}" "$RB_L"
+        tile_win "${WIN_ARRAY[4]}" "$RB_R"
+        ;;
+    6)
+        tile_win "${WIN_ARRAY[0]}" "$LT"
+        tile_win "${WIN_ARRAY[1]}" "$LB"
+        tile_win "${WIN_ARRAY[2]}" "$RT_L"
+        tile_win "${WIN_ARRAY[3]}" "$RT_R"
+        tile_win "${WIN_ARRAY[4]}" "$RB_L"
+        tile_win "${WIN_ARRAY[5]}" "$RB_R"
+        ;;
+    7)
+        tile_win "${WIN_ARRAY[0]}" "$LT"
+        tile_win "${WIN_ARRAY[1]}" "$LB_L"
+        tile_win "${WIN_ARRAY[2]}" "$LB_R"
+        tile_win "${WIN_ARRAY[3]}" "$RT_L"
+        tile_win "${WIN_ARRAY[4]}" "$RT_R"
+        tile_win "${WIN_ARRAY[5]}" "$RB_L"
+        tile_win "${WIN_ARRAY[6]}" "$RB_R"
+        ;;
+    8)
+        tile_win "${WIN_ARRAY[0]}" "$LT_L"
+        tile_win "${WIN_ARRAY[1]}" "$LT_R"
+        tile_win "${WIN_ARRAY[2]}" "$LB_L"
+        tile_win "${WIN_ARRAY[3]}" "$LB_R"
+        tile_win "${WIN_ARRAY[4]}" "$RT_L"
+        tile_win "${WIN_ARRAY[5]}" "$RT_R"
+        tile_win "${WIN_ARRAY[6]}" "$RB_L"
+        tile_win "${WIN_ARRAY[7]}" "$RB_R"
+        ;;
+    *)
+        tile_win "${WIN_ARRAY[0]}" "$LT"
+        tile_win "${WIN_ARRAY[1]}" "$LB"
+        tile_win "${WIN_ARRAY[2]}" "$RB_R"
+        tile_win "${WIN_ARRAY[3]}" "$RB_L"
+        for ((i=4; i<WIN_COUNT; i++)); do
+            tile_win "${WIN_ARRAY[i]}" "$RT"
+        done
+        ;;
+esac

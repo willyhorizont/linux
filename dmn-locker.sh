@@ -143,7 +143,7 @@ echo " Show Window       : $SHW_WIN"
 echo "=================================="
 
 while true; do
-    OPEN_WINS_COUNT=$(wmctrl -l -x | awk '!( ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") || ($3 == "plank.Plank" && $5 == "plank") || ($3 == "tint2.Tint2" && $5 == "tint2-top-bar") || ($3 == "tint2.Tint2" && $5 == "tint2-bottom-panel") || ($3 == "tint2.Tint2" && $5 == "tint2-bottom-upper-panel") || ($3 == "xpenguins.Xpenguins" && $5 == "Xpenguins-A") )' 2>/dev/null | grep -c .)
+    OPEN_WINS_COUNT=$(wmctrl -l -x | awk '!( ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") || ($3 == "plank.Plank" && $5 == "plank") || ($3 == "tint2.Tint2") || ($3 == "xpenguins.Xpenguins") || ($4 ~ /welcome-window|idle-window/) )' 2>/dev/null | grep -c .)
     CUR_IDLE_MS=$(xprintidle 2>/dev/null)
     CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
     IS_CUR_ACTV_WIN_MAXED=false

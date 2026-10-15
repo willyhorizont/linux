@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.3.5" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.5.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,15 +12,25 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-add cln-trl-wrkspc.sh;
-add indic0-wrkspc.sh;
-add dmn-openbox-wrkspc.sh;
-add openbox-mov-win-to-wrkspc.sh;
-add openbox-nu-wrkspc.sh;
-add tile-cur-wrkspc.sh;
-update dmn-locker.sh, add tint2-bottom-upper-panel, change to throw error instead of install;
-update README.md, add dmn-openbox-wrkspc.sh;
-attempt 1 make lxde and openbox session work like i3 session, infinite workspace;
+done with i3, openbox is satisfying;
+finish make lxde and openbox session work like i3 session, infinite workspace with manual auto tiling;
+add get-opn-win-ls.sh;
+finish tile-cur-wrkspc.sh;
+
+
+
+TODO:
+touch tui0-tiling.sh to select auto tiling variation;
+touch goto-wrkspc.sh;
+touch sv-tiling-geom-wrkspc-ls.sh to remember tiling geometry wrkspc_ls so tile-cur-wrkspc.sh can run lighter;
+tinker about autotiling instead of manual auto tiling;
+maybe combine sv-tiling-geom-wrkspc-ls.sh with dmn-openbox-wrkspc;
+check openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, prompt*, wdgt*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+update indic0-wrkspc.sh, change from read wmctrl -d intervally to read file written by every next prev wrkspc keybind press;
+cleanup dev/*
+cleanup *i3*
 "
 M=$(sed -e '/./,$!d' <<< "$M")
 M="$H
