@@ -12,7 +12,7 @@ $2 == ws {
     if ($3 == "plank.Plank" && $5 == "plank") next;
     if ($3 == "tint2.Tint2") next;
     if ($3 == "xpenguins.Xpenguins") next;
-    if ($4 ~ /welcome-window|idle-window/) next;
+    if ($3 ~ /welcome-window|idle-window/) next;
     print $1
 }')
 
@@ -43,12 +43,13 @@ RB="ctrl+super+s"          # C-W-s
 RB_L="ctrl+super+shift+x"  # C-W-S-x
 RB_R="ctrl+super+shift+s"  # C-W-S-s
 CG="ctrl+super+g"          # C-W-g
+F="ctrl+super+f"           # C-W-f
 L="ctrl+super+Left"        # C-W-Left
 R="ctrl+super+Right"       # C-W-Right
 
 case $WIN_COUNT in
     1)
-        tile_win "${WIN_ARRAY[0]}" "$CG"
+        tile_win "${WIN_ARRAY[0]}" "$F"
         ;;
     2)
         tile_win "${WIN_ARRAY[0]}" "$L"

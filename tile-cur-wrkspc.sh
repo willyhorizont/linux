@@ -6,15 +6,14 @@ if ! command -v wmctrl &> /dev/null || ! command -v xdotool &> /dev/null; then
 fi
 
 cur_wrkspc=$(wmctrl -d | grep '*' | awk '{print $1}')
-OPEN_WINS=$(wmctrl -l -x | awk -v ws="$cur_wrkspc" '
-$2 == ws {
-    if ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") next;
-    if ($3 == "plank.Plank" && $5 == "plank") next;
-    if ($3 == "tint2.Tint2") next;
-    if ($3 == "xpenguins.Xpenguins") next;
-    if ($4 ~ /welcome-window|idle-window/) next;
+OPEN_WINS=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
+    if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
+    if ($7 == "plank.Plank" && $9 == "plank") next;
+    if ($7 == "tint2.Tint2") next;
+    if ($7 == "xpenguins.Xpenguins") next;
+    if ($7 ~ /welcome-window|idle-window/) next;
     print $1
-}')
+}' 2>/dev/null)
 
 WIN_ARRAY=($OPEN_WINS)
 WIN_COUNT=${#WIN_ARRAY[@]}

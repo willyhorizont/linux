@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.5.3" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.5.4" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,20 +12,15 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update purgex command;
---touch sv-cur-ses.sh, to save current session--;
---touch opn-lst-ses.sh, to open last session--;
-touch run-session.sh, to run sequence opening apps to spesific wrkspc and tile keybind;
-update tile-cur-wrkspc.sh, change CF to F;
-update debian-apt.md, add system install age, add apt install history log location, add apt install history log, add Check is any depends on;
-update general.md, add Check if something is installed;
-update cool-package.csv, add top, htop, nmon, glances, gtop;
-
+update dmn-locker, shorten condition logic, fix welcome-window idle-window detection;
+update kb-nu-wrkspc.sh, make switch to nu-wrkspc after kb press;
+touch kb-goto-wrkspc-prompt.sh;
+update kb-mov-win-to-wrkspc-prompt.sh, change to rofi;
+tried create is-tux-fit.sh box collision detection logic (Axis-Aligned Bounding Box) version but not working;
+tried create is-tux-fit.sh Matrix 2D Screen version but not working;
 
 TODO:
-kb-nu-wrkspc.sh also switch to nu-wrkspc;
 touch tui0-tiling.sh to select auto tiling variation;
-touch goto-wrkspc.sh;
 make decorator or wrapper higherorder function to auto place win to tile;
 add abillity to navigate through tiles;
 add abillity to move tile;
@@ -40,7 +35,7 @@ kill tux when switching wrkspc;
 keybind LT, RT, etc also modify conf;
 make window font size smaller;
 check *openbox*.sh, remove openbox part if not related;
-rename script to job*, kb*, prompt*, wdgt*, to match indic*, tui*;
+rename script to job*, kb*, wdgt*, to match indic*, tui*;
 remove separate config and move it to the code instead;
 update indic0-wrkspc.sh, change from read wmctrl -d intervally to read file written by every next prev wrkspc keybind press;
 add time on terminal;

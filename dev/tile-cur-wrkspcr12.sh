@@ -24,7 +24,7 @@ $2 == ws {
     if ($3 == "plank.Plank" && $5 == "plank") next;
     if ($3 == "tint2.Tint2") next;
     if ($3 == "xpenguins.Xpenguins") next;
-    if ($4 ~ /welcome-window|idle-window/) next;
+    if ($3 ~ /welcome-window|idle-window/) next;
     print $1
 }')
 

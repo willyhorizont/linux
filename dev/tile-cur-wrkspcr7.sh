@@ -74,7 +74,14 @@ WORK_AREA=$(wmctrl -d | grep '*' | grep -oE 'WA: [0-9]+,[0-9]+ [0-9]+x[0-9]+')
 WA_W=$(echo "$WORK_AREA" | awk '{print $3}' | cut -d'x' -f1)
 WA_X=$(echo "$WORK_AREA" | awk '{print $2}' | cut -d' ' -f1 | cut -d',' -f1)
 
-OPEN_WINS=$(wmctrl -l -x | awk -v ws="$cur_wrkspc" '$2 == ws && !( ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") || ($3 == "plank.Plank" && $5 == "plank") || ($3 == "tint2.Tint2") ||  ($4 ~ /welcome-window|idle-window/) || ($3 == "xpenguins.Xpenguins") ) {print $1}')
+OPEN_WINS=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
+    if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
+    if ($7 == "plank.Plank" && $9 == "plank") next;
+    if ($7 == "tint2.Tint2") next;
+    if ($7 == "xpenguins.Xpenguins") next;
+    if ($7 ~ /welcome-window|idle-window/) next;
+    print $1
+}' 2>/dev/null)
 
 OPEN_WINS_COUNT=$(echo "$OPEN_WINS" | grep -c .)
 
