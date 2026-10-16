@@ -22,6 +22,11 @@ https://github.com/sharkdp/bat                                                  
 https://github.com/durdraw/durdraw/ or https://github.com/durdraw/durdraw/                       ; ASCII, Unicode and ANSI art editor
 https://github.com/da-luce/astroterm                                                             ; screensaver
 dysk                                                                                             ; disk-util
+top                                                                                              ; task-manager, system-resource-monitor
+htop                                                                                             ; task-manager, system-resource-monitor
+nmon                                                                                             ; task-manager, system-resource-monitor
+glances                                                                                          ; task-manager, system-resource-monitor; python
+gtop                                                                                             ; task-manager, system-resource-monitor; javascript
 https://github.com/dylanaraps/pure-bash-bible                                                    ; utils
 https://github.com/dylanaraps/pure-sh-bible                                                      ; utils
 https://github.com/agarrharr/awesome-cli-apps                                                    ; more

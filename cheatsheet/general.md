@@ -40,3 +40,9 @@ xev | grep keysym
 ```
 xwininfo | grep -E "Width|Height"
 ```
+
+### Check if something is installed
+```
+dpkg -l | grep -i something
+which something
+```
