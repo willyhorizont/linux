@@ -18,9 +18,6 @@
 ## View list of all currently installed apps
 ```apt list --installed```
 
-## View apt history.log
-```cat /var/log/apt/history.log```
-
 ## Clean all local repository cache
 ```sudo apt clean```
 
@@ -39,4 +36,50 @@ find /usr/share/icons/ -name "*distributor-logo-<distro>*"
 ## Set max audio volume
 ```
 pactl set-sink-volume @DEFAULT_SINK@ 100%
+```
+
+## system install age
+```
+# via root creation date (Universal on modern filesystems: EXT4, Btrfs, XFS)
+stat / | grep "Birth"
+
+# via $HOME creation date (Universal, check specific user creation)
+stat $HOME | grep "Birth"
+
+# via logrotate status (Universal across distros)
+sudo head -n 5 /var/lib/logrotate/status
+
+# via syslog (Debian family only)
+head -n 5 /var/log/installer/syslog 2>/dev/null
+
+# via filesystem metadata (Only for EXT2/3/4 family)
+sudo tune2fs -l $(findmnt -no SOURCE /) | grep "Filesystem created"
+```
+
+## apt install history log location
+```
+/var/log/apt/history.log
+```
+
+## apt install history log
+```
+# Up to 12 months (Depends on logrotate, searches active + compressed logs)
+zgrep "Commandline: apt" /var/log/apt/history.log*
+
+# Dpkg deployment log (Usually limited to around 12 weeks/rotations)
+grep " install " /var/log/dpkg.log
+
+# Current month only (Active log)
+cat /var/log/apt/history.log
+grep "install " /var/log/apt/history.log
+
+# Limited by terminal command lines count ($HISTSIZE), not by time duration
+history | grep "apt install"
+```
+
+## Check is any depends on
+```
+apt-cache rdepends --installed libunicode-linebreak-perl
+apt purge --simulate libunicode-linebreak-perl && apt autoremove --purge --simulate
+apt remove libunicode-linebreak-perl --simulate
 ```
