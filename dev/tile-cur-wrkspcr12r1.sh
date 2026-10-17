@@ -18,14 +18,14 @@
 # CG = 48   54  1504 771
 
 if ! command -v wmctrl &> /dev/null || ! command -v xdotool &> /dev/null; then
-    notify-send "tile-cur-wrkspc.sh" "Error: missing dependencies 'wmctrl xdotool'..."
+    notify-send "kb-tile-cur-wrkspc.sh" "Error: missing dependencies 'wmctrl xdotool'..."
     exit 1
 fi
 
 CONF_FILE="$HOME/willyhorizont.github.io/.config/tile.conf"
 
 if [ ! -f "$CONF_FILE" ]; then
-    notify-send "tile-cur-wrkspc.sh" "Error: $CONF_FILE not found"
+    notify-send "kb-tile-cur-wrkspc.sh" "Error: $CONF_FILE not found"
     exit 1
 fi
 
@@ -72,7 +72,7 @@ tile_win() {
     local w=${c_ls[2]}
     local h=${c_ls[3]}
     if [ -z "$x_conf" ] || [ -z "$y_conf" ] || [ -z "$w" ] || [ -z "$h" ]; then
-        notify-send "tile-cur-wrkspc.sh" "Error: Invalid geometry for $k in $CONF_FILE"
+        notify-send "kb-tile-cur-wrkspc.sh" "Error: Invalid geometry for $k in $CONF_FILE"
         return 1
     fi
     wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz

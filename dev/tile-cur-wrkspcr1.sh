@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! command -v wmctrl &> /dev/null || ! command -v xdotool &> /dev/null; then
-    notify-send "tile-cur-wrkspc.sh" "Error: missing dependencies 'wmctrl xdotool'..."
+    notify-send "kb-tile-cur-wrkspc.sh" "Error: missing dependencies 'wmctrl xdotool'..."
     exit 1
 fi
 

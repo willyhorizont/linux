@@ -1,13 +1,13 @@
 #!/bin/bash
 
 if ! command -v wmctrl &> /dev/null || ! command -v xdotool &> /dev/null; then
-    notify-send "tile-cur-wrkspc.sh" "Error: missing dependencies 'wmctrl xdotool'..."
+    notify-send "kb-tile-cur-wrkspc.sh" "Error: missing dependencies 'wmctrl xdotool'..."
     exit 1
 fi
 
 CFG="$HOME/willyhorizont.github.io/.config/tile.conf"
 if [ ! -f "$CFG" ]; then
-    notify-send "tile-cur-wrkspc.sh" "Error: tile.conf no found!"
+    notify-send "kb-tile-cur-wrkspc.sh" "Error: tile.conf no found!"
     exit 1
 fi
 

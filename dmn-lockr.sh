@@ -7,7 +7,7 @@ if [ "$TOT_PROC" -gt 0 ]; then
     exit 1
 fi
 
-CFG="$HOME/willyhorizont.github.io/.config/dmn-locker.conf"
+CFG="$HOME/willyhorizont.github.io/.config/dmn-lockr.conf"
 CFG_DIR=$(dirname "$CFG")
 
 DFLT_IDLE_SEC=120
@@ -59,7 +59,7 @@ while [ "$#" -gt 0 ]; do
             fi
             ;;
         *)
-            echo "Usage: dmn-locker.sh [--idle-sec <seconds>] [--lock-mnt <minutes>] [--show-tux <true|false>] [--shw-win <true|false>]"
+            echo "Usage: dmn-lockr.sh [--idle-sec <seconds>] [--lock-mnt <minutes>] [--show-tux <true|false>] [--shw-win <true|false>]"
             exit 1
             ;;
     esac
