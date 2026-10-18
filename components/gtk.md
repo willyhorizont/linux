@@ -13,6 +13,7 @@
 * plank
 * lxpanel
 * polybar
+* waybar
 * fbpanel
 * ~~lxqt-panel~~
 
@@ -30,6 +31,10 @@
 ### terminal
 * lxterminal
 * xfce4-terminal
+* foot
+* kitty
+* alacritty
+* ghostty
 
 ### file manager
 * pcmanfm
@@ -42,3 +47,10 @@
 * mpv
 * celluloid
 * parole
+
+### audio player
+* lxmusic
+
+### notification
+* dunst
+* mako

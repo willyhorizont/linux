@@ -1,3 +1,23 @@
+[Last updated: 19 Oct 2026 @ 05:24 AM][version: 0.5.7]
+update and fix run-session.sh;
+small update kb-tile-cur-wrkspc.sh;
+
+canceled:
+add abillity to navigate through tiles;
+add abillity to move tile;
+reason:
+tried to nav tile but no way to track detached tiles;
+tried to mov tile but no way to track detached tiles;
+
+TODO:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 18 Oct 2026 @ 08:00 PM][version: 0.5.6]
 update dmn-lockr.sh, replace xdotool search with wmctrl -l -x -G | awk ... so now is far more lighter;
 update indic2-net.sh, update tooltip text;

@@ -166,8 +166,8 @@ qtile-X11                               | [Python] (Core)          | -100     | 
 ### Top Best Linux Master & Linear Stack Tiling Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
-dwm                                     | [C] (Core)               | +100     | X11-Only             | Both                                    | ~4 - 7 K    | 6                  | 1          | No         | Lightweight        | Lightweight
 AwesomeWM                               | [C] (Core), Lua          | +100     | X11-Only             | Both                                    | ~3.5 - 6 K  | 7                  | 2          | No         | Lightweight        | Lightweight
+dwm                                     | [C] (Core)               | +100     | X11-Only             | Both                                    | ~4 - 7 K    | 6                  | 1          | No         | Lightweight        | Lightweight
 MangoWM                                 | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~30 - 45 K  | 1                  | 3          | Yes        | Lightweight        | Lightweight
 Dwl (Dynamic Window Manager for Wayland)| [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~40 - 65 K  | 3                  | 4          | Minimal    | Lightweight        | Lightweight
 River                                   | [Zig] (Core)             | +100     | Wayland-Only         | Keyboard-driven                         | ~50 - 75 K  | 2                  | 5          | Yes        | Lightweight        | Lightweight
