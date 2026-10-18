@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.5.5" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.5.6" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,12 +12,9 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update indic0-wrkspc.sh, change to interval 0.5;
---touch tui0-tiling.sh or update kb-tile-cur-wrkspc.sh to select auto tiling variation if exist--;
-update kb-tile-cur-wrkspc.sh to cycle tiles variation;
---remove cln-trl-wrkspc.sh and touch sld-wrkspc.sh to slide wrkspc to empty one--;
-remove cln-trl-wrkspc.sh and add kb-cln-wrkspc.sh;
-update dmn-wrkspc-mgr.sh, call kb-cln-wrkspc.sh;
+update dmn-lockr.sh, replace xdotool search with wmctrl -l -x -G | awk ... so now is far more lighter;
+update indic2-net.sh, update tooltip text;
+update and fix run-session.sh;
 
 canceled:
 touch sv-tiling-geom-wrkspc-ls.sh to remember tiling geometry wrkspc_ls so kb-tile-cur-wrkspc.sh can run lighter;

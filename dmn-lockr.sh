@@ -105,17 +105,22 @@ fi
 pkill -9 -x "xtrlock" 2>/dev/null
 
 WELCOME_WIN_ALIVE=false
-if xdotool search --classname "welcome-window" >/dev/null 2>&1; then
+if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
     WELCOME_WIN_ALIVE=true
 fi
 IDLE_WIN_ALIVE=false
-if xdotool search --classname "idle-window" >/dev/null 2>&1; then
+if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
     IDLE_WIN_ALIVE=true
 fi
 if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
     echo "Opening welcome-window..."
     xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "welcome-window" -hold -e fastfetch &
-    xdotool search --sync --classname "welcome-window" >/dev/null 2>&1
+    while true; do
+        if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
+            break
+        fi
+        sleep 1
+    done
     WELCOME_WIN_ALIVE=true
 fi
 
@@ -131,7 +136,7 @@ fi
 
 if [ "$SHW_TUX" = "true" ] && [ "$IS_CUR_ACTV_WIN_MAXED" = false ]; then
     echo "Deploying tux..."
-    xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 56 &
+    xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
     TUX_ALIVE=true
 fi
 
@@ -167,12 +172,11 @@ while true; do
     fi
 
     WELCOME_WIN_ALIVE=false
-    if xdotool search --classname "welcome-window" >/dev/null 2>&1; then
+    if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
         WELCOME_WIN_ALIVE=true
     fi
-
     IDLE_WIN_ALIVE=false
-    if xdotool search --classname "idle-window" >/dev/null 2>&1; then
+    if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
         IDLE_WIN_ALIVE=true
     fi
 
@@ -203,7 +207,7 @@ while true; do
             if [ -n "$CUR_ACTV_WIN_CLASS" ] && [ "$CUR_ACTV_WIN_CLASS" != "Plank" ] && [ "$CUR_ACTV_WIN_CLASS" != "Tint2" ]; then
                 if [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
                     echo "Deploying tux..."
-                    xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 56 &
+                    xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
                     TUX_ALIVE=true
                 fi
             fi
@@ -213,7 +217,12 @@ while true; do
             if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
                 xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
-                xdotool search --sync --classname "idle-window" >/dev/null 2>&1
+                while true; do
+                    if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
+                        break
+                    fi
+                    sleep 1
+                done
                 IDLE_WIN_ALIVE=true
             fi
             if [ "$IS_TUX_ALLOWED" = false ]; then
@@ -224,7 +233,7 @@ while true; do
                 fi
             elif [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
                 echo "Deploying tux..."
-                xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 56 &
+                xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
                 TUX_ALIVE=true
             fi
         fi
@@ -232,7 +241,12 @@ while true; do
             if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
                 xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
-                xdotool search --sync --classname "idle-window" >/dev/null 2>&1
+                while true; do
+                    if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
+                        break
+                    fi
+                    sleep 1
+                done
                 IDLE_WIN_ALIVE=true
             fi
             if [ "$IS_TUX_ALLOWED" = false ]; then
@@ -242,7 +256,7 @@ while true; do
                 fi
             elif [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
                 echo "Deploying tux..."
-                xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 56 &
+                xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
                 TUX_ALIVE=true
             fi
             if ! pgrep -x "xtrlock" >/dev/null; then

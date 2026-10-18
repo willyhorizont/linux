@@ -1,5 +1,10 @@
 #!/bin/bash
 
+IC_INIT="⏳"
+IC_ON="🔵"
+IC_OFF="🚫"
+IC_NONE="❌"
+
 while true; do
     clear
     echo "======================================="
@@ -8,16 +13,16 @@ while true; do
 
     HW_AVAIL="no"
     if [ -z "$(ls /sys/class/bluetooth/ 2>/dev/null)" ]; then
-        echo " Hardware Status  : [ ❌ Not Found / Disabled ]"
+        echo " Hardware Status  : [ ${IC_NONE} Not Found / Disabled ]"
         echo " Connected Device : [ None ]"
         HW_AVAIL="no"
     else
         HW_AVAIL="yes"
         if rfkill list bluetooth | grep -q "Soft blocked: yes"; then
-            echo " Hardware Status  : [ 🚫 OFF ]"
+            echo " Hardware Status  : [ ${IC_OFF} OFF ]"
             echo " Connected Device : [ None ]"
         else
-            echo " Hardware Status  : [ 🔵 ON ]"
+            echo " Hardware Status  : [ ${IC_ON} ON ]"
             CONN_DIR=$(ls -d /sys/class/bluetooth/hci0/dev_* 2>/dev/null | head -n1)
             if [ -z "$CONN_DIR" ]; then
                 echo " Connected Device : [ Not Connected ]"
