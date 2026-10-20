@@ -169,7 +169,7 @@ Name                                    | Languages                | Core Aura| 
 AwesomeWM                               | [C] (Core), Lua          | +100     | X11-Only             | Both                                    | ~3.5 - 6 K  | 7                  | 2          | No         | Lightweight        | Lightweight
 dwm                                     | [C] (Core)               | +100     | X11-Only             | Both                                    | ~4 - 7 K    | 6                  | 1          | No         | Lightweight        | Lightweight
 MangoWM                                 | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~30 - 45 K  | 1                  | 3          | Yes        | Lightweight        | Lightweight
-Dwl (Dynamic Window Manager for Wayland)| [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~40 - 65 K  | 3                  | 4          | Minimal    | Lightweight        | Lightweight
+dwl (dwm for Wayland)                   | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~40 - 65 K  | 3                  | 4          | Minimal    | Lightweight        | Lightweight
 River                                   | [Zig] (Core)             | +100     | Wayland-Only         | Keyboard-driven                         | ~50 - 75 K  | 2                  | 5          | Yes        | Lightweight        | Lightweight
 Vivarium                                | [C] (Core)               | +100     | Wayland-Only         | Keyboard-driven                         | ~8 - 15 K   | 4                  | 6          | Yes        | Lightweight        | Lightweight
 Gogh                                    | [Nim] (Core)             | +100     | Wayland-Only         | Keyboard-driven                         | ~5 - 10 K   | 5                  | 7          | Yes        | Lightweight        | Lightweight
@@ -323,7 +323,7 @@ Debian LXDE | jwm tint2 plank jgmenu                                            
 Debian LXDE | icewm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |
 Debian LXDE | fluxbox tint2 plank jgmenu                                                                                | lxpanel openbox | no             |
 Debian LXDE | pekwm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |
-Debian LXDE | openbox xfce4-panel xfce4-docklike-plugin xfce4-whiskermenu-plugin                                        | lxpanel         | yes            |
+Debian LXDE | openbox xfce4-panel xfce4-whiskermenu-plugin xfce4-docklike-plugin                                        | lxpanel         | yes            |
 <!-- tiling -->
 Debian LXDE | i3wm tint2 plank jgmenu                                                                                   | lxpanel openbox | no             |
 Debian LXDE | bspwm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |

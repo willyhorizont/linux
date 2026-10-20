@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.5.7" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.5.8" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,15 +12,15 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update and fix run-session.sh;
-small update kb-tile-cur-wrkspc.sh;
-
-canceled:
-add abillity to navigate through tiles;
-add abillity to move tile;
-reason:
-tried to nav tile but no way to track detached tiles;
-tried to mov tile but no way to track detached tiles;
+add run-session-i3.sh;
+update run-session.sh;
+update indic0-wrkspc, make it also show tot win;
+add lazygit config;
+update vscode settings.json, set window.menuStyle to custom, set window.titleBarStyle to native;
+add lazygit git-delta to list;
+add panel-bar.csv;
+update components gtk.md, move top-bar and bottom-panel to panel-bar.csv;
+delete i3wm-new-workspace.sh;
 
 TODO:
 make window font size smaller;

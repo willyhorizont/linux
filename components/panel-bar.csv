@@ -1,0 +1,13 @@
+panel / bar                                               | stdout| stderr/stdout_hover/tooltip| stdout_click/click_event| workspace_switcher| 
+tint2                                                     | ✅     | ✅                          | ✅                       | ❌                 | 
+xfce4-panel xfce4-genmon-plugin xfce4-i3-workspaces-plugin| ✅     | ✅                          | ✅                       | ✅                 | 
+mate-panel                                                | ✅     | ❌                          | ❌                       | ✅                 | 
+i3bar + i3blocks                                          | ✅     | ❌                          | ✅                       | ✅                 | 
+polybar                                                   | ✅     | ❌                          | ✅                       | ✅                 | 
+lxpanel                                                   | ❓     | ❓                          | ❓                       | ✅                 | 
+lemonbar                                                  | ❓     | ❓                          | ❓                       | ❓                 | 
+xmobar                                                    | ❓     | ❓                          | ❓                       | ❓                 | 
+dzen2                                                     | ❓     | ❓                          | ❓                       | ❓                 | 
+waybar (wayland)                                          | ❓     | ❓                          | ❓                       | ❓                 | 
+~~fbpanel~~                                               | ❓     | ❓                          | ❓                       | ❓                 | 
+~~lxqt-panel~~                                            | ❓     | ❓                          | ❓                       | ❓                 | 

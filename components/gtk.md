@@ -1,34 +1,16 @@
 # components > gtk
 
-## X11
-
-### topbar
-* lemonbar
-* i3status
-
-### panel
-* xfce4-panel
-* mate-panel
-* tint2
+## Pinned+Opened app combo
 * plank
-* lxpanel
-* polybar
-* waybar
-* fbpanel
-* ~~lxqt-panel~~
+* xfce4-panel + xfce4-docklike-plugin
+* ~~cariro-dock~~
 
-### menu
-* xfce4-whiskermenu-plugin
+## menu
 * jgmenu
 * rofi
+* xfce4-panel + xfce4-whiskermenu-plugin
 
-### app tray (pinned+opened)
-* xfce4-docklike-plugin
-
-### dock
-* cariro-dock
-
-### terminal
+## terminal
 * lxterminal
 * xfce4-terminal
 * foot
@@ -36,21 +18,21 @@
 * alacritty
 * ghostty
 
-### file manager
+## file manager
 * pcmanfm
 * thunar
 
-### text editor
+## text editor
 * mousepad
 
-### video player
+## video player
 * mpv
 * celluloid
 * parole
 
-### audio player
+## audio player
 * lxmusic
 
-### notification
+## notification
 * dunst
 * mako

@@ -1,4 +1,5 @@
 id or source                                                                                     ; categories
+lazygit git-delta                                                                                ; version control
 fastfetch                                                                                        ; startup
 figlet                                                                                           ; startup
 https://getfresh.dev/ or https://github.com/sinelaw/fresh                                        ; code-editor
