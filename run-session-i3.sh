@@ -2,6 +2,10 @@
 
 pkill -9 -f "$HOME/willyhorizont.github.io/linux/run-session-i3.sh" 2>/dev/null
 
+CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
+i3-msg "[id=$CUR_ACTV_WIN_ID] move container to workspace 2"
+i3-msg "workspace 2"
+
 i3-msg "exec brave-browser"
 while true; do
     wid_brv=$(wmctrl -l -x -G | awk '$7 == "brave-browser.Brave-browser" {print $1}' 2>/dev/null)
@@ -23,8 +27,8 @@ while true; do
     fi
     sleep 1
 done
-i3-msg "[class=\"Pcmanfm\"] move container to workspace 1"
-i3-msg "workspace 1"
+i3-msg "[class=\"Pcmanfm\"] move container to workspace 2"
+i3-msg "workspace 2"
 
 i3-msg "exec code '$HOME/Codes/linux/'"
 while true; do
@@ -34,8 +38,8 @@ while true; do
     fi
     sleep 1
 done
-i3-msg "[id=$wid_vsc_lnx] move container to workspace 2"
-i3-msg "workspace 2"
+i3-msg "[id=$wid_vsc_lnx] move container to workspace 3"
+i3-msg "workspace 3"
 
 i3-msg "exec code '$HOME/Codes/linux-debian-lxde/'"
 while true; do
@@ -45,7 +49,7 @@ while true; do
     fi
     sleep 1
 done
-i3-msg "[id=$wid_vsc_lxde] move container to workspace 3"
-i3-msg "workspace 3"
+i3-msg "[id=$wid_vsc_lxde] move container to workspace 4"
+i3-msg "workspace 4"
 
 i3-msg "workspace 1"
