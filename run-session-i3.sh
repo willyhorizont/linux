@@ -12,7 +12,7 @@ while true; do
     if [ -n "$wid_brv" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 i3-msg "[id=$wid_brv] move container to workspace 1"
 i3-msg "workspace 1"
@@ -25,7 +25,7 @@ while true; do
     if [ -n "$wid_fm" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 i3-msg "[class=\"Pcmanfm\"] move container to workspace 2"
 i3-msg "workspace 2"
@@ -36,7 +36,7 @@ while true; do
     if [ -n "$wid_vsc_lnx" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 i3-msg "[id=$wid_vsc_lnx] move container to workspace 3"
 i3-msg "workspace 3"
@@ -47,7 +47,7 @@ while true; do
     if [ -n "$wid_vsc_lxde" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 i3-msg "[id=$wid_vsc_lxde] move container to workspace 4"
 i3-msg "workspace 4"

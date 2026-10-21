@@ -10,7 +10,7 @@ while true; do
     if [ -n "$wid_brv" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 xdotool set_num_desktops 4
 xdotool set_desktop_for_window "$wid_brv" 0
@@ -25,7 +25,7 @@ while true; do
     if [ -n "$wid_fm" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 xdotool set_num_desktops 4
 xdotool set_desktop_for_window "$wid_fm" 1
@@ -38,7 +38,7 @@ while true; do
     if [ -n "$wid_trm" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 xdotool set_num_desktops 4
 xdotool set_desktop_for_window "$wid_trm" 1
@@ -51,7 +51,7 @@ while true; do
     if [ -n "$wid_vsc_lxde" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 xdotool set_num_desktops 4
 xdotool set_desktop_for_window "$wid_vsc_lxde" 3
@@ -64,7 +64,7 @@ while true; do
     if [ -n "$wid_vsc_lnx" ]; then
         break
     fi
-    sleep 1
+    sleep 0.2
 done
 xdotool set_num_desktops 4
 xdotool set_desktop_for_window "$wid_vsc_lnx" 2

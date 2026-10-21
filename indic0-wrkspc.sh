@@ -41,5 +41,5 @@ while true; do
         fi
     done
     echo "$indic_output "
-    sleep 0.5
+    sleep 0.2
 done

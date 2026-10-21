@@ -46,3 +46,13 @@ xwininfo | grep -E "Width|Height"
 dpkg -l | grep -i something
 which something
 ```
+
+### See command history
+```
+history
+```
+
+### Disable GRUB_TIMEOUT
+```
+sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub && sudo update-grub
+```

@@ -119,7 +119,7 @@ if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_A
         if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
             break
         fi
-        sleep 1
+        sleep 0.2
     done
     WELCOME_WIN_ALIVE=true
 fi
@@ -221,7 +221,7 @@ while true; do
                     if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
                         break
                     fi
-                    sleep 1
+                    sleep 0.2
                 done
                 IDLE_WIN_ALIVE=true
             fi
@@ -245,7 +245,7 @@ while true; do
                     if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
                         break
                     fi
-                    sleep 1
+                    sleep 0.2
                 done
                 IDLE_WIN_ALIVE=true
             fi

@@ -3,7 +3,7 @@
 SCRIPT_NAME="tui0-powr-mnu-prompt.sh"
 
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-    echo "Usage: $TITLE <cmd-logout> <cmd-lock> [OPTIONS]"
+    echo "Usage: $SCRIPT_NAME <cmd-logout> <cmd-lock> [OPTIONS]"
     echo ""
     echo "Mandatory Arguments:"
     echo "  <cmd-logout>                      Command or path to script executed to logout."
@@ -17,7 +17,7 @@ fi
 
 if [ -z "$1" ] || [ -z "$2" ]; then
     echo "Error: Missing mandatory arguments!"
-    echo "Usage: $TITLE <cmd-logout> <cmd-lock> [--tit=title]"
+    echo "Usage: $SCRIPT_NAME <cmd-logout> <cmd-lock> [--tit=title]"
     exit 1
 fi
 
@@ -47,10 +47,9 @@ ALL_ACTIONS=(
     ["logout"]="$CMD_LOGOUT"
     ["lock"]="$CMD_LOCK"
     ["btop"]="lxterminal --geometry=80x28 -e btop"
-    ["cancel"]="exit 0"
 )
 
-ORDERED_KEYS=("cancel" "btop" "lock" "logout" "suspend" "reboot" "shutdown")
+ORDERED_KEYS=("btop" "lock" "logout" "suspend" "reboot" "shutdown")
 
 MENU_OPTIONS=""
 for key in "${ORDERED_KEYS[@]}"; do

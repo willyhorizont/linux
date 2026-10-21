@@ -1,3 +1,32 @@
+[Last updated: 22 Oct 2026 @ 06:58 AM][version: 0.5.12]
+fix lxde openbox autostart;
+update tui0-powr-mnu-prompt.sh, remove cancel;
+update cheatsheet, add see command history, add Disable GRUB_TIMEOUT;
+add undo last commit cheatsheet;
+update sleep;
+update dmn-lockr.sh, update sleep;
+update indic0-wrkspc.sh, update sleep;
+update run-session.sh, update sleep;
+update run-session-i3.sh, update sleep;
+add wmctrl-lxcapg.sh;
+remove 5s timeout debian;
+
+TODO #1:
+touch kb-cnfrm-cls.sh;
+merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh;
+TODO #2:
+update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
+add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
+touch kb-update-indic.sh;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 21 Oct 2026 @ 10:26 AM][version: 0.5.10]
 update run-session.sh;
 update kb-goto-wrkspc-prompt.sh, add -p workspace_number;

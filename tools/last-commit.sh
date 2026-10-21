@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.5.10" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.5.12" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,16 +12,19 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update run-session.sh;
-update kb-goto-wrkspc-prompt.sh, add -p workspace_number;
-add keyboards.md;
-add keybinds.md;
---create tui0-powr-mnu-prompt.sh lxsession-logout i3 version--;
-add tui0-powr-mnu-prompt.sh <cmd-logout> <cmd-lock> --tit=title;
-broke lxde openbox autostart;
+fix lxde openbox autostart;
+update tui0-powr-mnu-prompt.sh, remove cancel;
+update cheatsheet, add see command history, add Disable GRUB_TIMEOUT;
+add undo last commit cheatsheet;
+update sleep;
+update dmn-lockr.sh, update sleep;
+update indic0-wrkspc.sh, update sleep;
+update run-session.sh, update sleep;
+update run-session-i3.sh, update sleep;
+add wmctrl-lxcapg.sh;
+remove 5s timeout debian;
 
 TODO #1:
-fix lxde openbox autostart;
 touch kb-cnfrm-cls.sh;
 merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh;
 TODO #2:
