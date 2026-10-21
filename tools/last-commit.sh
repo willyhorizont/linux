@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.5.9" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.5.10" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,9 +12,23 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-add run-session-i3.sh;
+update run-session.sh;
+update kb-goto-wrkspc-prompt.sh, add -p workspace_number;
+add keyboards.md;
+add keybinds.md;
+--create tui0-powr-mnu-prompt.sh lxsession-logout i3 version--;
+add tui0-powr-mnu-prompt.sh <cmd-logout> <cmd-lock> --tit=title;
+broke lxde openbox autostart;
 
-TODO:
+TODO #1:
+fix lxde openbox autostart;
+touch kb-cnfrm-cls.sh;
+merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh;
+TODO #2:
+update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
+add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
+touch kb-update-indic.sh;
+TODO #3:
 make window font size smaller;
 check *openbox*.sh, remove openbox part if not related;
 rename script to job*, kb*, indic*, to match indic*, tui*;

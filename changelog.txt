@@ -1,3 +1,29 @@
+[Last updated: 21 Oct 2026 @ 10:26 AM][version: 0.5.10]
+update run-session.sh;
+update kb-goto-wrkspc-prompt.sh, add -p workspace_number;
+add keyboards.md;
+add keybinds.md;
+--create tui0-powr-mnu-prompt.sh lxsession-logout i3 version--;
+add tui0-powr-mnu-prompt.sh <cmd-logout> <cmd-lock> --tit=title;
+broke lxde openbox autostart;
+
+TODO #1:
+fix lxde openbox autostart;
+touch kb-cnfrm-cls.sh;
+merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh;
+TODO #2:
+update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
+add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
+touch kb-update-indic.sh;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 21 Oct 2026 @ 01:53 AM][version: 0.5.9]
 add run-session-i3.sh;
 

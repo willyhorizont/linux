@@ -2,7 +2,7 @@
 
 pkill -9 -f "$HOME/willyhorizont.github.io/linux/run-session.sh" 2>/dev/null
 
-xdotool set_num_desktops 3
+xdotool set_num_desktops 4
 
 brave-browser &
 while true; do
@@ -12,7 +12,7 @@ while true; do
     fi
     sleep 1
 done
-xdotool set_num_desktops 3
+xdotool set_num_desktops 4
 xdotool set_desktop_for_window "$wid_brv" 0
 xdotool set_desktop 0
 xdotool key "ctrl+super+f"
@@ -27,9 +27,9 @@ while true; do
     fi
     sleep 1
 done
-xdotool set_num_desktops 3
-xdotool set_desktop_for_window "$wid_fm" 0
-xdotool set_desktop 0
+xdotool set_num_desktops 4
+xdotool set_desktop_for_window "$wid_fm" 1
+xdotool set_desktop 1
 xdotool key "ctrl+super+f"
 
 lxterminal --working-directory=~ &
@@ -40,10 +40,10 @@ while true; do
     fi
     sleep 1
 done
-xdotool set_num_desktops 3
-xdotool set_desktop_for_window "$wid_trm" 0
-xdotool set_desktop 0
-xdotool key "ctrl+super+f"
+xdotool set_num_desktops 4
+xdotool set_desktop_for_window "$wid_trm" 1
+xdotool set_desktop 1
+xdotool key "ctrl+super+t"
 
 code "$HOME/Codes/linux-debian-lxde/" &
 while true; do
@@ -53,9 +53,9 @@ while true; do
     fi
     sleep 1
 done
-xdotool set_num_desktops 3
-xdotool set_desktop_for_window "$wid_vsc_lxde" 2
-xdotool set_desktop 2
+xdotool set_num_desktops 4
+xdotool set_desktop_for_window "$wid_vsc_lxde" 3
+xdotool set_desktop 3
 xdotool key "ctrl+super+f"
 
 code "$HOME/Codes/linux/" &
@@ -66,7 +66,9 @@ while true; do
     fi
     sleep 1
 done
-xdotool set_num_desktops 3
-xdotool set_desktop_for_window "$wid_vsc_lnx" 1
-xdotool set_desktop 1
+xdotool set_num_desktops 4
+xdotool set_desktop_for_window "$wid_vsc_lnx" 2
+xdotool set_desktop 2
 xdotool key "ctrl+super+f"
+
+xdotool set_desktop 0
