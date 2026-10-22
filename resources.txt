@@ -1,0 +1,2 @@
+https://specifications.freedesktop.org/menu/latest/category-registry.html
+https://specifications.freedesktop.org/menu/latest/additional-category-registry.html

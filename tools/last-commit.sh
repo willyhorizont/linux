@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.5.12" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.5.13" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,17 +12,8 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-fix lxde openbox autostart;
-update tui0-powr-mnu-prompt.sh, remove cancel;
-update cheatsheet, add see command history, add Disable GRUB_TIMEOUT;
-add undo last commit cheatsheet;
-update sleep;
-update dmn-lockr.sh, update sleep;
-update indic0-wrkspc.sh, update sleep;
-update run-session.sh, update sleep;
-update run-session-i3.sh, update sleep;
-add wmctrl-lxcapg.sh;
-remove 5s timeout debian;
+update cheatsheet, add list all cats;
+add resources.txt;
 
 TODO #1:
 touch kb-cnfrm-cls.sh;
