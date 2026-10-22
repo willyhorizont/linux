@@ -146,11 +146,11 @@ E16 (Enlightenment v16)                 | [C] (Core)               | +100     | 
 MLVWM                                   | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 100       | 28                 | 31         | No         | Extreme Lightweight| Lightweight
 amiwm                                   | [C] (Core)               | +100     | X11-Only             | Mouse-friendly                          | < 200       | 20                 | 32         | No         | Extreme Lightweight| Lightweight
 <!-- Wayland Compositor -->
-Labwc                                   | [C] (Core), Python, Shell| +100     | Wayland-Only         | Both                                    | ~180 - 280 K| 5                  | 33         | Yes        | Lightweight        | Lightweight
+Labwc (Openbox for Wayland)             | [C] (Core), Python, Shell| +100     | Wayland-Only         | Both                                    | ~180 - 280 K| 5                  | 33         | Yes        | Lightweight        | Lightweight
 Steppewm                                | [Lua] (Core), C, Make    | -100     | Wayland-Only         | Mouse-friendly                          | ~1 - 3 K    | 14                 | 34         | Yes        | Lightweight        | Lightweight
 Waybox                                  | [C] (Core), Meson        | +100     | Wayland-Only         | Mouse-friendly                          | ~15 - 30 K  | 10                 | 35         | Yes        | Lightweight        | Lightweight
 Hikari                                  | [C] (Core), Jansson      | +100     | Wayland-Only         | Keyboard-driven                         | ~50 - 75 K  | 7                  | 36         | Yes        | Lightweight        | Lightweight
-Wayfire                                 | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~60 - 90 K  | 6                  | 37         | Full       | OK                 | Lightweight
+Wayfire (Compiz)                        | [C++] (Core)             | +100     | Wayland-Only         | Both                                    | ~60 - 90 K  | 6                  | 37         | Full       | OK                 | Lightweight
 ```
 
 ### Top Best Linux Automated / Dynamic / Dwindle / Spiral / Algorithmic Tiling Window Manager 2026 Q3
@@ -181,17 +181,18 @@ Name                                    | Languages                | Core Aura| 
 i3wm                                    | [C] (Core)               | +100     | X11-Only             | Both                                    | ~150 - 220 K| 2                  | 1          | No         | Lightweight        | Lightweight
 bspwm                                   | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | ~5 - 8 K    | 4                  | 2          | No         | Lightweight        | Lightweight
 herbstluftwm                            | [C++] (Core), Shell      | +100     | X11-Only             | Both                                    | ~15 - 25 K  | 3                  | 3          | No         | Lightweight        | Lightweight
-Sway                                    | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~250 - 350 K| 1                  | 4          | Minimal    | Lightweight        | Lightweight
+Sway (i3wm for Wayland)                 | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~250 - 350 K| 1                  | 4          | Minimal    | Lightweight        | Lightweight
 ```
 
 ### Top Best Linux Tabbed / Framing Window Manager 2026 Q3
 ```
 Name                                    | Languages                | Core Aura| Protocol             | Keyboard-driven / Mouse-friendly / Both | Users Count | Rank By Users Count| Rank By Me | GPU-driven | Older Hardware Use | Newer Hardware Use
 i3wm (Tabbed Mode)                      | [C] (Core)               | +100     | X11-Only             | Both                                    | ~150 - 220 K| 2                  | 1          | No         | Lightweight        | Lightweight
-Notion                                  | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | ~4 - 8 K    | 3                  | 2          | No         | Lightweight        | Lightweight
-PWM (Attachable Window Manager)         | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 5                  | 3          | No         | Lightweight        | Lightweight
+Notion (Ion)                            | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | ~4 - 8 K    | 3                  | 2          | No         | Lightweight        | Lightweight
+PWM (Attachable Window Manager)         | [C] (Core)               | +100     | X11-Only             | Keyboard-driven                         | < 100       | 6                  | 3          | No         | Lightweight        | Lightweight
 Sway (Tabbed Mode)                      | [C] (Core)               | +100     | Wayland-Only         | Both                                    | ~250 - 350 K| 1                  | 4          | Minimal    | Lightweight        | Lightweight
-Ion3 (Archived / Legacy)                | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | < 500       | 4                  | 5          | No         | Lightweight        | Lightweight
+Ion (Archived / Legacy)                 | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | < 500       | 4                  | 5          | No         | Lightweight        | Lightweight
+Ion3 (Archived / Legacy)                | [C] (Core), Lua          | +100     | X11-Only             | Keyboard-driven                         | < 500       | 5                  | 6          | No         | Lightweight        | Lightweight
 ```
 
 ### Top Best Linux Scrolling Window Manager 2026 Q3
