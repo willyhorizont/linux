@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pkill -9 -f "$HOME/willyhorizont.github.io/linux/run-session.sh" 2>/dev/null
+
 xdotool set_num_desktops 4
 
 pid_brv=$(wmctrl -l -x -G -p | awk '$8 == "brave-browser.Brave-browser" {print $3}' 2>/dev/null)
@@ -18,7 +20,7 @@ xdotool set_desktop_for_window "$wid_brv" 0
 xdotool set_desktop 0
 xdotool key "ctrl+super+f"
 
-pid_fm=$(wmctrl -l -x -G -p | awk '$8 == "pcmanfm.Pcmanfm" && $10 != "pcmanfm" {print $3}' 2>/dev/null)
+pids_fm=$(wmctrl -l -x -G -p | awk '$8 == "pcmanfm.Pcmanfm" && $10 != "pcmanfm" {print $3}' 2>/dev/null)
 if [ -n "$pids_fm" ]; then
     echo "$pids_fm" | while read -r pid; do
         if [ -n "$pid" ]; then

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pkill -9 -f "$HOME/willyhorizont.github.io/linux/run-session-i3.sh" 2>/dev/null
+
 CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
 i3-msg "[id=$CUR_ACTV_WIN_ID] move container to workspace 2"
 i3-msg "workspace 2"
@@ -18,7 +20,7 @@ done
 i3-msg "[id=$wid_brv] move container to workspace 1"
 i3-msg "workspace 1"
 
-pid_fm=$(wmctrl -l -x -G -p | awk '$8 == "pcmanfm.Pcmanfm" && $10 != "pcmanfm" {print $3}' 2>/dev/null)
+pids_fm=$(wmctrl -l -x -G -p | awk '$8 == "pcmanfm.Pcmanfm" && $10 != "pcmanfm" {print $3}' 2>/dev/null)
 if [ -n "$pids_fm" ]; then
     echo "$pids_fm" | while read -r pid; do
         if [ -n "$pid" ]; then
