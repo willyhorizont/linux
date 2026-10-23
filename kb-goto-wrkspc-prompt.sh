@@ -2,16 +2,37 @@
 
 SCRIPT_NAME="kb-goto-wrkspc-prompt.sh"
 
-while getopts "p:" opt; do
-    case ${opt} in
-        p ) TRGT_WRKSPC=$(( OPTARG - 1 )) ;;
-        \? ) echo "Usage: $0 [-p workspace_number]" && exit 1 ;;
+tot_wrkspc=$(xdotool get_num_desktops)
+curr_wrkspc=$(xdotool get_desktop)
+
+PROCESSED=0
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -p)
+            TRGT_WRKSPC=$(( $2 - 1 ))
+            PROCESSED=1
+            shift 2
+            ;;
+        --prev)
+            TRGT_WRKSPC=$(( (curr_wrkspc - 1 + tot_wrkspc) % tot_wrkspc ))
+            PROCESSED=1
+            shift
+            ;;
+        --next)
+            TRGT_WRKSPC=$(( (curr_wrkspc + 1) % tot_wrkspc ))
+            PROCESSED=1
+            shift
+            ;;
+        *)
+            echo "Usage: $0 [-p workspace_number] [--prev] [--next]"
+            exit 1
+            ;;
     esac
 done
 
-if [ -z "$TRGT_WRKSPC" ]; then
-    ACTIVE_WRKSPCS=$(seq 0 $(( $(xdotool get_num_desktops) - 1 )))
-
+if [ $PROCESSED -eq 0 ]; then
+    ACTIVE_WRKSPCS=$(seq 0 $(( tot_wrkspc - 1 )))
     TRGT_WRKSPC=$(echo "$ACTIVE_WRKSPCS" | rofi -dmenu -p "Go to Workspace")
 fi
 
@@ -20,7 +41,6 @@ if [ -z "$TRGT_WRKSPC" ]; then
 fi
 
 if echo "$TRGT_WRKSPC" | grep -qE '^[0-9]+$'; then
-    tot_wrkspc=$(xdotool get_num_desktops)
     if [ "$TRGT_WRKSPC" -ge "$tot_wrkspc" ]; then
         tot_wrkspc_nu=$((TRGT_WRKSPC + 1))
         xdotool set_num_desktops $tot_wrkspc_nu

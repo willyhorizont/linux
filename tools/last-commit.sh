@@ -2,7 +2,7 @@
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.5.19" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.5.21" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,7 +12,10 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update keybinds.md;
+update kb-tile-cur-wrkspc.sh, try replace xdotool windowactivate --sync WID to wmctrl -i -a WID, add --cycle;
+update kb-goto-wrkspc-prompt.sh, add --prev, add --next;
+update run-session.sh;
+update run-session-i3.sh;
 
 TODO #1:
 touch kb-cnfrm-cls.sh;

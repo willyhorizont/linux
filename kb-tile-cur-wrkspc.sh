@@ -5,6 +5,19 @@ if ! command -v wmctrl &> /dev/null || ! command -v xdotool &> /dev/null; then
     exit 1
 fi
 
+IS_CYCLE=0
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --cycle)
+            IS_CYCLE=1
+            shift
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
 cur_wrkspc=$(wmctrl -d | grep '*' | awk '{print $1}')
 OPEN_WINS=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
     if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
@@ -25,9 +38,31 @@ fi
 tile_win() {
     local wid=$1
     local kb=$2
-    wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
+    # wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
     xdotool windowactivate --sync "$wid"
+    # wmctrl -i -a "$wid"
     xdotool key "$kb"
+    # pos=""
+    # [ "$kb" == "ctrl+super+q" ] && pos="LT"
+    # [ "$kb" == "ctrl+super+shift+q" ] && pos="LT_L"
+    # [ "$kb" == "ctrl+super+shift+1" ] && pos="LT_R"
+    # [ "$kb" == "ctrl+super+a" ] && pos="LB"
+    # [ "$kb" == "ctrl+super+shift+a" ] && pos="LB_L"
+    # [ "$kb" == "ctrl+super+shift+z" ] && pos="LB_R"
+    # [ "$kb" == "ctrl+super+w" ] && pos="RT"
+    # [ "$kb" == "ctrl+super+shift+2" ] && pos="RT_L"
+    # [ "$kb" == "ctrl+super+shift+w" ] && pos="RT_R"
+    # [ "$kb" == "ctrl+super+s" ] && pos="RB"
+    # [ "$kb" == "ctrl+super+shift+x" ] && pos="RB_L"
+    # [ "$kb" == "ctrl+super+shift+s" ] && pos="RB_R"
+    # [ "$kb" == "ctrl+super+g" ] && pos="CG"
+    # [ "$kb" == "ctrl+super+f" ] && pos="F"
+    # [ "$kb" == "ctrl+super+Left" ] && pos="L"
+    # [ "$kb" == "ctrl+super+Right" ] && pos="R"
+    # [ "$kb" == "ctrl+super+Up" ] && pos="T"
+    # [ "$kb" == "ctrl+super+Down" ] && pos="B"
+    # window_title=$(xdotool getwindowname "$wid" 2>/dev/null)
+    # notify-send "WIN_COUNT: $WIN_COUNT" "$pos | $window_title"
 }
 
 LT="ctrl+super+q"          # C-W-q
@@ -51,8 +86,12 @@ B="ctrl+super+Down"        # C-W-Down
 
 CYCLE_FILE="/tmp/tile_cycle_ws_${cur_wrkspc}_wins_${WIN_COUNT}.state"
 
-cur_cy=$(cat "$CYCLE_FILE" 2>/dev/null)
-cur_cy=${cur_cy:-1}
+if [ "$IS_CYCLE" -eq 1 ]; then
+    cur_cy=$(cat "$CYCLE_FILE" 2>/dev/null)
+    cur_cy=${cur_cy:-1}
+else
+    cur_cy=1
+fi
 
 case $WIN_COUNT in
     1)
@@ -70,7 +109,7 @@ case $WIN_COUNT in
                 next_cycle=2
                 ;;
         esac
-        echo "$next_cycle" > "$CYCLE_FILE"
+        [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     2)
         case $cur_cy in
@@ -90,7 +129,7 @@ case $WIN_COUNT in
                 next_cycle=2
                 ;;
         esac
-        echo "$next_cycle" > "$CYCLE_FILE"
+        [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     3)
         case $cur_cy in
@@ -125,7 +164,7 @@ case $WIN_COUNT in
                 next_cycle=2
                 ;;
         esac
-        echo "$next_cycle" > "$CYCLE_FILE"
+        [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     4)
         case $cur_cy in
@@ -200,7 +239,7 @@ case $WIN_COUNT in
                 next_cycle=2
                 ;;
         esac
-        echo "$next_cycle" > "$CYCLE_FILE"
+        [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     5)
         case $cur_cy in
@@ -277,7 +316,7 @@ case $WIN_COUNT in
                 next_cycle=2
                 ;;
         esac
-        echo "$next_cycle" > "$CYCLE_FILE"
+        [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     6)
         case $cur_cy in
@@ -327,7 +366,7 @@ case $WIN_COUNT in
                 next_cycle=2
                 ;;
         esac
-        echo "$next_cycle" > "$CYCLE_FILE"
+        [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     7)
         case $cur_cy in
@@ -382,7 +421,7 @@ case $WIN_COUNT in
                 next_cycle=2
                 ;;
         esac
-        echo "$next_cycle" > "$CYCLE_FILE"
+        [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     8)
         case $cur_cy in
@@ -409,7 +448,7 @@ case $WIN_COUNT in
                 next_cycle=1
                 ;;
         esac
-        echo "$next_cycle" > "$CYCLE_FILE"
+        [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     *)
         tile_win "${WIN_ARRAY[0]}" "$LT"

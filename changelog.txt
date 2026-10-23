@@ -1,3 +1,44 @@
+[Last updated: 24 Oct 2026 @ 02:21 AM][version: 0.5.21]
+update kb-tile-cur-wrkspc.sh, try replace xdotool windowactivate --sync WID to wmctrl -i -a WID, add --cycle;
+update kb-goto-wrkspc-prompt.sh, add --prev, add --next;
+update run-session.sh;
+update run-session-i3.sh;
+
+TODO #1:
+touch kb-cnfrm-cls.sh;
+merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh;
+TODO #2:
+update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
+add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
+touch kb-update-indic.sh;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
+[Last updated: 23 Oct 2026 @ 08:04 PM][version: 0.5.20]
+update kb-tile-cur-wrkspc.sh, replace xdotool windowactivate --sync WID to wmctrl -i -a WID;
+
+TODO #1:
+touch kb-cnfrm-cls.sh;
+merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh;
+TODO #2:
+update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
+add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
+touch kb-update-indic.sh;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 23 Oct 2026 @ 07:10 PM][version: 0.5.19]
 update keybinds.md;
 
