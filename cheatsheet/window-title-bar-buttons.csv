@@ -1,0 +1,12 @@
+general                  ; Mac              ; Windows                               ; linux
+Window Management Buttons; Title Bar Buttons; System Caption Buttons                ; Window Decoration Buttons
+
+Windows layout           ; Mac layout
+_ ▢ X                    ; 🔴🟡🟢
+
+Mac                      ; Windows          ; behavior
+🔴                       ;                  ; Minimize to Mac Dock
+🟡                       ; _                ; Minimize to Windows Taskbar / Mac Dock
+🟢                       ; ▢                ; Enable Fullscreen
+                         ; 🗗               ; Restore maximized window
+                         ; X                ; Kill focused window
