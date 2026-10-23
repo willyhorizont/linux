@@ -26,7 +26,8 @@ fi
 tile_win() {
     local wid=$1
     local kb=$2
-    xdotool windowactivate --sync "$wid"
+    # xdotool windowactivate --sync "$wid"
+    wmctrl -i -a "$wid"
     xdotool key "$kb"
 }
 

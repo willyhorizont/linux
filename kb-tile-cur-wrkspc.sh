@@ -26,7 +26,8 @@ tile_win() {
     local wid=$1
     local kb=$2
     wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
-    xdotool windowactivate --sync "$wid"
+    # xdotool windowactivate --sync "$wid"
+    wmctrl -i -a "$wid"
     xdotool key "$kb"
 }
 
