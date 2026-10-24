@@ -20,11 +20,11 @@ done
 i3-msg "[id=$wid_brv] move container to workspace 1"
 i3-msg "workspace 1"
 
-pids_fm=$(wmctrl -l -x -G -p | awk '$8 == "pcmanfm.Pcmanfm" && $10 != "pcmanfm" {print $3}' 2>/dev/null)
-if [ -n "$pids_fm" ]; then
-    echo "$pids_fm" | while read -r pid; do
-        if [ -n "$pid" ]; then
-            kill -9 "$pid" 2>/dev/null
+wids_fm=$(wmctrl -l -x -G -p | awk '$8 == "pcmanfm.Pcmanfm" && $10 != "pcmanfm" {print $1}' 2>/dev/null)
+if [ -n "$wids_fm" ]; then
+    echo "$wids_fm" | while read -r wid_fm; do
+        if [ -n "$wid_fm" ]; then
+            kill -9 $(xdotool getwindowpid "$wid_fm")
         fi
     done
 fi
@@ -39,18 +39,6 @@ while true; do
     sleep 0.2
 done
 i3-msg "[class=\"Pcmanfm\"] move container to workspace 2"
-i3-msg "workspace 2"
-
-pkill -9 -x lxterminal 2>/dev/null
-i3-msg "exec lxterminal --working-directory=~"
-while true; do
-    wid_trm=$(wmctrl -l -x -G | awk '$7 == "lxterminal.Lxterminal" {print $1}' 2>/dev/null)
-    if [ -n "$wid_trm" ]; then
-        break
-    fi
-    sleep 0.2
-done
-i3-msg "[id=$wid_trm] move container to workspace 2"
 i3-msg "workspace 2"
 
 pid_vsc_lxde=$(wmctrl -l -x -G -p | awk '$8 == "com.microsoft.vscode.com.microsoft.VSCode" && (index($0, "linux-debian-lxde") || index($0, "linux-debian-lxde | ~/Codes/linux-debian-lxde")) {print $3}' 2>/dev/null)

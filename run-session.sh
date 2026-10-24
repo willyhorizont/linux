@@ -2,7 +2,11 @@
 
 pkill -9 -f "$HOME/willyhorizont.github.io/linux/run-session.sh" 2>/dev/null
 
+CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
 xdotool set_num_desktops 4
+xdotool set_desktop_for_window "$CUR_ACTV_WIN_ID" 1
+xdotool set_desktop 1
+xdotool key "ctrl+super+f"
 
 pid_brv=$(wmctrl -l -x -G -p | awk '$8 == "brave-browser.Brave-browser" {print $3}' 2>/dev/null)
 if [ -z "$pid_brv" ]; then
@@ -20,11 +24,11 @@ xdotool set_desktop_for_window "$wid_brv" 0
 xdotool set_desktop 0
 xdotool key "ctrl+super+f"
 
-pids_fm=$(wmctrl -l -x -G -p | awk '$8 == "pcmanfm.Pcmanfm" && $10 != "pcmanfm" {print $3}' 2>/dev/null)
-if [ -n "$pids_fm" ]; then
-    echo "$pids_fm" | while read -r pid; do
-        if [ -n "$pid" ]; then
-            kill -9 "$pid" 2>/dev/null
+wids_fm=$(wmctrl -l -x -G -p | awk '$8 == "pcmanfm.Pcmanfm" && $10 != "pcmanfm" {print $1}' 2>/dev/null)
+if [ -n "$wids_fm" ]; then
+    echo "$wids_fm" | while read -r wid_fm; do
+        if [ -n "$wid_fm" ]; then
+            kill -9 $(xdotool getwindowpid "$wid_fm")
         fi
     done
 fi
@@ -42,20 +46,6 @@ xdotool set_num_desktops 4
 xdotool set_desktop_for_window "$wid_fm" 1
 xdotool set_desktop 1
 xdotool key "ctrl+super+f"
-
-pkill -9 -x lxterminal 2>/dev/null
-lxterminal --working-directory=~ &
-while true; do
-    wid_trm=$(wmctrl -l -x -G | awk '$7 == "lxterminal.Lxterminal" {print $1}' 2>/dev/null)
-    if [ -n "$wid_trm" ]; then
-        break
-    fi
-    sleep 0.2
-done
-xdotool set_num_desktops 4
-xdotool set_desktop_for_window "$wid_trm" 1
-xdotool set_desktop 1
-xdotool key "ctrl+super+t"
 
 pid_vsc_lxde=$(wmctrl -l -x -G -p | awk '$8 == "com.microsoft.vscode.com.microsoft.VSCode" && (index($0, "linux-debian-lxde") || index($0, "linux-debian-lxde | ~/Codes/linux-debian-lxde")) {print $3}' 2>/dev/null)
 if [ -z "$pid_vsc_lxde" ]; then
