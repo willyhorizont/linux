@@ -117,6 +117,10 @@
             "key": "Terminal Emulator",
             "type": "terminal"
         },
+        {
+            "key": "Uptime",
+            "type": "uptime"
+        },
 
         {
             "type": "custom",
