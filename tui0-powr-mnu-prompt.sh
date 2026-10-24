@@ -51,19 +51,23 @@ ALL_ACTIONS=(
 
 ORDERED_KEYS=("btop" "lock" "logout" "suspend" "reboot" "shutdown")
 
-MENU_OPTIONS=""
-for key in "${ORDERED_KEYS[@]}"; do
-    DISPLAY_NAME=$(echo "$key" | tr '_' ' ')
-    MENU_OPTIONS+="$DISPLAY_NAME\n"
-done
+declare -A ALL_ICONS
+ALL_ICONS=(
+    ["shutdown"]="system-shutdown"
+    ["reboot"]="system-reboot"
+    ["suspend"]="system-suspend"
+    ["logout"]="system-log-out"
+    ["lock"]="system-lock-screen"
+    ["btop"]="utilities-system-monitor"
+)
 
-MENU_OPTIONS=$(echo -e "$MENU_OPTIONS" | sed '/^$/d')
-
-if [ -z "$MENU_OPTIONS" ]; then
-    exit 0
-fi
-
-CHOICE=$(echo -e "$MENU_OPTIONS" | rofi -dmenu -p "$TITLE")
+CHOICE=$( {
+    for key in "${ORDERED_KEYS[@]}"; do
+        DISPLAY_NAME=$(echo "$key" | tr '_' ' ')
+        ICON_NAME="${ALL_ICONS[$key]}"
+        printf "%b\n" "${DISPLAY_NAME}\0icon\x1f${ICON_NAME}"
+    done
+} | rofi -dmenu -p "$TITLE" -show-icons -i)
 
 if [ -z "$CHOICE" ]; then
     exit 0
