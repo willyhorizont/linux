@@ -1,8 +1,31 @@
 #!/bin/bash
 
+while true; do
+    read -sp "ARE YOU SURE: " PASS1
+    echo ""
+    
+    if [ -z "$PASS1" ]; then
+        echo "❌ Password empty! Please try again."
+        echo ""
+        continue
+    fi
+
+    read -sp "ARE YOU SUPER SURE: " PASS2
+    echo ""
+
+    if [ "$PASS1" == "$PASS2" ]; then
+        echo "✅ Password match. I hope you super duper sure..."
+        echo ""
+        break
+    else
+        echo "❌ Password not match! Please try again."
+        echo ""
+    fi
+done
+
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.5.25" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.6.2" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -12,9 +35,9 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update fastfetch config.jsonc, add uptime;
-add uptime.sh
-update indic6-powr.sh, add KWH;
+update last-commit.sh, add super confirmation;
+move run-session.sh to linux-debian-lxde;
+move run-session-i3.sh to linux-debian-lxde;
 
 TODO #1:
 touch kb-cnfrm-cls.sh;

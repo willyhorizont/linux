@@ -1,3 +1,24 @@
+[Last updated: 25 Oct 2026 @ 04:41 PM][version: 0.6.2]
+update last-commit.sh, add super confirmation;
+move run-session.sh to linux-debian-lxde;
+move run-session-i3.sh to linux-debian-lxde;
+
+TODO #1:
+touch kb-cnfrm-cls.sh;
+merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh;
+TODO #2:
+update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
+add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
+touch kb-update-indic.sh;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 25 Oct 2026 @ 06:01 AM][version: 0.5.25]
 update fastfetch config.jsonc, add uptime;
 add uptime.sh

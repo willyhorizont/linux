@@ -350,8 +350,11 @@
     "code-runner.ignoreSelection": true,
     "code-runner.runInTerminal": true,
     "files.associations": {
-        "*conf*": "shellscript",
-        "*autostart*": "shellscript",
+        // "last-commit.sh": "plaintext",
+        "**/i3/**/*conf*": "shellscript",
+        "**/LXDE/**/*conf*": "shellscript",
+        "**/LXDE/**/*autostart*": "shellscript",
+        "**/openbox/**/*autostart*": "shellscript",
 
         // 1. JavaScript / TypeScript
         "*.js": "javascript",
