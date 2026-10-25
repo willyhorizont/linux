@@ -114,7 +114,7 @@ if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch"
 fi
 if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
     echo "Opening welcome-window..."
-    xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "welcome-window" -hold -e fastfetch &
+    xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x24 -name "welcome-window" -hold -e fastfetch &
     while true; do
         if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
             break
@@ -216,7 +216,7 @@ while true; do
         if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ] && [ "$CUR_IDLE_MS" -lt "$LOCK_TM_MS" ]; then
             if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
-                xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
+                xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
                 while true; do
                     if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
                         break
@@ -240,7 +240,7 @@ while true; do
         if [ "$CUR_IDLE_MS" -ge "$LOCK_TM_MS" ]; then
             if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
-                xterm -bc -uc -u8 -bg black -fg white -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
+                xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
                 while true; do
                     if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
                         break
