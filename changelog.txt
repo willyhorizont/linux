@@ -1,3 +1,28 @@
+[Last updated: 26 Oct 2026 @ 06:57 AM][version: 0.6.5]
+rename dmn-locker.sh to dmn-screensavr.sh;
+update dmn-screensavr.sh, remove locking feature;
+rename tui0-locker.sh to tui0-screensavr.sh;
+update tui0-screensavr.sh, remove locking management;
+--touch kb-cnfrm-cls.sh--;
+--merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh--;
+delete dmn-wrkspc-mgr.sh;
+delete kb-cln-wrkspc.sh;
+update and fix indic0-wrkspc.sh, make it only shows non empty ws;
+
+TODO #1:
+TODO #2:
+update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
+add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
+touch kb-update-indic.sh;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 26 Oct 2026 @ 03:45 AM][version: 0.6.4]
 update dmn-locker.sh, update xterm call;
 

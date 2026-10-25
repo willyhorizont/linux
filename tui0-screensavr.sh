@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LOKD="$HOME/willyhorizont.github.io/linux/dmn-lockr.sh"
-CFG="$HOME/willyhorizont.github.io/.config/dmn-lockr.conf"
+LOKD="$HOME/willyhorizont.github.io/linux/dmn-screensavr.sh"
+CFG="$HOME/willyhorizont.github.io/.config/dmn-screensavr.conf"
 CFG_DIR=$(dirname "$CFG")
 
 init_conf() {
@@ -9,7 +9,6 @@ init_conf() {
         mkdir -p "$CFG_DIR"
         cat << EOF > "$CFG"
 idle_time_in_sec = 120
-lock_time_in_minute = 4
 show_tux = True
 show_window = True
 EOF
@@ -19,7 +18,6 @@ EOF
 read_conf() {
     init_conf
     V_IDLE=$(grep -E '^idle_time_in_sec' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
-    V_LOCK=$(grep -E '^lock_time_in_minute' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
     V_TUX=$(grep -E '^show_tux' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
     V_WIN=$(grep -E '^show_window' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
 }
@@ -42,18 +40,16 @@ while true; do
     fi
 
     echo "======================================="
-    echo "           LOCKER DAEMON TUI           "
+    echo "        SCREENSAVER DAEMON TUI         "
     echo "======================================="
     echo " Daemon Status     : $DMN_STAT"
     echo " Idle Timeout      : $V_IDLE sec"
-    echo " Auto-Lock Timeout : $V_LOCK mnt"
     echo " Show Tux          : $V_TUX"
     echo " Show Window       : $V_WIN"
     echo "---------------------------------------"
     echo " 1) Change Idle Timeout"
-    echo " 2) Change Auto-Lock Timeout"
-    echo " 3) Toggle Show Tux"
-    echo " 4) Toggle Show Window"
+    echo " 2) Toggle Show Tux"
+    echo " 3) Toggle Show Window"
     echo " 0) Exit"
     echo "======================================="
     echo -n " Select choice: "
@@ -73,18 +69,6 @@ while true; do
             fi
             ;;
         2)
-            echo -e "\n---------------------------------------"
-            read -p "Enter new auto-lock time (mnt): " NEW_LOCK
-            if echo "$NEW_LOCK" | grep -qE '^[0-9]+$'; then
-                sed -i "s|^lock_time_in_minute[[:space:]]*=.*|lock_time_in_minute = $NEW_LOCK|" "$CFG"
-                echo "[+] Auto-lock time updated to $NEW_LOCK mnt."
-                re_dmn
-            else
-                echo "[!] Error: Invalid input!"
-                read -rsp "Press any key to continue..." -n 1
-            fi
-            ;;
-        3)
             if [ "$V_TUX" = "True" ]; then
                 sed -i "s|^show_tux[[:space:]]*=.*|show_tux = False|" "$CFG"
                 echo -e "\n\n[-] Show Tux turned OFF."
@@ -94,7 +78,7 @@ while true; do
             fi
             re_dmn
             ;;
-        4)
+        3)
             if [ "$V_WIN" = "True" ]; then
                 sed -i "s|^show_window[[:space:]]*=.*|show_window = False|" "$CFG"
                 echo -e "\n\n[-] Show Window turned OFF."

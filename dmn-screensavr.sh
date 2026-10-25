@@ -7,16 +7,14 @@ if [ "$TOT_PROC" -gt 0 ]; then
     exit 1
 fi
 
-CFG="$HOME/willyhorizont.github.io/.config/dmn-lockr.conf"
+CFG="$HOME/willyhorizont.github.io/.config/dmn-screensavr.conf"
 CFG_DIR=$(dirname "$CFG")
 
 DFLT_IDLE_SEC=120
-DFLT_LOCK_MNT=4
 DFLT_SHW_TUX="true"
 DFLT_SHW_WIN="true"
 
 FLAG_IDLE=""
-FLAG_LOCK=""
 FLAG_TUX=""
 FLAG_WIN=""
 
@@ -28,15 +26,6 @@ while [ "$#" -gt 0 ]; do
                 shift 2
             else
                 echo "Error: Invalid --idle-sec value!"
-                exit 1
-            fi
-            ;;
-        --lock-mnt)
-            if [ -n "$2" ] && echo "$2" | grep -qE '^[0-9]+$'; then
-                FLAG_LOCK="$2"
-                shift 2
-            else
-                echo "Error: Invalid --lock-mnt value!"
                 exit 1
             fi
             ;;
@@ -59,7 +48,7 @@ while [ "$#" -gt 0 ]; do
             fi
             ;;
         *)
-            echo "Usage: dmn-lockr.sh [--idle-sec <seconds>] [--lock-mnt <minutes>] [--shw-tux <true|false>] [--shw-win <true|false>]"
+            echo "Usage: dmn-screensavr.sh [--idle-sec <seconds>] [--shw-tux <true|false>] [--shw-win <true|false>]"
             exit 1
             ;;
     esac
@@ -69,7 +58,6 @@ mkdir -p "$CFG_DIR"
 
 if [ ! -f "$CFG" ]; then
     W_IDLE=${FLAG_IDLE:-$DFLT_IDLE_SEC}
-    W_LOCK=${FLAG_LOCK:-$DFLT_LOCK_MNT}
     W_TUX=${FLAG_TUX:-$DFLT_SHW_TUX}
     W_WIN=${FLAG_WIN:-$DFLT_SHW_WIN}
     
@@ -78,31 +66,25 @@ if [ ! -f "$CFG" ]; then
 
     cat << EOF > "$CFG"
 idle_time_in_sec = $W_IDLE
-lock_time_in_minute = $W_LOCK
 show_tux = $W_TUX_CAP
 show_window = $W_WIN_CAP
 EOF
 fi
 
 CFG_IDLE=$(grep -E '^idle_time_in_sec[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
-CFG_LOCK=$(grep -E '^lock_time_in_minute[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
 CFG_TUX=$(grep -E '^show_tux[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2 | tr '[:upper:]' '[:lower:]')
 CFG_WIN=$(grep -E '^show_window[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2 | tr '[:upper:]' '[:lower:]')
 
 IDLE_TM_SEC=${FLAG_IDLE:-${CFG_IDLE:-$DFLT_IDLE_SEC}}
-LOCK_TM_MNT=${FLAG_LOCK:-${CFG_LOCK:-$DFLT_LOCK_MNT}}
 SHW_TUX=${FLAG_TUX:-${CFG_TUX:-$DFLT_SHW_TUX}}
 SHW_WIN=${FLAG_WIN:-${CFG_WIN:-$DFLT_SHW_WIN}}
 
 IDLE_TM_MS=$((IDLE_TM_SEC * 1000))
-LOCK_TM_MS=$((LOCK_TM_MNT * 60 * 1000))
 
 if ! command -v xprintidle >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&1; then
     echo "Error: missing dependencies 'xprintidle wmctrl'..."
     exit 1
 fi
-
-pkill -9 -x "xtrlock" 2>/dev/null
 
 WELCOME_WIN_ALIVE=false
 if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
@@ -142,7 +124,6 @@ fi
 
 echo "=================================="
 echo " Idle Timeout      : $IDLE_TM_SEC sec"
-echo " Auto-Lock Timeout : $LOCK_TM_MNT mnt"
 echo " Show Tux          : $SHW_TUX"
 echo " Show Window       : $SHW_WIN"
 echo "=================================="
@@ -186,7 +167,7 @@ while true; do
         IS_TUX_ALLOWED=true
     fi
 
-    if [ "$CUR_IDLE_MS" -lt 1000 ] && ! pgrep -x "xtrlock" >/dev/null; then
+    if [ "$CUR_IDLE_MS" -lt 1000 ]; then
         if [ "$WELCOME_WIN_ALIVE" = true ]; then
             echo "Closing welcome-window..."
             pkill -9 -f "xterm.*-name welcome-window" 2>/dev/null
@@ -213,7 +194,7 @@ while true; do
             fi
         fi
     else
-        if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ] && [ "$CUR_IDLE_MS" -lt "$LOCK_TM_MS" ]; then
+        if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ]; then
             if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
                 echo "Opening idle-window..."
                 xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
@@ -235,33 +216,6 @@ while true; do
                 echo "Deploying tux..."
                 xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
                 TUX_ALIVE=true
-            fi
-        fi
-        if [ "$CUR_IDLE_MS" -ge "$LOCK_TM_MS" ]; then
-            if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
-                echo "Opening idle-window..."
-                xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x24 -name "idle-window" -hold -e fastfetch &
-                while true; do
-                    if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
-                        break
-                    fi
-                    sleep 0.2
-                done
-                IDLE_WIN_ALIVE=true
-            fi
-            if [ "$IS_TUX_ALLOWED" = false ]; then
-                if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
-                    pkill -9 -x "xpenguins" 2>/dev/null
-                    TUX_ALIVE=false
-                fi
-            elif [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
-                echo "Deploying tux..."
-                xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
-                TUX_ALIVE=true
-            fi
-            if ! pgrep -x "xtrlock" >/dev/null; then
-                echo "Locking..."
-                xtrlock &
             fi
         fi
     fi
