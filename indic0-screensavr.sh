@@ -2,10 +2,10 @@
 
 TOOLTIP_TXT=$(cat << EOF
 \`                              
-      💡 indic0-tux.sh          
-                                
-    click to open tui0-lockr.sh   
-                               .
+       💡 indic0-screensavr.sh        
+                                      
+   click to open tui0-screensavr.sh   
+                                     .
 EOF
 )
 

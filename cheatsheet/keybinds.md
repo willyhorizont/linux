@@ -62,7 +62,7 @@ $meta+$space
 ```
 # Linux
 $super+$return
-$super+$meta+t
+$control+$meta+t
 # Windows
 # Mac
 ```

@@ -25,7 +25,7 @@ done
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.6.5" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.6.7" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -35,15 +35,9 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-rename dmn-locker.sh to dmn-screensavr.sh;
-update dmn-screensavr.sh, remove locking feature;
-rename tui0-locker.sh to tui0-screensavr.sh;
-update tui0-screensavr.sh, remove locking management;
---touch kb-cnfrm-cls.sh--;
---merge dmn-wrkspc-mgr.sh to indic0-wrkspc.sh, and delete dmn-wrkspc-mgr.sh--;
-delete dmn-wrkspc-mgr.sh;
-delete kb-cln-wrkspc.sh;
-update and fix indic0-wrkspc.sh, make it only shows non empty ws;
+rename indic0-tux.sh to indic0-screensavr.sh;
+update indic6-powr.sh, remove KWH;
+update README.md, rename indic0-tux.sh to indic0-screensavr.sh;
 
 TODO #1:
 TODO #2:
