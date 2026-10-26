@@ -129,7 +129,7 @@ echo " Show Window       : $SHW_WIN"
 echo "=================================="
 
 while true; do
-    cur_wrkspc=$(wmctrl -d | grep '*' | awk '{print $1}')
+    cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
     OPEN_WINS_COUNT=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
         if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
         if ($7 == "plank.Plank" && $9 == "plank") next;

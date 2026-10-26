@@ -17,7 +17,7 @@ get_geom() {
     echo $(grep "^${k}[[:space:]]*=" "$CONF_FILE" | sed 's/=//g' | awk '{$1=""; print $0}')
 }
 
-cur_wrkspc=$(wmctrl -d | grep '*' | awk '{print $1}')
+cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
 OPEN_WINS=$(wmctrl -l -x | awk -v ws="$cur_wrkspc" '
 $2 == ws {
     if ($3 == "pcmanfm.Pcmanfm" && $5 == "pcmanfm") next;

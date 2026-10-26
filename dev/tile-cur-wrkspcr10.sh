@@ -13,7 +13,7 @@ SCREEN_W=$(xdotool getdisplaygeometry | awk '{print $1}')
 SCREEN_H=$(xdotool getdisplaygeometry | awk '{print $2}')
 h_half=$(( SCREEN_H / 2 ))
 
-cur_wrkspc=$(wmctrl -d | grep '*' | awk '{print $1}')
+cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
 
 OPEN_WINS=$(wmctrl -l -x | awk -v ws="$cur_wrkspc" '
 $2 == ws {

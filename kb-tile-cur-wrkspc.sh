@@ -18,7 +18,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-cur_wrkspc=$(wmctrl -d | grep '*' | awk '{print $1}')
+cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
 OPEN_WINS=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
     if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
     if ($7 == "plank.Plank" && $9 == "plank") next;
