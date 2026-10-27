@@ -25,7 +25,7 @@ done
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.6.8" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.6.10" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -35,11 +35,7 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-improve get cur wrkspc;
-update indic0-wrkspc.sh, add --shw-wins --rev --pango; 
---make ws 1 based index--;
-update kb-goto-wrkspc-prompt.sh, display num start with 1;
-update kb-mov-win-to-wrkspc-prompt.sh, display num start with 1;
+small fix in dmn-screensavr.sh;
 
 TODO #1:
 update kb-goto-wrkspc-prompt.sh --prev --next to skip empty wrkspc;

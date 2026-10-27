@@ -167,7 +167,7 @@ while true; do
         IS_TUX_ALLOWED=true
     fi
 
-    if [ "$CUR_IDLE_MS" -lt 1000 ]; then
+    if [ "$CUR_IDLE_MS" -lt 1000 ] && ! pgrep -x "xtrlock" >/dev/null; then
         if [ "$WELCOME_WIN_ALIVE" = true ]; then
             echo "Closing welcome-window..."
             pkill -9 -f "xterm.*-name welcome-window" 2>/dev/null
