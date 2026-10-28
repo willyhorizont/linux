@@ -81,22 +81,15 @@ SHW_WIN=${FLAG_WIN:-${CFG_WIN:-$DFLT_SHW_WIN}}
 
 IDLE_TM_MS=$((IDLE_TM_SEC * 1000))
 
-if ! command -v xprintidle >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&1; then
-    echo "Error: missing dependencies 'xprintidle wmctrl'..."
+if ! command -v xprintidle >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&1 || ! command -v xdotool >/dev/null 2>&1; then
+    echo "Error: missing dependencies 'xprintidle wmctrl xdotool'..."
     exit 1
 fi
 
 WELCOME_WIN_ALIVE=false
-if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
-    WELCOME_WIN_ALIVE=true
-fi
-IDLE_WIN_ALIVE=false
-if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
-    IDLE_WIN_ALIVE=true
-fi
-if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
+if [ "$SHW_WIN" = "true" ]; then
     echo "Opening welcome-window..."
-    xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x26 -name "welcome-window" -hold -e fastfetch &
+    xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "welcome-window" -hold -e fastfetch &
     while true; do
         if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
             break
@@ -107,20 +100,6 @@ if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_A
 fi
 
 TUX_ALIVE=false
-CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
-IS_CUR_ACTV_WIN_MAXED=false
-if [ -n "$CUR_ACTV_WIN_ID" ]; then
-    CUR_ACTV_WIN_STATE=$(xprop -id "$CUR_ACTV_WIN_ID" _NET_WM_STATE 2>/dev/null)
-    if echo "$CUR_ACTV_WIN_STATE" | grep -qE "MAXIMIZED_HORZ|MAXIMIZED_VERT" && ! echo "$CUR_ACTV_WIN_STATE" | grep -q "HIDDEN"; then
-        IS_CUR_ACTV_WIN_MAXED=true
-    fi
-fi
-
-if [ "$SHW_TUX" = "true" ] && [ "$IS_CUR_ACTV_WIN_MAXED" = false ]; then
-    echo "Deploying tux..."
-    xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
-    TUX_ALIVE=true
-fi
 
 echo "=================================="
 echo " Idle Timeout      : $IDLE_TM_SEC sec"
@@ -129,15 +108,6 @@ echo " Show Window       : $SHW_WIN"
 echo "=================================="
 
 while true; do
-    cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
-    OPEN_WINS_COUNT=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
-        if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
-        if ($7 == "plank.Plank" && $9 == "plank") next;
-        if ($7 == "tint2.Tint2") next;
-        if ($7 == "xpenguins.Xpenguins") next;
-        if ($7 ~ /welcome-window|idle-window/) next;
-        print $1
-    }' 2>/dev/null | grep -c .)
     CUR_IDLE_MS=$(xprintidle 2>/dev/null)
     CUR_ACTV_WIN_ID=$(xdotool getactivewindow 2>/dev/null)
     IS_CUR_ACTV_WIN_MAXED=false
@@ -147,76 +117,45 @@ while true; do
             IS_CUR_ACTV_WIN_MAXED=true
         fi
     fi
-    CUR_ACTV_WIN_CLASS=""
-    if [ -n "$CUR_ACTV_WIN_ID" ]; then
-        CUR_ACTV_WIN_CLASS=$(xprop -id "$CUR_ACTV_WIN_ID" WM_CLASS 2>/dev/null | awk -F '"' '{print $4}')
-    fi
-
-    WELCOME_WIN_ALIVE=false
-    if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
-        WELCOME_WIN_ALIVE=true
-    fi
-    IDLE_WIN_ALIVE=false
-    if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
-        IDLE_WIN_ALIVE=true
-    fi
-
-    if [ "$OPEN_WINS_COUNT" -gt 1 ] || [ "$IS_CUR_ACTV_WIN_MAXED" = true ]; then
-        IS_TUX_ALLOWED=false
-    else
-        IS_TUX_ALLOWED=true
-    fi
-
-    if [ "$CUR_IDLE_MS" -lt 1000 ] && ! pgrep -x "xtrlock" >/dev/null; then
-        if [ "$WELCOME_WIN_ALIVE" = true ]; then
-            echo "Closing welcome-window..."
-            pkill -9 -f "xterm.*-name welcome-window" 2>/dev/null
-            WELCOME_WIN_ALIVE=false
-        fi
-        if [ "$IDLE_WIN_ALIVE" = true ]; then
-            echo "Closing idle-window..."
-            pkill -9 -f "xterm.*-name idle-window" 2>/dev/null
-            IDLE_WIN_ALIVE=false
-        fi
-        if [ "$IS_TUX_ALLOWED" = false ]; then
-            if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
-                echo "Killing tux..."
-                pkill -9 -x "xpenguins" 2>/dev/null
-                TUX_ALIVE=false
-            fi
-        else
-            if [ -n "$CUR_ACTV_WIN_CLASS" ] && [ "$CUR_ACTV_WIN_CLASS" != "Plank" ] && [ "$CUR_ACTV_WIN_CLASS" != "Tint2" ]; then
-                if [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
-                    echo "Deploying tux..."
-                    xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
-                    TUX_ALIVE=true
+    if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then WELCOME_WIN_ALIVE=true; else WELCOME_WIN_ALIVE=false; fi
+    if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then IDLE_WIN_ALIVE=true; else IDLE_WIN_ALIVE=false; fi
+    if pgrep -x "xtrlock" >/dev/null; then XTRLOCK_ALIVE=true; else XTRLOCK_ALIVE=false; fi
+    IS_SYSTEM_IDLE=false
+    if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ]; then
+        if [ "$SHW_WIN" = "true" ] && [ "$IDLE_WIN_ALIVE" = false ]; then
+            echo "Opening idle-window..."
+            xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "idle-window" -hold -e fastfetch &
+            while true; do
+                if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
+                    break
                 fi
-            fi
+                sleep 0.2
+            done
+            IDLE_WIN_ALIVE=true
+        fi
+        IS_SYSTEM_IDLE=true
+    fi
+    if [ "$CUR_IDLE_MS" -lt 1000 ] && [ "$IDLE_WIN_ALIVE" = true ]; then
+        echo "Closing idle-window..."
+        pkill -9 -f "xterm.*-name idle-window" 2>/dev/null
+        IDLE_WIN_ALIVE=false
+    fi
+    if [ "$IS_SYSTEM_IDLE" = true ] || \
+       [ "$IDLE_WIN_ALIVE" = true ] || \
+       [ "$WELCOME_WIN_ALIVE" = true ] || \
+       [ "$XTRLOCK_ALIVE" = true ] || \
+       [ "$IS_CUR_ACTV_WIN_MAXED" = false ] || \
+       false; then
+        if [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
+            echo "Deploying tux..."
+            xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
+            TUX_ALIVE=true
         fi
     else
-        if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ]; then
-            if [ "$SHW_WIN" = "true" ] && [ "$WELCOME_WIN_ALIVE" = false ] && [ "$IDLE_WIN_ALIVE" = false ]; then
-                echo "Opening idle-window..."
-                xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x26 -name "idle-window" -hold -e fastfetch &
-                while true; do
-                    if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
-                        break
-                    fi
-                    sleep 0.2
-                done
-                IDLE_WIN_ALIVE=true
-            fi
-            if [ "$IS_TUX_ALLOWED" = false ]; then
-                if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
-                    echo "Killing tux..."
-                    pkill -9 -x "xpenguins" 2>/dev/null
-                    TUX_ALIVE=false
-                fi
-            elif [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
-                echo "Deploying tux..."
-                xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
-                TUX_ALIVE=true
-            fi
+        if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
+            echo "Killing tux..."
+            pkill -9 -x "xpenguins" 2>/dev/null
+            TUX_ALIVE=false
         fi
     fi
     sleep 1
