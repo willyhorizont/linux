@@ -8,15 +8,11 @@ sudo apt install breeze-cursor-theme -y
 
 ## Icon theme
 ```
-sudo apt install papirus-icon-theme
-```
-
-## Widget Style theme
-```
-sudo apt install yaru-theme-gtk
-```
-
-## Window Border theme
-```
-sudo apt install greybird-gtk-theme -y
+sudo apt install -y \
+    hicolor-icon-theme \
+    breeze-icon-theme \
+    adwaita-icon-theme \
+    papirus-icon-theme \
+    numix-icon-theme-circle \
+    ""
 ```

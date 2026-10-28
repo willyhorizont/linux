@@ -25,7 +25,7 @@ done
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.6.13" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.6.14" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -35,16 +35,7 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
---remove hardcoded style--;
-update kb-goto-wrkspc-prompt.sh --prev --next to skip empty wrkspc;
---rename workspace name on indic0-wrkspc.sh--;
---update kb-goto-wrkspc-prompt.sh to go to name instead of index--;
---update kb-nu-wrkspc.sh also set workspace name to name instead of number--;
-update dmn-screensavr.sh, fix xterm window geometry;
-delete kb-goto-wrkspc-prompt.sh;
-delete kb-mov-win-to-wrkspc-prompt.sh;
-delete kb-nu-wrkspc.sh;
-add wrkspc-mgr.sh;
+update icon-theme;
 
 TODO #1:
 launch fastfetch and tux on xtrlock;
