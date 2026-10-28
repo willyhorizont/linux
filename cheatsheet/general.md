@@ -61,3 +61,9 @@ sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub && sudo updat
 ```
 grep "Categories=" /usr/share/applications/*.desktop
 ```
+
+### List all workspaces
+```
+wmctrl -d
+xprop -root _NET_DESKTOP_NAMES
+```

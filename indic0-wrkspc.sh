@@ -31,10 +31,10 @@ done
 
 TOOLTIP_TXT=$(cat << EOF
 \`                                 
-            💡 indic0-wrkspc.sh              
-                                             
-   click to open kb-goto-wrkspc-prompt.sh    
-                                            .
+       💡 indic0-wrkspc.sh        
+                                  
+   click to open wrkspc-mgr.sh    
+                                 .
 EOF
 )
 
