@@ -1,3 +1,40 @@
+[Last updated: 28 Oct 2026 @ 10:43 PM][version: 0.6.13]
+--remove hardcoded style--;
+update kb-goto-wrkspc-prompt.sh --prev --next to skip empty wrkspc;
+--rename workspace name on indic0-wrkspc.sh--;
+--update kb-goto-wrkspc-prompt.sh to go to name instead of index--;
+--update kb-nu-wrkspc.sh also set workspace name to name instead of number--;
+update dmn-screensavr.sh, fix xterm window geometry;
+delete kb-goto-wrkspc-prompt.sh;
+delete kb-mov-win-to-wrkspc-prompt.sh;
+delete kb-nu-wrkspc.sh;
+add wrkspc-mgr.sh;
+
+TODO #1:
+launch fastfetch and tux on xtrlock;
+update indic* add --pref --suff;
+combine indic* with tui* default to tui, --print for indic;
+update README.md, add strikethrough to wm that can not be installed via apt install;
+TODO #2:
+rofi grid;
+mac launchpad;
+skippy-xd;
+mac mission control or windows task view;
+remove space between months and days in SuckMyClock;
+dvd screensaver;
+panel with signal support, IPC?;
+update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
+add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
+touch kb-update-indic.sh;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 28 Oct 2026 @ 10:40 PM][version: 0.6.12]
 update dmn-screensavr.sh, fix xterm window geometry;
 delete kb-goto-wrkspc-prompt.sh;
