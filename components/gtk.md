@@ -6,17 +6,19 @@
 * ~~cariro-dock~~
 
 ## menu
-* jgmenu
 * rofi
+* dmenu
+* jgmenu
 * xfce4-panel + xfce4-whiskermenu-plugin
 
 ## terminal
 * lxterminal
-* xfce4-terminal
-* foot
-* kitty
 * alacritty
+* wezterm
+* xfce4-terminal
+* kitty
 * ghostty
+* foot (wayland)
 
 ## file manager
 * pcmanfm

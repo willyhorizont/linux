@@ -152,6 +152,25 @@
         "editor.wordHighlightBackground": "#0000004f",
         "editor.findMatchBorder": "#ffffff",
         "editor.findMatchHighlightBackground": "#FF000044",
+
+        "terminal.background": "#000000",
+        "terminal.foreground": "#CCFF00",
+        "terminal.ansiBlack": "#000000",         // color 0
+        "terminal.ansiRed": "#00ADD8",           // color 1
+        "terminal.ansiGreen": "#00ADD8",         // color 2
+        "terminal.ansiYellow": "#CCFF00",        // color 3
+        "terminal.ansiBlue": "#FF1493",          // color 4
+        "terminal.ansiMagenta": "#00ADD8",       // color 5
+        "terminal.ansiCyan": "#00ADD8",          // color 6
+        "terminal.ansiWhite": "#FF1493",         // color 7
+        "terminal.ansiBrightBlack": "#555555",   // color 8
+        "terminal.ansiBrightRed": "#00ADD8",     // color 9
+        "terminal.ansiBrightGreen": "#55FF55",   // color 10
+        "terminal.ansiBrightYellow": "#CCFF00",  // color 11
+        "terminal.ansiBrightBlue": "#FF1493",    // color 12
+        "terminal.ansiBrightMagenta": "#FF55FF", // color 13
+        "terminal.ansiBrightCyan": "#55FFFF",    // color 14
+        "terminal.ansiBrightWhite": "#FFFFFF"    // color 15
     },
     "editor.tokenColorCustomizations": {
         "[Visual Studio 2017 Dark - C++]": {

@@ -25,7 +25,7 @@ done
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.6.16" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.6.20" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -35,10 +35,21 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update screenshot;
+--update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh--;
+--add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content--;
+--touch kb-update-indic.sh--;
+move .bashrc to linux-debian-lxde;
+move fastfetch config.jsonc to linux-debian-lxde;
+move btop.conf to linux-debian-lxde;
+move lazygit config.yml to linux-debian-lxde;
+delete .config/
+update .vscode settings.json
+update terminal list;
+add shell-prompt.md
+--launch fastfetch and tux on xtrlock--;
+update dmn-screensavr.sh, tux not killed when unidle and still locked;
 
 TODO #1:
-launch fastfetch and tux on xtrlock;
 update indic* add --pref --suff;
 combine indic* with tui* default to tui, --print for indic;
 update README.md, add strikethrough to wm that can not be installed via apt install;
@@ -50,9 +61,6 @@ mac mission control or windows task view;
 remove space between months and days in SuckMyClock;
 dvd screensaver;
 panel with signal support, IPC?;
-update indic0-wrkspc.sh, update to read file on RMB click and add keybind to set the text content, add dmn-wrkspc-mgr.sh;
-add --eco to indic* SPRM to read file on RMB click and add keybind to set the text content;
-touch kb-update-indic.sh;
 TODO #3:
 make window font size smaller;
 check *openbox*.sh, remove openbox part if not related;

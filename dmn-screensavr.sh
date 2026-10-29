@@ -140,11 +140,11 @@ while true; do
         pkill -9 -f "xterm.*-name idle-window" 2>/dev/null
         IDLE_WIN_ALIVE=false
     fi
-    if [ "$IS_SYSTEM_IDLE" = true ] || \
-       [ "$IDLE_WIN_ALIVE" = true ] || \
-       [ "$WELCOME_WIN_ALIVE" = true ] || \
-       [ "$XTRLOCK_ALIVE" = true ] || \
-       [ "$IS_CUR_ACTV_WIN_MAXED" = false ] || \
+    if [[ "$IS_SYSTEM_IDLE" == true ]] ||
+       [[ "$IDLE_WIN_ALIVE" == true ]] ||
+       [[ "$WELCOME_WIN_ALIVE" == true ]] ||
+       [[ "$XTRLOCK_ALIVE" == true ]] ||
+       [[ "$IS_CUR_ACTV_WIN_MAXED" == false ]] ||
        false; then
         if [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
             echo "Deploying tux..."
@@ -152,6 +152,10 @@ while true; do
             TUX_ALIVE=true
         fi
     else
+        if [[ "$XTRLOCK_ALIVE" == true ]]; then
+            sleep 1
+            continue
+        fi
         if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
             echo "Killing tux..."
             pkill -9 -x "xpenguins" 2>/dev/null
