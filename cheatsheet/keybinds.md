@@ -24,11 +24,11 @@ capslock    ; Caps Lock, ⇪                        ; caps lock             ; Ca
 
 ## Order
 ```
-Windows = control ➡️ super ➡️ meta
-Mac     = control ➡️ meta  ➡️ super
+Windows = $control ➡️ $super ➡️ $meta
+Mac     = $control ➡️ $meta  ➡️ $super
 ```
 
-## open file manager
+## open Windows File Explorer / Mac Finder / Linux Thunar or PCManFM
 ```
 # Linux
 # Windows
@@ -36,7 +36,7 @@ $super+e
 # Mac
 ```
 
-## open Windows Start menu / Mac launchpad / xfce4-popup-whiskermenu
+## open Windows Start menu / Mac Launchpad / Linux xfce4-popup-whiskermenu or jgmenu or dmenu or rofi
 ```
 # Linux
 $meta+F1
@@ -48,7 +48,7 @@ $super
 F4
 ```
 
-## open Windows Run / Mac spotlight / dmenu or rofi
+## open Windows Run / Mac Spotlight / Linux dmenu or rofi
 ```
 # Linux
 $super+d
@@ -65,6 +65,15 @@ $super+$return
 $control+$meta+t
 # Windows
 # Mac
+```
+
+## open Windows Task Manager / Mac Activity Monitor / Linux btop
+```
+# Linux
+# Windows
+$control+$shift+$escape
+# Mac
+$super+$meta+$escape
 ```
 
 ## kill focused window
