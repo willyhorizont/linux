@@ -81,7 +81,7 @@ elif [ "$CON_TYPE" = "wifi" ]; then
 \`                               
        💡 indic2-net.sh          
                                  
-    ${IC_WIFI} ${SIG_PAD}%       
+     ${IC_WIFI} ${SSID:-Unknown}                   
                                  
      --ic-init  ; ${IC_INIT}     
      --ic-wifi  ; ${IC_WIFI}     

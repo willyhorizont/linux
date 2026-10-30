@@ -25,6 +25,7 @@ https://github.com/da-luce/astroterm                                            
 dysk                                                                                             ; disk-util
 top                                                                                              ; task-manager, system-resource-monitor
 htop                                                                                             ; task-manager, system-resource-monitor
+https://github.com/xxxserxxx/gotop                                                               ; task-manager, system-resource-monitor
 nmon                                                                                             ; task-manager, system-resource-monitor
 glances                                                                                          ; task-manager, system-resource-monitor; python
 gtop                                                                                             ; task-manager, system-resource-monitor; javascript
