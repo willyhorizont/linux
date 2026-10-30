@@ -25,7 +25,7 @@ done
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.6.22" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.6.24" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -35,12 +35,14 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-small update on lxterminal call;
-small update on indic2-net.sh;
+undo update terminal call, add geometry back;
+update terminal color;
 
-TODO #1:
+working on:
 update indic* add --pref --suff;
 combine indic* with tui* default to tui, --print for indic;
+
+TODO #1:
 update README.md, add strikethrough to wm that can not be installed via apt install;
 TODO #2:
 rofi grid;

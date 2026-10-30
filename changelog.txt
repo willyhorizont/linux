@@ -1,3 +1,30 @@
+[Last updated: 31 Oct 2026 @ 01:09 AM][version: 0.6.24]
+undo update terminal call, add geometry back;
+update terminal color;
+
+working on:
+update indic* add --pref --suff;
+combine indic* with tui* default to tui, --print for indic;
+
+TODO #1:
+update README.md, add strikethrough to wm that can not be installed via apt install;
+TODO #2:
+rofi grid;
+mac launchpad;
+skippy-xd;
+mac mission control or windows task view;
+remove space between months and days in SuckMyClock;
+dvd screensaver;
+panel with signal support, IPC?;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 30 Oct 2026 @ 12:25 PM][version: 0.6.22]
 small update on lxterminal call;
 small update on indic2-net.sh;
