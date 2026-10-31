@@ -170,8 +170,15 @@
         "terminal.ansiBrightBlue": "#00ADD8",    // color 12
         "terminal.ansiBrightMagenta": "#FF1493", // color 13
         "terminal.ansiBrightCyan": "#CCFF00",    // color 14
-        "terminal.ansiBrightWhite": "#FFFFFF"    // color 15
+        "terminal.ansiBrightWhite": "#FFFFFF",   // color 15
     },
+    "terminal.integrated.fontSize": 10,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyleInactive": "line",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.windows": "bash",
+    "terminal.integrated.gpuAcceleration": "off",
     "editor.tokenColorCustomizations": {
         "[Visual Studio 2017 Dark - C++]": {
             "variables": "#dfc570",
@@ -238,9 +245,6 @@
     },
     // "files.defaultLanguage": "javascript",
     // "files.defaultLanguage": "typescriptreact",
-    "terminal.integrated.cursorStyle": "line",
-    "terminal.integrated.cursorBlinking": true,
-    "terminal.integrated.cursorStyleInactive": "line",
     "[typst]": {
         "editor.wordWrap": "off",
         "editor.tabSize": 4,
@@ -291,13 +295,10 @@
     },
     "code-runner.showRunIconInEditorTitleMenu": true,
 
-    "terminal.integrated.defaultProfile.linux": "bash",
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
     "php.suggest.basic": false,
     "window.title": "${rootName}${separator}${activeEditorLong}${dirty}",
     "window.menuStyle": "custom",
     "window.titleBarStyle": "native",
-    "terminal.integrated.gpuAcceleration": "off",
     "json.maxItemsComputed": 500000,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "editor.lineHeight": 27,

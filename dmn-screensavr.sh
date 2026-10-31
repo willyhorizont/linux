@@ -60,9 +60,9 @@ if [ ! -f "$CFG" ]; then
     W_IDLE=${FLAG_IDLE:-$DFLT_IDLE_SEC}
     W_TUX=${FLAG_TUX:-$DFLT_SHW_TUX}
     W_WIN=${FLAG_WIN:-$DFLT_SHW_WIN}
-    
-    if [ "$W_TUX" = "true" ]; then W_TUX_CAP="True"; else W_TUX_CAP="False"; fi
-    if [ "$W_WIN" = "true" ]; then W_WIN_CAP="True"; else W_WIN_CAP="False"; fi
+
+    if [[ "$W_TUX" == "true" ]]; then W_TUX_CAP="True"; else W_TUX_CAP="False"; fi
+    if [[ "$W_WIN" == "true" ]]; then W_WIN_CAP="True"; else W_WIN_CAP="False"; fi
 
     cat << EOF > "$CFG"
 idle_time_in_sec = $W_IDLE
@@ -86,8 +86,7 @@ if ! command -v xprintidle >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&
     exit 1
 fi
 
-WELCOME_WIN_ALIVE=false
-if [ "$SHW_WIN" = "true" ]; then
+if [[ "$SHW_WIN" == "true" ]]; then
     echo "Opening welcome-window..."
     xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "welcome-window" -hold -e fastfetch &
     while true; do
@@ -96,10 +95,7 @@ if [ "$SHW_WIN" = "true" ]; then
         fi
         sleep 0.2
     done
-    WELCOME_WIN_ALIVE=true
 fi
-
-TUX_ALIVE=false
 
 echo "=================================="
 echo " Idle Timeout      : $IDLE_TM_SEC sec"
@@ -117,50 +113,71 @@ while true; do
             IS_CUR_ACTV_WIN_MAXED=true
         fi
     fi
-    if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then WELCOME_WIN_ALIVE=true; else WELCOME_WIN_ALIVE=false; fi
     if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then IDLE_WIN_ALIVE=true; else IDLE_WIN_ALIVE=false; fi
-    if pgrep -x "xtrlock" >/dev/null; then XTRLOCK_ALIVE=true; else XTRLOCK_ALIVE=false; fi
-    IS_SYSTEM_IDLE=false
-    if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ]; then
-        if [ "$SHW_WIN" = "true" ] && [ "$IDLE_WIN_ALIVE" = false ]; then
-            echo "Opening idle-window..."
-            xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "idle-window" -hold -e fastfetch &
-            while true; do
-                if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
-                    break
-                fi
-                sleep 0.2
-            done
-            IDLE_WIN_ALIVE=true
-        fi
-        IS_SYSTEM_IDLE=true
+    if pgrep -x "xpenguins" >/dev/null; then TUX_ALIVE=true; else TUX_ALIVE=false; fi
+    if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ]; then IS_IDLE=true; else IS_IDLE=false; fi
+    if pgrep -x "xtrlock" >/dev/null; then IS_LOCKED=true; else IS_LOCKED=false; fi
+    if true \
+    && [[ "$SHW_WIN" == "true" ]] \
+    && [[ "$IDLE_WIN_ALIVE" == false ]] \
+    && [[ "$IS_IDLE" == true ]] \
+    && true; then
+        IS_ACTION_OPEN_IDLE_WINDOW=true
+    else
+        IS_ACTION_OPEN_IDLE_WINDOW=false
     fi
-    if [ "$CUR_IDLE_MS" -lt 1000 ] && [ "$IDLE_WIN_ALIVE" = true ]; then
+    if true \
+    && [[ "$SHW_WIN" == "true" ]] \
+    && [[ "$IDLE_WIN_ALIVE" == true ]] \
+    && [[ "$CUR_IDLE_MS" -lt 1000 ]] \
+    && true; then
+        IS_ACTION_CLOSE_IDLE_WINDOW=true
+    else
+        IS_ACTION_CLOSE_IDLE_WINDOW=false
+    fi
+    if true \
+    && [[ "$SHW_TUX" == "true" ]] \
+    && [[ "$TUX_ALIVE" == false ]] \
+    && [[ "$IS_CUR_ACTV_WIN_MAXED" == false || "$IS_IDLE" == true || "$IS_LOCKED" == true ]] \
+    && true; then
+        IS_ACTION_DEPLOY_TUX=true
+    else
+        IS_ACTION_DEPLOY_TUX=false
+    fi
+    if true \
+    && [[ "$SHW_TUX" == "true" ]] \
+    && [[ "$TUX_ALIVE" == true ]] \
+    && [[ "$IS_CUR_ACTV_WIN_MAXED" == true && "$IS_IDLE" == false && "$IS_LOCKED" == false ]] \
+    && true; then
+        IS_ACTION_KILL_TUX=true
+    else
+        IS_ACTION_KILL_TUX=false
+    fi
+    if [[ "$IS_ACTION_OPEN_IDLE_WINDOW" == true ]]; then
+        echo "Opening idle-window..."
+        xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "idle-window" -hold -e fastfetch &
+        while true; do
+            if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
+                break
+            fi
+            sleep 0.2
+        done
+        IDLE_WIN_ALIVE=true
+    fi
+    if [[ "$IS_ACTION_DEPLOY_TUX" == true ]]; then
+        echo "Deploying tux..."
+        xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
+        TUX_ALIVE=true
+    fi
+    if [[ "$IS_ACTION_CLOSE_IDLE_WINDOW" == true ]]; then
         echo "Closing idle-window..."
         pkill -9 -f "xterm.*-name idle-window" 2>/dev/null
         IDLE_WIN_ALIVE=false
     fi
-    if [[ "$IS_SYSTEM_IDLE" == true ]] ||
-       [[ "$IDLE_WIN_ALIVE" == true ]] ||
-       [[ "$WELCOME_WIN_ALIVE" == true ]] ||
-       [[ "$XTRLOCK_ALIVE" == true ]] ||
-       [[ "$IS_CUR_ACTV_WIN_MAXED" == false ]] ||
-       false; then
-        if [ "$SHW_TUX" = "true" ] && [ "$TUX_ALIVE" = false ] && ! pidof xpenguins > /dev/null; then
-            echo "Deploying tux..."
-            xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
-            TUX_ALIVE=true
-        fi
-    else
-        if [[ "$XTRLOCK_ALIVE" == true ]]; then
-            sleep 1
-            continue
-        fi
-        if [ "$TUX_ALIVE" = true ] || pidof xpenguins > /dev/null; then
-            echo "Killing tux..."
-            pkill -9 -x "xpenguins" 2>/dev/null
-            TUX_ALIVE=false
-        fi
+    if [[ "$IS_ACTION_KILL_TUX" == true ]]; then
+        echo "Killing tux..."
+        pkill -9 -x "xpenguins" 2>/dev/null
+        TUX_ALIVE=false
     fi
     sleep 1
 done
