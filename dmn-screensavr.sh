@@ -10,16 +10,27 @@ fi
 CFG="$HOME/willyhorizont.github.io/.config/dmn-screensavr.conf"
 CFG_DIR=$(dirname "$CFG")
 
+DFLT_LOCKER="xtrlock"
 DFLT_IDLE_SEC=120
 DFLT_SHW_TUX="true"
 DFLT_SHW_WIN="true"
 
+FLAG_LOCKER=""
 FLAG_IDLE=""
 FLAG_TUX=""
 FLAG_WIN=""
 
 while [ "$#" -gt 0 ]; do
     case "$1" in
+        --locker)
+            if [ -n "$2" ]; then
+                FLAG_LOCKER="$2"
+                shift 2
+            else
+                echo "Error: Missing value for --locker!"
+                exit 1
+            fi
+            ;;
         --idle-sec)
             if [ -n "$2" ] && echo "$2" | grep -qE '^[0-9]+$'; then
                 FLAG_IDLE="$2"
@@ -48,7 +59,7 @@ while [ "$#" -gt 0 ]; do
             fi
             ;;
         *)
-            echo "Usage: dmn-screensavr.sh [--idle-sec <seconds>] [--shw-tux <true|false>] [--shw-win <true|false>]"
+            echo "Usage: dmn-screensavr.sh [--locker <command>] [--idle-sec <seconds>] [--shw-tux <true|false>] [--shw-win <true|false>]"
             exit 1
             ;;
     esac
@@ -57,6 +68,7 @@ done
 mkdir -p "$CFG_DIR"
 
 if [ ! -f "$CFG" ]; then
+    W_LOCKER=${FLAG_LOCKER:-$DFLT_LOCKER}
     W_IDLE=${FLAG_IDLE:-$DFLT_IDLE_SEC}
     W_TUX=${FLAG_TUX:-$DFLT_SHW_TUX}
     W_WIN=${FLAG_WIN:-$DFLT_SHW_WIN}
@@ -65,16 +77,19 @@ if [ ! -f "$CFG" ]; then
     if [[ "$W_WIN" == "true" ]]; then W_WIN_CAP="True"; else W_WIN_CAP="False"; fi
 
     cat << EOF > "$CFG"
+locker_command = $W_LOCKER
 idle_time_in_sec = $W_IDLE
 show_tux = $W_TUX_CAP
 show_window = $W_WIN_CAP
 EOF
 fi
 
+CFG_LOCKER=$(grep -E '^locker_command[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
 CFG_IDLE=$(grep -E '^idle_time_in_sec[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2)
 CFG_TUX=$(grep -E '^show_tux[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2 | tr '[:upper:]' '[:lower:]')
 CFG_WIN=$(grep -E '^show_window[[:space:]]*=' "$CFG" | sed 's/[[:space:]]//g' | cut -d= -f2 | tr '[:upper:]' '[:lower:]')
 
+LOCKER_CMD=${FLAG_LOCKER:-${CFG_LOCKER:-$DFLT_LOCKER}}
 IDLE_TM_SEC=${FLAG_IDLE:-${CFG_IDLE:-$DFLT_IDLE_SEC}}
 SHW_TUX=${FLAG_TUX:-${CFG_TUX:-$DFLT_SHW_TUX}}
 SHW_WIN=${FLAG_WIN:-${CFG_WIN:-$DFLT_SHW_WIN}}
@@ -98,6 +113,7 @@ if [[ "$SHW_WIN" == "true" ]]; then
 fi
 
 echo "=================================="
+echo " Locker Command    : $LOCKER_CMD"
 echo " Idle Timeout      : $IDLE_TM_SEC sec"
 echo " Show Tux          : $SHW_TUX"
 echo " Show Window       : $SHW_WIN"
@@ -116,7 +132,7 @@ while true; do
     if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then IDLE_WIN_ALIVE=true; else IDLE_WIN_ALIVE=false; fi
     if pgrep -x "xpenguins" >/dev/null; then TUX_ALIVE=true; else TUX_ALIVE=false; fi
     if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ]; then IS_IDLE=true; else IS_IDLE=false; fi
-    if pgrep -x "xtrlock" >/dev/null; then IS_LOCKED=true; else IS_LOCKED=false; fi
+    if pgrep -x "$LOCKER_CMD" >/dev/null; then IS_LOCKED=true; else IS_LOCKED=false; fi
     if true \
     && [[ "$SHW_WIN" == "true" ]] \
     && [[ "$IDLE_WIN_ALIVE" == false ]] \

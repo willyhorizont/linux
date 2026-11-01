@@ -1,3 +1,32 @@
+[Last updated: 01 Nov 2026 @ 09:01 AM][version: 0.6.27]
+update dmn-screensavr.sh, add --locker;
+
+working on:
+update indic* add --pref --suff;
+combine indic* with tui* default to tui, --print for indic;
+
+TODO #1:
+add --pango to SPRM;
+add --pango to SuckMyClock;
+add --pango to indic*;
+update README.md, add strikethrough to wm that can not be installed via apt install;
+TODO #2:
+rofi grid;
+mac launchpad;
+skippy-xd;
+mac mission control or windows task view;
+remove space between months and days in SuckMyClock;
+dvd screensaver;
+panel with signal support, IPC?;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 01 Nov 2026 @ 05:42 AM][version: 0.6.25]
 update dmn-screensavr.sh, update logic;
 

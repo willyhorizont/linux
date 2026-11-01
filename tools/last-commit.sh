@@ -25,7 +25,7 @@ done
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.6.25" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.6.27" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -35,13 +35,16 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-update dmn-screensavr.sh, update logic;
+update dmn-screensavr.sh, add --locker;
 
 working on:
 update indic* add --pref --suff;
 combine indic* with tui* default to tui, --print for indic;
 
 TODO #1:
+add --pango to SPRM;
+add --pango to SuckMyClock;
+add --pango to indic*;
 update README.md, add strikethrough to wm that can not be installed via apt install;
 TODO #2:
 rofi grid;
