@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT_NAME="tui0-powr-mnu-prompt.sh"
+SCRIPT_NAME="powr-mnu.sh"
 
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
     echo "Usage: $SCRIPT_NAME <cmd-logout> <cmd-lock> [OPTIONS]"

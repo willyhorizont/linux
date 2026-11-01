@@ -1,9 +1,9 @@
 #!/bin/bash
 
-POWR_PFL_SCRIPT="$HOME/willyhorizont.github.io/linux/tui6-1-powr-pfl.sh"
-BRGHTNSS_SCRIPT="$HOME/willyhorizont.github.io/linux/tui6-2-brghtnss.sh"
-BLU_LGHT_FLTR_SCRIPT="$HOME/willyhorizont.github.io/linux/tui6-3-blu-lght-fltr.sh"
-THINKPAD_BAT_SCRIPT="$HOME/willyhorizont.github.io/linux/tui6-4-bat-lenovo-thinkpad.sh"
+POWR_PFL_SCRIPT="$HOME/willyhorizont.github.io/linux/powr-pfl-mgr.sh"
+BRGHTNSS_SCRIPT="$HOME/willyhorizont.github.io/linux/scrn-brghtnss-mgr.sh"
+BLU_LGHT_FLTR_SCRIPT="$HOME/willyhorizont.github.io/linux/blu-lght-fltr-mgr.sh"
+THINKPAD_BAT_SCRIPT="$HOME/willyhorizont.github.io/linux/bat-lenovo-thinkpad-mgr.sh"
 
 while true; do
     clear
@@ -14,21 +14,16 @@ while true; do
             break
         fi
     done
-
-    echo "======================================="
-    echo "          POWER MANAGEMENT TUI         "
-    echo "======================================="
-    echo " 1) Power Profiles Management"
-    echo " 2) Brightness Control"
-    echo " 3) Blue Light Filter Control"
+    echo "powr-mgr.sh"
+    echo "1) Power Profiles"
+    echo "2) Brightness"
+    echo "3) Blue Light Filter"
     if $THINKPAD_SUPPORTED; then
-        echo " 4) ThinkPad Battery Threshold Management"
+        echo "4) ThinkPad Battery Charge Threshold"
     fi
-    echo " 0) Exit"
-    echo "======================================="
-    echo -n " Select choice [0-4]: "
+    echo "0) Exit"
+    echo -n "Select choice [0-4]: "
     read -n 1 CHOICE
-
     case "$CHOICE" in
         1)
             if [ -f "$POWR_PFL_SCRIPT" ]; then

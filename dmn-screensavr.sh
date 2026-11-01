@@ -146,6 +146,7 @@ while true; do
     && [[ "$SHW_WIN" == "true" ]] \
     && [[ "$IDLE_WIN_ALIVE" == true ]] \
     && [[ "$CUR_IDLE_MS" -lt 1000 ]] \
+    && [[ "$IS_LOCKED" == false ]] \
     && true; then
         IS_ACTION_CLOSE_IDLE_WINDOW=true
     else

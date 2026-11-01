@@ -1,3 +1,49 @@
+[Last updated: 02 Nov 2026 @ 02:16 AM][version: 0.7.0]
+combine indic* with tui* default to tui, --indicator for indic*;
+add --pref --suff to --indicator *indctr;
+rename indic0-wrkspc.sh                to wrkspc-indctr.sh;
+rename indic0-screensavr.sh            to tux-indctr.sh;
+combine indic1-bt.sh tui1-bt.sh        to bt.sh;
+combine indic2-net.sh tui2-net.sh      to net.sh;
+combine indic3-cam.sh tui3-cam.sh      to cam.sh;
+combine indic4-mic.sh tui4-mic.sh      to mic.sh;
+combine indic5-vol.sh tui5-vol.sh      to vol.sh;
+rename indic6-powr.sh                  to powr-indctr.sh;
+rename tui0-screensavr.sh              to screensavr-mgr.sh;
+rename tui6-powr.sh                    to powr-mgr.sh;
+rename tui6-1-powr-pfl.sh              to powr-pfl-mgr.sh;
+rename tui6-2-brghtnss.sh              to scrn-brghtnss-mgr.sh;
+rename tui6-3-blu-lght-fltr.sh         to blu-lght-fltr-mgr.sh;
+rename tui6-4-bat-lenovo-thinkpad.sh   to bat-lenovo-thinkpad-mgr.sh;
+rename tui0-powr-mnu-prompt.sh         to powr-mnu.sh;
+
+working on:
+add confirm-cmd.sh;
+add --pango to --indicator *indctr;
+add --pref --suff --pango to SPRM;
+add --pref --suff --pango to SuckMyClock;
+add rofi alt tab;
+create tile-cur-win;
+
+TODO #1:
+update README.md, add strikethrough to wm that can not be installed via apt install;
+TODO #2:
+rofi grid;
+mac launchpad;
+skippy-xd;
+mac mission control or windows task view;
+remove space between months and days in SuckMyClock;
+dvd screensaver;
+panel with signal support, IPC?;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 01 Nov 2026 @ 09:01 AM][version: 0.6.27]
 update dmn-screensavr.sh, add --locker;
 

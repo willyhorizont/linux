@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAIN_MENU="$HOME/willyhorizont.github.io/linux/tui6-powr.sh"
+MAIN_MENU="$HOME/willyhorizont.github.io/linux/powr-mgr.sh"
 CFG="$HOME/willyhorizont.github.io/.config/blu-lght-fltr.conf"
 CFG_DIR=$(dirname "$CFG")
 OVERRIDE_FILE="/tmp/blu-lght-fltr-override"
@@ -43,47 +43,40 @@ EOF
     else
         V_OVERRIDE="None"
     fi
-
     CUR_SCRN_TEMP=$(xsct 2>/dev/null | grep -oP 'temperature ~ \K[0-9]+')
     CUR_SCRN_TEMP=${CUR_SCRN_TEMP:-6500}
-
     if [ "$CUR_SCRN_TEMP" -eq 3500 ]; then
         if [ "$V_OVERRIDE" = "ON" ]; then
-            STAT_FLTR="[ 🟢 ON until reboot (${CUR_SCRN_TEMP}K) ]"
+            STAT_FLTR="[ ON until reboot (${CUR_SCRN_TEMP}K) ]"
         else
-            STAT_FLTR="[ 🟢 ON (${CUR_SCRN_TEMP}K) ]"
+            STAT_FLTR="[ ON (${CUR_SCRN_TEMP}K) ]"
         fi
         TOGGLE_TEXT="y) Turn Filter OFF Manual (Normal)"
     else
         if [ "$V_OVERRIDE" = "OFF" ]; then
-            STAT_FLTR="[ 🔴 OFF until reboot (Normal) ]"
+            STAT_FLTR="[ OFF until reboot (Normal) ]"
         else
-            STAT_FLTR="[ 🔴 OFF (Normal) ]"
+            STAT_FLTR="[ OFF (Normal) ]"
         fi
         TOGGLE_TEXT="y) Turn Filter ON Manual (3500K)"
     fi
-
-    STAT_AUTO="[ 🔴 OFF ]"
+    STAT_AUTO="[ OFF ]"
     if [ "$V_AUTO" = "True" ]; then
-        STAT_AUTO="[ 🟢 ON ]"
+        STAT_AUTO="[ ON ]"
     fi
-
-    echo "======================================="
-    echo "     BLUE LIGHT FILTER CONTROL TUI     "
-    echo "======================================="
-    echo " Screen Filter Status   : $STAT_FLTR"
-    echo " Auto Blue Light Filter : $STAT_AUTO"
-    echo " Schedule Time          : $V_ON - $V_OFF"
-    echo "---------------------------------------"
-    echo " $TOGGLE_TEXT"
-    echo " a) Toggle Auto Blue Light Filter ($V_ON - $V_OFF)"
-    echo " q) Go Back to Main Menu"
-    echo "======================================="
-    echo -n " Select choice: "
+    echo "blu-lght-fltr-mgr.sh"
+    echo "Screen Filter Status   : $STAT_FLTR"
+    echo "Auto Blue Light Filter : $STAT_AUTO"
+    echo "Schedule Time          : $V_ON - $V_OFF"
+    echo "$TOGGLE_TEXT"
+    echo "a) Toggle Auto Blue Light Filter ($V_ON - $V_OFF)"
+    echo "0) Go Back to Main Menu"
+    echo "q) Exit"
+    echo -n "Select choice: "
     read -n 1 CHOICE
-
     case "$CHOICE" in
         [yY])
+            echo ""
             if [ "$CUR_SCRN_TEMP" -eq 3500 ]; then
                 xsct 0 >/dev/null 2>&1
                 if [ "$(is_auto_on)" = "false" ]; then
@@ -101,23 +94,29 @@ EOF
             fi
             ;;
         [aA])
-            echo -e "\n---------------------------------------"
+            echo ""
             if [ "$V_AUTO" = "True" ]; then
                 sed -i "s|^auto_toggle_blue_light_filter[[:space:]]*=.*|auto_toggle_blue_light_filter = False|" "$CFG"
-                echo "[+] Auto Filter turned OFF."
+                echo "Auto Filter turned OFF."
             else
                 sed -i "s|^auto_toggle_blue_light_filter[[:space:]]*=.*|auto_toggle_blue_light_filter = True|" "$CFG"
-                echo "[+] Auto Filter turned ON."
+                echo "Auto Filter turned ON."
                 bash -c "$HOME/willyhorizont.github.io/linux/blu-lght-fltr.sh" >/dev/null 2>&1 &
             fi
             rm -f "$OVERRIDE_FILE"
             read -rsp "Press any key to continue..." -n 1
             ;;
-        [qQ])
+        0)
+            echo ""
             exec bash "$MAIN_MENU"
             ;;
+        [qQ])
+            echo ""
+            exit 0
+            ;;
         *)
-            echo -e "\n\n[!] Invalid choice!"
+            echo ""
+            echo "Invalid choice!"
             read -rsp "Press any key to continue..." -n 1
             ;;
     esac

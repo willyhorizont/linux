@@ -30,11 +30,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 TOOLTIP_TXT=$(cat << EOF
-\`                                 
-       💡 indic0-wrkspc.sh        
-                                  
-   click to open wrkspc-mgr.sh    
-                                 .
+ wrkspc-indctr.sh
+ click to run wrkspc-mgr.sh --goto;
 EOF
 )
 
