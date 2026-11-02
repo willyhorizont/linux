@@ -8,15 +8,16 @@
 #include <sys/stat.h>
 #include <sys/statvfs.h>
 
-#define CACHE_FILE "/tmp/sprm-c-cache.json"
+#define CACHE_FILE "/tmp/sprm-cache-c.json"
 
 void pad(const char *str, int len, char *out) {
     sprintf(out, "%*s", len, str);
 }
 
-void fmt(double bytesps, char *out) {
+void fmt(double bytesps, char *out_val, char *out_unit) {
     if (bytesps <= 0) {
-        strcpy(out, "      0B/s");
+        strcpy(out_val, "      0");
+        strcpy(out_unit, "B/s");
         return;
     }
     const char *units[] = {"B/s", "KB/s", "MB/s"};
@@ -42,15 +43,37 @@ void fmt(double bytesps, char *out) {
         strcpy(b_p, "00");
     }
     if (strlen(f_p) > 3) {
-        strcpy(out, "999999GB/s");
+        strcpy(out_val, "999999");
+        strcpy(out_unit, "GB/s");
         return;
     }
     char padded_f[64];
     pad(f_p, 3, padded_f);
-    sprintf(out, "%s.%s%s", padded_f, b_p, units[i]);
+    sprintf(out_val, "%s.%s", padded_f, b_p);
+    strcpy(out_unit, units[i]);
 }
 
-int main() {
+typedef struct {
+    char key[64];
+    char val[64];
+    char unit[64];
+} Block;
+
+int main(int argc, char *argv[]) {
+    char pref[256] = "";
+    char suff[256] = " |";
+    int use_pango = 0;
+
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--pref") == 0 && i + 1 < argc) {
+            strcpy(pref, argv[++i]);
+        } else if (strcmp(argv[i], "--suff") == 0 && i + 1 < argc) {
+            strcpy(suff, argv[++i]);
+        } else if (strcmp(argv[i], "--pango") == 0) {
+            use_pango = 1;
+        }
+    }
+
     char NET_INTRF[64];
     strcpy(NET_INTRF, "lo");
     FILE *fh = fopen("/proc/net/route", "r");
@@ -243,11 +266,11 @@ int main() {
     }
     double time_d = has_time ? (now_time - old_time) : (now_time - (now_time - 2.0));
     if (time_d <= 0) time_d = 2.0;
-    unsigned long long user = cpu_parts[0], nice = cpu_parts[1], system = cpu_parts[2], idle = cpu_parts[3], iowait = cpu_parts[4], irq = cpu_parts[5], softirq = cpu_parts[6];
+    unsigned long long user = cpu_parts[0], nice = cpu_parts[1], system_v = cpu_parts[2], idle = cpu_parts[3], iowait = cpu_parts[4], irq = cpu_parts[5], softirq = cpu_parts[6];
     unsigned long long old_idle = old_cpu[3] + old_cpu[4];
     unsigned long long new_idle = idle + iowait;
     unsigned long long old_non_idle = old_cpu[0] + old_cpu[1] + old_cpu[2] + old_cpu[5] + old_cpu[6];
-    unsigned long long new_non_idle = user + nice + system + irq + softirq;
+    unsigned long long new_non_idle = user + nice + system_v + irq + softirq;
     unsigned long long tot_old = old_idle + old_non_idle;
     unsigned long long tot_new = new_idle + new_non_idle;
     unsigned long long tot_delta = tot_new - tot_old;
@@ -275,34 +298,73 @@ int main() {
     sprintf(tmp_ram, "%.2f", ram_used); pad(tmp_ram, 5, ram_used_str);
     char ram_tot_str[64], d_free_str[64], d_tot_str[64];
     sprintf(ram_tot_str, "%.2f", ram_tot); sprintf(d_free_str, "%.2f", d_free_GB); sprintf(d_tot_str, "%.2f", d_tot_GB);
-    char f_r[64], f_w[64], f_d[64], f_u[64];
-    fmt(r_rt, f_r); fmt(w_rt, f_w); fmt(d_rt, f_d); fmt(u_rt, f_u);
-    char out_t[64];
-    if (strcmp(temp_str, "9999") == 0) sprintf(out_t, "9999°C");
-    else sprintf(out_t, "%s°C", temp_str);
-    char out_r[64], out_w[64], out_d[64], out_u[64];
-    if (strstr(f_r, "999999")) strcpy(out_r, "999999GB/s"); else strcpy(out_r, f_r);
-    if (strstr(f_w, "999999")) strcpy(out_w, "999999GB/s"); else strcpy(out_w, f_w);
-    if (strstr(f_d, "999999")) strcpy(out_d, "999999GB/s"); else strcpy(out_d, f_d);
-    if (strstr(f_u, "999999")) strcpy(out_u, "999999GB/s"); else strcpy(out_u, f_u);
-    printf(" T %s | C %s%% | G %s%% | M %s/%sGB | D %s/%sGB | R %s | W %s | ▼ %s | ▲ %s |", out_t, cpu_fmt, gpu_fmt, ram_used_str, ram_tot_str, d_free_str, d_tot_str, out_r, out_w, out_d, out_u);
+
+    char out_t_val[64];
+    if (strcmp(temp_str, "9999") == 0) strcpy(out_t_val, "9999");
+    else strcpy(out_t_val, temp_str);
+
+    Block blocks[9];
+    
+    strcpy(blocks[0].key, " T ");
+    strcpy(blocks[0].val, out_t_val);
+    strcpy(blocks[0].unit, "°C");
+
+    strcpy(blocks[1].key, " C ");
+    strcpy(blocks[1].val, cpu_fmt);
+    strcpy(blocks[1].unit, "%");
+
+    strcpy(blocks[2].key, " G ");
+    strcpy(blocks[2].val, gpu_fmt);
+    strcpy(blocks[2].unit, "%");
+
+    strcpy(blocks[3].key, " M ");
+    sprintf(blocks[3].val, "%s/%s", ram_used_str, ram_tot_str);
+    strcpy(blocks[3].unit, "GB");
+
+    strcpy(blocks[4].key, " D ");
+    sprintf(blocks[4].val, "%s/%s", d_free_str, d_tot_str);
+    strcpy(blocks[4].unit, "GB");
+
+    strcpy(blocks[5].key, " R ");
+    fmt(r_rt, blocks[5].val, blocks[5].unit);
+
+    strcpy(blocks[6].key, " W ");
+    fmt(w_rt, blocks[6].val, blocks[6].unit);
+
+    strcpy(blocks[7].key, " ▼ ");
+    fmt(d_rt, blocks[7].val, blocks[7].unit);
+
+    strcpy(blocks[8].key, " ▲ ");
+    fmt(u_rt, blocks[8].val, blocks[8].unit);
+
+    if (use_pango) {
+        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", pref);
+        for (int i = 0; i < 9; i++) {
+            printf("<span background='#000000' foreground='#FF1493'>%s</span>", blocks[i].key);
+            printf("<span background='#000000' foreground='#CCFF00'>%s</span>", blocks[i].val);
+            printf("<span background='#000000' foreground='#FF1493'>%s</span>", blocks[i].unit);
+            printf("<span background='#000000' foreground='#00ADD8'>%s</span>", suff);
+        }
+    } else {
+        printf("%s", pref);
+        for (int i = 0; i < 9; i++) {
+            printf("%s%s%s%s", blocks[i].key, blocks[i].val, blocks[i].unit, suff);
+        }
+    }
+    printf("\n");
+
     fprintf(stderr,
-        "`                                       \n"
-        "  SPRM (Simple Panel Resource Monitor)  \n"
-        "             * C version *              \n"
-        "                                        \n"
-        "        T = Temperature                 \n"
-        "        C = Total CPU Usage             \n"
-        "        G = Total GPU Usage             \n"
-        "        M = Total Memory Usage          \n"
-        "        D = Total Disk Usage            \n"
-        "        R = Total Disk Read             \n"
-        "        W = Total Disk Write            \n"
-        "        ▼ = Average Download Rate       \n"
-        "        ▲ = Average Upload Rate         \n"
-        "                                        \n"
-        "           click to open btop           \n"
-        "                                       .\n"
+        " SPRM (Simple Panel Resource Monitor) C version;\n"
+        " T = Temperature\n"
+        " C = Total CPU Usage\n"
+        " G = Total GPU Usage\n"
+        " M = Total Memory Usage\n"
+        " D = Total Disk Usage\n"
+        " R = Total Disk Read\n"
+        " W = Total Disk Write\n"
+        " ▼ = Average Download Rate\n"
+        " ▲ = Average Upload Rate\n"
+        " click to open btop\n"
     );
     return 0;
 }

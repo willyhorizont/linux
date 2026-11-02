@@ -4,8 +4,12 @@ function pad(str, len) {
     return sprintf("%*s", len, str)
 }
 
-function fmt(bytesps,    units, i, v, num_str, split_arr, f_p, b_p) {
-    if (bytesps <= 0) return "      0B/s"
+function fmt(bytesps, out_arr,    units, i, v, num_str, split_arr, f_p, b_p) {
+    if (bytesps <= 0) {
+        out_arr["val"] = "      0"
+        out_arr["unit"] = "B/s"
+        return
+    }
     units[0] = "B/s"; units[1] = "KB/s"; units[2] = "MB/s"
     i = 0
     v = bytesps
@@ -17,13 +21,39 @@ function fmt(bytesps,    units, i, v, num_str, split_arr, f_p, b_p) {
     split(num_str, split_arr, ".")
     f_p = split_arr[1]
     b_p = split_arr[2]
-    if (length(f_p) > 3) return "999999GB/s"
+    if (length(f_p) > 3) {
+        out_arr["val"] = "999999"
+        out_arr["unit"] = "GB/s"
+        return
+    }
     f_p = pad(f_p, 3)
-    return f_p "." b_p units[i]
+    out_arr["val"] = f_p "." b_p
+    out_arr["unit"] = units[i]
 }
 
 BEGIN {
-    CACHE_FILE = "/tmp/sprm-awk-cache.json"
+    pref = ""
+    suff = " |"
+    use_pango = 0
+    
+    for (i = 1; i < ARGC; i++) {
+        if (ARGV[i] == "--pref") {
+            pref = ARGV[i+1]
+            delete ARGV[i]
+            delete ARGV[i+1]
+            i++
+        } else if (ARGV[i] == "--suff") {
+            suff = ARGV[i+1]
+            delete ARGV[i]
+            delete ARGV[i+1]
+            i++
+        } else if (ARGV[i] == "--pango") {
+            use_pango = 1
+            delete ARGV[i]
+        }
+    }
+
+    CACHE_FILE = "/tmp/sprm-cache-awk.json"
     
     NET_INTRF = "lo"
     while ((getline < "/proc/net/route") > 0) {
@@ -192,31 +222,46 @@ BEGIN {
     d_free_str = sprintf("%.2f", d_free_GB)
     d_tot_str = sprintf("%.2f", d_tot_GB)
     
-    out_t = (temp_str == "9999") ? "9999°C" : temp_str "°C"
+    out_t = (temp_str == "9999") ? "9999" : temp_str
     
-    f_r = fmt(r_rt); f_w = fmt(w_rt); f_d = fmt(d_rt); f_u = fmt(u_rt)
-    out_r = (f_r ~ /999999/) ? "999999GB/s" : f_r
-    out_w = (f_w ~ /999999/) ? "999999GB/s" : f_w
-    out_d = (f_d ~ /999999/) ? "999999GB/s" : f_d
-    out_u = (f_u ~ /999999/) ? "999999GB/s" : f_u
+    keys[1] = " T "; vals[1] = out_t;                     units[1] = "°C"
+    keys[2] = " C "; vals[2] = cpu_fmt;                   units[2] = "%"
+    keys[3] = " G "; vals[3] = gpu_fmt;                   units[3] = "%"
+    keys[4] = " M "; vals[4] = ram_used_str "/" ram_tot_str; units[4] = "GB"
+    keys[5] = " D "; vals[5] = d_free_str "/" d_tot_str;   units[5] = "GB"
     
-    printf " T %s | C %s%% | G %s%% | M %s/%sGB | D %s/%sGB | R %s | W %s | ▼ %s | ▲ %s |", out_t, cpu_fmt, gpu_fmt, ram_used_str, ram_tot_str, d_free_str, d_tot_str, out_r, out_w, out_d, out_u
-    print "\n" \
-        "`                                        \n" \
-        "   SPRM (Simple Panel Resource Monitor)  \n" \
-        "             * Awk version *             \n" \
-        "                                         \n" \
-        "         T = Temperature                 \n" \
-        "         C = Total CPU Usage             \n" \
-        "         G = Total GPU Usage             \n" \
-        "         M = Total Memory Usage          \n" \
-        "         D = Total Disk Usage            \n" \
-        "         R = Total Disk Read             \n" \
-        "         W = Total Disk Write            \n" \
-        "         ▼ = Average Download Rate       \n" \
-        "         ▲ = Average Upload Rate         \n" \
-        "                                         \n" \
-        "            click to open btop           \n" \
-        "                                         \n" \
-        "                                        .\n" > "/dev/stderr"
+    fmt(r_rt, r_arr); vals[6] = r_arr["val"]; units[6] = r_arr["unit"]; keys[6] = " R "
+    fmt(w_rt, w_arr); vals[7] = w_arr["val"]; units[7] = w_arr["unit"]; keys[7] = " W "
+    fmt(d_rt, d_arr); vals[8] = d_arr["val"]; units[8] = d_arr["unit"]; keys[8] = " ▼ "
+    fmt(u_rt, u_arr); vals[9] = u_arr["val"]; units[9] = u_arr["unit"]; keys[9] = " ▲ "
+
+    out_string = ""
+    if (use_pango) {
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" pref "</span>"
+        for (i = 1; i <= 9; i++) {
+            out_string = out_string "<span background='#000000' foreground='#FF1493'>" keys[i] "</span>"
+            out_string = out_string "<span background='#000000' foreground='#CCFF00'>" vals[i] "</span>"
+            out_string = out_string "<span background='#000000' foreground='#FF1493'>" units[i] "</span>"
+            out_string = out_string "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
+        }
+    } else {
+        out_string = out_string pref
+        for (i = 1; i <= 9; i++) {
+            out_string = out_string keys[i] vals[i] units[i] suff
+        }
+    }
+    
+    print out_string
+    
+    print " SPRM (Simple Panel Resource Monitor) Awk version;\n" \
+          " T = Temperature\n" \
+          " C = Total CPU Usage\n" \
+          " G = Total GPU Usage\n" \
+          " M = Total Memory Usage\n" \
+          " D = Total Disk Usage\n" \
+          " R = Total Disk Read\n" \
+          " W = Total Disk Write\n" \
+          " ▼ = Average Download Rate\n" \
+          " ▲ = Average Upload Rate\n" \
+          " click to open btop\n" > "/dev/stderr"
 }

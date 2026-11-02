@@ -3,7 +3,21 @@ use strict;
 use warnings;
 use Time::HiRes qw(time);
 
-my $CACHE_FILE = "/tmp/sprm-perl-cache.json";
+my $CACHE_FILE = "/tmp/sprm-cache-pl.json";
+
+my $pref = "";
+my $suff = " |";
+my $use_pango = 0;
+
+for (my $i = 0; $i < @ARGV; $i++) {
+    if ($ARGV[$i] eq "--pref" && $i + 1 < @ARGV) {
+        $pref = $ARGV[++$i];
+    } elsif ($ARGV[$i] eq "--suff" && $i + 1 < @ARGV) {
+        $suff = $ARGV[++$i];
+    } elsif ($ARGV[$i] eq "--pango") {
+        $use_pango = 1;
+    }
+}
 
 my $NET_INTRF = "lo";
 if (open(my $fh, "<", "/proc/net/route")) {
@@ -39,7 +53,7 @@ sub pad {
 sub fmt {
     my ($bytesps) = @_;
     if ($bytesps <= 0) {
-        return "      0B/s";
+        return ("      0", "B/s");
     }
     my @units = ("B/s", "KB/s", "MB/s");
     my $i = 0;
@@ -51,22 +65,23 @@ sub fmt {
     
     my $num_str = ($i == 0) ? sprintf("%.3f", $v) : sprintf("%.2f", $v);
     my ($f_p, $b_p) = split(/\./, $num_str);
+    $b_p //= "00";
     
     if (length($f_p) > 3) {
-        return "999999GB/s";
+        return ("999999", "GB/s");
     }
     
     $f_p = pad($f_p, 3);
-    return "$f_p.$b_p$units[$i]";
+    return ("$f_p.$b_p", $units[$i]);
 }
 
 my $temp = 0.0;
 for my $zone (0..5) {
     if (open(my $fh, "<", "/sys/class/thermal/thermal_zone$zone/temp")) {
         my $t = <$fh>;
-        chomp($t);
+        chomp($t) if defined $t;
         close($fh);
-        if ($t > 0) {
+        if (defined $t && $t > 0) {
             $temp = $t / 1000;
             last;
         }
@@ -87,20 +102,20 @@ if (open(my $fh, "<", "/proc/stat")) {
 my $gpu = 0.0;
 if (-e "/sys/class/drm/card0/device/gpu_busy_percent") { # AMD
     if (open(my $fh, "<", "/sys/class/drm/card0/device/gpu_busy_percent")) {
-        $gpu = <$fh>;
-        chomp($gpu);
+        my $val = <$fh>;
+        if (defined $val) { chomp($val); $gpu = $val; }
         close($fh);
     }
 } elsif (-e "/sys/class/drm/card0/gt_act_freq_mhz" && -e "/sys/class/drm/card0/gt_max_freq_mhz") { # Intel
     my ($act, $max) = (0, 1);
     if (open(my $fh, "<", "/sys/class/drm/card0/gt_act_freq_mhz")) {
-        $act = <$fh>;
-        chomp($act);
+        my $val = <$fh>;
+        if (defined $val) { chomp($val); $act = $val; }
         close($fh);
     }
     if (open(my $fh, "<", "/sys/class/drm/card0/gt_max_freq_mhz")) {
-        $max = <$fh>;
-        chomp($max);
+        my $val = <$fh>;
+        if (defined $val) { chomp($val); $max = $val; }
         close($fh);
     }
     $gpu = ($max > 0) ? ($act / $max) * 100 : 0.0;
@@ -122,8 +137,8 @@ if (open(my $fh, "-|", "df -B1 / 2>/dev/null")) {
     while (<$fh>) {
         next if $. == 1;
         my @p = split;
-        $d_tot_GB = $p[1] / 1e9;
-        $d_free_GB = $p[3] / 1e9;
+        $d_tot_GB = $p[1] / 1e9 if defined $p[1];
+        $d_free_GB = $p[3] / 1e9 if defined $p[3];
     }
     close($fh);
 }
@@ -133,8 +148,8 @@ if (open(my $fh, "<", "/proc/diskstats")) {
     while (<$fh>) {
         my @p = split;
         if (defined $p[2] && $p[2] =~ /^(sd[a-z]|nvme\d+n\d+|mmcblk\d+|vd[a-z])$/) {
-            $cur_d_r += $p[5];
-            $cur_d_w += $p[9];
+            $cur_d_r += $p[5] if defined $p[5];
+            $cur_d_w += $p[9] if defined $p[9];
         }
     }
     close($fh);
@@ -147,9 +162,9 @@ if (open(my $fh, "<", "/proc/net/dev")) {
     while (<$fh>) {
         if (/$NET_INTRF/) {
             my @p = split(/[:\s]+/);
-            shift @p if $p[0] eq '';
-            $cur_net_down = $p[1];
-            $cur_net_up = $p[9];
+            shift @p if defined $p[0] && $p[0] eq '';
+            $cur_net_down = $p[1] if defined $p[1];
+            $cur_net_up = $p[9] if defined $p[9];
             last;
         }
     }
@@ -157,14 +172,21 @@ if (open(my $fh, "<", "/proc/net/dev")) {
 }
 
 my $now_time = time();
-my %old;
+my %old = (
+    time => undef,
+    d_r  => undef,
+    d_w  => undef,
+    n_d  => undef,
+    n_u  => undef,
+    cpu  => undef
+);
 
 if (-f $CACHE_FILE) {
     if (open(my $fh, "<", $CACHE_FILE)) {
         my $ctx = <$fh>;
         close($fh);
         if ($ctx && $ctx =~ /\{.*\}/) {
-            if ($ctx =~ /"time":(\d+\.?\d*)/) { $old{time} = $1; }
+            if ($ctx =~ /"time":(\d+\.\d*|\d+)/) { $old{time} = $1; }
             if ($ctx =~ /"d_r":(\d+)/) { $old{d_r} = $1; }
             if ($ctx =~ /"d_w":(\d+)/) { $old{d_w} = $1; }
             if ($ctx =~ /"n_d":(\d+)/) { $old{n_d} = $1; }
@@ -177,16 +199,17 @@ if (-f $CACHE_FILE) {
     }
 }
 
-my $time_d = $now_time - ($old{time} || ($now_time - 2.0));
+my $time_d = defined $old{time} ? ($now_time - $old{time}) : 2.0;
 $time_d = 2.0 if $time_d <= 0;
 
 my ($user, $nice, $system, $idle, $iowait, $irq, $softirq) = @cpu_parts;
-my @old_cpu = $old{cpu} ? @{$old{cpu}} : (0) * 7;
+my @old_cpu = defined $old{cpu} ? @{$old{cpu}} : (0) * 7;
+for (my $i=0; $i<7; $i++) { $old_cpu[$i] //= 0; }
 
-my $old_idle = $old_cpu[3] + $old_cpu[4];
-my $new_idle = $idle + $iowait;
-my $old_non_idle = $old_cpu[0] + $old_cpu[1] + $old_cpu[2] + $old_cpu[5] + $old_cpu[6];
-my $new_non_idle = $user + $nice + $system + $irq + $softirq;
+my $old_idle = ($old_cpu[3] || 0) + ($old_cpu[4] || 0);
+my $new_idle = ($idle || 0) + ($iowait || 0);
+my $old_non_idle = ($old_cpu[0] || 0) + ($old_cpu[1] || 0) + ($old_cpu[2] || 0) + ($old_cpu[5] || 0) + ($old_cpu[6] || 0);
+my $new_non_idle = ($user || 0) + ($nice || 0) + ($system || 0) + ($irq || 0) + ($softirq || 0);
 
 my $tot_old = $old_idle + $old_non_idle;
 my $tot_new = $new_idle + $new_non_idle;
@@ -199,10 +222,10 @@ if ($tot_delta > 0) {
 }
 my $cpu_fmt = pad(sprintf("%.1f", $cpu_pcent), 5);
 
-my $r_rt = exists $old{d_r} ? (($cur_d_r - $old{d_r}) / $time_d) : 0;
-my $w_rt = exists $old{d_w} ? (($cur_d_w - $old{d_w}) / $time_d) : 0;
-my $d_rt = exists $old{n_d} ? (($cur_net_down - $old{n_d}) / $time_d) : 0;
-my $u_rt = exists $old{n_u} ? (($cur_net_up - $old{n_u}) / $time_d) : 0;
+my $r_rt = defined $old{d_r} ? (($cur_d_r - $old{d_r}) / $time_d) : 0;
+my $w_rt = defined $old{d_w} ? (($cur_d_w - $old{d_w}) / $time_d) : 0;
+my $d_rt = defined $old{n_d} ? (($cur_net_down - $old{n_d}) / $time_d) : 0;
+my $u_rt = defined $old{n_u} ? (($cur_net_up - $old{n_u}) / $time_d) : 0;
 
 $r_rt = 0 if $r_rt < 0; $w_rt = 0 if $w_rt < 0;
 $d_rt = 0 if $d_rt < 0; $u_rt = 0 if $u_rt < 0;
@@ -220,32 +243,51 @@ my $ram_tot_str = sprintf("%.2f", $ram_tot);
 my $d_free_str = sprintf("%.2f", $d_free_GB);
 my $d_tot_str = sprintf("%.2f", $d_tot_GB);
 
-my $f_r = fmt($r_rt); my $f_w = fmt($w_rt);
-my $f_d = fmt($d_rt); my $f_u = fmt($u_rt);
+my @f_r = fmt($r_rt); my @f_w = fmt($w_rt);
+my @f_d = fmt($d_rt); my @f_u = fmt($u_rt);
 
-my $out_t = ($temp_str eq "9999") ? "9999°C" : "${temp_str}°C";
-my $out_r = ($f_r =~ /999999/) ? "999999GB/s" : $f_r;
-my $out_w = ($f_w =~ /999999/) ? "999999GB/s" : $f_w;
-my $out_d = ($f_d =~ /999999/) ? "999999GB/s" : $f_d;
-my $out_u = ($f_u =~ /999999/) ? "999999GB/s" : $f_u;
+my $out_t_val = ($temp_str eq "9999") ? "9999" : $temp_str;
+my $out_t_unit = "°C";
 
-print " T $out_t | C $cpu_fmt% | G $gpu_fmt% | M $ram_used_str/${ram_tot_str}GB | D $d_free_str/${d_tot_str}GB | R $out_r | W $out_w | ▼ $out_d | ▲ $out_u |";
+my @blocks = (
+    { key => " T ", val => $out_t_val, unit => $out_t_unit },
+    { key => " C ", val => $cpu_fmt, unit => "%" },
+    { key => " G ", val => $gpu_fmt, unit => "%" },
+    { key => " M ", val => "$ram_used_str/$ram_tot_str", unit => "GB" },
+    { key => " D ", val => "$d_free_str/$d_tot_str", unit => "GB" },
+    { key => " R ", val => $f_r[0], unit => $f_r[1] },
+    { key => " W ", val => $f_w[0], unit => $f_w[1] },
+    { key => " ▼ ", val => $f_d[0], unit => $f_d[1] },
+    { key => " ▲ ", val => $f_u[0], unit => $f_u[1] }
+);
+
+my $out_str = "";
+if ($use_pango) {
+    $out_str .= "<span background='#000000' foreground='#00ADD8'>$pref</span>";
+    for my $b (@blocks) {
+        $out_str .= "<span background='#000000' foreground='#FF1493'>$b->{key}</span>";
+        $out_str .= "<span background='#000000' foreground='#CCFF00'>$b->{val}</span>";
+        $out_str .= "<span background='#000000' foreground='#FF1493'>$b->{unit}</span>";
+        $out_str .= "<span background='#000000' foreground='#00ADD8'>$suff</span>";
+    }
+} else {
+    $out_str .= $pref;
+    for my $b (@blocks) {
+        $out_str .= "$b->{key}$b->{val}$b->{unit}$suff";
+    }
+}
+print $out_str . "\n";
 
 print STDERR <<'EOF';
-`                                       
-  SPRM (Simple Panel Resource Monitor)  
-            * Perl version *            
-                                        
-        T = Temperature                 
-        C = Total CPU Usage             
-        G = Total GPU Usage             
-        M = Total Memory Usage          
-        D = Total Disk Usage            
-        R = Total Disk Read             
-        W = Total Disk Write            
-        ▼ = Average Download Rate       
-        ▲ = Average Upload Rate         
-                                        
-           click to open btop           
-                                       .
+ SPRM (Simple Panel Resource Monitor) Perl version;
+ T = Temperature
+ C = Total CPU Usage
+ G = Total GPU Usage
+ M = Total Memory Usage
+ D = Total Disk Usage
+ R = Total Disk Read
+ W = Total Disk Write
+ ▼ = Average Download Rate
+ ▲ = Average Upload Rate
+ click to open btop
 EOF

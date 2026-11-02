@@ -9,7 +9,18 @@
 #include <unistd.h>
 #include <sys/statvfs.h>
 
-#define CACHE_FILE "/tmp/sprm-cpp-cache.json"
+#define CACHE_FILE "/tmp/sprm-cache-cpp.json"
+
+struct FmtResult {
+    std::string val;
+    std::string unit;
+};
+
+struct Block {
+    std::string key;
+    std::string val;
+    std::string unit;
+};
 
 std::string pad(const std::string& str, int len) {
     std::ostringstream ss;
@@ -17,8 +28,13 @@ std::string pad(const std::string& str, int len) {
     return ss.str();
 }
 
-std::string fmt(double bytesps) {
-    if (bytesps <= 0) return "      0B/s";
+FmtResult fmt(double bytesps) {
+    FmtResult res;
+    if (bytesps <= 0) {
+        res.val = "      0";
+        res.unit = "B/s";
+        return res;
+    }
     std::vector<std::string> units = {"B/s", "KB/s", "MB/s"};
     int i = 0;
     double v = bytesps;
@@ -35,12 +51,33 @@ std::string fmt(double bytesps) {
     std::string f_p = (dot != std::string::npos) ? num_str.substr(0, dot) : num_str;
     std::string b_p = (dot != std::string::npos) ? num_str.substr(dot + 1) : "00";
     
-    if (f_p.length() > 3) return "999999GB/s";
+    if (f_p.length() > 3) {
+        res.val = "999999";
+        res.unit = "GB/s";
+        return res;
+    }
     
-    return pad(f_p, 3) + "." + b_p + units[i];
+    res.val = pad(f_p, 3) + "." + b_p;
+    res.unit = units[i];
+    return res;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    std::string pref = "";
+    std::string suff = " |";
+    bool use_pango = false;
+
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "--pref" && i + 1 < argc) {
+            pref = argv[++i];
+        } else if (arg == "--suff" && i + 1 < argc) {
+            suff = argv[++i];
+        } else if (arg == "--pango") {
+            use_pango = true;
+        }
+    }
+
     std::string net_intrf = "lo";
     std::ifstream route_file("/proc/net/route");
     std::string line;
@@ -189,12 +226,12 @@ int main() {
         std::string ctx;
         std::getline(cache_in, ctx);
         std::smatch m;
-        if (std::regex_search(ctx, m, std::regex(R"("-time":([0-9.]+))"))) { old_time = std::stod(m[1]); has_time = true; }
-        if (std::regex_search(ctx, m, std::regex(R"("-d_r":([0-9]+))")))  { old_d_r = std::stoull(m[1]); has_dr = true; }
-        if (std::regex_search(ctx, m, std::regex(R"("-d_w":([0-9]+))")))  { old_d_w = std::stoull(m[1]); has_dw = true; }
-        if (std::regex_search(ctx, m, std::regex(R"("-n_d":([0-9]+))")))  { old_n_d = std::stoull(m[1]); has_nd = true; }
-        if (std::regex_search(ctx, m, std::regex(R"("-n_u":([0-9]+))")))  { old_n_u = std::stoull(m[1]); has_nu = true; }
-        if (std::regex_search(ctx, m, std::regex(R"("-cpu":\[([0-9,]+)\])"))) {
+        if (std::regex_search(ctx, m, std::regex(R"("time":([0-9.]+))"))) { old_time = std::stod(m[1]); has_time = true; }
+        if (std::regex_search(ctx, m, std::regex(R"("d_r":([0-9]+))")))  { old_d_r = std::stoull(m[1]); has_dr = true; }
+        if (std::regex_search(ctx, m, std::regex(R"("d_w":([0-9]+))")))  { old_d_w = std::stoull(m[1]); has_dw = true; }
+        if (std::regex_search(ctx, m, std::regex(R"("n_d":([0-9]+))")))  { old_n_d = std::stoull(m[1]); has_nd = true; }
+        if (std::regex_search(ctx, m, std::regex(R"("n_u":([0-9]+))")))  { old_n_u = std::stoull(m[1]); has_nu = true; }
+        if (std::regex_search(ctx, m, std::regex(R"("cpu":\[([0-9,]+)\])"))) {
             std::istringstream css(m[1].str());
             std::string val;
             for(int i=0; i<7 && std::getline(css, val, ','); ++i) old_cpu[i] = std::stoull(val);
@@ -238,7 +275,7 @@ int main() {
     std::string temp_str = (temp >= 100.0) ? "9999" : [] (double t){
         std::ostringstream ss; ss << std::fixed << std::setprecision(1) << t; return ss.str();
     }(temp);
-    std::string out_t = (temp_str == "9999") ? "9999°C" : temp_str + "°C";
+    std::string out_t = (temp_str == "9999") ? "9999" : temp_str;
     std::ostringstream g_ss, m_ss;
     g_ss << std::fixed << std::setprecision(1) << gpu;
     m_ss << std::fixed << std::setprecision(2) << ram_used;
@@ -248,31 +285,53 @@ int main() {
     rt_ss << std::fixed << std::setprecision(2) << ram_tot;
     df_ss << std::fixed << std::setprecision(2) << d_free_GB;
     dt_ss << std::fixed << std::setprecision(2) << d_tot_GB;
-    std::string f_r = fmt(r_rt); std::string f_w = fmt(w_rt);
-    std::string f_d = fmt(d_rt); std::string f_u = fmt(u_rt);
-    std::string out_r = (f_r.find("999999") != std::string::npos) ? "999999GB/s" : f_r;
-    std::string out_w = (f_w.find("999999") != std::string::npos) ? "999999GB/s" : f_w;
-    std::string out_d = (f_d.find("999999") != std::string::npos) ? "999999GB/s" : f_d;
-    std::string out_u = (f_u.find("999999") != std::string::npos) ? "999999GB/s" : f_u;
-    std::cout << " T " << out_t << " | C " << cpu_fmt << "% | G " << gpu_fmt << "% | M " << ram_used_str << "/" << rt_ss.str() << "GB | D " << df_ss.str() << "/" << dt_ss.str() << "GB | R " << out_r << " | W " << out_w << " | ▼ " << out_d << " | ▲ " << out_u << " |";
-    std::cerr << R"(
-`                                       
-  SPRM (Simple Panel Resource Monitor)  
-            * C++ version *             
-                                        
-        T = Temperature                 
-        C = Total CPU Usage             
-        G = Total GPU Usage             
-        M = Total Memory Usage          
-        D = Total Disk Usage            
-        R = Total Disk Read             
-        W = Total Disk Write            
-        ▼ = Average Download Rate       
-        ▲ = Average Upload Rate         
-                                        
-           click to open btop           
-                                       .
-)";
+    
+    FmtResult f_r = fmt(r_rt); std::string out_r_val = f_r.val; std::string out_r_unit = f_r.unit;
+    FmtResult f_w = fmt(w_rt); std::string out_w_val = f_w.val; std::string out_w_unit = f_w.unit;
+    FmtResult f_d = fmt(d_rt); std::string out_d_val = f_d.val; std::string out_d_unit = f_d.unit;
+    FmtResult f_u = fmt(u_rt); std::string out_u_val = f_u.val; std::string out_u_unit = f_u.unit;
+
+    std::vector<Block> blocks = {
+        {" T ", out_t, "°C"},
+        {" C ", cpu_fmt, "%"},
+        {" G ", gpu_fmt, "%"},
+        {" M ", ram_used_str + "/" + rt_ss.str(), "GB"},
+        {" D ", df_ss.str() + "/" + dt_ss.str(), "GB"},
+        {" R ", out_r_val, out_r_unit},
+        {" W ", out_w_val, out_w_unit},
+        {" ▼ ", out_d_val, out_d_unit},
+        {" ▲ ", out_u_val, out_u_unit}
+    };
+
+    std::string final_out = "";
+    if (use_pango) {
+        if (!pref.empty()) final_out += "<span background='#000000' foreground='#00ADD8'>" + pref + "</span>";
+        for (const auto& b : blocks) {
+            final_out += "<span background='#000000' foreground='#FF1493'>" + b.key + "</span>";
+            final_out += "<span background='#000000' foreground='#CCFF00'>" + b.val + "</span>";
+            final_out += "<span background='#000000' foreground='#FF1493'>" + b.unit + "</span>";
+            final_out += "<span background='#000000' foreground='#00ADD8'>" + suff + "</span>";
+        }
+    } else {
+        final_out += pref;
+        for (const auto& b : blocks) {
+            final_out += b.key + b.val + b.unit + suff;
+        }
+    }
+    
+    std::cout << final_out << std::endl;
+
+    std::cerr << R"( SPRM (Simple Panel Resource Monitor) C++ version;
+ T = Temperature
+ C = Total CPU Usage
+ G = Total GPU Usage
+ M = Total Memory Usage
+ D = Total Disk Usage
+ R = Total Disk Read
+ W = Total Disk Write
+ ▼ = Average Download Rate
+ ▲ = Average Upload Rate
+ click to open btop)";
     return 0;
 }
 

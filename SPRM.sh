@@ -1,6 +1,19 @@
 #!/bin/sh
 
-CACHE_FILE="/tmp/sprm-dash-cache.json"
+CACHE_FILE="/tmp/sprm-cache-sh.json"
+
+pref=""
+suff=" |"
+use_pango=0
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --pref) pref="$2"; shift 2 ;;
+        --suff) suff="$2"; shift 2 ;;
+        --pango) use_pango=1; shift ;;
+        *) shift ;;
+    esac
+done
 
 NET_INTRF="lo"
 if [ -r /proc/net/route ]; then
@@ -75,11 +88,10 @@ cur_d_w=$((cur_d_w * 512))
 
 cur_net_down=0; cur_net_up=0
 if [ -r /proc/net/dev ]; then
-    NET_LINE=$(grep -E "[[:space:]]$NET_INTRF:" /proc/net/dev)
-    if [ -n "$NET_LINE" ]; then
-        data_part=$(echo "$NET_LINE" | sed 's/.*://')
-        cur_net_down=$(echo "$data_part" | sed 's/^[[:space:]]*\([0-9]\{1,\}\).*/\1/')
-        cur_net_up=$(echo "$data_part" | sed 's/^\([[:space:]]*[0-9]\{1,\}\)\{8\}[[:space:]]\{1,\}\([0-9]\{1,\}\).*/\2/')
+    NET_DATA=$(awk -v iface="$NET_INTRF" '$0 ~ iface":" {sub(/^.*:/, ""); print $1, $9}' /proc/net/dev)
+    if [ -n "$NET_DATA" ]; then
+        cur_net_down=$(echo "$NET_DATA" | cut -d' ' -f1)
+        cur_net_up=$(echo "$NET_DATA" | cut -d' ' -f2)
     fi
 fi
 
@@ -143,14 +155,15 @@ u_rt=$(echo "$BC_EXEC" | sed -n '5p')
 
 echo "{\"time\":$now_time,\"cpu\":[$user,$nice,$system_t,$idle,$iowait,$irq,$softirq],\"d_r\":$cur_d_r,\"d_w\":$cur_d_w,\"n_d\":$cur_net_down,\"n_u\":$cur_net_up}" > "$CACHE_FILE"
 
-fmt_rate() {
+fmt_rate_parts() {
     val=$1
-    if [ "$(echo "$val <= 0" | bc)" -eq 1 ]; then echo "      0B/s"; return; fi
+    if [ "$(echo "$val <= 0" | bc)" -eq 1 ]; then echo "      0:B/s"; return; fi
     
     # MB/s (1024^2 = 1048576)
     if [ "$(echo "$val >= 1048576" | bc)" -eq 1 ]; then
         mb=$(echo "scale=2; $val / 1048576" | bc)
         num_str=$(printf "%.2f" "$mb")
+        unit="MB/s"
     # KB/s (1024)
     elif [ "$(echo "$val >= 1024" | bc)" -eq 1 ]; then
         kb=$(echo "scale=2; $val / 1024" | bc)
@@ -165,51 +178,87 @@ fmt_rate() {
     b_p=$(echo "$num_str" | cut -d'.' -f2)
 
     if [ ${#f_p} -gt 3 ]; then
-        echo "999999GB/s"
+        echo "999999:GB/s"
         return
     fi
     
-    if [ "$(echo "$val >= 1048576" | bc)" -eq 1 ]; then
-        unit="MB/s"
-    fi
     # B/s
     padded_fp=$(printf "%3s" "$f_p")
-    echo "${padded_fp}.${b_p}${unit}"
+    echo "${padded_fp}.${b_p}:${unit}"
 }
 
-out_t=$(echo "scale=1; $temp_raw / 1000" | bc)
-t_chk=$(echo "$out_t >= 100.0" | bc)
-if [ "$t_chk" -eq 1 ]; then out_t="9999°C"; else out_t="${out_t}°C"; fi
+out_t_val=$(echo "scale=1; $temp_raw / 1000" | bc)
+t_chk=$(echo "$out_t_val >= 100.0" | bc)
+if [ "$t_chk" -eq 1 ]; then out_t_val="9999"; fi
+out_t_unit="°C"
+
+cpu_fmt=$(printf "%5.1f" "$cpu_pcent")
+gpu_fmt=$(printf "%5.1f" "$gpu_pcent")
 
 ram_used=$(echo "scale=2; ($mem_t - $mem_a) / 1048576" | bc)
 ram_tot=$(echo "scale=2; $mem_t / 1048576" | bc)
+ram_used_fmt=$(printf "%5.2f" "$ram_used")
+ram_tot_fmt=$(printf "%.2f" "$ram_tot")
+ram_val="${ram_used_fmt}/${ram_tot_fmt}"
+
 d_tot_GB=$(echo "scale=2; $d_tot_bytes / 1000000000" | bc)
 d_free_GB=$(echo "scale=2; $d_free_bytes / 1000000000" | bc)
+d_free_fmt=$(printf "%.2f" "$d_free_GB")
+d_tot_fmt=$(printf "%.2f" "$d_tot_GB")
+disk_val="${d_free_fmt}/${d_tot_fmt}"
 
-f_r=$(fmt_rate "$r_rt"); f_w=$(fmt_rate "$w_rt"); f_d=$(fmt_rate "$d_rt"); f_u=$(fmt_rate "$u_rt")
+f_r=$(fmt_rate_parts "$r_rt"); f_w=$(fmt_rate_parts "$w_rt"); f_d=$(fmt_rate_parts "$d_rt"); f_u=$(fmt_rate_parts "$u_rt")
 
-out_r=$f_r; [ -n "$(echo "$f_r" | grep 999999)" ] && out_r="999999GB/s"
-out_w=$f_w; [ -n "$(echo "$f_w" | grep 999999)" ] && out_w="999999GB/s"
-out_d=$f_d; [ -n "$(echo "$f_d" | grep 999999)" ] && out_d="999999GB/s"
-out_u=$f_u; [ -n "$(echo "$f_u" | grep 999999)" ] && out_u="999999GB/s"
+r_val=$(echo "$f_r" | cut -d':' -f1); r_unit=$(echo "$f_r" | cut -d':' -f2)
+w_val=$(echo "$f_w" | cut -d':' -f1); w_unit=$(echo "$f_w" | cut -d':' -f2)
+d_val=$(echo "$f_d" | cut -d':' -f1); d_unit=$(echo "$f_d" | cut -d':' -f2)
+u_val=$(echo "$f_u" | cut -d':' -f1); u_unit=$(echo "$f_u" | cut -d':' -f2)
 
-printf " T %s | C %5.1f%% | G %5.1f%% | M %5.2f/%sGB | D %s/%sGB | R %s | W %s | ▼ %s | ▲ %s |" "$out_t" "$cpu_pcent" "$gpu_pcent" "$ram_used" "$ram_tot" "$d_free_GB" "$d_tot_GB" "$out_r" "$out_w" "$out_d" "$out_u"
+k0=" T "; v0="$out_t_val"; u0="$out_t_unit"
+k1=" C "; v1="$cpu_fmt";   u1="%"
+k2=" G "; v2="$gpu_fmt";   u2="%"
+k3=" M "; v3="$ram_val";   u3="GB"
+k4=" D "; v4="$disk_val";  u4="GB"
+k5=" R "; v5="$r_val";     u5="$r_unit"
+k6=" W "; v6="$w_val";     u6="$w_unit"
+k7=" ▼ "; v7="$d_val";     u7="$d_unit"
+k8=" ▲ "; v8="$u_val";     u8="$u_unit"
 
+out_string=""
+if [ "$use_pango" -eq 1 ]; then
+    out_string="<span background='#000000' foreground='#00ADD8'>$pref</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k0</span><span background='#000000' foreground='#CCFF00'>$v0</span><span background='#000000' foreground='#FF1493'>$u0</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k1</span><span background='#000000' foreground='#CCFF00'>$v1</span><span background='#000000' foreground='#FF1493'>$u1</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k2</span><span background='#000000' foreground='#CCFF00'>$v2</span><span background='#000000' foreground='#FF1493'>$u2</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k3</span><span background='#000000' foreground='#CCFF00'>$v3</span><span background='#000000' foreground='#FF1493'>$u3</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k4</span><span background='#000000' foreground='#CCFF00'>$v4</span><span background='#000000' foreground='#FF1493'>$u4</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k5</span><span background='#000000' foreground='#CCFF00'>$v5</span><span background='#000000' foreground='#FF1493'>$u5</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k6</span><span background='#000000' foreground='#CCFF00'>$v6</span><span background='#000000' foreground='#FF1493'>$u6</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k7</span><span background='#000000' foreground='#CCFF00'>$v7</span><span background='#000000' foreground='#FF1493'>$u7</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k8</span><span background='#000000' foreground='#CCFF00'>$v8</span><span background='#000000' foreground='#FF1493'>$u8</span><span background='#000000' foreground='#00ADD8'>$suff</span>"
+else
+    out_string="$pref"
+    out_string="${out_string}${k0}${v0}${u0}${suff}"
+    out_string="${out_string}${k1}${v1}${u1}${suff}"
+    out_string="${out_string}${k2}${v2}${u2}${suff}"
+    out_string="${out_string}${k3}${v3}${u3}${suff}"
+    out_string="${out_string}${k4}${v4}${u4}${suff}"
+    out_string="${out_string}${k5}${v5}${u5}${suff}"
+    out_string="${out_string}${k6}${v6}${u6}${suff}"
+    out_string="${out_string}${k7}${v7}${u7}${suff}"
+    out_string="${out_string}${k8}${v8}${u8}${suff}"
+fi
+printf "%s\n" "$out_string"
 cat << EOF 1>&2
-\`                                       
-  SPRM (Simple Panel Resource Monitor)  
-           * Shell version *            
-                                        
-        T = Temperature                 
-        C = Total CPU Usage             
-        G = Total GPU Usage             
-        M = Total Memory Usage          
-        D = Total Disk Usage            
-        R = Total Disk Read             
-        W = Total Disk Write            
-        ▼ = Average Download Rate       
-        ▲ = Average Upload Rate         
-                                        
-           click to open btop           
-                                       .
+ SPRM (Simple Panel Resource Monitor) Shell version
+ T = Temperature
+ C = Total CPU Usage
+ G = Total GPU Usage
+ M = Total Memory Usage
+ D = Total Disk Usage
+ R = Total Disk Read
+ W = Total Disk Write
+ ▼ = Average Download Rate
+ ▲ = Average Upload Rate
+ click to open btop
 EOF

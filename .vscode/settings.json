@@ -371,6 +371,8 @@
     "code-runner.runInTerminal": true,
     "files.associations": {
         // "last-commit.sh": "plaintext",
+        "**/*tint2*": "shellscript",
+        "*.awk": "shellscript",
         "**/i3/**/*conf*": "shellscript",
         "**/LXDE/**/*conf*": "shellscript",
         "**/LXDE/**/*autostart*": "shellscript",

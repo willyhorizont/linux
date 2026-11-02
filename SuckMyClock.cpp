@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iomanip>
 #include <string>
+#include <cstring>
 
 int get_total_days(int year, int month) {
     const int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -20,7 +21,21 @@ std::string format_time(const std::tm* tm_info, const std::string& fmt) {
     return std::string(buf);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    std::string pref = "| ";
+    std::string suff = " ";
+    bool use_pango = false;
+
+    for (int i = 1; i < argc; i++) {
+        if (std::strcmp(argv[i], "--pref") == 0 && i + 1 < argc) {
+            pref = argv[++i];
+        } else if (std::strcmp(argv[i], "--suff") == 0 && i + 1 < argc) {
+            suff = argv[++i];
+        } else if (std::strcmp(argv[i], "--pango") == 0) {
+            use_pango = true;
+        }
+    }
+
     auto now = std::chrono::system_clock::now();
     std::time_t t = std::chrono::system_clock::to_time_t(now);
     std::tm* tm_info = std::localtime(&t);
@@ -34,18 +49,39 @@ int main() {
 
     std::string date_string = format_time(tm_info, "%a, %d %b %Y");
     std::string time_24 = format_time(tm_info, "%H:%M:%S");
-    std::string time_12 = format_time(tm_info, "%I:%M:%S %p");
+    std::string time_12 = format_time(tm_info, "%I:%M:%S");
+    std::string am_pm_str = format_time(tm_info, "%p");
 
-    std::cout << "| " << month_num << "/12 months | " << day_num << "/" << total_days << " days | " << date_string << " | " << time_24 << " | " << time_12 << " ";
-    std::cerr << R"(
-`                          
-        SuckMyClock        
-      * C++ version *      
-                           
-  click to open calcurse   
-                           
-                          .
-)";
+    if (use_pango) {
+        std::cout << "<span background='#000000' foreground='#00ADD8'>" << pref << "</span>";
+
+        std::cout << "<span background='#000000' foreground='#CCFF00'>" << month_num << "/12 </span>";
+        std::cout << "<span background='#000000' foreground='#FF1493'>months</span>";
+        std::cout << "<span background='#000000' foreground='#00ADD8'> | </span>";
+
+        std::cout << "<span background='#000000' foreground='#CCFF00'>" << day_num << "</span>";
+        std::cout << "<span background='#000000' foreground='#CCFF00'>/</span>";
+        std::cout << "<span background='#000000' foreground='#CCFF00'>" << total_days << " </span>";
+        std::cout << "<span background='#000000' foreground='#FF1493'>days</span>";
+        std::cout << "<span background='#000000' foreground='#00ADD8'> | </span>";
+
+        std::cout << "<span background='#000000' foreground='#CCFF00'>" << date_string << "</span>";
+        std::cout << "<span background='#000000' foreground='#00ADD8'> | </span>";
+
+        std::cout << "<span background='#000000' foreground='#CCFF00'>" << time_24 << "</span>";
+        std::cout << "<span background='#000000' foreground='#00ADD8'> | </span>";
+
+        std::cout << "<span background='#000000' foreground='#CCFF00'>" << time_12 << " </span>";
+        std::cout << "<span background='#000000' foreground='#FF1493'>" << am_pm_str << "</span>";
+
+        std::cout << "<span background='#000000' foreground='#00ADD8'>" << suff << "</span>";
+    } else {
+        std::cout << pref << month_num << "/12 months | " << day_num << "/" << total_days << " days | " << date_string << " | " << time_24 << " | " << time_12 << " " << am_pm_str << suff;
+    }
+    std::cout << std::endl;
+
+    std::cerr << R"( SuckMyClock C++ version;
+ click to open calcurse)";
 
     return 0;
 }

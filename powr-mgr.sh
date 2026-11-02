@@ -29,7 +29,7 @@ while true; do
             if [ -f "$POWR_PFL_SCRIPT" ]; then
                 exec bash "$POWR_PFL_SCRIPT"
             else
-                echo -e "\n\n[!] Error: $POWR_PFL_SCRIPT not found!"
+                echo -e "\nError: $POWR_PFL_SCRIPT not found!"
                 read -rsp "Press any key to continue..." -n 1
             fi
             ;;
@@ -37,7 +37,7 @@ while true; do
             if [ -f "$BRGHTNSS_SCRIPT" ]; then
                 exec bash "$BRGHTNSS_SCRIPT"
             else
-                echo -e "\n\n[!] Error: $BRGHTNSS_SCRIPT not found!"
+                echo -e "\nError: $BRGHTNSS_SCRIPT not found!"
                 read -rsp "Press any key to continue..." -n 1
             fi
             ;;
@@ -45,7 +45,7 @@ while true; do
             if [ -f "$BLU_LGHT_FLTR_SCRIPT" ]; then
                 exec bash "$BLU_LGHT_FLTR_SCRIPT"
             else
-                echo -e "\n\n[!] Error: $BLU_LGHT_FLTR_SCRIPT not found!"
+                echo -e "\nError: $BLU_LGHT_FLTR_SCRIPT not found!"
                 read -rsp "Press any key to continue..." -n 1
             fi
             ;;
@@ -54,11 +54,11 @@ while true; do
                 if [ -f "$THINKPAD_BAT_SCRIPT" ]; then
                     exec bash "$THINKPAD_BAT_SCRIPT"
                 else
-                    echo -e "\n\n[!] Error: $THINKPAD_BAT_SCRIPT not found!"
+                    echo -e "\nError: $THINKPAD_BAT_SCRIPT not found!"
                     read -rsp "Press any key to continue..." -n 1
                 fi
             else
-                echo -e "\n\n[!] Invalid choice!."
+                echo -e "\nInvalid choice!."
                 read -rsp "Press any key to continue..." -n 1
             fi
             ;;
@@ -66,7 +66,7 @@ while true; do
             exit 0
             ;;
         *)
-            echo -e "\n\n[!] Invalid choice!"
+            echo -e "\nInvalid choice!"
             read -rsp "Press any key to continue..." -n 1
             ;;
     esac

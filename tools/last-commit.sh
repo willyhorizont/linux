@@ -25,7 +25,7 @@ done
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.7.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.7.1" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -35,31 +35,21 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-combine indic* with tui* default to tui, --indicator for indic*;
-add --pref --suff to --indicator *indctr;
-rename indic0-wrkspc.sh                to wrkspc-indctr.sh;
-rename indic0-screensavr.sh            to tux-indctr.sh;
-combine indic1-bt.sh tui1-bt.sh        to bt.sh;
-combine indic2-net.sh tui2-net.sh      to net.sh;
-combine indic3-cam.sh tui3-cam.sh      to cam.sh;
-combine indic4-mic.sh tui4-mic.sh      to mic.sh;
-combine indic5-vol.sh tui5-vol.sh      to vol.sh;
-rename indic6-powr.sh                  to powr-indctr.sh;
-rename tui0-screensavr.sh              to screensavr-mgr.sh;
-rename tui6-powr.sh                    to powr-mgr.sh;
-rename tui6-1-powr-pfl.sh              to powr-pfl-mgr.sh;
-rename tui6-2-brghtnss.sh              to scrn-brghtnss-mgr.sh;
-rename tui6-3-blu-lght-fltr.sh         to blu-lght-fltr-mgr.sh;
-rename tui6-4-bat-lenovo-thinkpad.sh   to bat-lenovo-thinkpad-mgr.sh;
-rename tui0-powr-mnu-prompt.sh         to powr-mnu.sh;
+fix SPRM.sh, fix download and upload stuck;
+add --pref --suff --pango to SPRM;
+add --pref --suff --pango to SuckMyClock;
+add uptime.c;
+add uptime.cpp;
+add uptime.awk;
+add uptime.pl;
+add uptime.py;
+update uptime.sh;
 
 working on:
 add confirm-cmd.sh;
-add --pango to --indicator *indctr;
-add --pref --suff --pango to SPRM;
-add --pref --suff --pango to SuckMyClock;
 add rofi alt tab;
 create tile-cur-win;
+add --pango to --indicator *indctr;
 
 TODO #1:
 update README.md, add strikethrough to wm that can not be installed via apt install;

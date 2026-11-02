@@ -1,3 +1,39 @@
+[Last updated: 02 Nov 2026 @ 08:44 AM][version: 0.7.1]
+fix SPRM.sh, fix download and upload stuck;
+add --pref --suff --pango to SPRM;
+add --pref --suff --pango to SuckMyClock;
+add uptime.c;
+add uptime.cpp;
+add uptime.awk;
+add uptime.pl;
+add uptime.py;
+update uptime.sh;
+
+working on:
+add confirm-cmd.sh;
+add rofi alt tab;
+create tile-cur-win;
+add --pango to --indicator *indctr;
+
+TODO #1:
+update README.md, add strikethrough to wm that can not be installed via apt install;
+TODO #2:
+rofi grid;
+mac launchpad;
+skippy-xd;
+mac mission control or windows task view;
+remove space between months and days in SuckMyClock;
+dvd screensaver;
+panel with signal support, IPC?;
+TODO #3:
+make window font size smaller;
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+add time on terminal;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 02 Nov 2026 @ 02:16 AM][version: 0.7.0]
 combine indic* with tui* default to tui, --indicator for indic*;
 add --pref --suff to --indicator *indctr;

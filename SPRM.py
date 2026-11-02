@@ -6,7 +6,7 @@ import time
 import json
 import re
 
-CACHE_FILE = "/tmp/sprm-python-cache.json"
+CACHE_FILE = "/tmp/sprm-cache-py.json"
 
 
 def get_active_net_interf():
@@ -46,7 +46,7 @@ def pad(s, length):
 
 def fmt(bytesps):
     if bytesps <= 0:
-        return "      0B/s"
+        return "      0", "B/s"
     units = ["B/s", "KB/s", "MB/s"]
     i = 0
     v = float(bytesps)
@@ -62,8 +62,8 @@ def fmt(bytesps):
     f_p = parts[0]
     b_p = parts[1]
     if len(f_p) > 3:
-        return "999999GB/s"
-    return f"{pad(f_p, 3)}.{b_p}{units[i]}"
+        return "999999", "GB/s"
+    return f"{pad(f_p, 3)}.{b_p}", units[i]
 
 
 def get_system_data():
@@ -162,6 +162,25 @@ def get_system_data():
 
 
 def main():
+    pref = ""
+    suff = " |"
+    use_pango = False
+
+    args = sys.argv[1:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--pref" and i + 1 < len(args):
+            pref = args[i+1]
+            i += 2
+        elif args[i] == "--suff" and i + 1 < len(args):
+            suff = args[i+1]
+            i += 2
+        elif args[i] == "--pango":
+            use_pango = True
+            i += 1
+        else:
+            i += 1
+
     now_time = time.monotonic()
     temp_val, cpu_parts, gpu_val, ram_used, ram_tot, d_free_GB, d_tot_GB, cur_d_r, cur_d_w, cur_net_down, cur_net_up = get_system_data()
 
@@ -219,37 +238,64 @@ def main():
     d_free_str = f"{d_free_GB:.2f}"
     d_tot_str = f"{d_tot_GB:.2f}"
 
-    f_r = fmt(r_rt)
-    f_w = fmt(w_rt)
-    f_d = fmt(d_rt)
-    f_u = fmt(u_rt)
+    f_r_val, f_r_unit = fmt(r_rt)
+    f_w_val, f_w_unit = fmt(w_rt)
+    f_d_val, f_d_unit = fmt(d_rt)
+    f_u_val, f_u_unit = fmt(u_rt)
 
-    out_t = "9999°C" if temp_str == "9999" else f"{temp_str}°C"
-    out_r = "999999GB/s" if "999999" in f_r else f_r
-    out_w = "999999GB/s" if "999999" in f_w else f_w
-    out_d = "999999GB/s" if "999999" in f_d else f_d
-    out_u = "999999GB/s" if "999999" in f_u else f_u
+    out_t_val = "9999" if temp_str == "9999" else temp_str
+    out_t_unit = "°C"
+    
+    out_r_val = "999999" if "999999" in f_r_val else f_r_val
+    out_r_unit = "GB/s" if "999999" in f_r_val else f_r_unit
+    
+    out_w_val = "999999" if "999999" in f_w_val else f_w_val
+    out_w_unit = "GB/s" if "999999" in f_w_val else f_w_unit
+    
+    out_d_val = "999999" if "999999" in f_d_val else f_d_val
+    out_d_unit = "GB/s" if "999999" in f_d_val else f_d_unit
+    
+    out_u_val = "999999" if "999999" in f_u_val else f_u_val
+    out_u_unit = "GB/s" if "999999" in f_u_val else f_u_unit
 
-    rr = f" T {out_t} | C {cpu_fmt}% | G {gpu_fmt}% | M {ram_used_str}/{ram_tot_str}GB | D {d_free_str}/{d_tot_str}GB | R {out_r} | W {out_w} | ▼ {out_d} | ▲ {out_u} |"
-    print(rr, end="")
-    print("""
-`                                       
-  SPRM (Simple Panel Resource Monitor)  
-           * Python version *           
-                                        
-        T = Temperature                 
-        C = Total CPU Usage             
-        G = Total GPU Usage             
-        M = Total Memory Usage          
-        D = Total Disk Usage            
-        R = Total Disk Read             
-        W = Total Disk Write            
-        ▼ = Average Download Rate       
-        ▲ = Average Upload Rate         
-                                        
-           click to open btop           
-                                       .
-    """, file=sys.stderr)
+    blocks = [
+        {"key": " T ", "val": out_t_val, "unit": out_t_unit},
+        {"key": " C ", "val": cpu_fmt, "unit": "%"},
+        {"key": " G ", "val": gpu_fmt, "unit": "%"},
+        {"key": " M ", "val": f"{ram_used_str}/{ram_tot_str}", "unit": "GB"},
+        {"key": " D ", "val": f"{d_free_str}/{d_tot_str}", "unit": "GB"},
+        {"key": " R ", "val": out_r_val, "unit": out_r_unit},
+        {"key": " W ", "val": out_w_val, "unit": out_w_unit},
+        {"key": " ▼ ", "val": out_d_val, "unit": out_d_unit},
+        {"key": " ▲ ", "val": out_u_val, "unit": out_u_unit}
+    ]
+
+    out_str = ""
+    if use_pango:
+        out_str += f"<span background='#000000' foreground='#00ADD8'>{pref}</span>"
+        for b in blocks:
+            out_str += f"<span background='#000000' foreground='#FF1493'>{b['key']}</span>"
+            out_str += f"<span background='#000000' foreground='#CCFF00'>{b['val']}</span>"
+            out_str += f"<span background='#000000' foreground='#FF1493'>{b['unit']}</span>"
+            out_str += f"<span background='#000000' foreground='#00ADD8'>{suff}</span>"
+    else:
+        out_str += pref
+        for b in blocks:
+            out_str += f"{b['key']}{b['val']}{b['unit']}{suff}"
+            
+    print(out_str, flush=True)
+
+    print(""" SPRM (Simple Panel Resource Monitor) Python version;
+ T = Temperature
+ C = Total CPU Usage
+ G = Total GPU Usage
+ M = Total Memory Usage
+ D = Total Disk Usage
+ R = Total Disk Read
+ W = Total Disk Write
+ ▼ = Average Download Rate
+ ▲ = Average Upload Rate
+ click to open btop""", file=sys.stderr)
 
 
 if __name__ == "__main__":
