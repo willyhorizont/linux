@@ -30,7 +30,7 @@ if [ -r /proc/uptime ]; then
     if [ "$hours" -lt 1000 ]; then
         v_hrs=$(printf "%3d" "$hours")
         u_hrs="hours "
-        v_min=$(printf "%02d" "$minutes")
+        v_min=$(printf "%2d" "$minutes")
         u_min="minutes"
         
         if [ "$use_pango" -eq 1 ]; then

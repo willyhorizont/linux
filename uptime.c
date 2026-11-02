@@ -19,50 +19,55 @@ int main(int argc, char *argv[]) {
     }
 
     FILE *fh = fopen("/proc/uptime", "r");
-    if (!fh) return 1;
+    if (fh) {
+        double secs;
+        if (fscanf(fh, "%lf", &secs) == 1) {
+            long long hours = (long long)(secs / 3600);
+            int minutes = (int)(((long long)secs % 3600) / 60);
 
-    double secs;
-    if (fscanf(fh, "%lf", &secs) != 1) {
+            if (hours > 9999999999999LL) {
+                hours = 9999999999999LL;
+            }
+
+            char *k_lbl = " uptime ";
+            char v_hrs[32], u_hrs[32], v_min[32], u_min[32];
+
+            if (hours < 1000) {
+                sprintf(v_hrs, "%3lld", hours);
+                strcpy(u_hrs, "hours ");
+                sprintf(v_min, "%2d", minutes);
+                strcpy(u_min, "minutes");
+
+                if (use_pango) {
+                    printf("<span background='#000000' foreground='#00ADD8'>%s</span>"
+                           "<span background='#000000' foreground='#FF1493'>%s</span>"
+                           "<span background='#000000' foreground='#CCFF00'>%s</span>"
+                           "<span background='#000000' foreground='#FF1493'>%s</span>"
+                           "<span background='#000000' foreground='#CCFF00'>%s</span>"
+                           "<span background='#000000' foreground='#FF1493'>%s</span>"
+                           "<span background='#000000' foreground='#00ADD8'>%s</span>\n",
+                           pref, k_lbl, v_hrs, u_hrs, v_min, u_min, suff);
+                } else {
+                    printf("%s%s%s%s%s%s%s\n", pref, k_lbl, v_hrs, u_hrs, v_min, u_min, suff);
+                }
+            } else {
+                sprintf(v_hrs, "%13lld", hours);
+                strcpy(u_hrs, "hours");
+
+                if (use_pango) {
+                    printf("<span background='#000000' foreground='#00ADD8'>%s</span>"
+                           "<span background='#000000' foreground='#FF1493'>%s</span>"
+                           "<span background='#000000' foreground='#CCFF00'>%s</span>"
+                           "<span background='#000000' foreground='#FF1493'>%s</span>"
+                           "<span background='#000000' foreground='#00ADD8'>%s</span>\n",
+                           pref, k_lbl, v_hrs, u_hrs, suff);
+                } else {
+                    printf("%s%s%s%s%s\n", pref, k_lbl, v_hrs, u_hrs, suff);
+                }
+            }
+        }
         fclose(fh);
-        return 1;
     }
-    fclose(fh);
-
-    long long hours = (long long)(secs / 3600);
-    int minutes = (int)(((long)(secs) % 3600) / 60);
-
-    if (hours > 9999999999999LL) {
-        hours = 9999999999999LL;
-    }
-
-    char *k_lbl = " uptime ";
-
-    if (hours < 1000) {
-        if (use_pango) {
-            printf("<span background='#000000' foreground='#00ADD8'>%s</span>"
-                   "<span background='#000000' foreground='#FF1493'>%s</span>"
-                   "<span background='#000000' foreground='#CCFF00'>%3lld</span>"
-                   "<span background='#000000' foreground='#FF1493'>hours </span>"
-                   "<span background='#000000' foreground='#CCFF00'>%02d</span>"
-                   "<span background='#000000' foreground='#FF1493'>minutes</span>"
-                   "<span background='#000000' foreground='#00ADD8'>%s</span>\n",
-                   pref, k_lbl, hours, minutes, suff);
-        } else {
-            printf("%s%s%3lldhours %02dminutes%s\n", pref, k_lbl, hours, minutes, suff);
-        }
-    } else {
-        if (use_pango) {
-            printf("<span background='#000000' foreground='#00ADD8'>%s</span>"
-                   "<span background='#000000' foreground='#FF1493'>%s</span>"
-                   "<span background='#000000' foreground='#CCFF00'>%13lld</span>"
-                   "<span background='#000000' foreground='#FF1493'>hours</span>"
-                   "<span background='#000000' foreground='#00ADD8'>%s</span>\n",
-                   pref, k_lbl, hours, suff);
-        } else {
-            printf("%s%s%13lldhours%s\n", pref, k_lbl, hours, suff);
-        }
-    }
-
     return 0;
 }
 

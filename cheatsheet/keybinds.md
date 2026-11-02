@@ -20,6 +20,7 @@ pagedown    ; Page Down, PgDn                     ; fn + ⬇, ⇟             ; 
 fn          ; Fn                                  ; fn, 🌐                ; Fn
 printscreen ; Print Screen, PrtSc                 ; command + shift + 3   ; Print
 capslock    ; Caps Lock, ⇪                        ; caps lock             ; Caps, Caps_Lock
+grave       ; Backtick, Grave, `                  ; backtick, grave, `    ; grave, backtick, `
 ```
 
 ## Order
@@ -31,16 +32,18 @@ Mac     = $control ➡️ $meta  ➡️ $super
 ## open Windows File Explorer / Mac Finder / Linux Thunar or PCManFM
 ```
 # Linux
+$super+e
 # Windows
 $super+e
 # Mac
 ```
 
-## open Windows Start menu / Mac Launchpad / Linux xfce4-popup-whiskermenu or jgmenu or dmenu or rofi
+## open Windows Start Menu / Mac Launchpad / Linux xfce4-popup-whiskermenu or jgmenu or dmenu or rofi
 ```
 # Linux
-$meta+F1
+$super
 $super+a
+$meta+F1
 $control+$escape
 # Windows
 $super
@@ -48,14 +51,15 @@ $super
 F4
 ```
 
-## open Windows Run / Mac Spotlight / Linux dmenu or rofi
+## open Windows Run or PowerToys Run / Mac Spotlight or Alfred / Linux dmenu or rofi
 ```
 # Linux
 $super+d
 # Windows
 $super+r
-# Mac
 $meta+$space
+# Mac
+$super+$space
 ```
 
 ## open terminal
@@ -76,6 +80,54 @@ $control+$shift+$escape
 $super+$meta+$escape
 ```
 
+## toggle show dekstop
+```
+# Linux
+$control+meta+d
+$super+d
+# Windows
+$super+d
+# Mac
+$super+F3
+```
+
+## cycle through Windows Tasks / Mac applications / Linux windows
+```
+# Linux
+$meta+$tab
+$meta+$shift+$tab
+# Windows
+$meta+$tab
+$meta+$shift+$tab
+# Mac
+$super+$tab
+$super+$shift+$tab
+$super+$grave
+$super+$shift+$grave
+```
+
+## cycle between Windows Virtual Desktops / Mac Spaces / Linux Workspaces
+```
+# Linux
+$control+$meta+$right
+$control+$meta+$left
+# Windows
+$control+$super+$right
+$control+$super+$left
+# Mac
+$control+$right
+$control+$left
+```
+
+## open Windows Task View / Mac Mission Control / Linux rofi
+```
+# Linux
+# Windows
+$super+$tab
+# Mac
+$control+$up
+```
+`
 ## kill focused window
 ```
 # Windows

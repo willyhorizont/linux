@@ -1,6 +1,6 @@
 # components > gtk
 
-## Pinned+Opened app combo
+## Windows 7 or 10 or 11 Taskbar behavior / Mac Dock behavior / Linux xfce4-docklike-plugin or plank behavior
 * plank
 * xfce4-panel + xfce4-docklike-plugin
 * ~~cariro-dock~~

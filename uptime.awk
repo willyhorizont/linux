@@ -37,7 +37,7 @@ BEGIN {
         if (hours < 1000) {
             v_hrs = sprintf("%3d", hours)
             u_hrs = "hours "
-            v_min = sprintf("%02d", minutes)
+            v_min = sprintf("%2d", minutes)
             u_min = "minutes"
             
             if (use_pango) {

@@ -41,13 +41,11 @@ int main(int argc, char *argv[]) {
                       << "<span background='#000000' foreground='#FF1493'>" << k_lbl << "</span>"
                       << "<span background='#000000' foreground='#CCFF00'>" << std::setw(3) << hours << "</span>"
                       << "<span background='#000000' foreground='#FF1493'>hours </span>"
-                      << "<span background='#000000' foreground='#CCFF00'>" << std::setw(2) << std::setfill('0') << minutes << "</span>"
-                      << "<span background='#000000' foreground='#FF1493'>" << std::setfill(' ') << "minutes</span>"
+                      << "<span background='#000000' foreground='#CCFF00'>" << std::setw(2) << minutes << "</span>"
+                      << "<span background='#000000' foreground='#FF1493'>minutes</span>"
                       << "<span background='#000000' foreground='#00ADD8'>" << suff << "</span>\n";
         } else {
-            std::cout << pref << k_lbl << std::setw(3) << hours << "hours " 
-                      << std::setw(2) << std::setfill('0') << minutes << "minutes" 
-                      << std::setfill(' ') << suff << "\n";
+            std::cout << pref << k_lbl << std::setw(3) << hours << "hours " << std::setw(2) << minutes << "minutes" << suff << "\n";
         }
     } else {
         if (use_pango) {

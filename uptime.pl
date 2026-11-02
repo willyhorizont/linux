@@ -32,7 +32,7 @@ if (open(my $fh, "<", "/proc/uptime")) {
 
         if ($hours < 1000) {
             my $v_hrs = sprintf("%3d", $hours);
-            my $v_min = sprintf("%02d", $minutes);
+            my $v_min = sprintf("%2d", $minutes);
             if ($use_pango) {
                 print "<span background='#000000' foreground='#00ADD8'>$pref</span>" .
                       "<span background='#000000' foreground='#FF1493'>$k_lbl</span>" .

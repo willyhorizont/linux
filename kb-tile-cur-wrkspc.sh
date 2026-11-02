@@ -35,6 +35,26 @@ if [ "$WIN_COUNT" -eq 0 ]; then
     exit 0
 fi
 
+F="ctrl+super+z"           # C-W-z
+M="ctrl+super+f"           # C-W-f
+CG="ctrl+super+g"          # C-W-g
+L="super+Left"             # W-Left
+R="super+Right"            # W-Right
+T="super+Up"               # W-Up
+B="super+Down"             # W-Down
+LT="ctrl+super+shift+u"    # C-W-S-u
+LT_L="ctrl+super+shift+t"  # C-W-S-t
+LT_R="ctrl+super+shift+y"  # C-W-S-y
+LB="ctrl+super+shift+h"    # C-W-S-h
+LB_L="ctrl+super+shift+f"  # C-W-S-f
+LB_R="ctrl+super+shift+g"  # C-W-S-g
+RT="ctrl+super+shift+i"    # C-W-S-i
+RT_L="ctrl+super+shift+o"  # C-W-S-o
+RT_R="ctrl+super+shift+p"  # C-W-S-p
+RB="ctrl+super+shift+j"    # C-W-S-j
+RB_L="ctrl+super+shift+k"  # C-W-S-k
+RB_R="ctrl+super+shift+l"  # C-W-S-l
+
 tile_win() {
     local wid=$1
     local kb=$2
@@ -43,46 +63,28 @@ tile_win() {
     # wmctrl -i -a "$wid"
     xdotool key "$kb"
     # pos=""
-    # [ "$kb" == "ctrl+super+q" ] && pos="LT"
-    # [ "$kb" == "ctrl+super+shift+q" ] && pos="LT_L"
-    # [ "$kb" == "ctrl+super+shift+1" ] && pos="LT_R"
-    # [ "$kb" == "ctrl+super+a" ] && pos="LB"
-    # [ "$kb" == "ctrl+super+shift+a" ] && pos="LB_L"
-    # [ "$kb" == "ctrl+super+shift+z" ] && pos="LB_R"
-    # [ "$kb" == "ctrl+super+w" ] && pos="RT"
-    # [ "$kb" == "ctrl+super+shift+2" ] && pos="RT_L"
-    # [ "$kb" == "ctrl+super+shift+w" ] && pos="RT_R"
-    # [ "$kb" == "ctrl+super+s" ] && pos="RB"
-    # [ "$kb" == "ctrl+super+shift+x" ] && pos="RB_L"
-    # [ "$kb" == "ctrl+super+shift+s" ] && pos="RB_R"
-    # [ "$kb" == "ctrl+super+g" ] && pos="CG"
-    # [ "$kb" == "ctrl+super+f" ] && pos="F"
-    # [ "$kb" == "ctrl+super+Left" ] && pos="L"
-    # [ "$kb" == "ctrl+super+Right" ] && pos="R"
-    # [ "$kb" == "ctrl+super+Up" ] && pos="T"
-    # [ "$kb" == "ctrl+super+Down" ] && pos="B"
+    # [ "$kb" == "$F" ] && pos="F"
+    # [ "$kb" == "$M" ] && pos="M"
+    # [ "$kb" == "$CG" ] && pos="CG"
+    # [ "$kb" == "$L" ] && pos="L"
+    # [ "$kb" == "$R" ] && pos="R"
+    # [ "$kb" == "$T" ] && pos="T"
+    # [ "$kb" == "$B" ] && pos="B"
+    # [ "$kb" == "$LT" ] && pos="LT"
+    # [ "$kb" == "$LT_L" ] && pos="LT_L"
+    # [ "$kb" == "$LT_R" ] && pos="LT_R"
+    # [ "$kb" == "$LB" ] && pos="LB"
+    # [ "$kb" == "$LB_L" ] && pos="LB_L"
+    # [ "$kb" == "$LB_R" ] && pos="LB_R"
+    # [ "$kb" == "$RT" ] && pos="RT"
+    # [ "$kb" == "$RT_L" ] && pos="RT_L"
+    # [ "$kb" == "$RT_R" ] && pos="RT_R"
+    # [ "$kb" == "$RB" ] && pos="RB"
+    # [ "$kb" == "$RB_L" ] && pos="RB_L"
+    # [ "$kb" == "$RB_R" ] && pos="RB_R"
     # window_title=$(xdotool getwindowname "$wid" 2>/dev/null)
     # notify-send "WIN_COUNT: $WIN_COUNT" "$pos | $window_title"
 }
-
-LT="ctrl+super+q"          # C-W-q
-LT_L="ctrl+super+shift+q"  # C-W-S-q
-LT_R="ctrl+super+shift+1"  # C-W-S-1
-LB="ctrl+super+a"          # C-W-a
-LB_L="ctrl+super+shift+a"  # C-W-S-a
-LB_R="ctrl+super+shift+z"  # C-W-S-z
-RT="ctrl+super+w"          # C-W-w
-RT_L="ctrl+super+shift+2"  # C-W-S-2
-RT_R="ctrl+super+shift+w"  # C-W-S-w
-RB="ctrl+super+s"          # C-W-s
-RB_L="ctrl+super+shift+x"  # C-W-S-x
-RB_R="ctrl+super+shift+s"  # C-W-S-s
-CG="ctrl+super+g"          # C-W-g
-F="ctrl+super+f"           # C-W-f
-L="ctrl+super+Left"        # C-W-Left
-R="ctrl+super+Right"       # C-W-Right
-T="ctrl+super+Up"          # C-W-Up
-B="ctrl+super+Down"        # C-W-Down
 
 CYCLE_FILE="/tmp/tile_cycle_ws_${cur_wrkspc}_wins_${WIN_COUNT}.state"
 
@@ -97,7 +99,7 @@ case $WIN_COUNT in
     1)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$F"
+                tile_win "${WIN_ARRAY[0]}" "$M"
                 next_cycle=2
                 ;;
             2)
@@ -105,7 +107,7 @@ case $WIN_COUNT in
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$F"
+                tile_win "${WIN_ARRAY[0]}" "$M"
                 next_cycle=2
                 ;;
         esac

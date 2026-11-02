@@ -1,3 +1,36 @@
+[Last updated: 03 Nov 2026 @ 01:34 AM][version: 0.7.2]
+--add time on terminal--;
+--remove space between months and days in SuckMyClock--;
+update uptime.c, remove minutes pad;
+update uptime.cpp, remove minutes pad;
+update uptime.awk, remove minutes pad;
+update uptime.pl, remove minutes pad;
+update uptime.py, remove minutes pad;
+update uptime.sh, remove minutes pad;
+update kb-tile-cur-wrkspc.sh, update tile keybind;
+
+working on:
+add confirm-cmd.sh;
+add rofi for Windows Task View / Mac Mission Control;
+create pinned+opened apps combo rofi;
+create other opened apps rofi;
+create rofi tile-cur-win.sh;
+add --pango to --indicator *indctr;
+
+TODO #1:
+update README.md, add strikethrough to wm that can not be installed via apt install;
+TODO #2:
+add rofi grid for Windows Start Menu / Mac Launchpad;
+try skippy-xd for Windows Task View / Mac Mission Control;
+dvd screensaver;
+try panel with signal support, IPC?;
+TODO #3:
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 02 Nov 2026 @ 08:44 AM][version: 0.7.1]
 fix SPRM.sh, fix download and upload stuck;
 add --pref --suff --pango to SPRM;

@@ -25,7 +25,7 @@ done
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.7.1" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.7.2" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -35,38 +35,35 @@ H="
 H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
-fix SPRM.sh, fix download and upload stuck;
-add --pref --suff --pango to SPRM;
-add --pref --suff --pango to SuckMyClock;
-add uptime.c;
-add uptime.cpp;
-add uptime.awk;
-add uptime.pl;
-add uptime.py;
-update uptime.sh;
+--add time on terminal--;
+--remove space between months and days in SuckMyClock--;
+update uptime.c, remove minutes pad;
+update uptime.cpp, remove minutes pad;
+update uptime.awk, remove minutes pad;
+update uptime.pl, remove minutes pad;
+update uptime.py, remove minutes pad;
+update uptime.sh, remove minutes pad;
+update kb-tile-cur-wrkspc.sh, update tile keybind;
 
 working on:
 add confirm-cmd.sh;
-add rofi alt tab;
-create tile-cur-win;
+add rofi for Windows Task View / Mac Mission Control;
+create pinned+opened apps combo rofi;
+create other opened apps rofi;
+create rofi tile-cur-win.sh;
 add --pango to --indicator *indctr;
 
 TODO #1:
 update README.md, add strikethrough to wm that can not be installed via apt install;
 TODO #2:
-rofi grid;
-mac launchpad;
-skippy-xd;
-mac mission control or windows task view;
-remove space between months and days in SuckMyClock;
+add rofi grid for Windows Start Menu / Mac Launchpad;
+try skippy-xd for Windows Task View / Mac Mission Control;
 dvd screensaver;
-panel with signal support, IPC?;
+try panel with signal support, IPC?;
 TODO #3:
-make window font size smaller;
 check *openbox*.sh, remove openbox part if not related;
 rename script to job*, kb*, indic*, to match indic*, tui*;
 remove separate config and move it to the code instead;
-add time on terminal;
 cleanup dev/*
 cleanup *i3*
 "

@@ -37,7 +37,7 @@ def main():
 
             if hours < 1000:
                 v_hrs = f"{hours:3d}"
-                v_min = f"{minutes:02d}"
+                v_min = f"{minutes:2d}"
                 if use_pango:
                     out = (f"<span background='#000000' foreground='#00ADD8'>{pref}</span>"
                            f"<span background='#000000' foreground='#FF1493'>{k_lbl}</span>"
