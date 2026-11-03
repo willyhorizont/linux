@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
     }
     std::cout << std::endl;
 
-    std::cerr << R"( SuckMyClock C++ version;
+    std::cerr << R"( SuckMyClock (My Suckless Clock) C++ version;
  click to open calcurse)";
 
     return 0;

@@ -1,3 +1,32 @@
+[Last updated: 03 Nov 2026 @ 09:45 AM][version: 0.7.3]
+add detect-tile.sh;
+add dmn-auto-tiling.sh;
+update kb-tile-cur-wrkspc.sh, use detect-tile.sh, add retry;
+add confirm-cmd.sh;
+update last-commit.sh, integrate confirm-cmd.sh;
+update powr-mu.sh, integrate confirm-cmd.sh;
+
+working on:
+add rofi for Windows Task View / Mac Mission Control;
+create pinned+opened apps combo rofi;
+create non pinned opened apps rofi;
+create rofi tile-cur-win.sh;
+add --pango to --indicator *indctr;
+
+TODO #1:
+update README.md, add strikethrough to wm that can not be installed via apt install;
+TODO #2:
+add rofi grid for Windows Start Menu / Mac Launchpad;
+try skippy-xd for Windows Task View / Mac Mission Control;
+dvd screensaver;
+try panel with signal support, IPC?;
+TODO #3:
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 03 Nov 2026 @ 01:34 AM][version: 0.7.2]
 --add time on terminal--;
 --remove space between months and days in SuckMyClock--;

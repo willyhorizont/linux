@@ -61,7 +61,7 @@ def main():
 
     print(out_string)
 
-    print(""" SuckMyClock Python version;
+    print(""" SuckMyClock (My Suckless Clock) Python version;
  click to open calcurse""", file=sys.stderr)
 
 if __name__ == "__main__":

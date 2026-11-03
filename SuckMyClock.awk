@@ -60,6 +60,6 @@ BEGIN {
 
     printf "%s\n", out_string
 
-    print " SuckMyClock Awk version;\n" \
+    print " SuckMyClock (My Suckless Clock) Awk version;\n" \
           " click to open calcurse\n" > "/dev/stderr"
 }

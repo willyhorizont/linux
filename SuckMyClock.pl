@@ -51,6 +51,6 @@ if ($use_pango) {
 print "$out_string\n";
 
 print STDERR <<'EOF';
- SuckMyClock Perl version;
+ SuckMyClock (My Suckless Clock) Perl version;
  click to open calcurse
 EOF

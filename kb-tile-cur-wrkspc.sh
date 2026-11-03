@@ -18,7 +18,8 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
+# cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
+cur_wrkspc=$(xdotool get_desktop)
 OPEN_WINS=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
     if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
     if ($7 == "plank.Plank" && $9 == "plank") next;
@@ -28,10 +29,10 @@ OPEN_WINS=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
     print $1
 }' 2>/dev/null)
 
-WIN_ARRAY=($OPEN_WINS)
-WIN_COUNT=${#WIN_ARRAY[@]}
+WID_ARRAY=($OPEN_WINS)
+WID_COUNT=${#WID_ARRAY[@]}
 
-if [ "$WIN_COUNT" -eq 0 ]; then
+if [ "$WID_COUNT" -eq 0 ]; then
     exit 0
 fi
 
@@ -55,13 +56,56 @@ RB="ctrl+super+shift+j"    # C-W-S-j
 RB_L="ctrl+super+shift+k"  # C-W-S-k
 RB_R="ctrl+super+shift+l"  # C-W-S-l
 
+declare -A slot_dict
+slot_dict["$F"]="F"
+slot_dict["$M"]="M"
+slot_dict["$CG"]="CG"
+slot_dict["$L"]="L"
+slot_dict["$R"]="R"
+slot_dict["$T"]="T"
+slot_dict["$B"]="B"
+slot_dict["$LT"]="LT"
+slot_dict["$LT_L"]="LT_L"
+slot_dict["$LT_R"]="LT_R"
+slot_dict["$LB"]="LB"
+slot_dict["$LB_L"]="LB_L"
+slot_dict["$LB_R"]="LB_R"
+slot_dict["$RT"]="RT"
+slot_dict["$RT_L"]="RT_L"
+slot_dict["$RT_R"]="RT_R"
+slot_dict["$RB"]="RB"
+slot_dict["$RB_L"]="RB_L"
+slot_dict["$RB_R"]="RB_R"
+
 tile_win() {
     local wid=$1
     local kb=$2
+    
+    local expected_tile_pos=${slot_dict["$kb"]}
+    local detected_tile_pos=$($HOME/willyhorizont.github.io/linux/detect-tile.sh --wid "$wid")
+    if [ "$detected_tile_pos" == "$expected_tile_pos" ]; then
+        return 0
+    fi
+
     # wmctrl -i -r "$wid" -b remove,maximized_vert,maximized_horz
     xdotool windowactivate --sync "$wid"
+    sleep 0.2
     # wmctrl -i -a "$wid"
     xdotool key "$kb"
+    sleep 0.2
+
+    retried_tile_pos=$($HOME/willyhorizont.github.io/linux/detect-tile.sh --wid "$wid")
+    local retry_count=0
+    
+    while [ "$retried_tile_pos" != "$expected_tile_pos" ] && [ $retry_count -lt 5 ]; do
+        xdotool windowactivate --sync "$wid"
+        sleep 0.2
+        xdotool key "$kb"
+        sleep 0.2
+        retried_tile_pos=$($HOME/willyhorizont.github.io/linux/detect-tile.sh --wid "$wid")
+        retry_count=$((retry_count + 1))
+    done
+
     # pos=""
     # [ "$kb" == "$F" ] && pos="F"
     # [ "$kb" == "$M" ] && pos="M"
@@ -83,10 +127,10 @@ tile_win() {
     # [ "$kb" == "$RB_L" ] && pos="RB_L"
     # [ "$kb" == "$RB_R" ] && pos="RB_R"
     # window_title=$(xdotool getwindowname "$wid" 2>/dev/null)
-    # notify-send "WIN_COUNT: $WIN_COUNT" "$pos | $window_title"
+    # notify-send "WID_COUNT: $WID_COUNT" "$pos | $window_title"
 }
 
-CYCLE_FILE="/tmp/tile_cycle_ws_${cur_wrkspc}_wins_${WIN_COUNT}.state"
+CYCLE_FILE="/tmp/tile-cycle-ws-${cur_wrkspc}-wins-${WID_COUNT}.state"
 
 if [ "$IS_CYCLE" -eq 1 ]; then
     cur_cy=$(cat "$CYCLE_FILE" 2>/dev/null)
@@ -95,19 +139,19 @@ else
     cur_cy=1
 fi
 
-case $WIN_COUNT in
+case $WID_COUNT in
     1)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$M"
+                tile_win "${WID_ARRAY[0]}" "$M"
                 next_cycle=2
                 ;;
             2)
-                tile_win "${WIN_ARRAY[0]}" "$CG"
+                tile_win "${WID_ARRAY[0]}" "$CG"
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$M"
+                tile_win "${WID_ARRAY[0]}" "$M"
                 next_cycle=2
                 ;;
         esac
@@ -116,18 +160,18 @@ case $WIN_COUNT in
     2)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$L"
-                tile_win "${WIN_ARRAY[1]}" "$R"
+                tile_win "${WID_ARRAY[0]}" "$L"
+                tile_win "${WID_ARRAY[1]}" "$R"
                 next_cycle=2
                 ;;
             2)
-                tile_win "${WIN_ARRAY[0]}" "$T"
-                tile_win "${WIN_ARRAY[1]}" "$B"
+                tile_win "${WID_ARRAY[0]}" "$T"
+                tile_win "${WID_ARRAY[1]}" "$B"
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$L"
-                tile_win "${WIN_ARRAY[1]}" "$R"
+                tile_win "${WID_ARRAY[0]}" "$L"
+                tile_win "${WID_ARRAY[1]}" "$R"
                 next_cycle=2
                 ;;
         esac
@@ -136,33 +180,33 @@ case $WIN_COUNT in
     3)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$L"
-                tile_win "${WIN_ARRAY[1]}" "$RT"
-                tile_win "${WIN_ARRAY[2]}" "$RB"
+                tile_win "${WID_ARRAY[0]}" "$L"
+                tile_win "${WID_ARRAY[1]}" "$RT"
+                tile_win "${WID_ARRAY[2]}" "$RB"
                 next_cycle=2
                 ;;
             2)
-                tile_win "${WIN_ARRAY[0]}" "$R"
-                tile_win "${WIN_ARRAY[1]}" "$LT"
-                tile_win "${WIN_ARRAY[2]}" "$LB"
+                tile_win "${WID_ARRAY[0]}" "$R"
+                tile_win "${WID_ARRAY[1]}" "$LT"
+                tile_win "${WID_ARRAY[2]}" "$LB"
                 next_cycle=3
                 ;;
             3)
-                tile_win "${WIN_ARRAY[0]}" "$T"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RB"
+                tile_win "${WID_ARRAY[0]}" "$T"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RB"
                 next_cycle=4
                 ;;
             4)
-                tile_win "${WIN_ARRAY[0]}" "$B"
-                tile_win "${WIN_ARRAY[1]}" "$LT"
-                tile_win "${WIN_ARRAY[2]}" "$RT"
+                tile_win "${WID_ARRAY[0]}" "$B"
+                tile_win "${WID_ARRAY[1]}" "$LT"
+                tile_win "${WID_ARRAY[2]}" "$RT"
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$L"
-                tile_win "${WIN_ARRAY[1]}" "$RT"
-                tile_win "${WIN_ARRAY[2]}" "$RB"
+                tile_win "${WID_ARRAY[0]}" "$L"
+                tile_win "${WID_ARRAY[1]}" "$RT"
+                tile_win "${WID_ARRAY[2]}" "$RB"
                 next_cycle=2
                 ;;
         esac
@@ -171,73 +215,73 @@ case $WIN_COUNT in
     4)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RT"
-                tile_win "${WIN_ARRAY[3]}" "$RB"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RT"
+                tile_win "${WID_ARRAY[3]}" "$RB"
                 next_cycle=2
                 ;;
             2)
-                tile_win "${WIN_ARRAY[0]}" "$L"
-                tile_win "${WIN_ARRAY[1]}" "$RT"
-                tile_win "${WIN_ARRAY[2]}" "$RB_L"
-                tile_win "${WIN_ARRAY[3]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$L"
+                tile_win "${WID_ARRAY[1]}" "$RT"
+                tile_win "${WID_ARRAY[2]}" "$RB_L"
+                tile_win "${WID_ARRAY[3]}" "$RB_R"
                 next_cycle=3
                 ;;
             3)
-                tile_win "${WIN_ARRAY[0]}" "$L"
-                tile_win "${WIN_ARRAY[1]}" "$RB"
-                tile_win "${WIN_ARRAY[2]}" "$RT_L"
-                tile_win "${WIN_ARRAY[3]}" "$RT_R"
+                tile_win "${WID_ARRAY[0]}" "$L"
+                tile_win "${WID_ARRAY[1]}" "$RB"
+                tile_win "${WID_ARRAY[2]}" "$RT_L"
+                tile_win "${WID_ARRAY[3]}" "$RT_R"
                 next_cycle=4
                 ;;
             4)
-                tile_win "${WIN_ARRAY[0]}" "$R"
-                tile_win "${WIN_ARRAY[1]}" "$LT"
-                tile_win "${WIN_ARRAY[2]}" "$LB_L"
-                tile_win "${WIN_ARRAY[3]}" "$LB_R"
+                tile_win "${WID_ARRAY[0]}" "$R"
+                tile_win "${WID_ARRAY[1]}" "$LT"
+                tile_win "${WID_ARRAY[2]}" "$LB_L"
+                tile_win "${WID_ARRAY[3]}" "$LB_R"
                 next_cycle=5
                 ;;
             5)
-                tile_win "${WIN_ARRAY[0]}" "$R"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$LT_L"
-                tile_win "${WIN_ARRAY[3]}" "$LT_R"
+                tile_win "${WID_ARRAY[0]}" "$R"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$LT_L"
+                tile_win "${WID_ARRAY[3]}" "$LT_R"
                 next_cycle=6
                 ;;
             6)
-                tile_win "${WIN_ARRAY[0]}" "$T"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RB_L"
-                tile_win "${WIN_ARRAY[3]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$T"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RB_L"
+                tile_win "${WID_ARRAY[3]}" "$RB_R"
                 next_cycle=7
                 ;;
             7)
-                tile_win "${WIN_ARRAY[0]}" "$T"
-                tile_win "${WIN_ARRAY[1]}" "$RB"
-                tile_win "${WIN_ARRAY[2]}" "$LB_L"
-                tile_win "${WIN_ARRAY[3]}" "$LB_R"
+                tile_win "${WID_ARRAY[0]}" "$T"
+                tile_win "${WID_ARRAY[1]}" "$RB"
+                tile_win "${WID_ARRAY[2]}" "$LB_L"
+                tile_win "${WID_ARRAY[3]}" "$LB_R"
                 next_cycle=8
                 ;;
             8)
-                tile_win "${WIN_ARRAY[0]}" "$B"
-                tile_win "${WIN_ARRAY[1]}" "$LT"
-                tile_win "${WIN_ARRAY[2]}" "$RT_L"
-                tile_win "${WIN_ARRAY[3]}" "$RT_R"
+                tile_win "${WID_ARRAY[0]}" "$B"
+                tile_win "${WID_ARRAY[1]}" "$LT"
+                tile_win "${WID_ARRAY[2]}" "$RT_L"
+                tile_win "${WID_ARRAY[3]}" "$RT_R"
                 next_cycle=9
                 ;;
             9)
-                tile_win "${WIN_ARRAY[0]}" "$B"
-                tile_win "${WIN_ARRAY[1]}" "$RT"
-                tile_win "${WIN_ARRAY[2]}" "$LT_L"
-                tile_win "${WIN_ARRAY[3]}" "$LT_R"
+                tile_win "${WID_ARRAY[0]}" "$B"
+                tile_win "${WID_ARRAY[1]}" "$RT"
+                tile_win "${WID_ARRAY[2]}" "$LT_L"
+                tile_win "${WID_ARRAY[3]}" "$LT_R"
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RT"
-                tile_win "${WIN_ARRAY[3]}" "$RB"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RT"
+                tile_win "${WID_ARRAY[3]}" "$RB"
                 next_cycle=2
                 ;;
         esac
@@ -246,75 +290,75 @@ case $WIN_COUNT in
     5)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RT"
-                tile_win "${WIN_ARRAY[3]}" "$RB_L"
-                tile_win "${WIN_ARRAY[4]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RT"
+                tile_win "${WID_ARRAY[3]}" "$RB_L"
+                tile_win "${WID_ARRAY[4]}" "$RB_R"
                 next_cycle=2
                 ;;
             2)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB_L"
-                tile_win "${WIN_ARRAY[2]}" "$LB_R"
-                tile_win "${WIN_ARRAY[3]}" "$RT"
-                tile_win "${WIN_ARRAY[4]}" "$RB"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB_L"
+                tile_win "${WID_ARRAY[2]}" "$LB_R"
+                tile_win "${WID_ARRAY[3]}" "$RT"
+                tile_win "${WID_ARRAY[4]}" "$RB"
                 next_cycle=3
                 ;;
             3)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RT_L"
-                tile_win "${WIN_ARRAY[3]}" "$RT_R"
-                tile_win "${WIN_ARRAY[4]}" "$RB"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RT_L"
+                tile_win "${WID_ARRAY[3]}" "$RT_R"
+                tile_win "${WID_ARRAY[4]}" "$RB"
                 next_cycle=4
                 ;;
             4)
-                tile_win "${WIN_ARRAY[0]}" "$LT_L"
-                tile_win "${WIN_ARRAY[1]}" "$LT_R"
-                tile_win "${WIN_ARRAY[2]}" "$LB"
-                tile_win "${WIN_ARRAY[3]}" "$RT"
-                tile_win "${WIN_ARRAY[4]}" "$RB"
+                tile_win "${WID_ARRAY[0]}" "$LT_L"
+                tile_win "${WID_ARRAY[1]}" "$LT_R"
+                tile_win "${WID_ARRAY[2]}" "$LB"
+                tile_win "${WID_ARRAY[3]}" "$RT"
+                tile_win "${WID_ARRAY[4]}" "$RB"
                 next_cycle=5
                 ;;
             5)
-                tile_win "${WIN_ARRAY[0]}" "$L"
-                tile_win "${WIN_ARRAY[1]}" "$RT_L"
-                tile_win "${WIN_ARRAY[2]}" "$RT_R"
-                tile_win "${WIN_ARRAY[3]}" "$RB_L"
-                tile_win "${WIN_ARRAY[4]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$L"
+                tile_win "${WID_ARRAY[1]}" "$RT_L"
+                tile_win "${WID_ARRAY[2]}" "$RT_R"
+                tile_win "${WID_ARRAY[3]}" "$RB_L"
+                tile_win "${WID_ARRAY[4]}" "$RB_R"
                 next_cycle=6
                 ;;
             6)
-                tile_win "${WIN_ARRAY[0]}" "$R"
-                tile_win "${WIN_ARRAY[1]}" "$LT_L"
-                tile_win "${WIN_ARRAY[2]}" "$LT_R"
-                tile_win "${WIN_ARRAY[3]}" "$LB_L"
-                tile_win "${WIN_ARRAY[4]}" "$LB_R"
+                tile_win "${WID_ARRAY[0]}" "$R"
+                tile_win "${WID_ARRAY[1]}" "$LT_L"
+                tile_win "${WID_ARRAY[2]}" "$LT_R"
+                tile_win "${WID_ARRAY[3]}" "$LB_L"
+                tile_win "${WID_ARRAY[4]}" "$LB_R"
                 next_cycle=7
                 ;;
             7)
-                tile_win "${WIN_ARRAY[0]}" "$T"
-                tile_win "${WIN_ARRAY[1]}" "$LB_L"
-                tile_win "${WIN_ARRAY[2]}" "$LB_R"
-                tile_win "${WIN_ARRAY[3]}" "$RB_L"
-                tile_win "${WIN_ARRAY[4]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$T"
+                tile_win "${WID_ARRAY[1]}" "$LB_L"
+                tile_win "${WID_ARRAY[2]}" "$LB_R"
+                tile_win "${WID_ARRAY[3]}" "$RB_L"
+                tile_win "${WID_ARRAY[4]}" "$RB_R"
                 next_cycle=8
                 ;;
             8)
-                tile_win "${WIN_ARRAY[0]}" "$B"
-                tile_win "${WIN_ARRAY[1]}" "$LT_L"
-                tile_win "${WIN_ARRAY[2]}" "$LT_R"
-                tile_win "${WIN_ARRAY[3]}" "$RT_L"
-                tile_win "${WIN_ARRAY[4]}" "$RT_R"
+                tile_win "${WID_ARRAY[0]}" "$B"
+                tile_win "${WID_ARRAY[1]}" "$LT_L"
+                tile_win "${WID_ARRAY[2]}" "$LT_R"
+                tile_win "${WID_ARRAY[3]}" "$RT_L"
+                tile_win "${WID_ARRAY[4]}" "$RT_R"
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RT"
-                tile_win "${WIN_ARRAY[3]}" "$RB_L"
-                tile_win "${WIN_ARRAY[4]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RT"
+                tile_win "${WID_ARRAY[3]}" "$RB_L"
+                tile_win "${WID_ARRAY[4]}" "$RB_R"
                 next_cycle=2
                 ;;
         esac
@@ -323,48 +367,48 @@ case $WIN_COUNT in
     6)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RT_L"
-                tile_win "${WIN_ARRAY[3]}" "$RT_R"
-                tile_win "${WIN_ARRAY[4]}" "$RB_L"
-                tile_win "${WIN_ARRAY[5]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RT_L"
+                tile_win "${WID_ARRAY[3]}" "$RT_R"
+                tile_win "${WID_ARRAY[4]}" "$RB_L"
+                tile_win "${WID_ARRAY[5]}" "$RB_R"
                 next_cycle=2
                 ;;
             2)
-                tile_win "${WIN_ARRAY[0]}" "$RT"
-                tile_win "${WIN_ARRAY[1]}" "$RB"
-                tile_win "${WIN_ARRAY[2]}" "$LT_L"
-                tile_win "${WIN_ARRAY[3]}" "$LT_R"
-                tile_win "${WIN_ARRAY[4]}" "$LB_L"
-                tile_win "${WIN_ARRAY[5]}" "$LB_R"
+                tile_win "${WID_ARRAY[0]}" "$RT"
+                tile_win "${WID_ARRAY[1]}" "$RB"
+                tile_win "${WID_ARRAY[2]}" "$LT_L"
+                tile_win "${WID_ARRAY[3]}" "$LT_R"
+                tile_win "${WID_ARRAY[4]}" "$LB_L"
+                tile_win "${WID_ARRAY[5]}" "$LB_R"
                 next_cycle=3
                 ;;
             3)
-                tile_win "${WIN_ARRAY[0]}" "$LB"
-                tile_win "${WIN_ARRAY[1]}" "$RB"
-                tile_win "${WIN_ARRAY[2]}" "$LT_L"
-                tile_win "${WIN_ARRAY[3]}" "$LT_R"
-                tile_win "${WIN_ARRAY[4]}" "$RT_L"
-                tile_win "${WIN_ARRAY[5]}" "$RT_R"
+                tile_win "${WID_ARRAY[0]}" "$LB"
+                tile_win "${WID_ARRAY[1]}" "$RB"
+                tile_win "${WID_ARRAY[2]}" "$LT_L"
+                tile_win "${WID_ARRAY[3]}" "$LT_R"
+                tile_win "${WID_ARRAY[4]}" "$RT_L"
+                tile_win "${WID_ARRAY[5]}" "$RT_R"
                 next_cycle=4
                 ;;
             4)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$RT"
-                tile_win "${WIN_ARRAY[2]}" "$LB_L"
-                tile_win "${WIN_ARRAY[3]}" "$LB_R"
-                tile_win "${WIN_ARRAY[4]}" "$RB_L"
-                tile_win "${WIN_ARRAY[5]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$RT"
+                tile_win "${WID_ARRAY[2]}" "$LB_L"
+                tile_win "${WID_ARRAY[3]}" "$LB_R"
+                tile_win "${WID_ARRAY[4]}" "$RB_L"
+                tile_win "${WID_ARRAY[5]}" "$RB_R"
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB"
-                tile_win "${WIN_ARRAY[2]}" "$RT_L"
-                tile_win "${WIN_ARRAY[3]}" "$RT_R"
-                tile_win "${WIN_ARRAY[4]}" "$RB_L"
-                tile_win "${WIN_ARRAY[5]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB"
+                tile_win "${WID_ARRAY[2]}" "$RT_L"
+                tile_win "${WID_ARRAY[3]}" "$RT_R"
+                tile_win "${WID_ARRAY[4]}" "$RB_L"
+                tile_win "${WID_ARRAY[5]}" "$RB_R"
                 next_cycle=2
                 ;;
         esac
@@ -373,53 +417,53 @@ case $WIN_COUNT in
     7)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB_L"
-                tile_win "${WIN_ARRAY[2]}" "$LB_R"
-                tile_win "${WIN_ARRAY[3]}" "$RT_L"
-                tile_win "${WIN_ARRAY[4]}" "$RT_R"
-                tile_win "${WIN_ARRAY[5]}" "$RB_L"
-                tile_win "${WIN_ARRAY[6]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB_L"
+                tile_win "${WID_ARRAY[2]}" "$LB_R"
+                tile_win "${WID_ARRAY[3]}" "$RT_L"
+                tile_win "${WID_ARRAY[4]}" "$RT_R"
+                tile_win "${WID_ARRAY[5]}" "$RB_L"
+                tile_win "${WID_ARRAY[6]}" "$RB_R"
                 next_cycle=2
                 ;;
             2)
-                tile_win "${WIN_ARRAY[0]}" "$LB"
-                tile_win "${WIN_ARRAY[1]}" "$LT_L"
-                tile_win "${WIN_ARRAY[2]}" "$LT_R"
-                tile_win "${WIN_ARRAY[3]}" "$RT_L"
-                tile_win "${WIN_ARRAY[4]}" "$RT_R"
-                tile_win "${WIN_ARRAY[5]}" "$RB_L"
-                tile_win "${WIN_ARRAY[6]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LB"
+                tile_win "${WID_ARRAY[1]}" "$LT_L"
+                tile_win "${WID_ARRAY[2]}" "$LT_R"
+                tile_win "${WID_ARRAY[3]}" "$RT_L"
+                tile_win "${WID_ARRAY[4]}" "$RT_R"
+                tile_win "${WID_ARRAY[5]}" "$RB_L"
+                tile_win "${WID_ARRAY[6]}" "$RB_R"
                 next_cycle=3
                 ;;
             3)
-                tile_win "${WIN_ARRAY[0]}" "$RT"
-                tile_win "${WIN_ARRAY[1]}" "$LT_L"
-                tile_win "${WIN_ARRAY[2]}" "$LT_R"
-                tile_win "${WIN_ARRAY[3]}" "$LB_L"
-                tile_win "${WIN_ARRAY[4]}" "$LB_R"
-                tile_win "${WIN_ARRAY[5]}" "$RB_L"
-                tile_win "${WIN_ARRAY[6]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$RT"
+                tile_win "${WID_ARRAY[1]}" "$LT_L"
+                tile_win "${WID_ARRAY[2]}" "$LT_R"
+                tile_win "${WID_ARRAY[3]}" "$LB_L"
+                tile_win "${WID_ARRAY[4]}" "$LB_R"
+                tile_win "${WID_ARRAY[5]}" "$RB_L"
+                tile_win "${WID_ARRAY[6]}" "$RB_R"
                 next_cycle=4
                 ;;
             4)
-                tile_win "${WIN_ARRAY[0]}" "$RB"
-                tile_win "${WIN_ARRAY[1]}" "$LT_L"
-                tile_win "${WIN_ARRAY[2]}" "$LT_R"
-                tile_win "${WIN_ARRAY[3]}" "$LB_L"
-                tile_win "${WIN_ARRAY[4]}" "$LB_R"
-                tile_win "${WIN_ARRAY[5]}" "$RT_L"
-                tile_win "${WIN_ARRAY[6]}" "$RT_R"
+                tile_win "${WID_ARRAY[0]}" "$RB"
+                tile_win "${WID_ARRAY[1]}" "$LT_L"
+                tile_win "${WID_ARRAY[2]}" "$LT_R"
+                tile_win "${WID_ARRAY[3]}" "$LB_L"
+                tile_win "${WID_ARRAY[4]}" "$LB_R"
+                tile_win "${WID_ARRAY[5]}" "$RT_L"
+                tile_win "${WID_ARRAY[6]}" "$RT_R"
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$LT"
-                tile_win "${WIN_ARRAY[1]}" "$LB_L"
-                tile_win "${WIN_ARRAY[2]}" "$LB_R"
-                tile_win "${WIN_ARRAY[3]}" "$RT_L"
-                tile_win "${WIN_ARRAY[4]}" "$RT_R"
-                tile_win "${WIN_ARRAY[5]}" "$RB_L"
-                tile_win "${WIN_ARRAY[6]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT"
+                tile_win "${WID_ARRAY[1]}" "$LB_L"
+                tile_win "${WID_ARRAY[2]}" "$LB_R"
+                tile_win "${WID_ARRAY[3]}" "$RT_L"
+                tile_win "${WID_ARRAY[4]}" "$RT_R"
+                tile_win "${WID_ARRAY[5]}" "$RB_L"
+                tile_win "${WID_ARRAY[6]}" "$RB_R"
                 next_cycle=2
                 ;;
         esac
@@ -428,37 +472,37 @@ case $WIN_COUNT in
     8)
         case $cur_cy in
             1)
-                tile_win "${WIN_ARRAY[0]}" "$LT_L"
-                tile_win "${WIN_ARRAY[1]}" "$LT_R"
-                tile_win "${WIN_ARRAY[2]}" "$LB_L"
-                tile_win "${WIN_ARRAY[3]}" "$LB_R"
-                tile_win "${WIN_ARRAY[4]}" "$RT_L"
-                tile_win "${WIN_ARRAY[5]}" "$RT_R"
-                tile_win "${WIN_ARRAY[6]}" "$RB_L"
-                tile_win "${WIN_ARRAY[7]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT_L"
+                tile_win "${WID_ARRAY[1]}" "$LT_R"
+                tile_win "${WID_ARRAY[2]}" "$LB_L"
+                tile_win "${WID_ARRAY[3]}" "$LB_R"
+                tile_win "${WID_ARRAY[4]}" "$RT_L"
+                tile_win "${WID_ARRAY[5]}" "$RT_R"
+                tile_win "${WID_ARRAY[6]}" "$RB_L"
+                tile_win "${WID_ARRAY[7]}" "$RB_R"
                 next_cycle=1
                 ;;
             *)
-                tile_win "${WIN_ARRAY[0]}" "$LT_L"
-                tile_win "${WIN_ARRAY[1]}" "$LT_R"
-                tile_win "${WIN_ARRAY[2]}" "$LB_L"
-                tile_win "${WIN_ARRAY[3]}" "$LB_R"
-                tile_win "${WIN_ARRAY[4]}" "$RT_L"
-                tile_win "${WIN_ARRAY[5]}" "$RT_R"
-                tile_win "${WIN_ARRAY[6]}" "$RB_L"
-                tile_win "${WIN_ARRAY[7]}" "$RB_R"
+                tile_win "${WID_ARRAY[0]}" "$LT_L"
+                tile_win "${WID_ARRAY[1]}" "$LT_R"
+                tile_win "${WID_ARRAY[2]}" "$LB_L"
+                tile_win "${WID_ARRAY[3]}" "$LB_R"
+                tile_win "${WID_ARRAY[4]}" "$RT_L"
+                tile_win "${WID_ARRAY[5]}" "$RT_R"
+                tile_win "${WID_ARRAY[6]}" "$RB_L"
+                tile_win "${WID_ARRAY[7]}" "$RB_R"
                 next_cycle=1
                 ;;
         esac
         [ "$IS_CYCLE" -eq 1 ] && echo "$next_cycle" > "$CYCLE_FILE"
         ;;
     *)
-        tile_win "${WIN_ARRAY[0]}" "$LT"
-        tile_win "${WIN_ARRAY[1]}" "$LB"
-        tile_win "${WIN_ARRAY[2]}" "$RB_R"
-        tile_win "${WIN_ARRAY[3]}" "$RB_L"
-        for ((i=4; i<WIN_COUNT; i++)); do
-            tile_win "${WIN_ARRAY[i]}" "$RT"
+        tile_win "${WID_ARRAY[0]}" "$LT"
+        tile_win "${WID_ARRAY[1]}" "$LB"
+        tile_win "${WID_ARRAY[2]}" "$RB_R"
+        tile_win "${WID_ARRAY[3]}" "$RB_L"
+        for ((i=4; i<WID_COUNT; i++)); do
+            tile_win "${WID_ARRAY[i]}" "$RT"
         done
         ;;
 esac

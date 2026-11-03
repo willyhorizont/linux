@@ -48,6 +48,6 @@ fi
 printf "%s\n" "$out_string"
 
 cat << EOF 1>&2
- SuckMyClock Shell version
+ SuckMyClock (My Suckless Clock) Shell version
  click to open calcurse
 EOF

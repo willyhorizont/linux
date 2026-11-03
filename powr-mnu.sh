@@ -1,23 +1,27 @@
 #!/bin/bash
 
 SCRIPT_NAME="powr-mnu.sh"
+DIRECT_ACTION=""
 
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
-    echo "Usage: $SCRIPT_NAME <cmd-logout> <cmd-lock> [OPTIONS]"
+    echo "Usage: $SCRIPT_NAME <cmd-logout> <cmd-lock> [DIRECT_ACTION_FLAG] [OPTIONS]"
     echo ""
     echo "Mandatory Arguments:"
     echo "  <cmd-logout>                      Command or path to script executed to logout."
     echo "  <cmd-lock>                        Command or path to script executed to lock."
     echo ""
+    echo "Direct Action Flags (Optional - Executes directly without opening menu):"
+    echo "  --shutdown, --reboot, --suspend, --logout, --lock, --btop"
+    echo ""
     echo "Optional Arguments:"
-    echo "  --tit=TITLE                       Set custom title prompt."
+    echo "  --title=TITLE                     Set custom title prompt."
     echo ""
     exit 0
 fi
 
 if [ -z "$1" ] || [ -z "$2" ]; then
     echo "Error: Missing mandatory arguments!"
-    echo "Usage: $SCRIPT_NAME <cmd-logout> <cmd-lock> [--tit=title]"
+    echo "Usage: $SCRIPT_NAME <cmd-logout> <cmd-lock> [DIRECT_ACTION_FLAG] [--title=title]"
     exit 1
 fi
 
@@ -29,7 +33,12 @@ TITLE="$SCRIPT_NAME"
 
 for arg in "$@"; do
     case $arg in
-        --tit=*)
+        --shutdown) DIRECT_ACTION="shutdown" ; shift ;;
+        --reboot)   DIRECT_ACTION="reboot"   ; shift ;;
+        --suspend)  DIRECT_ACTION="suspend"  ; shift ;;
+        --logout)   DIRECT_ACTION="logout"   ; shift ;;
+        --lock)     DIRECT_ACTION="lock"     ; shift ;;
+        --title=*)
             TITLE="${arg#*=}"
             shift
             ;;
@@ -61,19 +70,27 @@ ALL_ICONS=(
     ["btop"]="utilities-system-monitor"
 )
 
-CHOICE=$( {
-    for key in "${ORDERED_KEYS[@]}"; do
-        DISPLAY_NAME=$(echo "$key" | tr '_' ' ')
-        ICON_NAME="${ALL_ICONS[$key]}"
-        printf "%b\n" "${DISPLAY_NAME}\0icon\x1f${ICON_NAME}"
-    done
-} | rofi -dmenu -p "$TITLE" -show-icons -i)
+if [ -n "$DIRECT_ACTION" ]; then
+    ACTION_KEY="$DIRECT_ACTION"
+else
+    CHOICE=$( {
+        for key in "${ORDERED_KEYS[@]}"; do
+            DISPLAY_NAME=$(echo "$key" | tr '_' ' ')
+            ICON_NAME="${ALL_ICONS[$key]}"
+            printf "%b\n" "${DISPLAY_NAME}\0icon\x1f${ICON_NAME}"
+        done
+    } | rofi -dmenu -p "$TITLE" -show-icons -i)
 
-if [ -z "$CHOICE" ]; then
-    exit 0
+    if [ -z "$CHOICE" ]; then
+        exit 0
+    fi
+
+    ACTION_KEY=$(echo "$CHOICE" | tr ' ' '_')
 fi
 
-ACTION_KEY=$(echo "$CHOICE" | tr ' ' '_')
+if [[ "$ACTION_KEY" =~ ^(shutdown|reboot|suspend|logout)$ ]]; then
+    $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
+fi
 
 if [ -n "${ALL_ACTIONS[$ACTION_KEY]}" ]; then
     eval "${ALL_ACTIONS[$ACTION_KEY]}"
