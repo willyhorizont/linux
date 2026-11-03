@@ -31,7 +31,7 @@ if [ -z "$wid" ] || [ "$wid" == "0" ] || [ "$wid" == "0x0" ]; then
     exit 0
 fi
 
-wid_hex=$(awk -v id="$wid" 'BEGIN {printf "0x%08x\n", id}')
+wid_hex=$(printf "0x%08llx" "$wid" 2>/dev/null || printf "0x%08x" "$wid")
 
 cur_geom=$(wmctrl -l -G | awk -v id="$wid_hex" '$1 == id {print $3,$4,$5,$6}')
 

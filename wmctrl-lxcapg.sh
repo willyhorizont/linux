@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! command -v xdotool >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&1; then
-    echo "Error: missing dependencies 'xdotool wmctrl'..."
+    echo "[wmctrl-lxcapg.sh] Error: missing dependencies 'xdotool wmctrl'..."
     exit 1
 fi
 
@@ -11,7 +11,7 @@ WINDOW_LIST=$(wmctrl -l -x -G 2>/dev/null)
 
 while read -r WID; do
     [ -z "$WID" ] && continue
-    WID_HEX=$(printf "0x%08x" "$WID")
+    WID_HEX=$(printf "0x%08llx" "$WID" 2>/dev/null || printf "0x%08x" "$WID")
     if [ -n "$WINDOW_LIST" ] && echo "$WINDOW_LIST" | grep -q "^$WID_HEX"; then
         continue
     fi
@@ -35,8 +35,7 @@ while read -r WID; do
     else
         WINDOW_LIST="$WINDOW_LIST"$'\n'"$NEW_ENTRY"
     fi
-
-done < <(xdotool search --onlyvisible --name ".*" 2>/dev/null)
+done < <(xdotool search --onlyvisible --class ".+" 2>/dev/null)
 
 echo "$WINDOW_LIST" | awk '
 {
