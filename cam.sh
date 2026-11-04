@@ -6,8 +6,8 @@ IC_ON="👁️"
 IC_STB="⚠️"
 IC_NONE="🚫"
 
-PREF=""
-SUFF=" | "
+PREF=" "
+SUFF=" "
 
 STATUS_FILE="/sys/class/video4linux/video0/device/power/runtime_status"
 

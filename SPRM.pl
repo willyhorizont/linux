@@ -5,8 +5,9 @@ use Time::HiRes qw(time);
 
 my $CACHE_FILE = "/tmp/sprm-cache-pl.json";
 
-my $pref = "";
-my $suff = " |";
+my $pref = " ";
+my $suff = " ";
+my $sep = " | ";
 my $use_pango = 0;
 
 for (my $i = 0; $i < @ARGV; $i++) {
@@ -14,6 +15,8 @@ for (my $i = 0; $i < @ARGV; $i++) {
         $pref = $ARGV[++$i];
     } elsif ($ARGV[$i] eq "--suff" && $i + 1 < @ARGV) {
         $suff = $ARGV[++$i];
+    } elsif ($ARGV[$i] eq "--sep" && $i + 1 < @ARGV) {
+        $sep = $ARGV[++$i];
     } elsif ($ARGV[$i] eq "--pango") {
         $use_pango = 1;
     }
@@ -250,36 +253,45 @@ my $out_t_val = ($temp_str eq "9999") ? "9999" : $temp_str;
 my $out_t_unit = "°C";
 
 my @blocks = (
-    { key => " T ", val => $out_t_val, unit => $out_t_unit },
-    { key => " C ", val => $cpu_fmt, unit => "%" },
-    { key => " G ", val => $gpu_fmt, unit => "%" },
-    { key => " M ", val => "$ram_used_str/$ram_tot_str", unit => "GB" },
-    { key => " D ", val => "$d_free_str/$d_tot_str", unit => "GB" },
-    { key => " R ", val => $f_r[0], unit => $f_r[1] },
-    { key => " W ", val => $f_w[0], unit => $f_w[1] },
-    { key => " ▼ ", val => $f_d[0], unit => $f_d[1] },
-    { key => " ▲ ", val => $f_u[0], unit => $f_u[1] }
+    { key => "T ", val => $out_t_val, unit => $out_t_unit },
+    { key => "C ", val => $cpu_fmt, unit => "%" },
+    { key => "G ", val => $gpu_fmt, unit => "%" },
+    { key => "M ", val => "$ram_used_str/$ram_tot_str", unit => "GB" },
+    { key => "D ", val => "$d_free_str/$d_tot_str", unit => "GB" },
+    { key => "R ", val => $f_r[0], unit => $f_r[1] },
+    { key => "W ", val => $f_w[0], unit => $f_w[1] },
+    { key => "▼ ", val => $f_d[0], unit => $f_d[1] },
+    { key => "▲ ", val => $f_u[0], unit => $f_u[1] }
 );
 
 my $out_str = "";
 if ($use_pango) {
-    $out_str .= "<span background='#000000' foreground='#00ADD8'>$pref</span>";
-    for my $b (@blocks) {
+    $out_str .= "<span background='#000000' foreground='#00ADD8'>$pref</span>" if $pref ne "";
+    for (my $i = 0; $i < @blocks; $i++) {
+        my $b = $blocks[$i];
         $out_str .= "<span background='#000000' foreground='#FF1493'>$b->{key}</span>";
         $out_str .= "<span background='#000000' foreground='#CCFF00'>$b->{val}</span>";
         $out_str .= "<span background='#000000' foreground='#FF1493'>$b->{unit}</span>";
-        $out_str .= "<span background='#000000' foreground='#00ADD8'>$suff</span>";
+        if ($i < $#blocks) {
+            $out_str .= "<span background='#000000' foreground='#00ADD8'>$sep</span>";
+        }
     }
+    $out_str .= "<span background='#000000' foreground='#00ADD8'>$suff</span>" if $suff ne "";
 } else {
     $out_str .= $pref;
-    for my $b (@blocks) {
-        $out_str .= "$b->{key}$b->{val}$b->{unit}$suff";
+    for (my $i = 0; $i < @blocks; $i++) {
+        my $b = $blocks[$i];
+        $out_str .= "$b->{key}$b->{val}$b->{unit}";
+        if ($i < $#blocks) {
+            $out_str .= $sep;
+        }
     }
+    $out_str .= $suff;
 }
 print $out_str . "\n";
 
 print STDERR <<'EOF';
- SPRM (Simple Panel Resource Monitor) Perl version;
+ SPRM (Suckless Panel Resource Monitor) Perl version;
  T = Temperature
  C = Total CPU Usage
  G = Total GPU Usage

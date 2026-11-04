@@ -7,7 +7,7 @@ IC_OFF="🚫"
 IC_NONE="❌"
 
 PREF=" "
-SUFF=" | "
+SUFF=" "
 
 while [[ $# -gt 0 ]]; do
     case "$1" in

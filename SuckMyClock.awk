@@ -11,8 +11,9 @@ function get_total_days(year, month) {
 }
 
 BEGIN {
-    pref = "| "
+    pref = " "
     suff = " "
+    sep = " | "
     use_pango = 0
 
     for (i = 1; i < ARGC; i++) {
@@ -20,6 +21,8 @@ BEGIN {
             pref = ARGV[i+1]; delete ARGV[i]; delete ARGV[i+1]; i++
         } else if (ARGV[i] == "--suff") {
             suff = ARGV[i+1]; delete ARGV[i]; delete ARGV[i+1]; i++
+        } else if (ARGV[i] == "--sep") {
+            sep = ARGV[i+1]; delete ARGV[i]; delete ARGV[i+1]; i++
         } else if (ARGV[i] == "--pango") {
             use_pango = 1; delete ARGV[i]
         }
@@ -40,26 +43,27 @@ BEGIN {
     am_pm_str   = strftime("%p", now)
     
     if (use_pango) {
-        out_string = "<span background='#000000' foreground='#00ADD8'>" pref "</span>" \
-                     "<span background='#000000' foreground='#CCFF00'>" month_num "/12 </span>" \
+        out_string = ""
+        if (pref != "") out_string = out_string "<span background='#000000' foreground='#00ADD8'>" pref "</span>"
+        out_string = out_string "<span background='#000000' foreground='#CCFF00'>" month_num "/12 </span>" \
                      "<span background='#000000' foreground='#FF1493'>months</span>" \
-                     "<span background='#000000' foreground='#00ADD8'> | </span>" \
+                     "<span background='#000000' foreground='#00ADD8'>" sep "</span>" \
                      "<span background='#000000' foreground='#CCFF00'>" day_num "/" total_days " </span>" \
                      "<span background='#000000' foreground='#FF1493'>days</span>" \
-                     "<span background='#000000' foreground='#00ADD8'> | </span>" \
+                     "<span background='#000000' foreground='#00ADD8'>" sep "</span>" \
                      "<span background='#000000' foreground='#CCFF00'>" date_string "</span>" \
-                     "<span background='#000000' foreground='#00ADD8'> | </span>" \
+                     "<span background='#000000' foreground='#00ADD8'>" sep "</span>" \
                      "<span background='#000000' foreground='#CCFF00'>" time_24 "</span>" \
-                     "<span background='#000000' foreground='#00ADD8'> | </span>" \
+                     "<span background='#000000' foreground='#00ADD8'>" sep "</span>" \
                      "<span background='#000000' foreground='#CCFF00'>" time_12 " </span>" \
-                     "<span background='#000000' foreground='#FF1493'>" am_pm_str "</span>" \
-                     "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
+                     "<span background='#000000' foreground='#FF1493'>" am_pm_str "</span>"
+        if (suff != "") out_string = out_string "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
     } else {
-        out_string = pref month_num "/12 months | " day_num "/" total_days " days | " date_string " | " time_24 " | " time_12 " " am_pm_str suff
+        out_string = pref month_num "/12 months" sep day_num "/" total_days " days" sep date_string sep time_24 sep time_12 " " am_pm_str suff
     }
 
     printf "%s\n", out_string
 
     print " SuckMyClock (My Suckless Clock) Awk version;\n" \
-          " click to open calcurse\n" > "/dev/stderr"
+          " click to open calcurse" > "/dev/stderr"
 }

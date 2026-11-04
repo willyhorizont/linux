@@ -162,8 +162,9 @@ def get_system_data():
 
 
 def main():
-    pref = ""
-    suff = " |"
+    pref = " "
+    suff = " "
+    sep = " | "
     use_pango = False
 
     args = sys.argv[1:]
@@ -174,6 +175,9 @@ def main():
             i += 2
         elif args[i] == "--suff" and i + 1 < len(args):
             suff = args[i+1]
+            i += 2
+        elif args[i] == "--sep" and i + 1 < len(args):
+            sep = args[i+1]
             i += 2
         elif args[i] == "--pango":
             use_pango = True
@@ -259,33 +263,40 @@ def main():
     out_u_unit = "GB/s" if "999999" in f_u_val else f_u_unit
 
     blocks = [
-        {"key": " T ", "val": out_t_val, "unit": out_t_unit},
-        {"key": " C ", "val": cpu_fmt, "unit": "%"},
-        {"key": " G ", "val": gpu_fmt, "unit": "%"},
-        {"key": " M ", "val": f"{ram_used_str}/{ram_tot_str}", "unit": "GB"},
-        {"key": " D ", "val": f"{d_free_str}/{d_tot_str}", "unit": "GB"},
-        {"key": " R ", "val": out_r_val, "unit": out_r_unit},
-        {"key": " W ", "val": out_w_val, "unit": out_w_unit},
-        {"key": " ▼ ", "val": out_d_val, "unit": out_d_unit},
-        {"key": " ▲ ", "val": out_u_val, "unit": out_u_unit}
+        {"key": "T ", "val": out_t_val, "unit": out_t_unit},
+        {"key": "C ", "val": cpu_fmt, "unit": "%"},
+        {"key": "G ", "val": gpu_fmt, "unit": "%"},
+        {"key": "M ", "val": f"{ram_used_str}/{ram_tot_str}", "unit": "GB"},
+        {"key": "D ", "val": f"{d_free_str}/{d_tot_str}", "unit": "GB"},
+        {"key": "R ", "val": out_r_val, "unit": out_r_unit},
+        {"key": "W ", "val": out_w_val, "unit": out_w_unit},
+        {"key": "▼ ", "val": out_d_val, "unit": out_d_unit},
+        {"key": "▲ ", "val": out_u_val, "unit": out_u_unit}
     ]
 
     out_str = ""
     if use_pango:
-        out_str += f"<span background='#000000' foreground='#00ADD8'>{pref}</span>"
-        for b in blocks:
+        if pref:
+            out_str += f"<span background='#000000' foreground='#00ADD8'>{pref}</span>"
+        for idx, b in enumerate(blocks):
             out_str += f"<span background='#000000' foreground='#FF1493'>{b['key']}</span>"
             out_str += f"<span background='#000000' foreground='#CCFF00'>{b['val']}</span>"
             out_str += f"<span background='#000000' foreground='#FF1493'>{b['unit']}</span>"
+            if idx < len(blocks) - 1:
+                out_str += f"<span background='#000000' foreground='#00ADD8'>{sep}</span>"
+        if suff:
             out_str += f"<span background='#000000' foreground='#00ADD8'>{suff}</span>"
     else:
         out_str += pref
-        for b in blocks:
-            out_str += f"{b['key']}{b['val']}{b['unit']}{suff}"
+        for idx, b in enumerate(blocks):
+            out_str += f"{b['key']}{b['val']}{b['unit']}"
+            if idx < len(blocks) - 1:
+                out_str += sep
+        out_str += suff
             
     print(out_str, flush=True)
 
-    print(""" SPRM (Simple Panel Resource Monitor) Python version;
+    print(""" SPRM (Suckless Panel Resource Monitor) Python version;
  T = Temperature
  C = Total CPU Usage
  G = Total GPU Usage

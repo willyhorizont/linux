@@ -10,18 +10,7 @@ fi
 tot_wrkspc=$(xdotool get_num_desktops)
 cur_wrkspc=$(xdotool get_desktop)
 
-get_open_wins_data() {
-    wmctrl -l -x -G 2>/dev/null | awk '{
-        if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
-        if ($7 == "plank.Plank" && $9 == "plank") next;
-        if ($7 == "tint2.Tint2") next;
-        if ($7 == "xpenguins.Xpenguins") next;
-        if ($7 ~ /welcome-window|idle-window/) next;
-        print $2
-    }'
-}
-
-OPEN_WINS_DATA=$(get_open_wins_data)
+OPEN_WINS_DATA=$("$HOME/willyhorizont.github.io/linux/get-open-wins.sh" | awk '{print $2}')
 
 PROCESSED=0
 MOV_WIN_MODE=false
@@ -105,7 +94,7 @@ if [ $PROCESSED -eq 0 ]; then
         if [ -n "$OPEN_WINS_DATA" ]; then
             win_count=$(echo "$OPEN_WINS_DATA" | grep -c -w "$i")
         fi
-        if [ "$win_count" -gt 0 ] && [ "$i" -ne "$cur_wrkspc" ]; then
+        if [ "$win_count" -gt 0 ]; then
             display_num=$((i + 1))
             if [ -z "$ROFI_LIST" ]; then
                 ROFI_LIST="$display_num"
@@ -115,18 +104,15 @@ if [ $PROCESSED -eq 0 ]; then
         fi
     done
     if [ "$MOV_WIN_MODE" = true ]; then
-        WM_CLASS=$(xprop -id "$TRGT_WIN_ID" WM_CLASS 2>/dev/null | awk -F'"' '{print $2"."$4}')
-        if [ "$WM_CLASS" = "." ] || [ -z "$WM_CLASS" ]; then
-            WM_CLASS="N/A"
-        fi
         FULL_NM=$(xdotool getwindowname "$TRGT_WIN_ID" 2>/dev/null)
-        if [ ${#FULL_NM} -gt 69 ]; then
-            WIN_NM="${FULL_NM:0:33}...${FULL_NM: -33}"
+        if [ ${#FULL_NM} -gt 43 ]; then
+            WIN_NM="${FULL_NM:0:20}...${FULL_NM: -20}"
         else
             WIN_NM="$FULL_NM"
         fi
-        if ! [ "$WM_CLASS" = "N/A" ]; then
-            WIN_NM="($WM_CLASS) $WIN_NM"
+        WM_CLASS=$(xprop -id "$TRGT_WIN_ID" WM_CLASS 2>/dev/null | awk -F'"' '{print $4}')
+        if [ -n "$WM_CLASS" ]; then
+            WIN_NM="$WM_CLASS | $WIN_NM"
         fi
         PROMPT_MSG="Move [$WIN_NM] to Workspace"
     else

@@ -40,14 +40,7 @@ printf "%s" "$TOOLTIP_TXT" 1>&2
 handle_change() {
     cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
     tot_wrkspc=$(wmctrl -d | grep -c .)
-    OPEN_WINS_DATA=$(wmctrl -l -x -G 2>/dev/null | awk '{
-        if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
-        if ($7 == "plank.Plank" && $9 == "plank") next;
-        if ($7 == "tint2.Tint2") next;
-        if ($7 == "xpenguins.Xpenguins") next;
-        if ($7 ~ /welcome-window|idle-window/) next;
-        print $2
-    }')
+    OPEN_WINS_DATA=$("$HOME/willyhorizont.github.io/linux/get-open-wins.sh" | awk '{print $2}')
     max_active_win_ws=-1
     if [ -n "$OPEN_WINS_DATA" ]; then
         max_active_win_ws=$(echo "$OPEN_WINS_DATA" | sort -nu | tail -n 1)

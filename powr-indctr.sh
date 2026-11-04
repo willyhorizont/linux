@@ -8,8 +8,8 @@ BAT_NONE="❌"
 AC_ON="🔌"
 AC_NONE="❌️"
 
-PREF=""
-SUFF=" |"
+PREF=" "
+SUFF=" "
 
 HAS_BAT_HI=false
 HAS_BAT_LO=false

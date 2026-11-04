@@ -32,8 +32,9 @@ function fmt(bytesps, out_arr,    units, i, v, num_str, split_arr, f_p, b_p) {
 }
 
 BEGIN {
-    pref = ""
-    suff = " |"
+    pref = " "
+    suff = " "
+    sep = " | "
     use_pango = 0
     
     for (i = 1; i < ARGC; i++) {
@@ -44,6 +45,11 @@ BEGIN {
             i++
         } else if (ARGV[i] == "--suff") {
             suff = ARGV[i+1]
+            delete ARGV[i]
+            delete ARGV[i+1]
+            i++
+        } else if (ARGV[i] == "--sep") {
+            sep = ARGV[i+1]
             delete ARGV[i]
             delete ARGV[i+1]
             i++
@@ -224,36 +230,43 @@ BEGIN {
     
     out_t = (temp_str == "9999") ? "9999" : temp_str
     
-    keys[1] = " T "; vals[1] = out_t;                     units[1] = "°C"
-    keys[2] = " C "; vals[2] = cpu_fmt;                   units[2] = "%"
-    keys[3] = " G "; vals[3] = gpu_fmt;                   units[3] = "%"
-    keys[4] = " M "; vals[4] = ram_used_str "/" ram_tot_str; units[4] = "GB"
-    keys[5] = " D "; vals[5] = d_free_str "/" d_tot_str;   units[5] = "GB"
+    keys[1] = "T "; vals[1] = out_t;                     units[1] = "°C"
+    keys[2] = "C "; vals[2] = cpu_fmt;                   units[2] = "%"
+    keys[3] = "G "; vals[3] = gpu_fmt;                   units[3] = "%"
+    keys[4] = "M "; vals[4] = ram_used_str "/" ram_tot_str; units[4] = "GB"
+    keys[5] = "D "; vals[5] = d_free_str "/" d_tot_str;   units[5] = "GB"
     
-    fmt(r_rt, r_arr); vals[6] = r_arr["val"]; units[6] = r_arr["unit"]; keys[6] = " R "
-    fmt(w_rt, w_arr); vals[7] = w_arr["val"]; units[7] = w_arr["unit"]; keys[7] = " W "
-    fmt(d_rt, d_arr); vals[8] = d_arr["val"]; units[8] = d_arr["unit"]; keys[8] = " ▼ "
-    fmt(u_rt, u_arr); vals[9] = u_arr["val"]; units[9] = u_arr["unit"]; keys[9] = " ▲ "
+    fmt(r_rt, r_arr); vals[6] = r_arr["val"]; units[6] = r_arr["unit"]; keys[6] = "R "
+    fmt(w_rt, w_arr); vals[7] = w_arr["val"]; units[7] = w_arr["unit"]; keys[7] = "W "
+    fmt(d_rt, d_arr); vals[8] = d_arr["val"]; units[8] = d_arr["unit"]; keys[8] = "▼ "
+    fmt(u_rt, u_arr); vals[9] = u_arr["val"]; units[9] = u_arr["unit"]; keys[9] = "▲ "
 
     out_string = ""
     if (use_pango) {
-        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" pref "</span>"
+        if (pref != "") out_string = out_string "<span background='#000000' foreground='#00ADD8'>" pref "</span>"
         for (i = 1; i <= 9; i++) {
             out_string = out_string "<span background='#000000' foreground='#FF1493'>" keys[i] "</span>"
             out_string = out_string "<span background='#000000' foreground='#CCFF00'>" vals[i] "</span>"
             out_string = out_string "<span background='#000000' foreground='#FF1493'>" units[i] "</span>"
-            out_string = out_string "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
+            if (i < 9) {
+                out_string = out_string "<span background='#000000' foreground='#00ADD8'>" sep "</span>"
+            }
         }
+        if (suff != "") out_string = out_string "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
     } else {
         out_string = out_string pref
         for (i = 1; i <= 9; i++) {
-            out_string = out_string keys[i] vals[i] units[i] suff
+            out_string = out_string keys[i] vals[i] units[i]
+            if (i < 9) {
+                out_string = out_string sep
+            }
         }
+        out_string = out_string suff
     }
     
     print out_string
     
-    print " SPRM (Simple Panel Resource Monitor) Awk version;\n" \
+    print " SPRM (Suckless Panel Resource Monitor) Awk version;\n" \
           " T = Temperature\n" \
           " C = Total CPU Usage\n" \
           " G = Total GPU Usage\n" \

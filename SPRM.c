@@ -60,8 +60,9 @@ typedef struct {
 } Block;
 
 int main(int argc, char *argv[]) {
-    char pref[256] = "";
-    char suff[256] = " |";
+    char pref[256] = " ";
+    char suff[256] = " ";
+    char sep[256] = " | ";
     int use_pango = 0;
 
     for (int i = 1; i < argc; i++) {
@@ -69,6 +70,8 @@ int main(int argc, char *argv[]) {
             strcpy(pref, argv[++i]);
         } else if (strcmp(argv[i], "--suff") == 0 && i + 1 < argc) {
             strcpy(suff, argv[++i]);
+        } else if (strcmp(argv[i], "--sep") == 0 && i + 1 < argc) {
+            strcpy(sep, argv[++i]);
         } else if (strcmp(argv[i], "--pango") == 0) {
             use_pango = 1;
         }
@@ -305,36 +308,36 @@ int main(int argc, char *argv[]) {
 
     Block blocks[9];
     
-    strcpy(blocks[0].key, " T ");
+    strcpy(blocks[0].key, "T ");
     strcpy(blocks[0].val, out_t_val);
     strcpy(blocks[0].unit, "°C");
 
-    strcpy(blocks[1].key, " C ");
+    strcpy(blocks[1].key, "C ");
     strcpy(blocks[1].val, cpu_fmt);
     strcpy(blocks[1].unit, "%");
 
-    strcpy(blocks[2].key, " G ");
+    strcpy(blocks[2].key, "G ");
     strcpy(blocks[2].val, gpu_fmt);
     strcpy(blocks[2].unit, "%");
 
-    strcpy(blocks[3].key, " M ");
+    strcpy(blocks[3].key, "M ");
     sprintf(blocks[3].val, "%s/%s", ram_used_str, ram_tot_str);
     strcpy(blocks[3].unit, "GB");
 
-    strcpy(blocks[4].key, " D ");
+    strcpy(blocks[4].key, "D ");
     sprintf(blocks[4].val, "%s/%s", d_free_str, d_tot_str);
     strcpy(blocks[4].unit, "GB");
 
-    strcpy(blocks[5].key, " R ");
+    strcpy(blocks[5].key, "R ");
     fmt(r_rt, blocks[5].val, blocks[5].unit);
 
-    strcpy(blocks[6].key, " W ");
+    strcpy(blocks[6].key, "W ");
     fmt(w_rt, blocks[6].val, blocks[6].unit);
 
-    strcpy(blocks[7].key, " ▼ ");
+    strcpy(blocks[7].key, "▼ ");
     fmt(d_rt, blocks[7].val, blocks[7].unit);
 
-    strcpy(blocks[8].key, " ▲ ");
+    strcpy(blocks[8].key, "▲ ");
     fmt(u_rt, blocks[8].val, blocks[8].unit);
 
     if (use_pango) {
@@ -343,18 +346,25 @@ int main(int argc, char *argv[]) {
             printf("<span background='#000000' foreground='#FF1493'>%s</span>", blocks[i].key);
             printf("<span background='#000000' foreground='#CCFF00'>%s</span>", blocks[i].val);
             printf("<span background='#000000' foreground='#FF1493'>%s</span>", blocks[i].unit);
-            printf("<span background='#000000' foreground='#00ADD8'>%s</span>", suff);
+            if (i < 8) {
+                printf("<span background='#000000' foreground='#00ADD8'>%s</span>", sep);
+            }
         }
+        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", suff);
     } else {
         printf("%s", pref);
         for (int i = 0; i < 9; i++) {
-            printf("%s%s%s%s", blocks[i].key, blocks[i].val, blocks[i].unit, suff);
+            printf("%s%s%s", blocks[i].key, blocks[i].val, blocks[i].unit);
+            if (i < 8) {
+                printf("%s", sep);
+            }
         }
+        printf("%s", suff);
     }
     printf("\n");
 
     fprintf(stderr,
-        " SPRM (Simple Panel Resource Monitor) C version;\n"
+        " SPRM (Suckless Panel Resource Monitor) C version;\n"
         " T = Temperature\n"
         " C = Total CPU Usage\n"
         " G = Total GPU Usage\n"

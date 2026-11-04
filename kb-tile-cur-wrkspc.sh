@@ -20,16 +20,9 @@ done
 
 # cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
 cur_wrkspc=$(xdotool get_desktop)
-OPEN_WINS=$(wmctrl -l -x -G | awk -v ws="$cur_wrkspc" '$2 == ws {
-    if ($7 == "pcmanfm.Pcmanfm" && $9 == "pcmanfm") next;
-    if ($7 == "plank.Plank" && $9 == "plank") next;
-    if ($7 == "tint2.Tint2") next;
-    if ($7 == "xpenguins.Xpenguins") next;
-    if ($7 ~ /welcome-window|idle-window/) next;
-    print $1
-}' 2>/dev/null)
+WIDS=$("$HOME/willyhorizont.github.io/linux/get-open-wins.sh" | awk -v ws="$cur_wrkspc" '$2 == ws {print $1}')
 
-WID_ARRAY=($OPEN_WINS)
+WID_ARRAY=($WIDS)
 WID_COUNT=${#WID_ARRAY[@]}
 
 if [ "$WID_COUNT" -eq 0 ]; then

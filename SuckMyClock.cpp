@@ -22,8 +22,9 @@ std::string format_time(const std::tm* tm_info, const std::string& fmt) {
 }
 
 int main(int argc, char *argv[]) {
-    std::string pref = "| ";
+    std::string pref = " ";
     std::string suff = " ";
+    std::string sep = " | ";
     bool use_pango = false;
 
     for (int i = 1; i < argc; i++) {
@@ -31,6 +32,8 @@ int main(int argc, char *argv[]) {
             pref = argv[++i];
         } else if (std::strcmp(argv[i], "--suff") == 0 && i + 1 < argc) {
             suff = argv[++i];
+        } else if (std::strcmp(argv[i], "--sep") == 0 && i + 1 < argc) {
+            sep = argv[++i];
         } else if (std::strcmp(argv[i], "--pango") == 0) {
             use_pango = true;
         }
@@ -53,30 +56,30 @@ int main(int argc, char *argv[]) {
     std::string am_pm_str = format_time(tm_info, "%p");
 
     if (use_pango) {
-        std::cout << "<span background='#000000' foreground='#00ADD8'>" << pref << "</span>";
+        if (!pref.empty()) std::cout << "<span background='#000000' foreground='#00ADD8'>" << pref << "</span>";
 
         std::cout << "<span background='#000000' foreground='#CCFF00'>" << month_num << "/12 </span>";
         std::cout << "<span background='#000000' foreground='#FF1493'>months</span>";
-        std::cout << "<span background='#000000' foreground='#00ADD8'> | </span>";
+        std::cout << "<span background='#000000' foreground='#00ADD8'>" << sep << "</span>";
 
         std::cout << "<span background='#000000' foreground='#CCFF00'>" << day_num << "</span>";
         std::cout << "<span background='#000000' foreground='#CCFF00'>/</span>";
         std::cout << "<span background='#000000' foreground='#CCFF00'>" << total_days << " </span>";
         std::cout << "<span background='#000000' foreground='#FF1493'>days</span>";
-        std::cout << "<span background='#000000' foreground='#00ADD8'> | </span>";
+        std::cout << "<span background='#000000' foreground='#00ADD8'>" << sep << "</span>";
 
         std::cout << "<span background='#000000' foreground='#CCFF00'>" << date_string << "</span>";
-        std::cout << "<span background='#000000' foreground='#00ADD8'> | </span>";
+        std::cout << "<span background='#000000' foreground='#00ADD8'>" << sep << "</span>";
 
         std::cout << "<span background='#000000' foreground='#CCFF00'>" << time_24 << "</span>";
-        std::cout << "<span background='#000000' foreground='#00ADD8'> | </span>";
+        std::cout << "<span background='#000000' foreground='#00ADD8'>" << sep << "</span>";
 
         std::cout << "<span background='#000000' foreground='#CCFF00'>" << time_12 << " </span>";
         std::cout << "<span background='#000000' foreground='#FF1493'>" << am_pm_str << "</span>";
 
-        std::cout << "<span background='#000000' foreground='#00ADD8'>" << suff << "</span>";
+        if (!suff.empty()) std::cout << "<span background='#000000' foreground='#00ADD8'>" << suff << "</span>";
     } else {
-        std::cout << pref << month_num << "/12 months | " << day_num << "/" << total_days << " days | " << date_string << " | " << time_24 << " | " << time_12 << " " << am_pm_str << suff;
+        std::cout << pref << month_num << "/12 months" << sep << day_num << "/" << total_days << " days" << sep << date_string << sep << time_24 << sep << time_12 << " " << am_pm_str << suff;
     }
     std::cout << std::endl;
 

@@ -6,8 +6,8 @@ IC_WIFI="🛜"
 IC_ETH="🔌"
 IC_NONE="✈️"
 
-PREF=""
-SUFF=" | "
+PREF=" "
+SUFF=" "
 
 while [[ $# -gt 0 ]]; do
     case "$1" in

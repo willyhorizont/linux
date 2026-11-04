@@ -63,8 +63,9 @@ FmtResult fmt(double bytesps) {
 }
 
 int main(int argc, char* argv[]) {
-    std::string pref = "";
-    std::string suff = " |";
+    std::string pref = " ";
+    std::string suff = " ";
+    std::string sep = " | ";
     bool use_pango = false;
 
     for (int i = 1; i < argc; ++i) {
@@ -73,6 +74,8 @@ int main(int argc, char* argv[]) {
             pref = argv[++i];
         } else if (arg == "--suff" && i + 1 < argc) {
             suff = argv[++i];
+        } else if (arg == "--sep" && i + 1 < argc) {
+            sep = argv[++i];
         } else if (arg == "--pango") {
             use_pango = true;
         }
@@ -292,36 +295,43 @@ int main(int argc, char* argv[]) {
     FmtResult f_u = fmt(u_rt); std::string out_u_val = f_u.val; std::string out_u_unit = f_u.unit;
 
     std::vector<Block> blocks = {
-        {" T ", out_t, "°C"},
-        {" C ", cpu_fmt, "%"},
-        {" G ", gpu_fmt, "%"},
-        {" M ", ram_used_str + "/" + rt_ss.str(), "GB"},
-        {" D ", df_ss.str() + "/" + dt_ss.str(), "GB"},
-        {" R ", out_r_val, out_r_unit},
-        {" W ", out_w_val, out_w_unit},
-        {" ▼ ", out_d_val, out_d_unit},
-        {" ▲ ", out_u_val, out_u_unit}
+        {"T ", out_t, "°C"},
+        {"C ", cpu_fmt, "%"},
+        {"G ", gpu_fmt, "%"},
+        {"M ", ram_used_str + "/" + rt_ss.str(), "GB"},
+        {"D ", df_ss.str() + "/" + dt_ss.str(), "GB"},
+        {"R ", out_r_val, out_r_unit},
+        {"W ", out_w_val, out_w_unit},
+        {"▼ ", out_d_val, out_d_unit},
+        {"▲ ", out_u_val, out_u_unit}
     };
 
     std::string final_out = "";
     if (use_pango) {
         if (!pref.empty()) final_out += "<span background='#000000' foreground='#00ADD8'>" + pref + "</span>";
-        for (const auto& b : blocks) {
-            final_out += "<span background='#000000' foreground='#FF1493'>" + b.key + "</span>";
-            final_out += "<span background='#000000' foreground='#CCFF00'>" + b.val + "</span>";
-            final_out += "<span background='#000000' foreground='#FF1493'>" + b.unit + "</span>";
-            final_out += "<span background='#000000' foreground='#00ADD8'>" + suff + "</span>";
+        for (size_t i = 0; i < blocks.size(); ++i) {
+            final_out += "<span background='#000000' foreground='#FF1493'>" + blocks[i].key + "</span>";
+            final_out += "<span background='#000000' foreground='#CCFF00'>" + blocks[i].val + "</span>";
+            final_out += "<span background='#000000' foreground='#FF1493'>" + blocks[i].unit + "</span>";
+            if (i < blocks.size() - 1) {
+                final_out += "<span background='#000000' foreground='#00ADD8'>" + sep + "</span>";
+            }
         }
+        if (!suff.empty()) final_out += "<span background='#000000' foreground='#00ADD8'>" + suff + "</span>";
     } else {
         final_out += pref;
-        for (const auto& b : blocks) {
-            final_out += b.key + b.val + b.unit + suff;
+        for (size_t i = 0; i < blocks.size(); ++i) {
+            final_out += blocks[i].key + blocks[i].val + blocks[i].unit;
+            if (i < blocks.size() - 1) {
+                final_out += sep;
+            }
         }
+        final_out += suff;
     }
     
     std::cout << final_out << std::endl;
 
-    std::cerr << R"( SPRM (Simple Panel Resource Monitor) C++ version;
+    std::cerr << R"( SPRM (Suckless Panel Resource Monitor) C++ version;
  T = Temperature
  C = Total CPU Usage
  G = Total GPU Usage

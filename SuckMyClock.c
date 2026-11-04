@@ -14,8 +14,9 @@ int get_total_days(int year, int month) {
 }
 
 int main(int argc, char *argv[]) {
-    char *pref = "| ";
+    char *pref = " ";
     char *suff = " ";
+    char *sep = " | ";
     int use_pango = 0;
 
     for (int i = 1; i < argc; i++) {
@@ -23,6 +24,8 @@ int main(int argc, char *argv[]) {
             pref = argv[++i];
         } else if (strcmp(argv[i], "--suff") == 0 && i + 1 < argc) {
             suff = argv[++i];
+        } else if (strcmp(argv[i], "--sep") == 0 && i + 1 < argc) {
+            sep = argv[++i];
         } else if (strcmp(argv[i], "--pango") == 0) {
             use_pango = 1;
         }
@@ -52,30 +55,30 @@ int main(int argc, char *argv[]) {
     strftime(am_pm_str, sizeof(am_pm_str), "%p", tm_info);
 
     if (use_pango) {
-        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", pref);
+        if (strlen(pref) > 0) printf("<span background='#000000' foreground='#00ADD8'>%s</span>", pref);
 
         printf("<span background='#000000' foreground='#CCFF00'>%s/12 </span>", month_num);
         printf("<span background='#000000' foreground='#FF1493'>months</span>");
-        printf("<span background='#000000' foreground='#00ADD8'> | </span>");
+        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", sep);
 
         printf("<span background='#000000' foreground='#CCFF00'>%s</span>", day_num);
         printf("<span background='#000000' foreground='#CCFF00'>/</span>");
         printf("<span background='#000000' foreground='#CCFF00'>%s </span>", total_days_str);
         printf("<span background='#000000' foreground='#FF1493'>days</span>");
-        printf("<span background='#000000' foreground='#00ADD8'> | </span>");
+        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", sep);
 
         printf("<span background='#000000' foreground='#CCFF00'>%s</span>", date_string);
-        printf("<span background='#000000' foreground='#00ADD8'> | </span>");
+        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", sep);
 
         printf("<span background='#000000' foreground='#CCFF00'>%s</span>", time_24);
-        printf("<span background='#000000' foreground='#00ADD8'> | </span>");
+        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", sep);
 
         printf("<span background='#000000' foreground='#CCFF00'>%s </span>", time_12);
         printf("<span background='#000000' foreground='#FF1493'>%s</span>", am_pm_str);
 
-        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", suff);
+        if (strlen(suff) > 0) printf("<span background='#000000' foreground='#00ADD8'>%s</span>", suff);
     } else {
-        printf("%s%s/12 months | %s/%d days | %s | %s | %s %s%s", pref, month_num, day_num, total_days, date_string, time_24, time_12, am_pm_str, suff);
+        printf("%s%s/12 months%s%s/%d days%s%s%s%s%s%s %s%s", pref, month_num, sep, day_num, total_days, sep, date_string, sep, time_24, sep, time_12, am_pm_str, suff);
     }
     printf("\n");
 
