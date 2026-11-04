@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.7.6" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.7.7" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,32 +15,13 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-add get-open-wins.sh;
-add .windowignore to ignore window in wmctrl -l -x -G;
-update wrkspc-mgr.sh, use get-open-wins.sh;
-update wrkspc-indctr.sh, use get-open-wins.sh;
-update kb-tile-cur-ws.sh, use get-open-wins.sh;
-update and fix SPRM.awk, add --sep, fix --pref --suff;
-update and fix SPRM.c, add --sep, fix --pref --suff;
-update and fix SPRM.cpp, add --sep, fix --pref --suff;
-update and fix SPRM.pl, add --sep, fix --pref --suff;
-update and fix SPRM.py, add --sep, fix --pref --suff;
-update and fix SPRM.sh, add --sep, fix --pref --suff;
-update and fix SuckMyClock.awk, add --sep, fix --pref --suff;
-update and fix SuckMyClock.c, add --sep, fix --pref --suff;
-update and fix SuckMyClock.cpp, add --sep, fix --pref --suff;
-update and fix SuckMyClock.pl, add --sep, fix --pref --suff;
-update and fix SuckMyClock.py, add --sep, fix --pref --suff;
-update and fix SuckMyClock.sh, add --sep, fix --pref --suff;
-update bt.sh, update --pref --suff;
-update net.sh, update --pref --suff;
-update cam.sh, update --pref --suff;
-update mic.sh, update --pref --suff;
-update vol.sh, update --pref --suff;
-update powr-indctr.sh, update --pref --suff;
+add rofi for Windows Task View / Mac Mission Control;
+add rofi-windows-task-view-mac-mission-control.sh;
+update powr-indctr.sh, add --sep;
+--try combine i3 wrkspc-mgr.sh via xprop -root _NET_DESKTOP_NAMES--;
+update wrkspc-mgr.sh, add --byname;
 
 [working on]
-add rofi for Windows Task View / Mac Mission Control;
 create pinned+opened apps combo rofi;
 create non pinned opened apps rofi;
 create system tray rofi;

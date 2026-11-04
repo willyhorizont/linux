@@ -10,6 +10,7 @@ AC_NONE="❌️"
 
 PREF=" "
 SUFF=" "
+SEP=" "
 
 HAS_BAT_HI=false
 HAS_BAT_LO=false
@@ -26,6 +27,7 @@ while [[ $# -gt 0 ]]; do
         --ac-none)    AC_NONE="$2";                      shift 2 ;;
         --pref)       PREF="$2";                         shift 2 ;;
         --suff)       SUFF="$2";                         shift 2 ;;
+        --sep)        SEP="$2";                          shift 2 ;;
         *)                                               shift ;;
     esac
 done
@@ -44,7 +46,7 @@ EOF
 )
 
 if [ ! -d /sys/class/power_supply ] || [ -z "$(ls /sys/class/power_supply/ | grep -E '^BAT|^battery')" ]; then
-    echo "${PREF}BAT=${BAT_NONE}   0% | AC=${AC_ON}${SUFF}"
+    echo "${PREF}BAT=${BAT_NONE}   0%${SEP}AC=${AC_ON}${SUFF}"
     printf "%s" "$TOOLTIP_TXT" 1>&2
     exit 0
 fi
@@ -96,7 +98,7 @@ AC_ONLINE=0
 [ -f /sys/class/power_supply/AC/online ] && AC_ONLINE=$(cat /sys/class/power_supply/AC/online)
 
 if $IS_CHARGING || [ "$AC_ONLINE" = "1" ]; then
-    echo "${PREF}BAT=${BAT_ON} ${CAP_PAD}% | AC=${AC_ON}${SUFF}"
+    echo "${PREF}BAT=${BAT_ON} ${CAP_PAD}%${SEP}AC=${AC_ON}${SUFF}"
     printf "%s" "$TOOLTIP_TXT" 1>&2
 else
     if [ "$AC_ONLINE" = "0" ]; then
@@ -104,10 +106,10 @@ else
         if [ "$CAP" -lt 40 ]; then
             notify-send "⚠️ Low BAT"
         fi
-        echo "${PREF}BAT=${SEL_BAT_ON} ${CAP_PAD}% | AC=${AC_NONE}${SUFF}"
+        echo "${PREF}BAT=${SEL_BAT_ON} ${CAP_PAD}%${SEP}AC=${AC_NONE}${SUFF}"
         printf "%s" "$TOOLTIP_TXT" 1>&2
     else
-        echo "${PREF}BAT=${IC_INIT} ${CAP_PAD}% | AC=${IC_INIT}${SUFF}"
+        echo "${PREF}BAT=${IC_INIT} ${CAP_PAD}%${SEP}AC=${IC_INIT}${SUFF}"
         printf "%s" "$TOOLTIP_TXT" 1>&2
     fi
 fi

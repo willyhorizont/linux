@@ -124,6 +124,7 @@ $control+$left
 # Linux
 # Windows
 $super+$tab
+$meta+$tab
 # Mac
 $control+$up
 ```
