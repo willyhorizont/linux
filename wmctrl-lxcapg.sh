@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if ! command -v xdotool >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&1; then
-    echo "[wmctrl-lxcapg.sh] Error: missing dependencies 'xdotool wmctrl'..."
+if ! command -v xdotool >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&1 || ! command -v xprop >/dev/null 2>&1; then
+    echo "[wmctrl-lxcapg.sh] Error: missing dependencies 'xdotool wmctrl xprop'..."
     exit 1
 fi
 

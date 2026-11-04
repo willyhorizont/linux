@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.7.4" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.7.5" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,8 +15,7 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-small update on wmctrl-lxcapg.sh;
-small update on detect-tile.sh;
+update wrkspc-mgr.sh;
 
 [working on]
 add rofi for Windows Task View / Mac Mission Control;

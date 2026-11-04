@@ -2,6 +2,11 @@
 
 SCRIPT_NAME="wrkspc-mgr.sh"
 
+if ! command -v xdotool >/dev/null 2>&1 || ! command -v wmctrl >/dev/null 2>&1 || ! command -v xprop >/dev/null 2>&1; then
+    notify-send "[$SCRIPT_NAME]" "Error: missing dependencies 'xdotool wmctrl xprop'..."
+    exit 1
+fi
+
 tot_wrkspc=$(xdotool get_num_desktops)
 cur_wrkspc=$(xdotool get_desktop)
 
@@ -81,13 +86,13 @@ while [[ $# -gt 0 ]]; do
             PROCESSED=1
             shift
             ;;
-        --name)
+        --number)
             TRGT_WRKSPC=$(( $2 - 1 ))
             PROCESSED=1
             shift 2
             ;;
         *)
-            echo "Usage: $0 [--goto] [--mov] [--plus] [--prev] [--next] [--name workspace_number]"
+            echo "Usage: $0 [--goto] [--mov] [--plus] [--prev] [--next] [--number workspace_number]"
             exit 1
             ;;
     esac
@@ -110,7 +115,19 @@ if [ $PROCESSED -eq 0 ]; then
         fi
     done
     if [ "$MOV_WIN_MODE" = true ]; then
-        WIN_NM=$(xdotool getwindowname "$TRGT_WIN_ID" 2>/dev/null | cut -c1-30)
+        WM_CLASS=$(xprop -id "$TRGT_WIN_ID" WM_CLASS 2>/dev/null | awk -F'"' '{print $2"."$4}')
+        if [ "$WM_CLASS" = "." ] || [ -z "$WM_CLASS" ]; then
+            WM_CLASS="N/A"
+        fi
+        FULL_NM=$(xdotool getwindowname "$TRGT_WIN_ID" 2>/dev/null)
+        if [ ${#FULL_NM} -gt 69 ]; then
+            WIN_NM="${FULL_NM:0:33}...${FULL_NM: -33}"
+        else
+            WIN_NM="$FULL_NM"
+        fi
+        if ! [ "$WM_CLASS" = "N/A" ]; then
+            WIN_NM="($WM_CLASS) $WIN_NM"
+        fi
         PROMPT_MSG="Move [$WIN_NM] to Workspace"
     else
         PROMPT_MSG="Go to Workspace"

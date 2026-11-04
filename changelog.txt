@@ -1,3 +1,31 @@
+[Last updated: 04 Nov 2026 @ 04:35 PM][version: 0.7.5]
+[new]
+update wrkspc-mgr.sh;
+
+[working on]
+add rofi for Windows Task View / Mac Mission Control;
+create pinned+opened apps combo rofi;
+create non pinned opened apps rofi;
+create system tray rofi;
+
+[TODO #1]
+create rofi tile-cur-win.sh;
+add --pango to --indicator *indctr;
+update README.md, add strikethrough to wm that can not be installed via apt install;
+
+[TODO #2]
+add rofi grid for Windows Start Menu / Mac Launchpad;
+try skippy-xd for Windows Task View / Mac Mission Control;
+dvd screensaver;
+try panel with signal support, IPC?;
+
+[TODO #3]
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 04 Nov 2026 @ 03:19 AM][version: 0.7.4]
 [new]
 small update on wmctrl-lxcapg.sh;
