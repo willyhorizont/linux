@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.7.7" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.7.8" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,11 +15,7 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-add rofi for Windows Task View / Mac Mission Control;
-add rofi-windows-task-view-mac-mission-control.sh;
-update powr-indctr.sh, add --sep;
---try combine i3 wrkspc-mgr.sh via xprop -root _NET_DESKTOP_NAMES--;
-update wrkspc-mgr.sh, add --byname;
+update powr-mnu.sh, small fix for lxde openbox remove 2x confirm.cmd.sh;
 
 [working on]
 create pinned+opened apps combo rofi;

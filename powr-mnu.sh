@@ -88,7 +88,7 @@ else
     ACTION_KEY=$(echo "$CHOICE" | tr ' ' '_')
 fi
 
-if [[ "$ACTION_KEY" =~ ^(shutdown|reboot|suspend|logout)$ ]]; then
+if [[ "$ACTION_KEY" =~ ^(shutdown|reboot|suspend|logout)$ ]] && ! [[ "$CMD_LOGOUT" == "$HOME/willyhorizont.github.io/linux-debian-lxde/lxsession-logout.sh --logout" && "$ACTION_KEY" == "logout" ]]; then
     $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 fi
 
