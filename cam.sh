@@ -60,13 +60,13 @@ if $IS_INDICATOR; then
         APP_LINE=""
     fi
     TOOLTIP_TXT=$(cat << EOF
- cam.sh
- --ic-init    = ${IC_INIT}
- --ic-on      = ${IC_ON}
- --ic-standby = ${IC_STB}
- --ic-none    = ${IC_NONE}
- click to open cam.sh;
- ${APP_LINE}
+cam.sh
+--ic-init    = ${IC_INIT}
+--ic-on      = ${IC_ON}
+--ic-standby = ${IC_STB}
+--ic-none    = ${IC_NONE}
+click to open cam.sh
+${APP_LINE}
 EOF
     )
     case "$STATE" in

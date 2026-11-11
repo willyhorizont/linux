@@ -364,17 +364,17 @@ int main(int argc, char *argv[]) {
     printf("\n");
 
     fprintf(stderr,
-        " SPRM (Suckless Panel Resource Monitor) C version;\n"
-        " T = Temperature\n"
-        " C = Total CPU Usage\n"
-        " G = Total GPU Usage\n"
-        " M = Total Memory Usage\n"
-        " D = Total Disk Usage\n"
-        " R = Total Disk Read\n"
-        " W = Total Disk Write\n"
-        " ▼ = Average Download Rate\n"
-        " ▲ = Average Upload Rate\n"
-        " click to open btop\n"
+        "SPRM (Suckless Panel Resource Monitor) C version\n"
+        "T = Temperature\n"
+        "C = Total CPU Usage\n"
+        "G = Total GPU Usage\n"
+        "M = Total Memory Usage\n"
+        "D = Total Disk Usage\n"
+        "R = Total Disk Read\n"
+        "W = Total Disk Write\n"
+        "▼ = Average Download Rate\n"
+        "▲ = Average Upload Rate\n"
+        "click to open btop"
     );
     return 0;
 }

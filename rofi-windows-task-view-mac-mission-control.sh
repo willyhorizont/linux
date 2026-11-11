@@ -20,11 +20,28 @@ ROFI_LIST=$(echo "$WINS_RAW" | awk -v names_str="$DESKTOP_NAMES" '
         if ($2 == -1) next;
         ws_name = names_arr[$2 + 1];
         if (ws_name == "") ws_name = $2;
+        gsub(/[^0-9]/, "", ws_name);
         window_title = "";
         for(i=9; i<=NF; i++) {
             window_title = (window_title == "" ? $i : window_title " " $i);
         }
-        print $1, ws_name, "["$7"]", window_title
+        lns[NR] = $1 " " ws_name " " window_title
+        wm_classes[NR] = $7
+        if (length($7) > max_7) {
+            max_7 = length($7)
+        }
+    }
+    END {
+        for (j = 1; j <= NR; j++) {
+            if (!lns[j]) continue;
+            split(lns[j], parts, " ");
+            win_id = parts[1];
+            ws = parts[2];
+            match(lns[j], /([^ \t]+[ \t]+){2}/)
+            title = substr(lns[j], RSTART + RLENGTH)
+            fmt = sprintf("%%s   %%s   %%-%ds   %%s\n", max_7)
+            printf fmt, win_id, ws, wm_classes[j], title
+        }
     }
 ' | sort -V -k2)
 

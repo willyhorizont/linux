@@ -1,3 +1,40 @@
+[Last updated: 11 Nov 2026 @ 08:40 PM][version: 0.7.9]
+[new]
+--create pinned+opened apps combo rofi--;
+--create non pinned opened apps rofi--;
+update bt.sh, trim tooltip spaces;
+update cam.sh, trim tooltip spaces;
+update mic.sh, trim tooltip spaces;
+update net.sh, trim tooltip spaces;
+update vol.sh, trim tooltip spaces;
+update powr-indctr.sh, trim tooltip spaces;
+update wrkspc-indctr.sh, trim tooltip spaces;
+update tux-indctr.sh, trim tooltip spaces;
+update SPRM, trim tooltip spaces;
+update SuckMyClock, trim tooltip spaces;
+update rofi-windows-task-view-mac-mission-control.sh, add padding;
+
+[working on]
+create system tray rofi;
+
+[TODO #1]
+create rofi tile-cur-win.sh;
+add --pango to --indicator *indctr;
+update README.md, add strikethrough to wm that can not be installed via apt install;
+
+[TODO #2]
+add rofi grid for Windows Start Menu / Mac Launchpad;
+try skippy-xd for Windows Task View / Mac Mission Control;
+dvd screensaver;
+try panel with signal support, IPC?;
+
+[TODO #3]
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 05 Nov 2026 @ 05:45 PM][version: 0.7.8]
 [new]
 update powr-mnu.sh, small fix for lxde openbox remove 2x confirm.cmd.sh;

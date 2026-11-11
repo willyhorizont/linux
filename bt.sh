@@ -53,13 +53,13 @@ if $IS_INDICATOR; then
         DVC_LINE=""
     fi
     TOOLTIP_TXT=$(cat << EOF
- bt.sh
- --ic-init = ${IC_INIT}
- --ic-on   = ${IC_ON}
- --ic-off  = ${IC_OFF}
- --ic-none = ${IC_NONE}
- click to open bt.sh;
- ${DVC_LINE}
+bt.sh
+--ic-init = ${IC_INIT}
+--ic-on   = ${IC_ON}
+--ic-off  = ${IC_OFF}
+--ic-none = ${IC_NONE}
+click to open bt.sh
+${DVC_LINE}
 EOF
     )
     case "$STATE" in

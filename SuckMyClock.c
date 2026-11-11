@@ -83,8 +83,8 @@ int main(int argc, char *argv[]) {
     printf("\n");
 
     fprintf(stderr,
-        " SuckMyClock (My Suckless Clock) C version;\n"
-        " click to open calcurse\n"
+        "SuckMyClock (My Suckless Clock) C version\n"
+        "click to open calcurse\n"
     );
 
     return 0;

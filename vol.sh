@@ -25,12 +25,12 @@ done
 print_vol_stat() {
     local tooltip_txt
     tooltip_txt=$(cat << EOF
- vol.sh
- --ic-init = ${IC_INIT}
- --ic-on   = ${IC_ON}
- --ic-off  = ${IC_OFF}
- --ic-none = ${IC_NONE}
- click to open vol.sh;
+vol.sh
+--ic-init = ${IC_INIT}
+--ic-on   = ${IC_ON}
+--ic-off  = ${IC_OFF}
+--ic-none = ${IC_NONE}
+click to open vol.sh
 EOF
     )
     local vol=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk '{print $5}' | tr -d '%')

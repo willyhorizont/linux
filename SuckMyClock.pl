@@ -53,6 +53,6 @@ if ($use_pango) {
 print "$out_string\n";
 
 print STDERR <<'EOF';
- SuckMyClock (My Suckless Clock) Perl version;
- click to open calcurse
+SuckMyClock (My Suckless Clock) Perl version
+click to open calcurse
 EOF

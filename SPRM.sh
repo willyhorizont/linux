@@ -244,15 +244,15 @@ else
 fi
 printf "%s\n" "$out_string"
 cat << EOF 1>&2
- SPRM (Suckless Panel Resource Monitor) POSIX Shell version
- T = Temperature
- C = Total CPU Usage
- G = Total GPU Usage
- M = Total Memory Usage
- D = Total Disk Usage
- R = Total Disk Read
- W = Total Disk Write
- ▼ = Average Download Rate
- ▲ = Average Upload Rate
- click to open btop
+SPRM (Suckless Panel Resource Monitor) POSIX Shell version
+T = Temperature
+C = Total CPU Usage
+G = Total GPU Usage
+M = Total Memory Usage
+D = Total Disk Usage
+R = Total Disk Read
+W = Total Disk Write
+▼ = Average Download Rate
+▲ = Average Upload Rate
+click to open btop
 EOF

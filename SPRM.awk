@@ -266,15 +266,15 @@ BEGIN {
     
     print out_string
     
-    print " SPRM (Suckless Panel Resource Monitor) Awk version;\n" \
-          " T = Temperature\n" \
-          " C = Total CPU Usage\n" \
-          " G = Total GPU Usage\n" \
-          " M = Total Memory Usage\n" \
-          " D = Total Disk Usage\n" \
-          " R = Total Disk Read\n" \
-          " W = Total Disk Write\n" \
-          " ▼ = Average Download Rate\n" \
-          " ▲ = Average Upload Rate\n" \
-          " click to open btop\n" > "/dev/stderr"
+    print "SPRM (Suckless Panel Resource Monitor) Awk version\n" \
+          "T = Temperature\n" \
+          "C = Total CPU Usage\n" \
+          "G = Total GPU Usage\n" \
+          "M = Total Memory Usage\n" \
+          "D = Total Disk Usage\n" \
+          "R = Total Disk Read\n" \
+          "W = Total Disk Write\n" \
+          "▼ = Average Download Rate\n" \
+          "▲ = Average Upload Rate\n" \
+          "click to open btop" > "/dev/stderr"
 }

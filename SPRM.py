@@ -296,17 +296,17 @@ def main():
             
     print(out_str, flush=True)
 
-    print(""" SPRM (Suckless Panel Resource Monitor) Python version;
- T = Temperature
- C = Total CPU Usage
- G = Total GPU Usage
- M = Total Memory Usage
- D = Total Disk Usage
- R = Total Disk Read
- W = Total Disk Write
- ▼ = Average Download Rate
- ▲ = Average Upload Rate
- click to open btop""", file=sys.stderr)
+    print("""SPRM (Suckless Panel Resource Monitor) Python version
+T = Temperature
+C = Total CPU Usage
+G = Total GPU Usage
+M = Total Memory Usage
+D = Total Disk Usage
+R = Total Disk Read
+W = Total Disk Write
+▼ = Average Download Rate
+▲ = Average Upload Rate
+click to open btop""", file=sys.stderr)
 
 
 if __name__ == "__main__":

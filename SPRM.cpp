@@ -331,17 +331,17 @@ int main(int argc, char* argv[]) {
     
     std::cout << final_out << std::endl;
 
-    std::cerr << R"( SPRM (Suckless Panel Resource Monitor) C++ version;
- T = Temperature
- C = Total CPU Usage
- G = Total GPU Usage
- M = Total Memory Usage
- D = Total Disk Usage
- R = Total Disk Read
- W = Total Disk Write
- ▼ = Average Download Rate
- ▲ = Average Upload Rate
- click to open btop)";
+    std::cerr << R"(SPRM (Suckless Panel Resource Monitor) C++ version
+T = Temperature
+C = Total CPU Usage
+G = Total GPU Usage
+M = Total Memory Usage
+D = Total Disk Usage
+R = Total Disk Read
+W = Total Disk Write
+▼ = Average Download Rate
+▲ = Average Upload Rate
+click to open btop)";
     return 0;
 }
 

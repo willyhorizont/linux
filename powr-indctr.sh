@@ -33,15 +33,15 @@ while [[ $# -gt 0 ]]; do
 done
 
 TOOLTIP_TXT=$(cat << EOF
- powr-indctr.sh
- --ic-init   = ${IC_INIT}      
- --bat-on-hi = ${BAT_ON_HI}    
- --bat-on-lo = ${BAT_ON_LO}    
- --bat-on    = ${BAT_ON}       
- --bat-none  = ${BAT_NONE}     
- --ac-on     = ${AC_ON}        
- --ac-none   = ${AC_NONE}      
- click to open powr-mgr.sh;
+powr-indctr.sh
+--ic-init   = ${IC_INIT}      
+--bat-on-hi = ${BAT_ON_HI}    
+--bat-on-lo = ${BAT_ON_LO}    
+--bat-on    = ${BAT_ON}       
+--bat-none  = ${BAT_NONE}     
+--ac-on     = ${AC_ON}        
+--ac-none   = ${AC_NONE}      
+click to open powr-mgr.sh
 EOF
 )
 

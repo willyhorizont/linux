@@ -22,11 +22,11 @@ done
 
 print_mic_stat() {
     local tooltip_txt=$(cat << EOF
- mic.sh
- --ic-on   = ${IC_ON}
- --ic-off  = ${IC_OFF}
- --ic-none = ${IC_NONE}
- click to open mic.sh;
+mic.sh
+--ic-on   = ${IC_ON}
+--ic-off  = ${IC_OFF}
+--ic-none = ${IC_NONE}
+click to open mic.sh
 EOF
     )
     local mic_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ 2>/dev/null | awk '{print $5}' | tr -d '%')

@@ -50,6 +50,6 @@ fi
 printf "%s\n" "$out_string"
 
 cat << EOF 1>&2
- SuckMyClock (My Suckless Clock) POSIX Shell version
- click to open calcurse
+SuckMyClock (My Suckless Clock) POSIX Shell version
+click to open calcurse
 EOF

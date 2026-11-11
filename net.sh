@@ -24,18 +24,18 @@ done
 
 if $IS_INDICATOR; then
     TOOLTIP_TXT_BASE=$(cat << EOF
- net.sh
- --ic-init = ${IC_INIT}
- --ic-wifi = ${IC_WIFI}
- --ic-eth  = ${IC_ETH}
- --ic-none = ${IC_NONE}
- click to open net.sh;
+net.sh
+--ic-init = ${IC_INIT}
+--ic-wifi = ${IC_WIFI}
+--ic-eth  = ${IC_ETH}
+--ic-none = ${IC_NONE}
+click to open net.sh
 EOF
     )
     if [ -z "$(ls /sys/class/net/ 2>/dev/null | grep -E 'eth|wlan|enp|wlp')" ]; then
         TOOLTIP_TXT=$(cat << EOF
 ${TOOLTIP_TXT_BASE}
- ${IC_INIT}
+${IC_INIT}
 EOF
         )
         echo "${PREF}NET=${IC_INIT}   0%${SUFF}"
@@ -46,7 +46,7 @@ EOF
     if [ "$CON_TYPE" = "ethernet" ]; then
         TOOLTIP_TXT=$(cat << EOF
 ${TOOLTIP_TXT_BASE}
- ${IC_ETH}
+${IC_ETH}
 EOF
         )
         echo "${PREF}NET=${IC_ETH} 100%${SUFF}"
@@ -58,7 +58,7 @@ EOF
         SIG_PAD=$(printf "%3d" "${SIG:-0}")
         TOOLTIP_TXT=$(cat << EOF
 ${TOOLTIP_TXT_BASE}
- ${IC_WIFI} ${SSID:-Unknown}
+${IC_WIFI} ${SSID:-Unknown}
 EOF
         )
         echo "${PREF}NET=${IC_WIFI} ${SIG_PAD}%${SUFF}"
@@ -67,7 +67,7 @@ EOF
         if [ "$(nmcli radio wifi)" = "disabled" ]; then
             TOOLTIP_TXT=$(cat << EOF
 ${TOOLTIP_TXT_BASE}
- ${IC_NONE}
+${IC_NONE}
 EOF
             )
             echo "${PREF}NET=${IC_NONE}   0%${SUFF}"
@@ -75,7 +75,7 @@ EOF
         else
             TOOLTIP_TXT=$(cat << EOF
 ${TOOLTIP_TXT_BASE}
- ${IC_INIT}
+${IC_INIT}
 EOF
             )
             echo "${PREF}NET=${IC_INIT}   0%${SUFF}"
