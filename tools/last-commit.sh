@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.7.9" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.8.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,19 +15,11 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
---create pinned+opened apps combo rofi--;
---create non pinned opened apps rofi--;
-update bt.sh, trim tooltip spaces;
-update cam.sh, trim tooltip spaces;
-update mic.sh, trim tooltip spaces;
-update net.sh, trim tooltip spaces;
-update vol.sh, trim tooltip spaces;
-update powr-indctr.sh, trim tooltip spaces;
-update wrkspc-indctr.sh, trim tooltip spaces;
-update tux-indctr.sh, trim tooltip spaces;
-update SPRM, trim tooltip spaces;
-update SuckMyClock, trim tooltip spaces;
-update rofi-windows-task-view-mac-mission-control.sh, add padding;
+move lxde openbox wrkspc-indctr.sh to linux-debian-lxde repo;
+move lxde openbox wrkspc-mgr.sh to linux-debian-lxde repo;
+update powr-mnu.sh, update visual rofi;
+replace wmctrl -l -x -G with wmctrl-lxcapg.sh;
+update dmn-screensavr.sh, replace wmctrl -l -x -G with wmctrl-lxcapg.sh;
 
 [working on]
 create system tray rofi;

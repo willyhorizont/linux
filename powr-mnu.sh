@@ -38,6 +38,7 @@ for arg in "$@"; do
         --suspend)  DIRECT_ACTION="suspend"  ; shift ;;
         --logout)   DIRECT_ACTION="logout"   ; shift ;;
         --lock)     DIRECT_ACTION="lock"     ; shift ;;
+        --btop)     DIRECT_ACTION="btop"     ; shift ;;
         --title=*)
             TITLE="${arg#*=}"
             shift
@@ -58,7 +59,15 @@ ALL_ACTIONS=(
     ["btop"]="lxterminal --geometry=88x28 --working-directory=~ -e btop"
 )
 
-ORDERED_KEYS=("btop" "lock" "logout" "suspend" "reboot" "shutdown")
+declare -A ALL_LABELS
+ALL_LABELS=(
+    ["btop"]="btop"
+    ["lock"]="Lock"
+    ["logout"]="Logout"
+    ["suspend"]="Suspend"
+    ["reboot"]="Reboot"
+    ["shutdown"]="Shutdown"
+)
 
 declare -A ALL_ICONS
 ALL_ICONS=(
@@ -70,12 +79,14 @@ ALL_ICONS=(
     ["btop"]="utilities-system-monitor"
 )
 
+ORDERED_KEYS=("btop" "lock" "logout" "suspend" "reboot" "shutdown")
+
 if [ -n "$DIRECT_ACTION" ]; then
     ACTION_KEY="$DIRECT_ACTION"
 else
     CHOICE=$( {
         for key in "${ORDERED_KEYS[@]}"; do
-            DISPLAY_NAME=$(echo "$key" | tr '_' ' ')
+            DISPLAY_NAME="${ALL_LABELS[$key]}"
             ICON_NAME="${ALL_ICONS[$key]}"
             printf "%b\n" "${DISPLAY_NAME}\0icon\x1f${ICON_NAME}"
         done
@@ -85,7 +96,13 @@ else
         exit 0
     fi
 
-    ACTION_KEY=$(echo "$CHOICE" | tr ' ' '_')
+    ACTION_KEY=""
+    for key in "${!ALL_LABELS[@]}"; do
+        if [[ "${ALL_LABELS[$key]}" == "$CHOICE" ]]; then
+            ACTION_KEY="$key"
+            break
+        fi
+    done
 fi
 
 if [[ "$ACTION_KEY" =~ ^(shutdown|reboot|suspend|logout)$ ]] && ! [[ "$CMD_LOGOUT" == "$HOME/willyhorizont.github.io/linux-debian-lxde/lxsession-logout.sh --logout" && "$ACTION_KEY" == "logout" ]]; then

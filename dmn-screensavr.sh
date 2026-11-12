@@ -105,7 +105,7 @@ if [[ "$SHW_WIN" == "true" ]]; then
     echo "Opening welcome-window..."
     xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "welcome-window" -hold -e fastfetch &
     while true; do
-        if [ -n "$(wmctrl -l -x -G | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
+        if [ -n "$("$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
             break
         fi
         sleep 0.2
@@ -129,7 +129,7 @@ while true; do
             IS_CUR_ACTV_WIN_MAXED=true
         fi
     fi
-    if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then IDLE_WIN_ALIVE=true; else IDLE_WIN_ALIVE=false; fi
+    if [ -n "$("$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then IDLE_WIN_ALIVE=true; else IDLE_WIN_ALIVE=false; fi
     if pgrep -x "xpenguins" >/dev/null; then TUX_ALIVE=true; else TUX_ALIVE=false; fi
     if [ "$CUR_IDLE_MS" -ge "$IDLE_TM_MS" ]; then IS_IDLE=true; else IS_IDLE=false; fi
     if pgrep -x "$LOCKER_CMD" >/dev/null; then IS_LOCKED=true; else IS_LOCKED=false; fi
@@ -174,7 +174,7 @@ while true; do
         echo "Opening idle-window..."
         xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "idle-window" -hold -e fastfetch &
         while true; do
-            if [ -n "$(wmctrl -l -x -G | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
+            if [ -n "$("$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
                 break
             fi
             sleep 0.2

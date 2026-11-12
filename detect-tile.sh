@@ -33,10 +33,10 @@ fi
 
 wid_hex=$(printf "0x%08llx" "$wid" 2>/dev/null || printf "0x%08x" "$wid")
 
-cur_geom=$(wmctrl -l -G | awk -v id="$wid_hex" '$1 == id {print $3,$4,$5,$6}')
+cur_geom=$("$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk -v id="$wid_hex" '$1 == id {print $3,$4,$5,$6}')
 
 if [ -z "$cur_geom" ]; then
-    cur_geom=$(wmctrl -l -G | awk -v id="$wid" '$1 == id {print $3,$4,$5,$6}')
+    cur_geom=$("$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk -v id="$wid" '$1 == id {print $3,$4,$5,$6}')
 fi
 
 if [ -z "$cur_geom" ]; then

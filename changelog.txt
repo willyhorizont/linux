@@ -1,3 +1,32 @@
+[Last updated: 12 Nov 2026 @ 09:28 AM][version: 0.8.0]
+[new]
+move lxde openbox wrkspc-indctr.sh to linux-debian-lxde repo;
+move lxde openbox wrkspc-mgr.sh to linux-debian-lxde repo;
+update powr-mnu.sh, update visual rofi;
+replace wmctrl -l -x -G with wmctrl-lxcapg.sh;
+update dmn-screensavr.sh, replace wmctrl -l -x -G with wmctrl-lxcapg.sh;
+
+[working on]
+create system tray rofi;
+
+[TODO #1]
+create rofi tile-cur-win.sh;
+add --pango to --indicator *indctr;
+update README.md, add strikethrough to wm that can not be installed via apt install;
+
+[TODO #2]
+add rofi grid for Windows Start Menu / Mac Launchpad;
+try skippy-xd for Windows Task View / Mac Mission Control;
+dvd screensaver;
+try panel with signal support, IPC?;
+
+[TODO #3]
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 11 Nov 2026 @ 08:40 PM][version: 0.7.9]
 [new]
 --create pinned+opened apps combo rofi--;
