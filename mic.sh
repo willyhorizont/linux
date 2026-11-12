@@ -33,7 +33,7 @@ EOF
     if [ -z "$mic_vol" ]; then
         echo "${PREF}MIC=${IC_NONE}   0%${SUFF}"
         printf "%s" "$tooltip_txt" 1>&2
-        return
+        return 0
     fi
     local mic_pad=$(printf "%3d" "${mic_vol:-0}")
     if [ "$(pactl get-source-mute @DEFAULT_SOURCE@ 2>/dev/null | awk '{print $2}')" = "yes" ]; then

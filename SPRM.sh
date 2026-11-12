@@ -159,7 +159,7 @@ echo "{\"time\":$now_time,\"cpu\":[$user,$nice,$system_t,$idle,$iowait,$irq,$sof
 
 fmt_rate_parts() {
     val=$1
-    if [ "$(echo "$val <= 0" | bc)" -eq 1 ]; then echo "      0:B/s"; return; fi
+    if [ "$(echo "$val <= 0" | bc)" -eq 1 ]; then echo "      0:B/s"; return 0; fi
     
     # MB/s (1024^2 = 1048576)
     if [ "$(echo "$val >= 1048576" | bc)" -eq 1 ]; then
@@ -181,7 +181,7 @@ fmt_rate_parts() {
 
     if [ ${#f_p} -gt 3 ]; then
         echo "999999:GB/s"
-        return
+        return 0
     fi
     
     # B/s

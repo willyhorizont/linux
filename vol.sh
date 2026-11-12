@@ -37,7 +37,7 @@ EOF
     if [ -z "$vol" ]; then
         echo "${PREF}VOL=${IC_NONE}   0%${SUFF}"
         printf "%s" "$tooltip_txt" 1>&2
-        return
+        return 0
     fi
     local vol_pad=$(printf "%3d" "${vol:-0}")
     if [ "$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{print $2}')" = "yes" ]; then

@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.8.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.8.1" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,14 +15,10 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-move lxde openbox wrkspc-indctr.sh to linux-debian-lxde repo;
-move lxde openbox wrkspc-mgr.sh to linux-debian-lxde repo;
-update powr-mnu.sh, update visual rofi;
-replace wmctrl -l -x -G with wmctrl-lxcapg.sh;
-update dmn-screensavr.sh, replace wmctrl -l -x -G with wmctrl-lxcapg.sh;
+update rofi-windows-task-view-mac-mission-control.sh, add --print --title;
 
 [working on]
-create system tray rofi;
+create rofi Windows Notification Area or System Tray / Mac Menu Bar Extras or Status Menus / Linux Status Notifier Area or System Tray;
 
 [TODO #1]
 create rofi tile-cur-win.sh;

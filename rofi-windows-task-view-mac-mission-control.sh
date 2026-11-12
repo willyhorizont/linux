@@ -8,6 +8,26 @@ if [ ! -f "$GET_OPEN_WINS_SCRIPT" ]; then
     exit 1
 fi
 
+PRINT_MODE=false
+TITLE="rofi Windows Task View / Mac Mission Control"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --print)
+            PRINT_MODE=true
+            shift
+            ;;
+        --title)
+            TITLE=$2
+            shift 2
+            ;;
+        *)
+            echo "Usage: $0 [--print] [--title title]"
+            exit 1
+            ;;
+    esac
+done
+
 WINS_RAW=$("$GET_OPEN_WINS_SCRIPT")
 
 DESKTOP_NAMES=$(xprop -root _NET_DESKTOP_NAMES 2>/dev/null | awk -F'"' '{for(i=2; i<=NF; i+=2) print $i}')
@@ -53,7 +73,7 @@ ROFI_THEME="
     window { width: 90%; }
 "
 
-ROFI_INPUT=$(echo -e "$ROFI_LIST" | rofi -dmenu -i -p "rofi Windows Task View / Mac Mission Control" -theme-str "$ROFI_THEME")
+ROFI_INPUT=$(echo -e "$ROFI_LIST" | rofi -dmenu -i -p "$TITLE" -theme-str "$ROFI_THEME")
 
 if [ -z "$ROFI_INPUT" ]; then
     exit 0
@@ -61,6 +81,13 @@ fi
 
 TRGT_WIN_ID=$(echo "$ROFI_INPUT" | awk '{print $1}')
 
-if [ -n "$TRGT_WIN_ID" ]; then
+if [ -z "$TRGT_WIN_ID" ]; then
+    exit 0
+fi
+
+if [ "$PRINT_MODE" = false ]; then
     xdotool windowactivate "$TRGT_WIN_ID" 2>/dev/null
 fi
+
+PRINT_OUTPUT=$(echo "$ROFI_INPUT" | awk '{print $0}')
+echo "$PRINT_OUTPUT"

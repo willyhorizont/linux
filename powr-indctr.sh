@@ -10,7 +10,7 @@ AC_NONE="❌️"
 
 PREF=" "
 SUFF=" "
-SEP=" "
+SEP=" | "
 
 HAS_BAT_HI=false
 HAS_BAT_LO=false

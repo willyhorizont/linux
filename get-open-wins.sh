@@ -10,7 +10,7 @@ WINDOW_IGNORE_FILE="$HOME/willyhorizont.github.io/.config/.windowignore"
 get_open_wins_data() {
     if [ ! -f "$WINDOW_IGNORE_FILE" ]; then
         "$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk '{print $0}'
-        return
+        return 0
     fi
     "$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk -v ignore_file="$WINDOW_IGNORE_FILE" '
         BEGIN {

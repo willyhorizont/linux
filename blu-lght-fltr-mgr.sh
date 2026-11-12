@@ -8,18 +8,18 @@ OVERRIDE_FILE="/tmp/blu-lght-fltr-override"
 is_auto_on() {
     if [ "$V_AUTO" != "True" ]; then
         echo "false"
-        return
+        return 0
     fi
     on_mnt=$(date -d "$V_ON" +"%H*60+%M" | bc)
     off_mnt=$(date -d "$V_OFF" +"%H*60+%M" | bc)
     cur_mnt=$(date +"%H*60+%M" | bc)
     if [ "$on_mnt" -lt "$off_mnt" ]; then
         if [ "$cur_mnt" -ge "$on_mnt" ] && [ "$cur_mnt" -lt "$off_mnt" ]; then
-            echo "true"; return
+            echo "true"; return 0
         fi
     else
         if [ "$cur_mnt" -ge "$on_mnt" ] || [ "$cur_mnt" -lt "$off_mnt" ]; then
-            echo "true"; return
+            echo "true"; return 0
         fi
     fi
     echo "false"
