@@ -1,10 +1,6 @@
 # Linux
-![Debian LXDE Screenshot 1](https://github.com/willyhorizont/linux-debian-lxde/blob/main/screenshot1.jpg)  
-![Debian LXDE Screenshot 2](https://github.com/willyhorizont/linux-debian-lxde/blob/main/screenshot2.jpg)  
-![Debian LXDE Screenshot 3](https://github.com/willyhorizont/linux-debian-lxde/blob/main/screenshot3.jpg)  
-![Debian LXDE i3 Screenshot 1](https://github.com/willyhorizont/linux-debian-lxde/blob/main/i3/screenshot1.jpg)  
-![Debian LXDE i3 Screenshot 2](https://github.com/willyhorizont/linux-debian-lxde/blob/main/i3/screenshot2.jpg)  
-![Debian LXDE i3 Screenshot 3](https://github.com/willyhorizont/linux-debian-lxde/blob/main/i3/screenshot3.jpg)  
+![Debian LXDE Screenshot 1](https://github.com/willyhorizont/linux-debian-lxde/blob/main/screenshot.jpg)  
+![Debian LXDE i3 Screenshot 1](https://github.com/willyhorizont/linux-debian-lxde/blob/main/i3/screenshot.jpg)  
 
 ## Program/Scripts (Choose your own localization/flavour)
 * [SPRM (Suckless Panel Resource Monitor)](https://github.com/willyhorizont/linux/blob/main/SPRM.c) is available in [C](https://github.com/willyhorizont/linux/blob/main/SPRM.c), [C++](https://github.com/willyhorizont/linux/blob/main/SPRM.cpp), [Awk](https://github.com/willyhorizont/linux/blob/main/SPRM.awk), [Perl](https://github.com/willyhorizont/linux/blob/main/SPRM.pl), [Python](https://github.com/willyhorizont/linux/blob/main/SPRM.py), [Shell](https://github.com/willyhorizont/linux/blob/main/SPRM.sh)

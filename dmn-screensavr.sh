@@ -183,7 +183,7 @@ while true; do
     fi
     if [[ "$IS_ACTION_DEPLOY_TUX" == true ]]; then
         echo "Deploying tux..."
-        xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 52 &
+        xpenguins --nomenu --no-blood --no-angels --nodoublebuffer --ignorepopups --rectwin --delay 1000 --penguins 8 --lift 50 &
         TUX_ALIVE=true
     fi
     if [[ "$IS_ACTION_CLOSE_IDLE_WINDOW" == true ]]; then
