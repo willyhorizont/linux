@@ -105,7 +105,7 @@ else
     done
 fi
 
-if [[ "$ACTION_KEY" =~ ^(shutdown|reboot|suspend|logout)$ ]] && ! [[ "$CMD_LOGOUT" == "$HOME/willyhorizont.github.io/linux-debian-lxde/lxsession-logout.sh --logout" && "$ACTION_KEY" == "logout" ]]; then
+if [[ "$ACTION_KEY" =~ ^(shutdown|reboot|suspend|logout)$ ]] && ! [[ "$CMD_LOGOUT" == *"lxsession-logout.sh --logout"* && "$ACTION_KEY" == "logout" ]]; then
     $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 fi
 
