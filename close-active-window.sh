@@ -5,6 +5,6 @@ if ! command -v xdotool >/dev/null 2>&1; then
     exit 1
 fi
 
-$HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
+$HOME/willyhorizont.github.io/linux/confirm-cmd.sh --confirm || exit 1
 
 xdotool getactivewindow windowclose
