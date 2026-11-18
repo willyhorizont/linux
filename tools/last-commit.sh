@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.8.4" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.8.5" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,9 +15,13 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-update notes;
+update confirm-cmd.sh, add fallback to terminal if no rofi;
+add close-active-window.sh;
+add npm-version.py;
+small fix in rofi-windows-task-view-mac-mission-control.sh;
 
 [working on]
+create lock-mgr.sh;
 update SPRM, add --mode xfce4-panel <txt></txt>\n<txtclick></txtclick>\n<tool></tool>;
 update SuckMyClock, add --mode xfce4-panel <txt></txt>\n<txtclick></txtclick>\n<tool></tool>;
 update uptime, add --mode xfce4-panel <txt></txt>\n<txtclick></txtclick>\n<tool></tool>;

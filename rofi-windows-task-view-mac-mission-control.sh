@@ -30,6 +30,11 @@ done
 
 WINS_RAW=$("$GET_OPEN_WINS_SCRIPT")
 
+if [ -z "$WINS_RAW" ]; then
+    notify-send "[$SCRIPT_NAME]" "Info: no any window found!"
+    exit 0
+fi
+
 DESKTOP_NAMES=$(xprop -root _NET_DESKTOP_NAMES 2>/dev/null | awk -F'"' '{for(i=2; i<=NF; i+=2) print $i}')
 
 ROFI_LIST=$(echo "$WINS_RAW" | awk -v names_str="$DESKTOP_NAMES" '
@@ -37,7 +42,7 @@ ROFI_LIST=$(echo "$WINS_RAW" | awk -v names_str="$DESKTOP_NAMES" '
         split(names_str, names_arr, "\n");
     }
     {
-        if ($2 == -1) next;
+        if (NF == 0 || $2 == -1) next;
         ws_name = names_arr[$2 + 1];
         if (ws_name == "") ws_name = $2;
         gsub(/[^0-9]/, "", ws_name);
@@ -66,6 +71,7 @@ ROFI_LIST=$(echo "$WINS_RAW" | awk -v names_str="$DESKTOP_NAMES" '
 ' | sort -V -k2)
 
 if [ -z "$ROFI_LIST" ]; then
+    notify-send "[$SCRIPT_NAME]" "Info: no any window found!"
     exit 0
 fi
 
