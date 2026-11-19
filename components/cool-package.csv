@@ -1,6 +1,8 @@
 id or source                                                                                     ; categories
 lazygit git-delta                                                                                ; version control
 fastfetch                                                                                        ; startup
+stalonetray                                                                                      ; systray
+trayer                                                                                           ; systray
 figlet                                                                                           ; startup
 https://getfresh.dev/ or https://github.com/sinelaw/fresh                                        ; code-editor
 btop                                                                                             ; task-manager, system-resource-monitor
