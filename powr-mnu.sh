@@ -112,12 +112,12 @@ else
     done
 fi
 
-if [[ "$ACTION_KEY" =~ ^(shutdown|reboot|suspend|logout)$ ]] && ! [[ "$CMD_LOGOUT" == *"lxsession-logout.sh --logout"* && "$ACTION_KEY" == "logout" ]]; then
-    $HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
-fi
-
-if [ -n "${ALL_ACTIONS[$ACTION_KEY]}" ]; then
-    eval "${ALL_ACTIONS[$ACTION_KEY]}"
-else
+if [ -z "${ALL_ACTIONS[$ACTION_KEY]}" ]; then
     notify-send "$SCRIPT_NAME" "Error: Invalid input!"
 fi
+
+if [[ "$ACTION_KEY" =~ ^(shutdown|reboot|suspend|logout)$ ]] && ! [[ "$CMD_LOGOUT" == *"lxsession-logout.sh --logout"* && "$ACTION_KEY" == "logout" ]]; then
+    $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm ${ALL_LABELS[$ACTION_KEY]}" || exit 1
+fi
+
+exec sh -c "${ALL_ACTIONS[$ACTION_KEY]}"

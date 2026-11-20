@@ -1,10 +1,10 @@
 #!/bin/bash
 
-$HOME/willyhorizont.github.io/linux/confirm-cmd.sh || exit 1
+$HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exit 1
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.9.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.9.1" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,7 +15,9 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-move rofi-windows-task-view-mac-mission-control.sh to linux-debian-lxde;
+update confirm-cmd.sh, add --msg;
+update close-active-window.sh, use confirm-cmd.sh --msg;
+update powr-mnu.sh, use confirm-cmd.sh --msg;
 
 [working on]
 create lock-mgr.sh;

@@ -1,3 +1,60 @@
+[Last updated: 20 Nov 2026 @ 10:52 AM][version: 0.9.1]
+[new]
+update confirm-cmd.sh, add --msg;
+update close-active-window.sh, use confirm-cmd.sh --msg;
+update powr-mnu.sh, use confirm-cmd.sh --msg;
+
+[working on]
+create lock-mgr.sh;
+update SPRM, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update SuckMyClock, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update uptime, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update tux-indctr.sh, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update bt.sh, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update net.sh, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update cam.sh, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update mic.sh, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update vol.sh, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+update powr-indctr.sh, add --mode xfce4-panel <txt></txt>
+<txtclick></txtclick>
+<tool></tool>;
+
+[TODO #1]
+create rofi tile-cur-win.sh;
+add --pango to --indicator *indctr;
+create rofi Windows Notification Area or System Tray / Mac Menu Bar Extras or Status Menus / Linux Status Notifier Area or System Tray;
+
+[TODO #2]
+add rofi grid for Windows Start Menu / Mac Launchpad;
+try skippy-xd for Windows Task View / Mac Mission Control;
+dvd screensaver;
+try panel with signal support, IPC?;
+
+[TODO #3]
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 20 Nov 2026 @ 09:26 AM][version: 0.9.0]
 [new]
 move rofi-windows-task-view-mac-mission-control.sh to linux-debian-lxde;
