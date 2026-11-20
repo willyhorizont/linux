@@ -29,6 +29,7 @@ get_open_wins_data() {
             close(ignore_file);
         }
         {
+            if (NF == 0 || $2 == -1) next;
             cur_class = $7;
             cur_title = "";
             for(i=9; i<=NF; i++) {
