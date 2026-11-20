@@ -12,7 +12,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if command -v rofi >/dev/null 2>&1; then
-    CONFIRM=$(echo -e "No\nYes" | rofi -dmenu -p "$MSG" -i -select "No")
+    CONFIRM=$(echo -e "No\nYes" | rofi -dmenu -normal-window -p "$MSG" -i -select "No")
     if [ "$CONFIRM" != "Yes" ]; then
         echo "❌ Cancelled."
         exit 1
@@ -21,7 +21,7 @@ if command -v rofi >/dev/null 2>&1; then
         echo "✅ Confirmed."
         exit 0
     fi
-    DOUBLE_CONFIRM=$(rofi -dmenu -p "Type" -theme-str 'listview {enabled: false;} entry {placeholder: "CONFIRM";}')
+    DOUBLE_CONFIRM=$(rofi -dmenu -normal-window -p "Type" -theme-str 'listview {enabled: false;} entry {placeholder: "CONFIRM";}')
 else
     read -r -p "Type YES to proceed: " CONFIRM
     if [ "$CONFIRM" != "YES" ]; then

@@ -37,6 +37,10 @@ while read -r WID; do
     fi
 done < <(xdotool search --onlyvisible --class ".+" 2>/dev/null)
 
+if [ -z "$WINDOW_LIST" ]; then
+    exit 0
+fi
+
 echo "$WINDOW_LIST" | awk '
 {
     lines[NR] = $0

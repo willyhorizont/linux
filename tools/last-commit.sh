@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exi
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.9.1" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.9.2" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,9 +15,8 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-update confirm-cmd.sh, add --msg;
-update close-active-window.sh, use confirm-cmd.sh --msg;
-update powr-mnu.sh, use confirm-cmd.sh --msg;
+update confirm-cmd.sh, add --normal-window;
+small fix in wmctrl-lxcapg.sh, add exit before reach awk;
 
 [working on]
 create lock-mgr.sh;
