@@ -79,7 +79,14 @@ ALL_ICONS=(
     ["btop"]="utilities-system-monitor"
 )
 
-ORDERED_KEYS=("btop" "lock" "logout" "suspend" "reboot" "shutdown")
+ORDERED_KEYS=(
+    "btop"
+    "lock"
+    "logout"
+    "suspend"
+    "reboot"
+    "shutdown"
+)
 
 if [ -n "$DIRECT_ACTION" ]; then
     ACTION_KEY="$DIRECT_ACTION"
