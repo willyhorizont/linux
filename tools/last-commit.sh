@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exi
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.9.3" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.9.6" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,7 +15,16 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-small fix in get-open-wins.sh;
+update tux-indctr.sh, optimize via listener;
+update bt.sh, optimize --indicator via listener;
+update net.sh, optimize --indicator via listener;
+update cam.sh, optimize --indicator via listener;
+update mic.sh, optimize --indicator via listener;
+update vol.sh, optimize --indicator via listener;
+update powr-indctr.sh, update tooltip, optimize via listener;
+update powr-mgr.sh;
+update screensavr-mgr.sh;
+update scrn-brghtnss-mgr.sh, add --print;
 
 [working on]
 create lock-mgr.sh;

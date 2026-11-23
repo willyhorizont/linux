@@ -29,7 +29,7 @@ EOF
     echo "1) Change Idle Timeout"
     echo "2) Toggle Show Tux"
     echo "3) Toggle Show Window"
-    echo "0) Exit"
+    echo "q) Exit"
     echo -n "Select choice: "
     read -n 1 CHOICE
     case "$CHOICE" in
@@ -68,7 +68,7 @@ EOF
             echo "Please restart desktop manually."
             read -rsp "Press any key to continue..." -n 1
             ;;
-        0)
+        [qQ])
             echo ""
             exit 0
             ;;

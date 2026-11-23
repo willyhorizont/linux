@@ -23,7 +23,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 get_bt_stat() {
-    DEV_NAME="None"
+    DVC_NM="None"
     if [ -z "$(ls /sys/class/bluetooth/ 2>/dev/null)" ]; then
         STATE="NONE"
     elif rfkill list bluetooth | grep -q "Soft blocked: yes"; then
@@ -32,34 +32,33 @@ get_bt_stat() {
         CONN_DIR=$(ls -d /sys/class/bluetooth/hci0/dev_* 2>/dev/null | head -n1)
         if [ -z "$CONN_DIR" ]; then
             STATE="INIT"
-            DEV_NAME="Not Connected"
+            DVC_NM="Not Connected"
         else
             STATE="ON"
             local conn_mac
             conn_mac=$(basename "$CONN_DIR" | sed 's/dev_//; s/_/:/g')
-            local full_name
-            full_name=$(bluetoothctl info "$conn_mac" 2>/dev/null | awk -F': ' '/Name:/ {print $2}')
-            DEV_NAME=${full_name:-Unknown}
+            local dvc_full_nm
+            dvc_full_nm=$(bluetoothctl info "$conn_mac" 2>/dev/null | awk -F': ' '/Name:/ {print $2}')
+            DVC_NM=${dvc_full_nm:-Unknown}
         fi
     fi
 }
 
-if $IS_INDICATOR; then
+print_indicator() {
     get_bt_stat
-    DVC_SHORT=${DEV_NAME:0:8}
+    local dvc_nm=""
     if [ "$STATE" = "ON" ]; then
-        DVC_LINE="${DEV_NAME}"
-    else
-        DVC_LINE=""
+        dvc_nm="${DVC_NM}"
     fi
-    TOOLTIP_TXT=$(cat << EOF
+    local tooltip_txt
+    tooltip_txt=$(cat << EOF
 bt.sh
 --ic-init = ${IC_INIT}
 --ic-on   = ${IC_ON}
 --ic-off  = ${IC_OFF}
 --ic-none = ${IC_NONE}
 click to open bt.sh
-${DVC_LINE}
+${dvc_nm}
 EOF
     )
     case "$STATE" in
@@ -68,7 +67,16 @@ EOF
         INIT) echo "${PREF}BT=${IC_INIT}${SUFF}" ;;
         ON)   echo "${PREF}BT=${IC_ON}${SUFF}" ;;
     esac
-    printf "%s" "$TOOLTIP_TXT" 1>&2
+    printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+}
+
+if $IS_INDICATOR; then
+    print_indicator
+    dbus-monitor --system "sender='org.bluez'" 2>/dev/null | while read -r ln; do
+        if [[ "$ln" == *"PropertiesChanged"* || "$ln" == *"InterfacesAdded"* || "$ln" == *"InterfacesRemoved"* ]]; then
+            print_indicator
+        fi
+    done
     exit 0
 fi
 
@@ -79,27 +87,27 @@ while true; do
     case "$STATE" in
         NONE)
             echo "Hardware Status  : [ ${IC_NONE} Not Found / Disabled ]"
-            echo "Connected Device : [ ${DEV_NAME} ]"
+            echo "Connected Device : [ ${DVC_NM} ]"
             HW_AVAIL="no"
             ;;
         OFF)
             echo "Hardware Status  : [ ${IC_OFF} OFF ]"
-            echo "Connected Device : [ ${DEV_NAME} ]"
+            echo "Connected Device : [ ${DVC_NM} ]"
             HW_AVAIL="yes"
             ;;
         INIT)
             echo "Hardware Status  : [ ${IC_ON} ON ]"
-            echo "Connected Device : [ ${DEV_NAME} ]"
+            echo "Connected Device : [ ${DVC_NM} ]"
             HW_AVAIL="yes"
             ;;
         ON)
             echo "Hardware Status  : [ ${IC_ON} ON ]"
-            echo "Connected Device : [ ${DEV_NAME} ]"
+            echo "Connected Device : [ ${DVC_NM} ]"
             HW_AVAIL="yes"
             ;;
     esac
     echo "1) Open interactive bluetoothctl bluez wizard"
-    echo "0) Exit"
+    echo "q) Exit"
     echo -n " Select choice: "
     read -n 1 CHOICE
     case "$CHOICE" in
@@ -141,7 +149,7 @@ while true; do
                 fi
             fi
             ;;
-        0)
+        [qQ])
             echo ""
             exit 0
             ;;

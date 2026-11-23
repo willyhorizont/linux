@@ -22,8 +22,9 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if $IS_INDICATOR; then
-    TOOLTIP_TXT_BASE=$(cat << EOF
+print_indicator() {
+    local tooltip_txt_base
+    tooltip_txt_base=$(cat << EOF
 net.sh
 --ic-init = ${IC_INIT}
 --ic-wifi = ${IC_WIFI}
@@ -32,56 +33,69 @@ net.sh
 click to open net.sh
 EOF
     )
+    local tooltip_txt
     if [ -z "$(ls /sys/class/net/ 2>/dev/null | grep -E 'eth|wlan|enp|wlp')" ]; then
-        TOOLTIP_TXT=$(cat << EOF
-${TOOLTIP_TXT_BASE}
+        tooltip_txt=$(cat << EOF
+${tooltip_txt_base}
 ${IC_INIT}
 EOF
         )
         echo "${PREF}NET=${IC_INIT}   0%${SUFF}"
-        printf "%s" "$TOOLTIP_TXT" 1>&2
-        exit 0
+        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+        return 0
     fi
-    CON_TYPE=$(nmcli -t -f TYPE,STATE dev | awk -F: '$2=="connected" {print $1; exit}')
-    if [ "$CON_TYPE" = "ethernet" ]; then
-        TOOLTIP_TXT=$(cat << EOF
-${TOOLTIP_TXT_BASE}
+    local con_type
+    con_type=$(nmcli -t -f TYPE,STATE dev | awk -F: '$2=="connected" {print $1; exit}')
+    if [ "$con_type" = "ethernet" ]; then
+        tooltip_txt=$(cat << EOF
+${tooltip_txt_base}
 ${IC_ETH}
 EOF
         )
         echo "${PREF}NET=${IC_ETH} 100%${SUFF}"
-        printf "%s" "$TOOLTIP_TXT" 1>&2
-    elif [ "$CON_TYPE" = "wifi" ]; then
-        WIFI_INFO=$(nmcli -t -f active,ssid,signal dev wifi | awk -F: '/^yes:/ {print $2 "," $3}')
-        SSID=${WIFI_INFO%,*}
-        SIG=${WIFI_INFO#*,}
-        SIG_PAD=$(printf "%3d" "${SIG:-0}")
-        TOOLTIP_TXT=$(cat << EOF
-${TOOLTIP_TXT_BASE}
-${IC_WIFI} ${SSID:-Unknown}
+        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+    elif [ "$con_type" = "wifi" ]; then
+        local wifi_info
+        local ssid
+        local sig
+        local sig_pad
+        wifi_info=$(nmcli -t -f active,ssid,signal dev wifi | awk -F: '/^yes:/ {print $2 "," $3}')
+        ssid=${wifi_info%,*}
+        sig=${wifi_info#*,}
+        sig_pad=$(printf "%3d" "${sig:-0}")
+        tooltip_txt=$(cat << EOF
+${tooltip_txt_base}
+${IC_WIFI} ${ssid:-Unknown}
 EOF
         )
-        echo "${PREF}NET=${IC_WIFI} ${SIG_PAD}%${SUFF}"
-        printf "%s" "$TOOLTIP_TXT" 1>&2
+        echo "${PREF}NET=${IC_WIFI} ${sig_pad}%${SUFF}"
+        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
     else
         if [ "$(nmcli radio wifi)" = "disabled" ]; then
-            TOOLTIP_TXT=$(cat << EOF
-${TOOLTIP_TXT_BASE}
+            tooltip_txt=$(cat << EOF
+${tooltip_txt_base}
 ${IC_NONE}
 EOF
             )
             echo "${PREF}NET=${IC_NONE}   0%${SUFF}"
-            printf "%s" "$TOOLTIP_TXT" 1>&2
+            printf "\e[2J%s\n" "$tooltip_txt" 1>&2
         else
-            TOOLTIP_TXT=$(cat << EOF
-${TOOLTIP_TXT_BASE}
+            tooltip_txt=$(cat << EOF
+${tooltip_txt_base}
 ${IC_INIT}
 EOF
             )
             echo "${PREF}NET=${IC_INIT}   0%${SUFF}"
-            printf "%s" "$TOOLTIP_TXT" 1>&2
+            printf "\e[2J%s\n" "$tooltip_txt" 1>&2
         fi
     fi
+}
+
+if $IS_INDICATOR; then
+    print_indicator
+    nmcli monitor | while read -r _; do
+        print_indicator
+    done
     exit 0
 fi
 

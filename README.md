@@ -24,7 +24,7 @@
 
 ### SPRM output example (self explanatory)
 ```
- T 59.0°C | C   9.6% | G  28.0% | M  3.25/15.45GB | D 158.19/250.39GB | R       0B/s | W       0B/s | ▼       0B/s | ▲       0B/s |
+ T 59.0°C | C   9.6% | G  28.0% | M  3.25/15.45GB | D 158.19/250.39GB | R       0B/s | W       0B/s | ▼       0B/s | ▲       0B/s 
 ```
 ```
         T = Temperature                 
@@ -40,5 +40,5 @@
 
 ### SuckMyClock output example (self explanatory)
 ```
-| 10/12 months | 02/31 days | Fri, 02 Oct 2026 | 04:01:49 | 04:01:49 AM 
+ 10/12 months | 02/31 days | Fri, 02 Oct 2026 | 04:01:49 | 04:01:49 AM 
 ```

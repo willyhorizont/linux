@@ -15,25 +15,17 @@ while true; do
         fi
     done
     echo "powr-mgr.sh"
-    echo "1) Power Profiles"
-    echo "2) Brightness"
-    echo "3) Blue Light Filter"
+    echo "1) Brightness"
+    echo "2) Blue Light Filter"
+    echo "3) Power Profiles"
     if $THINKPAD_SUPPORTED; then
         echo "4) ThinkPad Battery Charge Threshold"
     fi
-    echo "0) Exit"
-    echo -n "Select choice [0-4]: "
+    echo "q) Exit"
+    echo -n "Select choice: "
     read -n 1 CHOICE
     case "$CHOICE" in
         1)
-            if [ -f "$POWR_PFL_SCRIPT" ]; then
-                exec bash "$POWR_PFL_SCRIPT"
-            else
-                echo -e "\nError: $POWR_PFL_SCRIPT not found!"
-                read -rsp "Press any key to continue..." -n 1
-            fi
-            ;;
-        2)
             if [ -f "$BRGHTNSS_SCRIPT" ]; then
                 exec bash "$BRGHTNSS_SCRIPT"
             else
@@ -41,11 +33,19 @@ while true; do
                 read -rsp "Press any key to continue..." -n 1
             fi
             ;;
-        3)
+        2)
             if [ -f "$BLU_LGHT_FLTR_SCRIPT" ]; then
                 exec bash "$BLU_LGHT_FLTR_SCRIPT"
             else
                 echo -e "\nError: $BLU_LGHT_FLTR_SCRIPT not found!"
+                read -rsp "Press any key to continue..." -n 1
+            fi
+            ;;
+        3)
+            if [ -f "$POWR_PFL_SCRIPT" ]; then
+                exec bash "$POWR_PFL_SCRIPT"
+            else
+                echo -e "\nError: $POWR_PFL_SCRIPT not found!"
                 read -rsp "Press any key to continue..." -n 1
             fi
             ;;
@@ -62,7 +62,7 @@ while true; do
                 read -rsp "Press any key to continue..." -n 1
             fi
             ;;
-        0)
+        [Qq])
             exit 0
             ;;
         *)

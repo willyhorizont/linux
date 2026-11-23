@@ -32,7 +32,7 @@ EOF
     local mic_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ 2>/dev/null | awk '{print $5}' | tr -d '%')
     if [ -z "$mic_vol" ]; then
         echo "${PREF}MIC=${IC_NONE}   0%${SUFF}"
-        printf "%s" "$tooltip_txt" 1>&2
+        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
         return 0
     fi
     local mic_pad=$(printf "%3d" "${mic_vol:-0}")
@@ -41,7 +41,7 @@ EOF
     else
         echo "${PREF}MIC=${IC_ON} ${mic_pad}%${SUFF}"
     fi
-    printf "%s" "$tooltip_txt" 1>&2
+    printf "\e[2J%s\n" "$tooltip_txt" 1>&2
 }
 
 if $IS_INDICATOR; then

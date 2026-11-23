@@ -36,7 +36,7 @@ EOF
     local vol=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk '{print $5}' | tr -d '%')
     if [ -z "$vol" ]; then
         echo "${PREF}VOL=${IC_NONE}   0%${SUFF}"
-        printf "%s" "$tooltip_txt" 1>&2
+        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
         return 0
     fi
     local vol_pad=$(printf "%3d" "${vol:-0}")
@@ -45,7 +45,7 @@ EOF
     else
         echo "${PREF}VOL=${IC_ON} ${vol_pad}%${SUFF}"
     fi
-    printf "%s" "$tooltip_txt" 1>&2
+    printf "\e[2J%s\n" "$tooltip_txt" 1>&2
 }
 
 if $IS_INDICATOR; then

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! command -v inotifywait >/dev/null 2>&1; then
+    notify-send "cam.sh" "Error: missing dependencies 'inotify-tools'..."
+    exit 1
+fi
+
 IS_INDICATOR=false
 IC_INIT="⏳"
 IC_ON="👁️"
@@ -50,23 +55,23 @@ get_cam_stat() {
     fi
 }
 
-if $IS_INDICATOR; then
+print_indicator() {
     get_cam_stat
+    local app_ln=""
     if [ "$STATE" = "ON" ]; then
-        APP_LINE="${APP_NAME} (PID: ${CAM_PID})"
+        app_ln="${APP_NAME} (PID: ${CAM_PID})"
     elif [ "$STATE" = "ACCESS" ]; then
-        APP_LINE="${APP_NAME}"
-    else
-        APP_LINE=""
+        app_ln="${APP_NAME}"
     fi
-    TOOLTIP_TXT=$(cat << EOF
+    local tooltip_txt
+    tooltip_txt=$(cat << EOF
 cam.sh
 --ic-init    = ${IC_INIT}
 --ic-on      = ${IC_ON}
 --ic-standby = ${IC_STB}
 --ic-none    = ${IC_NONE}
 click to open cam.sh
-${APP_LINE}
+${app_ln}
 EOF
     )
     case "$STATE" in
@@ -76,7 +81,16 @@ EOF
         ACCESS) echo "${PREF}CAM=${IC_INIT}${SUFF}" ;;
         ON)     echo "${PREF}CAM=${IC_ON}${SUFF}" ;;
     esac
-    printf "%s" "$TOOLTIP_TXT" 1>&2
+    printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+}
+
+if $IS_INDICATOR; then
+    print_indicator
+    inotifywait -m -q -e open,close,create,delete --format '%f' /dev 2>/dev/null | while read -r file; do
+        if [ "$file" = "video0" ]; then
+            print_indicator
+        fi
+    done
     exit 0
 fi
 
@@ -117,7 +131,7 @@ while true; do
             ;;
     esac
     echo "$TOGGLE_TXT"
-    echo "0) Exit"
+    echo "q) Exit"
     echo -n "Select choice: "
     read -n 1 CHOICE
     case "$CHOICE" in
@@ -139,7 +153,7 @@ while true; do
             fi
             read -rsp "Press any key to continue..." -n 1
             ;;
-        0)
+        [qQ])
             echo ""
             exit 0
             ;;
