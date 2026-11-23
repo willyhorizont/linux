@@ -11,7 +11,7 @@ WINDOW_LIST=$(wmctrl -l -x -G 2>/dev/null)
 
 while read -r WID; do
     [ -z "$WID" ] && continue
-    WID_HEX=$(printf "0x%08llx" "$WID" 2>/dev/null || printf "0x%08x" "$WID")
+    WID_HEX=$(printf "0x%08llx" "$WID" 2>/dev/null || printf "0x%08x" "$WID" 2>/dev/null)
     if [ -n "$WINDOW_LIST" ] && echo "$WINDOW_LIST" | grep -q "^$WID_HEX"; then
         continue
     fi

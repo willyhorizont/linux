@@ -19,7 +19,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # cur_wrkspc=$(wmctrl -d | awk '{if ($2 == "*") print $1}')
-cur_wrkspc=$(xdotool get_desktop)
+cur_wrkspc=$(xdotool get_desktop 2>/dev/null)
 WIDS=$("$HOME/willyhorizont.github.io/linux/get-open-wins.sh" | awk -v ws="$cur_wrkspc" '$2 == ws {print $1}')
 
 WID_ARRAY=($WIDS)

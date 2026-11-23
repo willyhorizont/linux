@@ -31,7 +31,7 @@ if [ -z "$wid" ] || [ "$wid" == "0" ] || [ "$wid" == "0x0" ]; then
     exit 0
 fi
 
-wid_hex=$(printf "0x%08llx" "$wid" 2>/dev/null || printf "0x%08x" "$wid")
+wid_hex=$(printf "0x%08llx" "$wid" 2>/dev/null || printf "0x%08x" "$wid" 2>/dev/null)
 
 cur_geom=$("$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk -v id="$wid_hex" '$1 == id {print $3,$4,$5,$6}')
 

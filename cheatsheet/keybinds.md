@@ -128,7 +128,7 @@ $meta+$tab
 # Mac
 $control+$up
 ```
-`
+
 ## kill focused window
 ```
 # Windows
@@ -137,4 +137,16 @@ $meta+F4
 $super+q
 # Linux
 $super+$shift+q
+```
+
+## open power menu
+```
+# Windows
+$control+$meta+$delete
+$control+$super+$delete
+# Mac
+# Linux
+$control+$meta+$delete
+$control+$super+$delete
+$super+$shift+e
 ```

@@ -44,13 +44,12 @@ EOF
     printf "\e[2J%s\n" "$tooltip_txt" 1>&2
 }
 
-if $IS_INDICATOR; then
-    print_mic_stat
-    pactl subscribe 2>/dev/null | grep --line-buffered "source" | while read -r _; do
-        print_mic_stat
-    done
+if ! $IS_INDICATOR; then
+    alsamixer --view=capture
     exit 0
 fi
 
-alsamixer --view=capture
-exit 0
+print_mic_stat
+pactl subscribe 2>/dev/null | grep --line-buffered "source" | while read -r _; do
+    print_mic_stat
+done

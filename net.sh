@@ -91,13 +91,12 @@ EOF
     fi
 }
 
-if $IS_INDICATOR; then
-    print_indicator
-    nmcli monitor | while read -r _; do
-        print_indicator
-    done
+if ! $IS_INDICATOR; then
+    nmtui
     exit 0
 fi
 
-nmtui
-exit 0
+print_indicator
+nmcli monitor | while read -r _; do
+    print_indicator
+done

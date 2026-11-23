@@ -12,7 +12,7 @@ WM_NAME=$(xdotool getwindowname "$CUR_ACTV_WIN_ID_HEX" 2>/dev/null)
 if [ "$WM_CLASS" = "." ] || [ -z "$WM_CLASS" ]; then
     WM_CLASS="N/A"
 fi
-if ! [ "$WM_CLASS" = "N/A" ] || [ -z "$WM_NAME" ]; then
+if [ "$WM_CLASS" = "N/A" ] || [ -z "$WM_NAME" ]; then
     WIN_NM="$WM_CLASS"
 elif [ ${#WM_NAME} -gt 43 ]; then
     WIN_NM="$WM_CLASS ${WM_NAME:0:20}...${WM_NAME: -20}"

@@ -48,13 +48,12 @@ EOF
     printf "\e[2J%s\n" "$tooltip_txt" 1>&2
 }
 
-if $IS_INDICATOR; then
-    print_vol_stat
-    pactl subscribe 2>/dev/null | grep --line-buffered "sink" | while read -r _; do
-        print_vol_stat
-    done
+if ! $IS_INDICATOR; then
+    alsamixer --view=playback
     exit 0
 fi
 
-alsamixer --view=playback
-exit 0
+print_vol_stat
+pactl subscribe 2>/dev/null | grep --line-buffered "sink" | while read -r _; do
+    print_vol_stat
+done
