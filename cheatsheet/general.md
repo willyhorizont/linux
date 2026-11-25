@@ -67,3 +67,11 @@ grep "Categories=" /usr/share/applications/*.desktop
 wmctrl -d
 xprop -root _NET_DESKTOP_NAMES
 ```
+
+### List all pid program command
+```
+ps -eo pid,comm,args ww >> "$HOME/Codes/linux-debian-lxde/dev/cmd-out-$(date +%Y-%m-%d-%H%M%S-%3N).txt"
+pgrep -af "." >> "$HOME/Codes/linux-debian-lxde/dev/cmd-out-$(date +%Y-%m-%d-%H%M%S-%3N).txt"
+pstree -ap >> "$HOME/Codes/linux-debian-lxde/dev/cmd-out-$(date +%Y-%m-%d-%H%M%S-%3N).txt"
+procs --only pid,name,command >> "$HOME/Codes/linux-debian-lxde/dev/cmd-out-$(date +%Y-%m-%d-%H%M%S-%3N).txt"
+```

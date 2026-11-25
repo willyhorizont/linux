@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exi
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.9.7" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.10.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,10 +15,19 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-try touch confirm-cmd-and-press-kb.sh;
-try touch exit.sh;
+update bt.sh, add --mode xfce4-panel --genmon-id;
+update cam.sh, add --mode xfce4-panel --genmon-id;
+update mic.sh, add --mode xfce4-panel --genmon-id, refactoring;
+update net.sh, add --mode xfce4-panel --genmon-id, refactoring;
+add numrz-wrkspc.py;
+update powr-indctr.sh, add --mode xfce4-panel --genmon-id, refactoring;
+delete powr-mnu.sh, move it to linux-debian-lxde repo as rofi-powr-mnu.sh;
+update tux-indctr.sh, add --mode xfce4-panel --genmon-id, refactoring;
+update vol.sh, add --mode xfce4-panel --genmon-id, refactoring;
+add List all pid program command to notes;
 
 [working on]
+create windows-control-panel.sh;
 create lock-mgr.sh;
 update SPRM, add --mode xfce4-panel <txt></txt>\n<txtclick></txtclick>\n<tool></tool>;
 update SuckMyClock, add --mode xfce4-panel <txt></txt>\n<txtclick></txtclick>\n<tool></tool>;

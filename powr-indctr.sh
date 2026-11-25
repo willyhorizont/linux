@@ -1,5 +1,15 @@
 #!/bin/bash
 
+CMD_CLICK="lxterminal --geometry=88x28 --working-directory=$HOME -e $HOME/willyhorizont.github.io/linux/powr-mgr.sh"
+
+declare -A ALL_MODES
+ALL_MODES=(
+    ["tint2"]="tint2"
+    ["xfce4-panel"]="xfce4-panel"
+)
+
+MODE="${ALL_MODES["tint2"]}"
+GENMON_ID=""
 IC_INIT="⏳"
 BAT_ON_HI="🔋"
 BAT_ON_LO="🪫"
@@ -16,8 +26,17 @@ HAS_BAT_HI=false
 HAS_BAT_LO=false
 HAS_BAT_ON=false
 
+STATE_NOTIFIED_DIR="/tmp/low-bat-notified.lock"
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
+        --mode)
+            if [[ -n "$2" && -n "${ALL_MODES["$2"]}" ]]; then
+                MODE="${ALL_MODES["$2"]}"
+            fi
+            shift 2
+            ;;
+        --genmon-id)  GENMON_ID="$2";                    shift 2 ;;
         --ic-init)    IC_INIT="$2";                      shift 2 ;;
         --bat-on-hi)  BAT_ON_HI="$2";  HAS_BAT_HI=true;  shift 2 ;;
         --bat-on-lo)  BAT_ON_LO="$2";  HAS_BAT_LO=true;  shift 2 ;;
@@ -32,8 +51,6 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-IS_NOTIFIED=false
-
 get_bat_icon() {
     local cap="$1"
     if $HAS_BAT_HI && $HAS_BAT_LO; then
@@ -45,28 +62,9 @@ get_bat_icon() {
     fi
 }
 
-print_status() {
-    local scrn_brghtnss
-    scrn_brghtnss=$("$HOME/willyhorizont.github.io/linux/scrn-brghtnss-mgr.sh" --print)
-    
-    local tooltip_txt
-    tooltip_txt=$(cat << EOF
-powr-indctr.sh
-Screen Brightness : [ ☀️ ${scrn_brghtnss}% ]
---ic-init   = ${IC_INIT}      
---bat-on-hi = ${BAT_ON_HI}    
---bat-on-lo = ${BAT_ON_LO}    
---bat-on    = ${BAT_ON}       
---bat-none  = ${BAT_NONE}     
---ac-on     = ${AC_ON}        
---ac-none   = ${AC_NONE}      
-click to open powr-mgr.sh
-EOF
-)
-
+get_powr_stat() {
     if [ ! -d /sys/class/power_supply ] || [ -z "$(ls /sys/class/power_supply/ | grep -E '^BAT|^battery')" ]; then
-        echo "${PREF}BAT=${BAT_NONE}   0%${SEP}AC=${AC_ON}${SUFF}"
-        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+        OUT_TXT="${PREF}BAT=${BAT_NONE}   0%${SEP}AC=${AC_ON}${SUFF}"
         return 0
     fi
 
@@ -103,8 +101,6 @@ EOF
     local cap=0
     if [ "$tot_full" -gt 0 ]; then
         cap=$(( tot_charge * 100 / tot_full ))
-    else
-        cap=0
     fi
 
     local cap_pad
@@ -114,29 +110,68 @@ EOF
     [ -f /sys/class/power_supply/AC/online ] && ac_online=$(cat /sys/class/power_supply/AC/online)
 
     if $is_charging || [ "$ac_online" = "1" ]; then
-        IS_NOTIFIED=false
-        echo "${PREF}BAT=${BAT_ON} ${cap_pad}%${SEP}AC=${AC_ON}${SUFF}"
-        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
-    else
-        if [ "$ac_online" = "0" ]; then
-            local sel_bat_on
-            sel_bat_on=$(get_bat_icon "$cap")
-            if [ "$cap" -lt 40 ] && ! $IS_NOTIFIED; then
-                notify-send "⚠️ Low BAT"
-                IS_NOTIFIED=true
-            fi
-            echo "${PREF}BAT=${sel_bat_on} ${cap_pad}%${SEP}AC=${AC_NONE}${SUFF}"
-            printf "\e[2J%s\n" "$tooltip_txt" 1>&2
-        else
-            echo "${PREF}BAT=${IC_INIT} ${cap_pad}%${SEP}AC=${IC_INIT}${SUFF}"
-            printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+        rmdir "$STATE_NOTIFIED_DIR" 2>/dev/null
+        OUT_TXT="${PREF}BAT=${BAT_ON} ${cap_pad}%${SEP}AC=${AC_ON}${SUFF}"
+    elif [ "$ac_online" = "0" ]; then
+        local sel_bat_on
+        sel_bat_on=$(get_bat_icon "$cap")
+        if [ "$cap" -lt 40 ] && mkdir "$STATE_NOTIFIED_DIR" 2>/dev/null; then
+            notify-send "⚠️ Low BAT"
         fi
+        OUT_TXT="${PREF}BAT=${sel_bat_on} ${cap_pad}%${SEP}AC=${AC_NONE}${SUFF}"
+    else
+        OUT_TXT="${PREF}BAT=${IC_INIT} ${cap_pad}%${SEP}AC=${IC_INIT}${SUFF}"
     fi
 }
 
-print_status
-udevadm monitor --udev --subsystem-match=power_supply --subsystem-match=backlight | while read -r ln; do
+print_indicator() {
+    local scrn_brghtnss
+    scrn_brghtnss=$("$HOME/willyhorizont.github.io/linux/scrn-brghtnss-mgr.sh" --print)
+
+    get_powr_stat
+
+    local tooltip_txt
+    tooltip_txt=$(cat << EOF
+powr-indctr.sh
+Screen Brightness : [ ☀️ ${scrn_brghtnss}% ]
+--ic-init   = ${IC_INIT}
+--bat-on-hi = ${BAT_ON_HI}
+--bat-on-lo = ${BAT_ON_LO}
+--bat-on    = ${BAT_ON}
+--bat-none  = ${BAT_NONE}
+--ac-on     = ${AC_ON}
+--ac-none   = ${AC_NONE}
+click to open powr-mgr.sh
+EOF
+    )
+
+    if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
+        echo "<txt>${OUT_TXT}</txt>"
+        echo "<txtclick>$CMD_CLICK</txtclick>"
+        echo "<tool>$tooltip_txt</tool>"
+    else
+        echo "${OUT_TXT}"
+        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+    fi
+}
+
+print_indicator
+
+if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
+    [ -z "$GENMON_ID" ] && exit 0
+    pgrep -f ".*udevadm monitor --udev --subsystem-match=power_supply --subsystem-match=backlight.*xfce4-panel.*--plugin-event.*:refresh:bool:true.*" >/dev/null && exit 0
+    bash -c '
+        udevadm monitor --udev --subsystem-match=power_supply --subsystem-match=backlight 2>/dev/null | while read -r ln; do
+            if [[ "$ln" == *"UDEV"* ]]; then
+                xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+            fi
+        done
+    ' _ "$GENMON_ID" >/dev/null 2>&1 &
+    exit 0
+fi
+
+udevadm monitor --udev --subsystem-match=power_supply --subsystem-match=backlight 2>/dev/null | while read -r ln; do
     if [[ "$ln" == *"UDEV"* ]]; then
-        print_status
+        print_indicator
     fi
 done

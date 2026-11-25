@@ -25,6 +25,7 @@ fi
 (
     xprop -root -spy _NET_CLIENT_LIST &
     xprop -root -spy _NET_CURRENT_DESKTOP &
+    xprop -root -spy _NET_NUMBER_OF_DESKTOPS &
     wait
 ) | while read -r line; do
     xdotool key "$kb"

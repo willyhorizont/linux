@@ -4,7 +4,7 @@
 ```sudo apt update && sudo apt upgrade -y && sudo apt autoremove --purge```
 
 ## Install a new package
-```sudo apt install -y <package>```
+```sudo apt install -y --no-install-recommends <package>```
 
 ## Remove a package and remove its config
 ```sudo apt purge -y <package> && sudo apt autoremove --purge```
@@ -64,7 +64,8 @@ sudo tune2fs -l $(findmnt -no SOURCE /) | grep "Filesystem created"
 ## apt install history log
 ```
 # Up to 12 months (Depends on logrotate, searches active + compressed logs)
-zgrep "Commandline: apt" /var/log/apt/history.log*
+zgrep -B 1 -A 2 "Commandline: apt" /var/log/apt/history.log*
+ls -rt /var/log/apt/history.log* | xargs zgrep -B 1 -A 2 "Commandline: apt"
 
 # Dpkg deployment log (Usually limited to around 12 weeks/rotations)
 grep " install " /var/log/dpkg.log

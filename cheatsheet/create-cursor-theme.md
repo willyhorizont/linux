@@ -1,4 +1,4 @@
-sudo apt install -y xcur2png
+sudo apt install -y --no-install-recommends xcur2png
 
 xcur2png left_ptr
 

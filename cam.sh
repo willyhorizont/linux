@@ -5,7 +5,17 @@ if ! command -v inotifywait >/dev/null 2>&1; then
     exit 1
 fi
 
+CMD_CLICK="lxterminal --geometry=88x28 --working-directory=$HOME -e $HOME/willyhorizont.github.io/linux/cam.sh"
+
+declare -A ALL_MODES
+ALL_MODES=(
+    ["tint2"]="tint2"
+    ["xfce4-panel"]="xfce4-panel"
+)
+
 IS_INDICATOR=false
+MODE="${ALL_MODES["tint2"]}"
+GENMON_ID=""
 IC_INIT="⏳"
 IC_ON="👁️"
 IC_STB="⚠️"
@@ -19,6 +29,13 @@ STATUS_FILE="/sys/class/video4linux/video0/device/power/runtime_status"
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --indicator)   IS_INDICATOR=true; shift ;;
+        --mode)
+            if [[ -n "$2" && -n "${ALL_MODES["$2"]}" ]]; then
+                MODE="${ALL_MODES["$2"]}"
+            fi
+            shift 2
+            ;;
+        --genmon-id)   GENMON_ID="$2";    shift 2 ;;
         --ic-init)     IC_INIT="$2";      shift 2 ;;
         --ic-on)       IC_ON="$2";        shift 2 ;;
         --ic-standby)  IC_STB="$2";       shift 2 ;;
@@ -74,18 +91,42 @@ click to open cam.sh
 ${app_ln}
 EOF
     )
-    case "$STATE" in
-        NONE)   echo "${PREF}CAM=${IC_NONE}${SUFF}" ;;
-        STB)    echo "${PREF}CAM=${IC_STB}${SUFF}" ;;
-        INIT)   echo "${PREF}CAM=${IC_INIT}${SUFF}" ;;
-        ACCESS) echo "${PREF}CAM=${IC_INIT}${SUFF}" ;;
-        ON)     echo "${PREF}CAM=${IC_ON}${SUFF}" ;;
-    esac
-    printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+    if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
+        case "$STATE" in
+            NONE)   echo "<txt>${PREF}CAM=${IC_NONE}${SUFF}</txt>" ;;
+            STB)    echo "<txt>${PREF}CAM=${IC_STB}${SUFF}</txt>" ;;
+            INIT)   echo "<txt>${PREF}CAM=${IC_INIT}${SUFF}</txt>" ;;
+            ACCESS) echo "<txt>${PREF}CAM=${IC_INIT}${SUFF}</txt>" ;;
+            ON)     echo "<txt>${PREF}CAM=${IC_ON}${SUFF}</txt>" ;;
+        esac
+        echo "<txtclick>$CMD_CLICK</txtclick>"
+        echo "<tool>$tooltip_txt</tool>"
+    else
+        case "$STATE" in
+            NONE)   echo "${PREF}CAM=${IC_NONE}${SUFF}" ;;
+            STB)    echo "${PREF}CAM=${IC_STB}${SUFF}" ;;
+            INIT)   echo "${PREF}CAM=${IC_INIT}${SUFF}" ;;
+            ACCESS) echo "${PREF}CAM=${IC_INIT}${SUFF}" ;;
+            ON)     echo "${PREF}CAM=${IC_ON}${SUFF}" ;;
+        esac
+        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+    fi
 }
 
 if $IS_INDICATOR; then
     print_indicator
+    if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
+        [ -z "$GENMON_ID" ] && exit 0
+        pgrep -f ".*inotifywait.*xfce4-panel.*--plugin-event.*:refresh:bool:true.*" >/dev/null && exit 0
+        bash -c '
+            inotifywait -m -q -e open,close,create,delete --format "%f" /dev 2>/dev/null | while read -r file; do
+                if [ "$file" = "video0" ]; then
+                    xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+                fi
+            done
+        ' _ "$GENMON_ID" >/dev/null 2>&1 &
+        exit 0
+    fi
     inotifywait -m -q -e open,close,create,delete --format '%f' /dev 2>/dev/null | while read -r file; do
         if [ "$file" = "video0" ]; then
             print_indicator

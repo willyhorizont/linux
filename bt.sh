@@ -1,6 +1,16 @@
 #!/bin/bash
 
+CMD_CLICK="lxterminal --geometry=88x28 --working-directory=$HOME -e $HOME/willyhorizont.github.io/linux/bt.sh"
+
+declare -A ALL_MODES
+ALL_MODES=(
+    ["tint2"]="tint2"
+    ["xfce4-panel"]="xfce4-panel"
+)
+
 IS_INDICATOR=false
+MODE="${ALL_MODES["tint2"]}"
+GENMON_ID=""
 IC_INIT="⏳"
 IC_ON="🔵"
 IC_OFF="🚫"
@@ -12,6 +22,13 @@ SUFF=" "
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --indicator)   IS_INDICATOR=true; shift ;;
+        --mode)
+            if [[ -n "$2" && -n "${ALL_MODES["$2"]}" ]]; then
+                MODE="${ALL_MODES["$2"]}"
+            fi
+            shift 2
+            ;;
+        --genmon-id)   GENMON_ID="$2";    shift 2 ;;
         --ic-init)     IC_INIT="$2";      shift 2 ;;
         --ic-on)       IC_ON="$2";        shift 2 ;;
         --ic-off)      IC_OFF="$2";       shift 2 ;;
@@ -61,18 +78,41 @@ click to open bt.sh
 ${dvc_nm}
 EOF
     )
-    case "$STATE" in
-        NONE) echo "${PREF}BT=${IC_NONE}${SUFF}" ;;
-        OFF)  echo "${PREF}BT=${IC_OFF}${SUFF}" ;;
-        INIT) echo "${PREF}BT=${IC_INIT}${SUFF}" ;;
-        ON)   echo "${PREF}BT=${IC_ON}${SUFF}" ;;
-    esac
-    printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+    if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
+        case "$STATE" in
+            NONE) echo "<txt>${PREF}BT=${IC_NONE}${SUFF}</txt>" ;;
+            OFF)  echo "<txt>${PREF}BT=${IC_OFF}${SUFF}</txt>" ;;
+            INIT) echo "<txt>${PREF}BT=${IC_INIT}${SUFF}</txt>" ;;
+            ON)   echo "<txt>${PREF}BT=${IC_ON}${SUFF}</txt>" ;;
+        esac
+        echo "<txtclick>$CMD_CLICK</txtclick>"
+        echo "<tool>$tooltip_txt</tool>"
+    else
+        case "$STATE" in
+            NONE) echo "${PREF}BT=${IC_NONE}${SUFF}" ;;
+            OFF)  echo "${PREF}BT=${IC_OFF}${SUFF}" ;;
+            INIT) echo "${PREF}BT=${IC_INIT}${SUFF}" ;;
+            ON)   echo "${PREF}BT=${IC_ON}${SUFF}" ;;
+        esac
+        printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+    fi
 }
 
 if $IS_INDICATOR; then
     print_indicator
-    dbus-monitor --system "sender='org.bluez'" 2>/dev/null | while read -r ln; do
+    if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
+        [ -z "$GENMON_ID" ] && exit 0
+        pgrep -f ".*dbus-monitor.*bluez.*xfce4-panel.*--plugin-event.*:refresh:bool:true.*" >/dev/null && exit 0
+        bash -c '
+            dbus-monitor --system "sender=org.bluez" 2>/dev/null | while read -r ln; do
+                if [[ "$ln" == *"PropertiesChanged"* || "$ln" == *"InterfacesAdded"* || "$ln" == *"InterfacesRemoved"* ]]; then
+                    xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+                fi
+            done
+        ' _ "$GENMON_ID" >/dev/null 2>&1 &
+        exit 0
+    fi
+    dbus-monitor --system "sender=org.bluez" 2>/dev/null | while read -r ln; do
         if [[ "$ln" == *"PropertiesChanged"* || "$ln" == *"InterfacesAdded"* || "$ln" == *"InterfacesRemoved"* ]]; then
             print_indicator
         fi

@@ -2,10 +2,10 @@
 
 ## Widget Style theme
 ```
-sudo apt install yaru-theme-gtk
+sudo apt install -y --no-install-recommends yaru-theme-gtk
 ```
 
 ## Window Border theme
 ```
-sudo apt install greybird-gtk-theme -y
+sudo apt install -y --no-install-recommends greybird-gtk-theme
 ```

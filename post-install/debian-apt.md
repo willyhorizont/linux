@@ -14,7 +14,7 @@ sudo apt update && sudo apt upgrade -y && sudo apt autoremove --purge
 
 3. Install Github
 ```
-sudo apt install git -y
+sudo apt install -y --no-install-recommends git
 git config --global init.defaultBranch main
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
@@ -22,6 +22,6 @@ git config --global user.name "Your Name"
 
 3. Github login
 ```
-sudo apt install gh -y
+sudo apt install -y --no-install-recommends gh
 gh auth login
 ```

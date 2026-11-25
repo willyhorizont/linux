@@ -120,7 +120,7 @@ Debian LXDE | jwm tint2 plank jgmenu                                            
 Debian LXDE | icewm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |
 Debian LXDE | fluxbox tint2 plank jgmenu                                                                                | lxpanel openbox | no             |
 Debian LXDE | pekwm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |
-Debian LXDE | openbox xfce4-panel xfce4-whiskermenu-plugin xfce4-docklike-plugin                                        | lxpanel         | yes            |
+Debian LXDE | openbox xfce4-panel xfce4-whiskermenu-plugin xfce4-docklike-plugin xfce4-genmon-plugin                    | lxpanel         | yes            |
 <!-- tiling -->
 Debian LXDE | i3wm tint2 plank jgmenu                                                                                   | lxpanel openbox | no             |
 Debian LXDE | bspwm tint2 plank jgmenu                                                                                  | lxpanel openbox | no             |

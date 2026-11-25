@@ -12,7 +12,7 @@ sudo dnf system-upgrade reboot
 ### LMDE 7 Cinnamon ➡️ LMDE 8 Cinnamon
 ```
 sudo apt update && sudo apt full-upgrade -y
-sudo apt install mintupgrade -y
+sudo apt install -y --no-install-recommends mintupgrade
 sudo mintupgrade
 ```
 
