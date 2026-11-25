@@ -160,13 +160,15 @@ print_indicator
 if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
     [ -z "$GENMON_ID" ] && exit 0
     pgrep -f ".*udevadm monitor --udev --subsystem-match=power_supply --subsystem-match=backlight.*xfce4-panel.*--plugin-event.*:refresh:bool:true.*" >/dev/null && exit 0
-    bash -c '
+    setsid -f bash -c '
         udevadm monitor --udev --subsystem-match=power_supply --subsystem-match=backlight 2>/dev/null | while read -r ln; do
-            if [[ "$ln" == *"UDEV"* ]]; then
-                xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+            if pgrep -x "xfce4-panel" >/dev/null; then
+                if [[ "$ln" == *"UDEV"* ]]; then
+                    xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+                fi
             fi
         done
-    ' _ "$GENMON_ID" >/dev/null 2>&1 &
+    ' _ "$GENMON_ID" >/dev/null 2>&1
     exit 0
 fi
 

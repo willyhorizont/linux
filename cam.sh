@@ -118,13 +118,15 @@ if $IS_INDICATOR; then
     if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
         [ -z "$GENMON_ID" ] && exit 0
         pgrep -f ".*inotifywait.*xfce4-panel.*--plugin-event.*:refresh:bool:true.*" >/dev/null && exit 0
-        bash -c '
+        setsid -f bash -c '
             inotifywait -m -q -e open,close,create,delete --format "%f" /dev 2>/dev/null | while read -r file; do
-                if [ "$file" = "video0" ]; then
-                    xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+                if pgrep -x "xfce4-panel" >/dev/null; then
+                    if [ "$file" = "video0" ]; then
+                        xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+                    fi
                 fi
             done
-        ' _ "$GENMON_ID" >/dev/null 2>&1 &
+        ' _ "$GENMON_ID" >/dev/null 2>&1
         exit 0
     fi
     inotifywait -m -q -e open,close,create,delete --format '%f' /dev 2>/dev/null | while read -r file; do

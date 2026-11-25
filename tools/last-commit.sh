@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exi
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.10.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.10.1" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,16 +15,13 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-update bt.sh, add --mode xfce4-panel --genmon-id;
-update cam.sh, add --mode xfce4-panel --genmon-id;
-update mic.sh, add --mode xfce4-panel --genmon-id, refactoring;
-update net.sh, add --mode xfce4-panel --genmon-id, refactoring;
-add numrz-wrkspc.py;
-update powr-indctr.sh, add --mode xfce4-panel --genmon-id, refactoring;
-delete powr-mnu.sh, move it to linux-debian-lxde repo as rofi-powr-mnu.sh;
-update tux-indctr.sh, add --mode xfce4-panel --genmon-id, refactoring;
-update vol.sh, add --mode xfce4-panel --genmon-id, refactoring;
-add List all pid program command to notes;
+update bt.sh, add check if xfce4-panel running;
+update cam.sh, add check if xfce4-panel running;
+update mic.sh, add check if xfce4-panel running;
+update net.sh, add check if xfce4-panel running;
+update powr-indctr.sh, add check if xfce4-panel running;
+update tux-indctr.sh, add check if xfce4-panel running;
+update vol.sh, add check if xfce4-panel running;
 
 [working on]
 create windows-control-panel.sh;

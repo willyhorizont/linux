@@ -82,11 +82,13 @@ if $IS_INDICATOR; then
     if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
         [ -z "$GENMON_ID" ] && exit 0
         pgrep -f ".*pactl subscribe.*source.*xfce4-panel.*--plugin-event.*:refresh:bool:true.*" >/dev/null && exit 0
-        bash -c '
+        setsid -f bash -c '
             pactl subscribe 2>/dev/null | grep --line-buffered "source" | while read -r _; do
-                xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+                if pgrep -x "xfce4-panel" >/dev/null; then
+                    xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
+                fi
             done
-        ' _ "$GENMON_ID" >/dev/null 2>&1 &
+        ' _ "$GENMON_ID" >/dev/null 2>&1
         exit 0
     fi
     pactl subscribe 2>/dev/null | grep --line-buffered "source" | while read -r _; do
