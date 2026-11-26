@@ -32,27 +32,28 @@ function fmt(bytesps, out_arr,    units, i, v, num_str, split_arr, f_p, b_p) {
 }
 
 BEGIN {
-    pref = " "
-    suff = " "
+    CMD_CLICK = "lxterminal --geometry=88x28 --working-directory=$HOME -e btop"
+    mode = "tint2"
+    pref = "["
+    suff = "]"
     sep = " | "
     use_pango = 0
     
     for (i = 1; i < ARGC; i++) {
-        if (ARGV[i] == "--pref") {
-            pref = ARGV[i+1]
-            delete ARGV[i]
-            delete ARGV[i+1]
-            i++
+        if (ARGV[i] == "--mode") {
+            if (ARGV[i+1] == "tint2" || ARGV[i+1] == "xfce4-panel") {
+                mode = ARGV[i+1]
+            }
+            delete ARGV[i]; delete ARGV[i+1]; i++
+        } else if (ARGV[i] == "--pref") {
+            if (i + 1 < ARGC) pref = ARGV[i+1]
+            delete ARGV[i]; delete ARGV[i+1]; i++
         } else if (ARGV[i] == "--suff") {
-            suff = ARGV[i+1]
-            delete ARGV[i]
-            delete ARGV[i+1]
-            i++
+            if (i + 1 < ARGC) suff = ARGV[i+1]
+            delete ARGV[i]; delete ARGV[i+1]; i++
         } else if (ARGV[i] == "--sep") {
-            sep = ARGV[i+1]
-            delete ARGV[i]
-            delete ARGV[i+1]
-            i++
+            if (i + 1 < ARGC) sep = ARGV[i+1]
+            delete ARGV[i]; delete ARGV[i+1]; i++
         } else if (ARGV[i] == "--pango") {
             use_pango = 1
             delete ARGV[i]
@@ -194,7 +195,7 @@ BEGIN {
     }
     close(CACHE_FILE)
     
-    time_d = has_time ? (now_time - old_time) : (now_time - (now_time - 2.0))
+    time_d = has_time ? (now_time - old_time) : 2.0
     if (time_d <= 0) time_d = 2.0
     
     old_idle = old_cpu[4] + old_cpu[5]
@@ -228,13 +229,11 @@ BEGIN {
     d_free_str = sprintf("%.2f", d_free_GB)
     d_tot_str = sprintf("%.2f", d_tot_GB)
     
-    out_t = (temp_str == "9999") ? "9999" : temp_str
-    
-    keys[1] = "T "; vals[1] = out_t;                     units[1] = "°C"
-    keys[2] = "C "; vals[2] = cpu_fmt;                   units[2] = "%"
-    keys[3] = "G "; vals[3] = gpu_fmt;                   units[3] = "%"
-    keys[4] = "M "; vals[4] = ram_used_str "/" ram_tot_str; units[4] = "GB"
-    keys[5] = "D "; vals[5] = d_free_str "/" d_tot_str;   units[5] = "GB"
+    keys[1] = "T "; vals[1] = temp_str;                      units[1] = "°C"
+    keys[2] = "C "; vals[2] = cpu_fmt;                       units[2] = "%"
+    keys[3] = "G "; vals[3] = gpu_fmt;                       units[3] = "%"
+    keys[4] = "M "; vals[4] = ram_used_str "/" ram_tot_str;  units[4] = "GB"
+    keys[5] = "D "; vals[5] = d_free_str "/" d_tot_str;      units[5] = "GB"
     
     fmt(r_rt, r_arr); vals[6] = r_arr["val"]; units[6] = r_arr["unit"]; keys[6] = "R "
     fmt(w_rt, w_arr); vals[7] = w_arr["val"]; units[7] = w_arr["unit"]; keys[7] = "W "
@@ -243,7 +242,7 @@ BEGIN {
 
     out_string = ""
     if (use_pango) {
-        if (pref != "") out_string = out_string "<span background='#000000' foreground='#00ADD8'>" pref "</span>"
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" pref "</span>"
         for (i = 1; i <= 9; i++) {
             out_string = out_string "<span background='#000000' foreground='#FF1493'>" keys[i] "</span>"
             out_string = out_string "<span background='#000000' foreground='#CCFF00'>" vals[i] "</span>"
@@ -252,7 +251,7 @@ BEGIN {
                 out_string = out_string "<span background='#000000' foreground='#00ADD8'>" sep "</span>"
             }
         }
-        if (suff != "") out_string = out_string "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
     } else {
         out_string = out_string pref
         for (i = 1; i <= 9; i++) {
@@ -264,17 +263,24 @@ BEGIN {
         out_string = out_string suff
     }
     
-    print out_string
-    
-    print "SPRM (Suckless Panel Resource Monitor) Awk version\n" \
-          "T = Temperature\n" \
-          "C = Total CPU Usage\n" \
-          "G = Total GPU Usage\n" \
-          "M = Total Memory Usage\n" \
-          "D = Total Disk Usage\n" \
-          "R = Total Disk Read\n" \
-          "W = Total Disk Write\n" \
-          "▼ = Average Download Rate\n" \
-          "▲ = Average Upload Rate\n" \
-          "click to open btop" > "/dev/stderr"
+    tooltip_txt = "SPRM (Suckless Panel Resource Monitor) Awk version\n" \
+                  "T = Temperature\n" \
+                  "C = Total CPU Usage\n" \
+                  "G = Total GPU Usage\n" \
+                  "M = Total Memory Usage\n" \
+                  "D = Total Disk Usage\n" \
+                  "R = Total Disk Read\n" \
+                  "W = Total Disk Write\n" \
+                  "▼ = Average Download Rate\n" \
+                  "▲ = Average Upload Rate\n" \
+                  "click to open btop\n"
+
+    if (mode == "xfce4-panel") {
+        print "<txt>" out_string "</txt>"
+        print "<txtclick>" CMD_CLICK "</txtclick>"
+        print "<tool>" tooltip_txt "</tool>"
+    } else {
+        print out_string
+        printf "\x1b[2J%s", tooltip_txt > "/dev/stderr"
+    }
 }

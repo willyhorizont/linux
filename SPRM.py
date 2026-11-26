@@ -7,6 +7,7 @@ import json
 import re
 
 CACHE_FILE = "/tmp/sprm-cache-py.json"
+CMD_CLICK = "lxterminal --geometry=88x28 --working-directory=$HOME -e btop"
 
 
 def get_active_net_interf():
@@ -22,7 +23,7 @@ def get_active_net_interf():
                         if parts[1] == "00000000" and parts[0] != "lo":
                             net_interf = parts[0]
                             break
-        except:
+        except Exception:
             pass
 
     if net_interf == "lo" and os.path.exists("/proc/net/dev"):
@@ -34,7 +35,7 @@ def get_active_net_interf():
                         if not re.compile(r"^(lo|sit|docker|veth|br-|virbr)").match(candidate):
                             net_interf = candidate
                             break
-        except:
+        except Exception:
             pass
             
     return net_interf
@@ -78,33 +79,36 @@ def get_system_data():
                     if t > 0:
                         temp_val = t / 1000.0
                         break
-            except:
+            except Exception:
                 pass
 
+    parts = [0, 0, 0, 0, 0, 0, 0]
     try:
         with open("/proc/stat", "r") as f:
             for ln in f:
                 if ln.startswith("cpu "):
                     parts = [int(x) for x in ln.split()[1:8]]
                     break
-    except:
-        parts = [0, 0, 0, 0, 0, 0, 0]
+    except Exception:
+        pass
 
     gpu_val = 0.0
-    if os.path.exists("/sys/class/drm/card0/device/gpu_busy_percent"): # AMD
+    # AMD
+    if os.path.exists("/sys/class/drm/card0/device/gpu_busy_percent"):
         try:
             with open("/sys/class/drm/card0/device/gpu_busy_percent", "r") as f:
                 gpu_val = float(f.read().strip())
-        except:
+        except Exception:
             pass
-    elif os.path.exists("/sys/class/drm/card0/gt_act_freq_mhz") and os.path.exists("/sys/class/drm/card0/gt_max_freq_mhz"): # Intel
+    # Intel
+    elif os.path.exists("/sys/class/drm/card0/gt_act_freq_mhz") and os.path.exists("/sys/class/drm/card0/gt_max_freq_mhz"):
         try:
             with open("/sys/class/drm/card0/gt_act_freq_mhz", "r") as f:
                 act = float(f.read().strip())
             with open("/sys/class/drm/card0/gt_max_freq_mhz", "r") as f:
                 max_f = float(f.read().strip())
             gpu_val = (act / max_f) * 100.0 if max_f > 0 else 0.0
-        except:
+        except Exception:
             pass
 
     try:
@@ -117,7 +121,7 @@ def get_system_data():
                     mem_a = int(ln.split()[1])
         ram_used = (mem_t - mem_a) / 1024 / 1024
         ram_tot = mem_t / 1024 / 1024
-    except:
+    except Exception:
         ram_used, ram_tot = 0.0, 0.0
 
     try:
@@ -126,7 +130,7 @@ def get_system_data():
         d_avail = st.f_bavail * st.f_frsize
         d_free_GB = d_avail / 1e9
         d_tot_GB = d_tot / 1e9
-    except:
+    except Exception:
         d_free_GB, d_tot_GB = 0.0, 0.0
 
     try:
@@ -139,7 +143,7 @@ def get_system_data():
                     w_io += int(p[9])
         cur_d_r = r_io * 512
         cur_d_w = w_io * 512
-    except:
+    except Exception:
         cur_d_r, cur_d_w = 0, 0
 
     try:
@@ -147,37 +151,39 @@ def get_system_data():
         with open("/proc/net/dev", "r") as f:
             for ln in f:
                 if net_intrf in ln:
-                    p = ln.split()
-                    if ":" in p[0]:
-                        cur_net_down = int(p[1])
-                        cur_net_up = int(p[9])
-                    else:
-                        cur_net_down = int(p[1])
-                        cur_net_up = int(p[9])
+                    after_colon = ln.split(":", 1)[1]
+                    p = after_colon.split()
+                    cur_net_down = int(p[0])
+                    cur_net_up = int(p[8])
                     break
-    except:
+    except Exception:
         cur_net_down, cur_net_up = 0, 0
 
     return temp_val, parts, gpu_val, ram_used, ram_tot, d_free_GB, d_tot_GB, cur_d_r, cur_d_w, cur_net_down, cur_net_up
 
 
 def main():
-    pref = " "
-    suff = " "
+    mode = "tint2"
+    pref = "["
+    suff = "]"
     sep = " | "
     use_pango = False
 
     args = sys.argv[1:]
     i = 0
     while i < len(args):
-        if args[i] == "--pref" and i + 1 < len(args):
-            pref = args[i+1]
+        if args[i] == "--mode" and i + 1 < len(args):
+            if args[i + 1] in ("tint2", "xfce4-panel"):
+                mode = args[i + 1]
+            i += 2
+        elif args[i] == "--pref" and i + 1 < len(args):
+            pref = args[i + 1]
             i += 2
         elif args[i] == "--suff" and i + 1 < len(args):
-            suff = args[i+1]
+            suff = args[i + 1]
             i += 2
         elif args[i] == "--sep" and i + 1 < len(args):
-            sep = args[i+1]
+            sep = args[i + 1]
             i += 2
         elif args[i] == "--pango":
             use_pango = True
@@ -192,17 +198,16 @@ def main():
         try:
             with open(CACHE_FILE, "r") as f:
                 old = json.load(f)
-        except:
+        except Exception:
             old = {}
     else:
         old = {}
 
-    lst_time = old.get("time", now_time - 2.0)
-    time_d = now_time - lst_time
+    time_d = (now_time - old["time"]) if "time" in old else 2.0
     if time_d <= 0:
         time_d = 2.0
 
-    old_cpu = old.get("cpu", [0,0,0,0,0,0,0])
+    old_cpu = old.get("cpu", [0, 0, 0, 0, 0, 0, 0])
     user, nice, system, idle, iowait, irq, softirq = cpu_parts
     old_idle = old_cpu[3] + old_cpu[4]
     new_idle = idle + iowait
@@ -216,13 +221,12 @@ def main():
     cpu_pcent = 0.0
     if tot_delta > 0:
         cpu_pcent = ((tot_delta - idle_delta) / tot_delta) * 100
-    cpu_str = f"{cpu_pcent:.1f}"
-    cpu_fmt = pad(cpu_str, 5)
+    cpu_fmt = pad(f"{cpu_pcent:.1f}", 5)
 
-    r_rt = (cur_d_r - old.get("d_r", cur_d_r)) / time_d if "d_r" in old else 0
-    w_rt = (cur_d_w - old.get("d_w", cur_d_w)) / time_d if "d_w" in old else 0
-    d_rt = (cur_net_down - old.get("n_d", cur_net_down)) / time_d if "n_d" in old else 0
-    u_rt = (cur_net_up - old.get("n_u", cur_net_up)) / time_d if "n_u" in old else 0
+    r_rt = (cur_d_r - old.get("d_r", cur_d_r)) / time_d if "d_r" in old else 0.0
+    w_rt = (cur_d_w - old.get("d_w", cur_d_w)) / time_d if "d_w" in old else 0.0
+    d_rt = (cur_net_down - old.get("n_d", cur_net_down)) / time_d if "n_d" in old else 0.0
+    u_rt = (cur_net_up - old.get("n_u", cur_net_up)) / time_d if "n_u" in old else 0.0
 
     r_rt = max(0.0, r_rt)
     w_rt = max(0.0, w_rt)
@@ -232,7 +236,7 @@ def main():
     try:
         with open(CACHE_FILE, "w") as f:
             json.dump({"time": now_time, "cpu": cpu_parts, "d_r": cur_d_r, "d_w": cur_d_w, "n_d": cur_net_down, "n_u": cur_net_up}, f)
-    except:
+    except Exception:
         pass
 
     temp_str = "9999" if temp_val >= 100.0 else f"{temp_val:.1f}"
@@ -247,45 +251,28 @@ def main():
     f_d_val, f_d_unit = fmt(d_rt)
     f_u_val, f_u_unit = fmt(u_rt)
 
-    out_t_val = "9999" if temp_str == "9999" else temp_str
-    out_t_unit = "°C"
-    
-    out_r_val = "999999" if "999999" in f_r_val else f_r_val
-    out_r_unit = "GB/s" if "999999" in f_r_val else f_r_unit
-    
-    out_w_val = "999999" if "999999" in f_w_val else f_w_val
-    out_w_unit = "GB/s" if "999999" in f_w_val else f_w_unit
-    
-    out_d_val = "999999" if "999999" in f_d_val else f_d_val
-    out_d_unit = "GB/s" if "999999" in f_d_val else f_d_unit
-    
-    out_u_val = "999999" if "999999" in f_u_val else f_u_val
-    out_u_unit = "GB/s" if "999999" in f_u_val else f_u_unit
-
     blocks = [
-        {"key": "T ", "val": out_t_val, "unit": out_t_unit},
+        {"key": "T ", "val": temp_str, "unit": "°C"},
         {"key": "C ", "val": cpu_fmt, "unit": "%"},
         {"key": "G ", "val": gpu_fmt, "unit": "%"},
         {"key": "M ", "val": f"{ram_used_str}/{ram_tot_str}", "unit": "GB"},
         {"key": "D ", "val": f"{d_free_str}/{d_tot_str}", "unit": "GB"},
-        {"key": "R ", "val": out_r_val, "unit": out_r_unit},
-        {"key": "W ", "val": out_w_val, "unit": out_w_unit},
-        {"key": "▼ ", "val": out_d_val, "unit": out_d_unit},
-        {"key": "▲ ", "val": out_u_val, "unit": out_u_unit}
+        {"key": "R ", "val": f_r_val, "unit": f_r_unit},
+        {"key": "W ", "val": f_w_val, "unit": f_w_unit},
+        {"key": "▼ ", "val": f_d_val, "unit": f_d_unit},
+        {"key": "▲ ", "val": f_u_val, "unit": f_u_unit},
     ]
 
     out_str = ""
     if use_pango:
-        if pref:
-            out_str += f"<span background='#000000' foreground='#00ADD8'>{pref}</span>"
+        out_str += f"<span background='#000000' foreground='#00ADD8'>{pref}</span>"
         for idx, b in enumerate(blocks):
             out_str += f"<span background='#000000' foreground='#FF1493'>{b['key']}</span>"
             out_str += f"<span background='#000000' foreground='#CCFF00'>{b['val']}</span>"
             out_str += f"<span background='#000000' foreground='#FF1493'>{b['unit']}</span>"
             if idx < len(blocks) - 1:
                 out_str += f"<span background='#000000' foreground='#00ADD8'>{sep}</span>"
-        if suff:
-            out_str += f"<span background='#000000' foreground='#00ADD8'>{suff}</span>"
+        out_str += f"<span background='#000000' foreground='#00ADD8'>{suff}</span>"
     else:
         out_str += pref
         for idx, b in enumerate(blocks):
@@ -293,20 +280,28 @@ def main():
             if idx < len(blocks) - 1:
                 out_str += sep
         out_str += suff
-            
-    print(out_str, flush=True)
 
-    print("""SPRM (Suckless Panel Resource Monitor) Python version
-T = Temperature
-C = Total CPU Usage
-G = Total GPU Usage
-M = Total Memory Usage
-D = Total Disk Usage
-R = Total Disk Read
-W = Total Disk Write
-▼ = Average Download Rate
-▲ = Average Upload Rate
-click to open btop""", file=sys.stderr)
+    tooltip_txt = (
+        "SPRM (Suckless Panel Resource Monitor) Python version\n"
+        "T = Temperature\n"
+        "C = Total CPU Usage\n"
+        "G = Total GPU Usage\n"
+        "M = Total Memory Usage\n"
+        "D = Total Disk Usage\n"
+        "R = Total Disk Read\n"
+        "W = Total Disk Write\n"
+        "▼ = Average Download Rate\n"
+        "▲ = Average Upload Rate\n"
+        "click to open btop\n"
+    )
+
+    if mode == "xfce4-panel":
+        print(f"<txt>{out_str}</txt>")
+        print(f"<txtclick>{CMD_CLICK}</txtclick>")
+        print(f"<tool>{tooltip_txt}</tool>")
+    else:
+        print(out_str, flush=True)
+        print(f"\x1b[2J{tooltip_txt}", end="", file=sys.stderr)
 
 
 if __name__ == "__main__":

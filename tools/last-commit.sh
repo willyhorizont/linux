@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exi
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.10.1" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.10.2" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,13 +15,9 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-update bt.sh, add check if xfce4-panel running;
-update cam.sh, add check if xfce4-panel running;
-update mic.sh, add check if xfce4-panel running;
-update net.sh, add check if xfce4-panel running;
-update powr-indctr.sh, add check if xfce4-panel running;
-update tux-indctr.sh, add check if xfce4-panel running;
-update vol.sh, add check if xfce4-panel running;
+update SPRM, add --mode xfce4-panel;
+update SuckMyClock, add --mode xfce4-panel;
+update uptime, add --mode xfce4-panel;
 
 [working on]
 create windows-control-panel.sh;

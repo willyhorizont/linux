@@ -1,19 +1,27 @@
 #!/bin/sh
 
 CACHE_FILE="/tmp/sprm-cache-sh.json"
+CMD_CLICK="lxterminal --geometry=88x28 --working-directory=\$HOME -e btop"
 
-pref=" "
-suff=" "
+mode="tint2"
+pref="["
+suff="]"
 sep=" | "
 use_pango=0
 
 while [ $# -gt 0 ]; do
     case "$1" in
-        --pref) pref="$2"; shift 2 ;;
-        --suff) suff="$2"; shift 2 ;;
-        --sep)  sep="$2";  shift 2 ;;
-        --pango) use_pango=1; shift ;;
-        *) shift ;;
+        --mode)
+            if [ "$2" = "tint2" ] || [ "$2" = "xfce4-panel" ]; then
+                mode="$2"
+            fi
+            shift 2
+            ;;
+        --pref)      pref="$2";      shift 2 ;;
+        --suff)      suff="$2";      shift 2 ;;
+        --sep)       sep="$2";       shift 2 ;;
+        --pango)     use_pango=1;    shift ;;
+        *)                           shift ;;
     esac
 done
 
@@ -120,7 +128,8 @@ fi
 
 BC_EXEC=$(bc <<EOF
 scale=6
-time_d = $now_time - $old_time
+time_d = 2.0
+if ($has_time == 1) time_d = $now_time - $old_time
 if (time_d <= 0) time_d = 2.0
 
 old_idle = $o_idle + $o_io
@@ -228,23 +237,66 @@ k8="▲ "; v8="$u_val";     u8="$u_unit"
 
 out_string=""
 if [ "$use_pango" -eq 1 ]; then
-    [ -n "$pref" ] && out_string="<span background='#000000' foreground='#00ADD8'>$pref</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k0</span><span background='#000000' foreground='#CCFF00'>$v0</span><span background='#000000' foreground='#FF1493'>$u0</span><span background='#000000' foreground='#00ADD8'>$sep</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k1</span><span background='#000000' foreground='#CCFF00'>$v1</span><span background='#000000' foreground='#FF1493'>$u1</span><span background='#000000' foreground='#00ADD8'>$sep</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k2</span><span background='#000000' foreground='#CCFF00'>$v2</span><span background='#000000' foreground='#FF1493'>$u2</span><span background='#000000' foreground='#00ADD8'>$sep</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k3</span><span background='#000000' foreground='#CCFF00'>$v3</span><span background='#000000' foreground='#FF1493'>$u3</span><span background='#000000' foreground='#00ADD8'>$sep</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k4</span><span background='#000000' foreground='#CCFF00'>$v4</span><span background='#000000' foreground='#FF1493'>$u4</span><span background='#000000' foreground='#00ADD8'>$sep</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k5</span><span background='#000000' foreground='#CCFF00'>$v5</span><span background='#000000' foreground='#FF1493'>$u5</span><span background='#000000' foreground='#00ADD8'>$sep</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k6</span><span background='#000000' foreground='#CCFF00'>$v6</span><span background='#000000' foreground='#FF1493'>$u6</span><span background='#000000' foreground='#00ADD8'>$sep</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k7</span><span background='#000000' foreground='#CCFF00'>$v7</span><span background='#000000' foreground='#FF1493'>$u7</span><span background='#000000' foreground='#00ADD8'>$sep</span>"
-    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k8</span><span background='#000000' foreground='#CCFF00'>$v8</span><span background='#000000' foreground='#FF1493'>$u8</span>"
-    [ -n "$suff" ] && out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$pref</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k0</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v0</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u0</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$sep</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k1</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v1</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u1</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$sep</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k2</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v2</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u2</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$sep</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k3</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v3</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u3</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$sep</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k4</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v4</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u4</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$sep</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k5</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v5</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u5</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$sep</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k6</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v6</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u6</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$sep</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k7</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v7</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u7</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$sep</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$k8</span>"
+    out_string="${out_string}<span background='#000000' foreground='#CCFF00'>$v8</span>"
+    out_string="${out_string}<span background='#000000' foreground='#FF1493'>$u8</span>"
+
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$suff</span>"
 else
     out_string="${pref}${k0}${v0}${u0}${sep}${k1}${v1}${u1}${sep}${k2}${v2}${u2}${sep}${k3}${v3}${u3}${sep}${k4}${disk_val}${u4}${sep}${k5}${v5}${u5}${sep}${k6}${v6}${u6}${sep}${k7}${v7}${u7}${sep}${k8}${v8}${u8}${suff}"
 fi
-printf "%s\n" "$out_string"
-cat << EOF 1>&2
-SPRM (Suckless Panel Resource Monitor) POSIX Shell version
+
+tooltip_txt="SPRM (Suckless Panel Resource Monitor) POSIX Shell version
 T = Temperature
 C = Total CPU Usage
 G = Total GPU Usage
@@ -254,5 +306,13 @@ R = Total Disk Read
 W = Total Disk Write
 ▼ = Average Download Rate
 ▲ = Average Upload Rate
-click to open btop
-EOF
+click to open btop"
+
+if [ "$mode" = "xfce4-panel" ]; then
+    printf "<txt>%s</txt>\n" "$out_string"
+    printf "<txtclick>%s</txtclick>\n" "$CMD_CLICK"
+    printf "<tool>%s</tool>\n" "$tooltip_txt"
+else
+    printf "%s\n" "$out_string"
+    printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+fi

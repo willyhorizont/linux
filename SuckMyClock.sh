@@ -1,12 +1,21 @@
 #!/bin/sh
 
-pref=" "
-suff=" "
+CMD_CLICK="lxterminal --geometry=88x28 --working-directory=\$HOME -e calcurse"
+
+mode="tint2"
+pref="["
+suff="]"
 sep=" | "
 use_pango=0
 
 while [ $# -gt 0 ]; do
     case "$1" in
+        --mode)
+            if [ "$2" = "tint2" ] || [ "$2" = "xfce4-panel" ]; then
+                mode="$2"
+            fi
+            shift 2
+            ;;
         --pref) pref="$2"; shift 2 ;;
         --suff) suff="$2"; shift 2 ;;
         --sep)  sep="$2";  shift 2 ;;
@@ -29,7 +38,7 @@ AM_PM_STR=$(date +"%p")
 
 if [ "$use_pango" -eq 1 ]; then
     out_string=""
-    [ -n "$pref" ] && out_string="<span background='#000000' foreground='#00ADD8'>$pref</span>"
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$pref</span>"
     out_string="${out_string}<span background='#000000' foreground='#CCFF00'>${MONTH_NUM}/12 </span>"
     out_string="${out_string}<span background='#000000' foreground='#FF1493'>months</span>"
     out_string="${out_string}<span background='#000000' foreground='#00ADD8'>${sep}</span>"
@@ -42,14 +51,19 @@ if [ "$use_pango" -eq 1 ]; then
     out_string="${out_string}<span background='#000000' foreground='#00ADD8'>${sep}</span>"
     out_string="${out_string}<span background='#000000' foreground='#CCFF00'>${TIME_12} </span>"
     out_string="${out_string}<span background='#000000' foreground='#FF1493'>${AM_PM_STR}</span>"
-    [ -n "$suff" ] && out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$suff</span>"
+    out_string="${out_string}<span background='#000000' foreground='#00ADD8'>$suff</span>"
 else
     out_string="${pref}${MONTH_NUM}/12 months${sep}${DAY_NUM}/${TOTAL_DAYS} days${sep}${DATE_STRING}${sep}${TIME_24}${sep}${TIME_12} ${AM_PM_STR}${suff}"
 fi
 
-printf "%s\n" "$out_string"
+tooltip_txt="SuckMyClock (My Suckless Clock) POSIX Shell version
+click to open calcurse"
 
-cat << EOF 1>&2
-SuckMyClock (My Suckless Clock) POSIX Shell version
-click to open calcurse
-EOF
+if [ "$mode" = "xfce4-panel" ]; then
+    printf "<txt>%s</txt>\n" "$out_string"
+    printf "<txtclick>%s</txtclick>\n" "$CMD_CLICK"
+    printf "<tool>%s</tool>\n" "$tooltip_txt"
+else
+    printf "%s\n" "$out_string"
+    printf "\e[2J%s\n" "$tooltip_txt" 1>&2
+fi

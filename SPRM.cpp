@@ -10,6 +10,7 @@
 #include <sys/statvfs.h>
 
 #define CACHE_FILE "/tmp/sprm-cache-cpp.json"
+#define CMD_CLICK "lxterminal --geometry=88x28 --working-directory=$HOME -e btop"
 
 struct FmtResult {
     std::string val;
@@ -63,14 +64,20 @@ FmtResult fmt(double bytesps) {
 }
 
 int main(int argc, char* argv[]) {
-    std::string pref = " ";
-    std::string suff = " ";
+    std::string mode = "tint2";
+    std::string pref = "[";
+    std::string suff = "]";
     std::string sep = " | ";
     bool use_pango = false;
 
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
-        if (arg == "--pref" && i + 1 < argc) {
+        if (arg == "--mode" && i + 1 < argc) {
+            std::string m = argv[++i];
+            if (m == "tint2" || m == "xfce4-panel") {
+                mode = m;
+            }
+        } else if (arg == "--pref" && i + 1 < argc) {
             pref = argv[++i];
         } else if (arg == "--suff" && i + 1 < argc) {
             suff = argv[++i];
@@ -242,7 +249,7 @@ int main(int argc, char* argv[]) {
         cache_in.close();
     }
 
-    double time_d = has_time ? (now_time - old_time) : (now_time - (now_time - 2.0));
+    double time_d = has_time ? (now_time - old_time) : 2.0;
     if (time_d <= 0.0) time_d = 2.0;
 
     unsigned long long user = cpu_parts[0], nice = cpu_parts[1], system_v = cpu_parts[2], idle = cpu_parts[3], iowait = cpu_parts[4], irq = cpu_parts[5], softirq = cpu_parts[6];
@@ -278,7 +285,6 @@ int main(int argc, char* argv[]) {
     std::string temp_str = (temp >= 100.0) ? "9999" : [] (double t){
         std::ostringstream ss; ss << std::fixed << std::setprecision(1) << t; return ss.str();
     }(temp);
-    std::string out_t = (temp_str == "9999") ? "9999" : temp_str;
     std::ostringstream g_ss, m_ss;
     g_ss << std::fixed << std::setprecision(1) << gpu;
     m_ss << std::fixed << std::setprecision(2) << ram_used;
@@ -295,7 +301,7 @@ int main(int argc, char* argv[]) {
     FmtResult f_u = fmt(u_rt); std::string out_u_val = f_u.val; std::string out_u_unit = f_u.unit;
 
     std::vector<Block> blocks = {
-        {"T ", out_t, "°C"},
+        {"T ", temp_str, "°C"},
         {"C ", cpu_fmt, "%"},
         {"G ", gpu_fmt, "%"},
         {"M ", ram_used_str + "/" + rt_ss.str(), "GB"},
@@ -308,7 +314,7 @@ int main(int argc, char* argv[]) {
 
     std::string final_out = "";
     if (use_pango) {
-        if (!pref.empty()) final_out += "<span background='#000000' foreground='#00ADD8'>" + pref + "</span>";
+        final_out += "<span background='#000000' foreground='#00ADD8'>" + pref + "</span>";
         for (size_t i = 0; i < blocks.size(); ++i) {
             final_out += "<span background='#000000' foreground='#FF1493'>" + blocks[i].key + "</span>";
             final_out += "<span background='#000000' foreground='#CCFF00'>" + blocks[i].val + "</span>";
@@ -317,7 +323,7 @@ int main(int argc, char* argv[]) {
                 final_out += "<span background='#000000' foreground='#00ADD8'>" + sep + "</span>";
             }
         }
-        if (!suff.empty()) final_out += "<span background='#000000' foreground='#00ADD8'>" + suff + "</span>";
+        final_out += "<span background='#000000' foreground='#00ADD8'>" + suff + "</span>";
     } else {
         final_out += pref;
         for (size_t i = 0; i < blocks.size(); ++i) {
@@ -328,20 +334,29 @@ int main(int argc, char* argv[]) {
         }
         final_out += suff;
     }
-    
-    std::cout << final_out << std::endl;
 
-    std::cerr << R"(SPRM (Suckless Panel Resource Monitor) C++ version
-T = Temperature
-C = Total CPU Usage
-G = Total GPU Usage
-M = Total Memory Usage
-D = Total Disk Usage
-R = Total Disk Read
-W = Total Disk Write
-▼ = Average Download Rate
-▲ = Average Upload Rate
-click to open btop)";
+    std::string tooltip_txt =
+        "SPRM (Suckless Panel Resource Monitor) C++ version\n"
+        "T = Temperature\n"
+        "C = Total CPU Usage\n"
+        "G = Total GPU Usage\n"
+        "M = Total Memory Usage\n"
+        "D = Total Disk Usage\n"
+        "R = Total Disk Read\n"
+        "W = Total Disk Write\n"
+        "▼ = Average Download Rate\n"
+        "▲ = Average Upload Rate\n"
+        "click to open btop\n";
+
+    if (mode == "xfce4-panel") {
+        std::cout << "<txt>" << final_out << "</txt>\n";
+        std::cout << "<txtclick>" << CMD_CLICK << "</txtclick>\n";
+        std::cout << "<tool>" << tooltip_txt << "</tool>\n";
+    } else {
+        std::cout << final_out << "\n";
+        std::cerr << "\x1b[2J" << tooltip_txt;
+    }
+
     return 0;
 }
 

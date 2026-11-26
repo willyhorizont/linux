@@ -1,4 +1,5 @@
-#define _POSIX_C_SOURCE 199309L
+// #define _POSIX_C_SOURCE 199309L
+#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,15 +10,16 @@
 #include <sys/statvfs.h>
 
 #define CACHE_FILE "/tmp/sprm-cache-c.json"
+#define CMD_CLICK "lxterminal --geometry=88x28 --working-directory=$HOME -e btop"
 
-void pad(const char *str, int len, char *out) {
-    sprintf(out, "%*s", len, str);
+void pad(const char *str, int len, char *out, size_t out_sz) {
+    snprintf(out, out_sz, "%*s", len, str);
 }
 
-void fmt(double bytesps, char *out_val, char *out_unit) {
+void fmt(double bytesps, char *out_val, size_t val_sz, char *out_unit, size_t unit_sz) {
     if (bytesps <= 0) {
-        strcpy(out_val, "      0");
-        strcpy(out_unit, "B/s");
+        snprintf(out_val, val_sz, "      0");
+        snprintf(out_unit, unit_sz, "B/s");
         return;
     }
     const char *units[] = {"B/s", "KB/s", "MB/s"};
@@ -28,29 +30,29 @@ void fmt(double bytesps, char *out_val, char *out_unit) {
         i++;
     }
     char num_str[64];
-    if (i == 0) sprintf(num_str, "%.3f", v);
-    else sprintf(num_str, "%.2f", v);
+    if (i == 0) snprintf(num_str, sizeof(num_str), "%.3f", v);
+    else snprintf(num_str, sizeof(num_str), "%.2f", v);
     
     char f_p[64] = {0};
     char b_p[64] = {0};
     char *dot = strchr(num_str, '.');
     if (dot) {
         *dot = '\0';
-        strcpy(f_p, num_str);
-        strcpy(b_p, dot + 1);
+        snprintf(f_p, sizeof(f_p), "%s", num_str);
+        snprintf(b_p, sizeof(b_p), "%s", dot + 1);
     } else {
-        strcpy(f_p, num_str);
-        strcpy(b_p, "00");
+        snprintf(f_p, sizeof(f_p), "%s", num_str);
+        snprintf(b_p, sizeof(b_p), "00");
     }
     if (strlen(f_p) > 3) {
-        strcpy(out_val, "999999");
-        strcpy(out_unit, "GB/s");
+        snprintf(out_val, val_sz, "999999");
+        snprintf(out_unit, unit_sz, "GB/s");
         return;
     }
     char padded_f[64];
-    pad(f_p, 3, padded_f);
-    sprintf(out_val, "%s.%s", padded_f, b_p);
-    strcpy(out_unit, units[i]);
+    pad(f_p, 3, padded_f, sizeof(padded_f));
+    snprintf(out_val, val_sz, "%s.%s", padded_f, b_p);
+    snprintf(out_unit, unit_sz, "%s", units[i]);
 }
 
 typedef struct {
@@ -60,34 +62,40 @@ typedef struct {
 } Block;
 
 int main(int argc, char *argv[]) {
-    char pref[256] = " ";
-    char suff[256] = " ";
+    char pref[256] = "[";
+    char suff[256] = "]";
     char sep[256] = " | ";
+    char mode[64] = "tint2";
     int use_pango = 0;
 
     for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--pref") == 0 && i + 1 < argc) {
-            strcpy(pref, argv[++i]);
+        if (strcmp(argv[i], "--mode") == 0 && i + 1 < argc) {
+            i++;
+            if (strcmp(argv[i], "tint2") == 0 || strcmp(argv[i], "xfce4-panel") == 0) {
+                snprintf(mode, sizeof(mode), "%s", argv[i]);
+            }
+        } else if (strcmp(argv[i], "--pref") == 0 && i + 1 < argc) {
+            snprintf(pref, sizeof(pref), "%s", argv[++i]);
         } else if (strcmp(argv[i], "--suff") == 0 && i + 1 < argc) {
-            strcpy(suff, argv[++i]);
+            snprintf(suff, sizeof(suff), "%s", argv[++i]);
         } else if (strcmp(argv[i], "--sep") == 0 && i + 1 < argc) {
-            strcpy(sep, argv[++i]);
+            snprintf(sep, sizeof(sep), "%s", argv[++i]);
         } else if (strcmp(argv[i], "--pango") == 0) {
             use_pango = 1;
         }
     }
 
     char NET_INTRF[64];
-    strcpy(NET_INTRF, "lo");
+    snprintf(NET_INTRF, sizeof(NET_INTRF), "lo");
     FILE *fh = fopen("/proc/net/route", "r");
     if (fh) {
         char ln[256];
-        if (fgets(ln, sizeof(ln), fh)) { // skip header
+        if (fgets(ln, sizeof(ln), fh)) {
             while (fgets(ln, sizeof(ln), fh)) {
                 char iface[64], dest[64];
                 if (sscanf(ln, "%63s %63s", iface, dest) >= 2) {
                     if (strcmp(dest, "00000000") == 0 && strcmp(iface, "lo") != 0) {
-                        strcpy(NET_INTRF, iface);
+                        snprintf(NET_INTRF, sizeof(NET_INTRF), "%s", iface);
                         break;
                     }
                 }
@@ -106,11 +114,11 @@ int main(int argc, char *argv[]) {
                     char *start = ln;
                     while (isspace((unsigned char)*start)) start++;
                     size_t len = colon - start;
-                    if (len < 64) {
-                        strncpy(candidate, start, len);
+                    if (len < sizeof(candidate)) {
+                        memcpy(candidate, start, len);
                         candidate[len] = '\0';
                         if (strcmp(candidate, "lo") != 0 && strncmp(candidate, "sit", 3) != 0 && strncmp(candidate, "docker", 6) != 0 && strncmp(candidate, "veth", 4) != 0 && strncmp(candidate, "br-", 3) != 0 && strncmp(candidate, "virbr", 5) != 0) {
-                            strcpy(NET_INTRF, candidate);
+                            snprintf(NET_INTRF, sizeof(NET_INTRF), "%s", candidate);
                             break;
                         }
                     }
@@ -122,7 +130,7 @@ int main(int argc, char *argv[]) {
     double temp = 0.0;
     for (int zone = 0; zone <= 5; zone++) {
         char path[128];
-        sprintf(path, "/sys/class/thermal/thermal_zone%d/temp", zone);
+        snprintf(path, sizeof(path), "/sys/class/thermal/thermal_zone%d/temp", zone);
         fh = fopen(path, "r");
         if (fh) {
             char t_buf[64];
@@ -267,9 +275,15 @@ int main(int argc, char *argv[]) {
             fclose(fh);
         }
     }
-    double time_d = has_time ? (now_time - old_time) : (now_time - (now_time - 2.0));
+    double time_d = has_time ? (now_time - old_time) : 2.0;
     if (time_d <= 0) time_d = 2.0;
-    unsigned long long user = cpu_parts[0], nice = cpu_parts[1], system_v = cpu_parts[2], idle = cpu_parts[3], iowait = cpu_parts[4], irq = cpu_parts[5], softirq = cpu_parts[6];
+    unsigned long long user = cpu_parts[0];
+    unsigned long long nice = cpu_parts[1];
+    unsigned long long system_v = cpu_parts[2];
+    unsigned long long idle = cpu_parts[3];
+    unsigned long long iowait = cpu_parts[4];
+    unsigned long long irq = cpu_parts[5];
+    unsigned long long softirq = cpu_parts[6];
     unsigned long long old_idle = old_cpu[3] + old_cpu[4];
     unsigned long long new_idle = idle + iowait;
     unsigned long long old_non_idle = old_cpu[0] + old_cpu[1] + old_cpu[2] + old_cpu[5] + old_cpu[6];
@@ -283,87 +297,92 @@ int main(int argc, char *argv[]) {
     double w_rt = has_dw ? ((double)(cur_d_w - old_d_w) / time_d) : 0.0;
     double d_rt = has_nd ? ((double)(cur_net_down - old_n_d) / time_d) : 0.0;
     double u_rt = has_nu ? ((double)(cur_net_up - old_n_u) / time_d) : 0.0;
-    if (r_rt < 0) r_rt = 0; if (w_rt < 0) w_rt = 0;
-    if (d_rt < 0) d_rt = 0; if (u_rt < 0) u_rt = 0;
+    if (r_rt < 0) r_rt = 0;
+    if (w_rt < 0) w_rt = 0;
+    if (d_rt < 0) d_rt = 0;
+    if (u_rt < 0) u_rt = 0;
     fh = fopen(CACHE_FILE, "w");
     if (fh) {
         fprintf(fh, "{\"time\":%.6f,\"cpu\":[%llu,%llu,%llu,%llu,%llu,%llu,%llu],\"d_r\":%llu,\"d_w\":%llu,\"n_d\":%llu,\"n_u\":%llu}", now_time, cpu_parts[0], cpu_parts[1], cpu_parts[2], cpu_parts[3], cpu_parts[4], cpu_parts[5], cpu_parts[6], cur_d_r, cur_d_w, cur_net_down, cur_net_up);
         fclose(fh);
     }
     char temp_str[64];
-    if (temp >= 100.0) strcpy(temp_str, "9999");
-    else sprintf(temp_str, "%.1f", temp);
+    if (temp >= 100.0) snprintf(temp_str, sizeof(temp_str), "9999");
+    else snprintf(temp_str, sizeof(temp_str), "%.1f", temp);
     char tmp_cpu[64], cpu_fmt[64];
-    sprintf(tmp_cpu, "%.1f", cpu_pcent); pad(tmp_cpu, 5, cpu_fmt);
+    snprintf(tmp_cpu, sizeof(tmp_cpu), "%.1f", cpu_pcent);
+    pad(tmp_cpu, 5, cpu_fmt, sizeof(cpu_fmt));
     char tmp_gpu[64], gpu_fmt[64];
-    sprintf(tmp_gpu, "%.1f", gpu); pad(tmp_gpu, 5, gpu_fmt);
+    snprintf(tmp_gpu, sizeof(tmp_gpu), "%.1f", gpu);
+    pad(tmp_gpu, 5, gpu_fmt, sizeof(gpu_fmt));
     char tmp_ram[64], ram_used_str[64];
-    sprintf(tmp_ram, "%.2f", ram_used); pad(tmp_ram, 5, ram_used_str);
+    snprintf(tmp_ram, sizeof(tmp_ram), "%.2f", ram_used);
+    pad(tmp_ram, 5, ram_used_str, sizeof(ram_used_str));
     char ram_tot_str[64], d_free_str[64], d_tot_str[64];
-    sprintf(ram_tot_str, "%.2f", ram_tot); sprintf(d_free_str, "%.2f", d_free_GB); sprintf(d_tot_str, "%.2f", d_tot_GB);
-
-    char out_t_val[64];
-    if (strcmp(temp_str, "9999") == 0) strcpy(out_t_val, "9999");
-    else strcpy(out_t_val, temp_str);
+    snprintf(ram_tot_str, sizeof(ram_tot_str), "%.2f", ram_tot);
+    snprintf(d_free_str, sizeof(d_free_str), "%.2f", d_free_GB);
+    snprintf(d_tot_str, sizeof(d_tot_str), "%.2f", d_tot_GB);
 
     Block blocks[9];
     
-    strcpy(blocks[0].key, "T ");
-    strcpy(blocks[0].val, out_t_val);
-    strcpy(blocks[0].unit, "°C");
+    snprintf(blocks[0].key, sizeof(blocks[0].key), "T ");
+    snprintf(blocks[0].val, sizeof(blocks[0].val), "%s", temp_str);
+    snprintf(blocks[0].unit, sizeof(blocks[0].unit), "°C");
 
-    strcpy(blocks[1].key, "C ");
-    strcpy(blocks[1].val, cpu_fmt);
-    strcpy(blocks[1].unit, "%");
+    snprintf(blocks[1].key, sizeof(blocks[1].key), "C ");
+    snprintf(blocks[1].val, sizeof(blocks[1].val), "%s", cpu_fmt);
+    snprintf(blocks[1].unit, sizeof(blocks[1].unit), "%%");
 
-    strcpy(blocks[2].key, "G ");
-    strcpy(blocks[2].val, gpu_fmt);
-    strcpy(blocks[2].unit, "%");
+    snprintf(blocks[2].key, sizeof(blocks[2].key), "G ");
+    snprintf(blocks[2].val, sizeof(blocks[2].val), "%s", gpu_fmt);
+    snprintf(blocks[2].unit, sizeof(blocks[2].unit), "%%");
 
-    strcpy(blocks[3].key, "M ");
-    sprintf(blocks[3].val, "%s/%s", ram_used_str, ram_tot_str);
-    strcpy(blocks[3].unit, "GB");
+    snprintf(blocks[3].key, sizeof(blocks[3].key), "M ");
+    snprintf(blocks[3].val, sizeof(blocks[3].val), "%s/%s", ram_used_str, ram_tot_str);
+    snprintf(blocks[3].unit, sizeof(blocks[3].unit), "GB");
 
-    strcpy(blocks[4].key, "D ");
-    sprintf(blocks[4].val, "%s/%s", d_free_str, d_tot_str);
-    strcpy(blocks[4].unit, "GB");
+    snprintf(blocks[4].key, sizeof(blocks[4].key), "D ");
+    snprintf(blocks[4].val, sizeof(blocks[4].val), "%s/%s", d_free_str, d_tot_str);
+    snprintf(blocks[4].unit, sizeof(blocks[4].unit), "GB");
 
-    strcpy(blocks[5].key, "R ");
-    fmt(r_rt, blocks[5].val, blocks[5].unit);
+    snprintf(blocks[5].key, sizeof(blocks[5].key), "R ");
+    fmt(r_rt, blocks[5].val, sizeof(blocks[5].val), blocks[5].unit, sizeof(blocks[5].unit));
 
-    strcpy(blocks[6].key, "W ");
-    fmt(w_rt, blocks[6].val, blocks[6].unit);
+    snprintf(blocks[6].key, sizeof(blocks[6].key), "W ");
+    fmt(w_rt, blocks[6].val, sizeof(blocks[6].val), blocks[6].unit, sizeof(blocks[6].unit));
 
-    strcpy(blocks[7].key, "▼ ");
-    fmt(d_rt, blocks[7].val, blocks[7].unit);
+    snprintf(blocks[7].key, sizeof(blocks[7].key), "▼ ");
+    fmt(d_rt, blocks[7].val, sizeof(blocks[7].val), blocks[7].unit, sizeof(blocks[7].unit));
 
-    strcpy(blocks[8].key, "▲ ");
-    fmt(u_rt, blocks[8].val, blocks[8].unit);
+    snprintf(blocks[8].key, sizeof(blocks[8].key), "▲ ");
+    fmt(u_rt, blocks[8].val, sizeof(blocks[8].val), blocks[8].unit, sizeof(blocks[8].unit));
+
+    char out_txt[4096] = {0};
+    size_t pos = 0;
 
     if (use_pango) {
-        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", pref);
+        pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "<span background='#000000' foreground='#00ADD8'>%s</span>", pref);
         for (int i = 0; i < 9; i++) {
-            printf("<span background='#000000' foreground='#FF1493'>%s</span>", blocks[i].key);
-            printf("<span background='#000000' foreground='#CCFF00'>%s</span>", blocks[i].val);
-            printf("<span background='#000000' foreground='#FF1493'>%s</span>", blocks[i].unit);
+            pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "<span background='#000000' foreground='#FF1493'>%s</span>", blocks[i].key);
+            pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "<span background='#000000' foreground='#CCFF00'>%s</span>", blocks[i].val);
+            pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "<span background='#000000' foreground='#FF1493'>%s</span>", blocks[i].unit);
             if (i < 8) {
-                printf("<span background='#000000' foreground='#00ADD8'>%s</span>", sep);
+                pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "<span background='#000000' foreground='#00ADD8'>%s</span>", sep);
             }
         }
-        printf("<span background='#000000' foreground='#00ADD8'>%s</span>", suff);
+        pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "<span background='#000000' foreground='#00ADD8'>%s</span>", suff);
     } else {
-        printf("%s", pref);
+        pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "%s", pref);
         for (int i = 0; i < 9; i++) {
-            printf("%s%s%s", blocks[i].key, blocks[i].val, blocks[i].unit);
+            pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "%s%s%s", blocks[i].key, blocks[i].val, blocks[i].unit);
             if (i < 8) {
-                printf("%s", sep);
+                pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "%s", sep);
             }
         }
-        printf("%s", suff);
+        pos += snprintf(out_txt + pos, sizeof(out_txt) - pos, "%s", suff);
     }
-    printf("\n");
 
-    fprintf(stderr,
+    const char *tooltip_txt =
         "SPRM (Suckless Panel Resource Monitor) C version\n"
         "T = Temperature\n"
         "C = Total CPU Usage\n"
@@ -374,8 +393,17 @@ int main(int argc, char *argv[]) {
         "W = Total Disk Write\n"
         "▼ = Average Download Rate\n"
         "▲ = Average Upload Rate\n"
-        "click to open btop"
-    );
+        "click to open btop\n";
+
+    if (strcmp(mode, "xfce4-panel") == 0) {
+        printf("<txt>%s</txt>\n", out_txt);
+        printf("<txtclick>%s</txtclick>\n", CMD_CLICK);
+        printf("<tool>%s</tool>\n", tooltip_txt);
+    } else {
+        printf("%s\n", out_txt);
+        fprintf(stderr, "\x1b[2J%s", tooltip_txt);
+    }
+
     return 0;
 }
 

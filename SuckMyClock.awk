@@ -11,13 +11,20 @@ function get_total_days(year, month) {
 }
 
 BEGIN {
-    pref = " "
-    suff = " "
+    CMD_CLICK = "lxterminal --geometry=88x28 --working-directory=$HOME -e calcurse"
+    mode = "tint2"
+    pref = "["
+    suff = "]"
     sep = " | "
     use_pango = 0
 
     for (i = 1; i < ARGC; i++) {
-        if (ARGV[i] == "--pref") {
+        if (ARGV[i] == "--mode") {
+            if (ARGV[i+1] == "tint2" || ARGV[i+1] == "xfce4-panel") {
+                mode = ARGV[i+1]
+            }
+            delete ARGV[i]; delete ARGV[i+1]; i++
+        } else if (ARGV[i] == "--pref") {
             pref = ARGV[i+1]; delete ARGV[i]; delete ARGV[i+1]; i++
         } else if (ARGV[i] == "--suff") {
             suff = ARGV[i+1]; delete ARGV[i]; delete ARGV[i+1]; i++
@@ -42,28 +49,35 @@ BEGIN {
     time_12     = strftime("%I:%M:%S", now)
     am_pm_str   = strftime("%p", now)
     
+    out_string = ""
     if (use_pango) {
-        out_string = ""
-        if (pref != "") out_string = out_string "<span background='#000000' foreground='#00ADD8'>" pref "</span>"
-        out_string = out_string "<span background='#000000' foreground='#CCFF00'>" month_num "/12 </span>" \
-                     "<span background='#000000' foreground='#FF1493'>months</span>" \
-                     "<span background='#000000' foreground='#00ADD8'>" sep "</span>" \
-                     "<span background='#000000' foreground='#CCFF00'>" day_num "/" total_days " </span>" \
-                     "<span background='#000000' foreground='#FF1493'>days</span>" \
-                     "<span background='#000000' foreground='#00ADD8'>" sep "</span>" \
-                     "<span background='#000000' foreground='#CCFF00'>" date_string "</span>" \
-                     "<span background='#000000' foreground='#00ADD8'>" sep "</span>" \
-                     "<span background='#000000' foreground='#CCFF00'>" time_24 "</span>" \
-                     "<span background='#000000' foreground='#00ADD8'>" sep "</span>" \
-                     "<span background='#000000' foreground='#CCFF00'>" time_12 " </span>" \
-                     "<span background='#000000' foreground='#FF1493'>" am_pm_str "</span>"
-        if (suff != "") out_string = out_string "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" pref "</span>"
+        out_string = out_string "<span background='#000000' foreground='#CCFF00'>" month_num "/12 </span>"
+        out_string = out_string "<span background='#000000' foreground='#FF1493'>months</span>"
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" sep "</span>"
+        out_string = out_string "<span background='#000000' foreground='#CCFF00'>" day_num "/" total_days " </span>"
+        out_string = out_string "<span background='#000000' foreground='#FF1493'>days</span>"
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" sep "</span>"
+        out_string = out_string "<span background='#000000' foreground='#CCFF00'>" date_string "</span>"
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" sep "</span>"
+        out_string = out_string "<span background='#000000' foreground='#CCFF00'>" time_24 "</span>"
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" sep "</span>"
+        out_string = out_string "<span background='#000000' foreground='#CCFF00'>" time_12 " </span>"
+        out_string = out_string "<span background='#000000' foreground='#FF1493'>" am_pm_str "</span>"
+        out_string = out_string "<span background='#000000' foreground='#00ADD8'>" suff "</span>"
     } else {
         out_string = pref month_num "/12 months" sep day_num "/" total_days " days" sep date_string sep time_24 sep time_12 " " am_pm_str suff
     }
 
-    printf "%s\n", out_string
+    tooltip_txt = "SuckMyClock (My Suckless Clock) Awk version\n" \
+                  "click to open calcurse\n"
 
-    print "SuckMyClock (My Suckless Clock) Awk version\n" \
-          "click to open calcurse" > "/dev/stderr"
+    if (mode == "xfce4-panel") {
+        printf "<txt>%s</txt>\n", out_string
+        printf "<txtclick>%s</txtclick>\n", CMD_CLICK
+        printf "<tool>%s</tool>\n", tooltip_txt
+    } else {
+        printf "%s\n", out_string
+        printf "\033[2J%s", tooltip_txt > "/dev/stderr"
+    }
 }

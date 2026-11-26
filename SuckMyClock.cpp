@@ -5,6 +5,8 @@
 #include <string>
 #include <cstring>
 
+#define CMD_CLICK "lxterminal --geometry=88x28 --working-directory=$HOME -e calcurse"
+
 int get_total_days(int year, int month) {
     const int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     if (month == 2) {
@@ -22,13 +24,19 @@ std::string format_time(const std::tm* tm_info, const std::string& fmt) {
 }
 
 int main(int argc, char *argv[]) {
-    std::string pref = " ";
-    std::string suff = " ";
+    std::string mode = "tint2";
+    std::string pref = "[";
+    std::string suff = "]";
     std::string sep = " | ";
     bool use_pango = false;
 
     for (int i = 1; i < argc; i++) {
-        if (std::strcmp(argv[i], "--pref") == 0 && i + 1 < argc) {
+        if (std::strcmp(argv[i], "--mode") == 0 && i + 1 < argc) {
+            i++;
+            if (std::strcmp(argv[i], "tint2") == 0 || std::strcmp(argv[i], "xfce4-panel") == 0) {
+                mode = argv[i];
+            }
+        } else if (std::strcmp(argv[i], "--pref") == 0 && i + 1 < argc) {
             pref = argv[++i];
         } else if (std::strcmp(argv[i], "--suff") == 0 && i + 1 < argc) {
             suff = argv[++i];
@@ -55,36 +63,44 @@ int main(int argc, char *argv[]) {
     std::string time_12 = format_time(tm_info, "%I:%M:%S");
     std::string am_pm_str = format_time(tm_info, "%p");
 
+    std::string final_out = "";
     if (use_pango) {
-        if (!pref.empty()) std::cout << "<span background='#000000' foreground='#00ADD8'>" << pref << "</span>";
+        final_out += "<span background='#000000' foreground='#00ADD8'>" + pref + "</span>";
 
-        std::cout << "<span background='#000000' foreground='#CCFF00'>" << month_num << "/12 </span>";
-        std::cout << "<span background='#000000' foreground='#FF1493'>months</span>";
-        std::cout << "<span background='#000000' foreground='#00ADD8'>" << sep << "</span>";
+        final_out += "<span background='#000000' foreground='#CCFF00'>" + month_num + "/12 </span>";
+        final_out += "<span background='#000000' foreground='#FF1493'>months</span>";
+        final_out += "<span background='#000000' foreground='#00ADD8'>" + sep + "</span>";
 
-        std::cout << "<span background='#000000' foreground='#CCFF00'>" << day_num << "</span>";
-        std::cout << "<span background='#000000' foreground='#CCFF00'>/</span>";
-        std::cout << "<span background='#000000' foreground='#CCFF00'>" << total_days << " </span>";
-        std::cout << "<span background='#000000' foreground='#FF1493'>days</span>";
-        std::cout << "<span background='#000000' foreground='#00ADD8'>" << sep << "</span>";
+        final_out += "<span background='#000000' foreground='#CCFF00'>" + day_num + "/" + std::to_string(total_days) + " </span>";
+        final_out += "<span background='#000000' foreground='#FF1493'>days</span>";
+        final_out += "<span background='#000000' foreground='#00ADD8'>" + sep + "</span>";
 
-        std::cout << "<span background='#000000' foreground='#CCFF00'>" << date_string << "</span>";
-        std::cout << "<span background='#000000' foreground='#00ADD8'>" << sep << "</span>";
+        final_out += "<span background='#000000' foreground='#CCFF00'>" + date_string + "</span>";
+        final_out += "<span background='#000000' foreground='#00ADD8'>" + sep + "</span>";
 
-        std::cout << "<span background='#000000' foreground='#CCFF00'>" << time_24 << "</span>";
-        std::cout << "<span background='#000000' foreground='#00ADD8'>" << sep << "</span>";
+        final_out += "<span background='#000000' foreground='#CCFF00'>" + time_24 + "</span>";
+        final_out += "<span background='#000000' foreground='#00ADD8'>" + sep + "</span>";
 
-        std::cout << "<span background='#000000' foreground='#CCFF00'>" << time_12 << " </span>";
-        std::cout << "<span background='#000000' foreground='#FF1493'>" << am_pm_str << "</span>";
+        final_out += "<span background='#000000' foreground='#CCFF00'>" + time_12 + " </span>";
+        final_out += "<span background='#000000' foreground='#FF1493'>" + am_pm_str + "</span>";
 
-        if (!suff.empty()) std::cout << "<span background='#000000' foreground='#00ADD8'>" << suff << "</span>";
+        final_out += "<span background='#000000' foreground='#00ADD8'>" + suff + "</span>";
     } else {
-        std::cout << pref << month_num << "/12 months" << sep << day_num << "/" << total_days << " days" << sep << date_string << sep << time_24 << sep << time_12 << " " << am_pm_str << suff;
+        final_out = pref + month_num + "/12 months" + sep + day_num + "/" + std::to_string(total_days) + " days" + sep + date_string + sep + time_24 + sep + time_12 + " " + am_pm_str + suff;
     }
-    std::cout << std::endl;
 
-    std::cerr << R"(SuckMyClock (My Suckless Clock) C++ version
-click to open calcurse)";
+    std::string tooltip_txt =
+        "SuckMyClock (My Suckless Clock) C++ version\n"
+        "click to open calcurse\n";
+
+    if (mode == "xfce4-panel") {
+        std::cout << "<txt>" << final_out << "</txt>\n";
+        std::cout << "<txtclick>" << CMD_CLICK << "</txtclick>\n";
+        std::cout << "<tool>" << tooltip_txt << "</tool>\n";
+    } else {
+        std::cout << final_out << "\n";
+        std::cerr << "\x1b[2J" << tooltip_txt;
+    }
 
     return 0;
 }

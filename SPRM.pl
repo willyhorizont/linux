@@ -4,14 +4,19 @@ use warnings;
 use Time::HiRes qw(time);
 
 my $CACHE_FILE = "/tmp/sprm-cache-pl.json";
+my $CMD_CLICK = 'lxterminal --geometry=88x28 --working-directory=$HOME -e btop';
 
-my $pref = " ";
-my $suff = " ";
+my $mode = "tint2";
+my $pref = "[";
+my $suff = "]";
 my $sep = " | ";
 my $use_pango = 0;
 
 for (my $i = 0; $i < @ARGV; $i++) {
-    if ($ARGV[$i] eq "--pref" && $i + 1 < @ARGV) {
+    if ($ARGV[$i] eq "--mode" && $i + 1 < @ARGV) {
+        my $m = $ARGV[++$i];
+        $mode = $m if ($m eq "tint2" || $m eq "xfce4-panel");
+    } elsif ($ARGV[$i] eq "--pref" && $i + 1 < @ARGV) {
         $pref = $ARGV[++$i];
     } elsif ($ARGV[$i] eq "--suff" && $i + 1 < @ARGV) {
         $suff = $ARGV[++$i];
@@ -163,7 +168,7 @@ $cur_d_w *= 512;
 my ($cur_net_down, $cur_net_up) = (0, 0);
 if (open(my $fh, "<", "/proc/net/dev")) {
     while (<$fh>) {
-        if (/$NET_INTRF/) {
+        if (/\Q$NET_INTRF\E/) {
             my @p = split(/[:\s]+/);
             shift @p if defined $p[0] && $p[0] eq '';
             $cur_net_down = $p[1] if defined $p[1];
@@ -249,11 +254,10 @@ my $d_tot_str = sprintf("%.2f", $d_tot_GB);
 my @f_r = fmt($r_rt); my @f_w = fmt($w_rt);
 my @f_d = fmt($d_rt); my @f_u = fmt($u_rt);
 
-my $out_t_val = ($temp_str eq "9999") ? "9999" : $temp_str;
 my $out_t_unit = "°C";
 
 my @blocks = (
-    { key => "T ", val => $out_t_val, unit => $out_t_unit },
+    { key => "T ", val => $temp_str, unit => $out_t_unit },
     { key => "C ", val => $cpu_fmt, unit => "%" },
     { key => "G ", val => $gpu_fmt, unit => "%" },
     { key => "M ", val => "$ram_used_str/$ram_tot_str", unit => "GB" },
@@ -266,7 +270,7 @@ my @blocks = (
 
 my $out_str = "";
 if ($use_pango) {
-    $out_str .= "<span background='#000000' foreground='#00ADD8'>$pref</span>" if $pref ne "";
+    $out_str .= "<span background='#000000' foreground='#00ADD8'>$pref</span>";
     for (my $i = 0; $i < @blocks; $i++) {
         my $b = $blocks[$i];
         $out_str .= "<span background='#000000' foreground='#FF1493'>$b->{key}</span>";
@@ -276,7 +280,7 @@ if ($use_pango) {
             $out_str .= "<span background='#000000' foreground='#00ADD8'>$sep</span>";
         }
     }
-    $out_str .= "<span background='#000000' foreground='#00ADD8'>$suff</span>" if $suff ne "";
+    $out_str .= "<span background='#000000' foreground='#00ADD8'>$suff</span>";
 } else {
     $out_str .= $pref;
     for (my $i = 0; $i < @blocks; $i++) {
@@ -288,18 +292,25 @@ if ($use_pango) {
     }
     $out_str .= $suff;
 }
-print $out_str . "\n";
 
-print STDERR <<'EOF';
-SPRM (Suckless Panel Resource Monitor) Perl version
-T = Temperature
-C = Total CPU Usage
-G = Total GPU Usage
-M = Total Memory Usage
-D = Total Disk Usage
-R = Total Disk Read
-W = Total Disk Write
-▼ = Average Download Rate
-▲ = Average Upload Rate
-click to open btop
-EOF
+my $tooltip_txt =
+    "SPRM (Suckless Panel Resource Monitor) Perl version\n" .
+    "T = Temperature\n" .
+    "C = Total CPU Usage\n" .
+    "G = Total GPU Usage\n" .
+    "M = Total Memory Usage\n" .
+    "D = Total Disk Usage\n" .
+    "R = Total Disk Read\n" .
+    "W = Total Disk Write\n" .
+    "▼ = Average Download Rate\n" .
+    "▲ = Average Upload Rate\n" .
+    "click to open btop\n";
+
+if ($mode eq "xfce4-panel") {
+    print "<txt>$out_str</txt>\n";
+    print "<txtclick>$CMD_CLICK</txtclick>\n";
+    print "<tool>$tooltip_txt</tool>\n";
+} else {
+    print "$out_str\n";
+    print STDERR "\x1b[2J$tooltip_txt";
+}

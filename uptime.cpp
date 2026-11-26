@@ -1,16 +1,31 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <iomanip>
+
+#define CMD_CLICK ""
+
+std::string pad_num(long long val, size_t width) {
+    std::string s = std::to_string(val);
+    if (s.length() < width) {
+        return std::string(width - s.length(), ' ') + s;
+    }
+    return s;
+}
 
 int main(int argc, char *argv[]) {
-    std::string pref = "";
-    std::string suff = " |";
+    std::string mode = "tint2";
+    std::string pref = "[";
+    std::string suff = "]";
     bool use_pango = false;
 
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
-        if (arg == "--pref" && i + 1 < argc) {
+        if (arg == "--mode" && i + 1 < argc) {
+            i++;
+            if (std::string(argv[i]) == "tint2" || std::string(argv[i]) == "xfce4-panel") {
+                mode = argv[i];
+            }
+        } else if (arg == "--pref" && i + 1 < argc) {
             pref = argv[++i];
         } else if (arg == "--suff" && i + 1 < argc) {
             suff = argv[++i];
@@ -33,30 +48,47 @@ int main(int argc, char *argv[]) {
         hours = 9999999999999LL;
     }
 
-    std::string k_lbl = " uptime ";
+    std::string k_lbl = "uptime ";
+    std::string final_out = "";
 
     if (hours < 1000) {
+        std::string v_hrs = pad_num(hours, 3);
+        std::string v_min = pad_num(minutes, 2);
+
         if (use_pango) {
-            std::cout << "<span background='#000000' foreground='#00ADD8'>" << pref << "</span>"
-                      << "<span background='#000000' foreground='#FF1493'>" << k_lbl << "</span>"
-                      << "<span background='#000000' foreground='#CCFF00'>" << std::setw(3) << hours << "</span>"
-                      << "<span background='#000000' foreground='#FF1493'>hours </span>"
-                      << "<span background='#000000' foreground='#CCFF00'>" << std::setw(2) << minutes << "</span>"
-                      << "<span background='#000000' foreground='#FF1493'>minutes</span>"
-                      << "<span background='#000000' foreground='#00ADD8'>" << suff << "</span>\n";
+            final_out += "<span background='#000000' foreground='#00ADD8'>" + pref + "</span>";
+            final_out += "<span background='#000000' foreground='#FF1493'>" + k_lbl + "</span>";
+            final_out += "<span background='#000000' foreground='#CCFF00'>" + v_hrs + "</span>";
+            final_out += "<span background='#000000' foreground='#FF1493'>hours </span>";
+            final_out += "<span background='#000000' foreground='#CCFF00'>" + v_min + "</span>";
+            final_out += "<span background='#000000' foreground='#FF1493'>minutes</span>";
+            final_out += "<span background='#000000' foreground='#00ADD8'>" + suff + "</span>";
         } else {
-            std::cout << pref << k_lbl << std::setw(3) << hours << "hours " << std::setw(2) << minutes << "minutes" << suff << "\n";
+            final_out = pref + k_lbl + v_hrs + "hours " + v_min + "minutes" + suff;
         }
     } else {
+        std::string v_hrs = pad_num(hours, 13);
+
         if (use_pango) {
-            std::cout << "<span background='#000000' foreground='#00ADD8'>" << pref << "</span>"
-                      << "<span background='#000000' foreground='#FF1493'>" << k_lbl << "</span>"
-                      << "<span background='#000000' foreground='#CCFF00'>" << std::setw(13) << hours << "</span>"
-                      << "<span background='#000000' foreground='#FF1493'>hours</span>"
-                      << "<span background='#000000' foreground='#00ADD8'>" << suff << "</span>\n";
+            final_out += "<span background='#000000' foreground='#00ADD8'>" + pref + "</span>";
+            final_out += "<span background='#000000' foreground='#FF1493'>" + k_lbl + "</span>";
+            final_out += "<span background='#000000' foreground='#CCFF00'>" + v_hrs + "</span>";
+            final_out += "<span background='#000000' foreground='#FF1493'>hours</span>";
+            final_out += "<span background='#000000' foreground='#00ADD8'>" + suff + "</span>";
         } else {
-            std::cout << pref << k_lbl << std::setw(13) << hours << "hours" << suff << "\n";
+            final_out = pref + k_lbl + v_hrs + "hours" + suff;
         }
+    }
+
+    std::string tooltip_txt = "";
+
+    if (mode == "xfce4-panel") {
+        std::cout << "<txt>" << final_out << "</txt>\n";
+        std::cout << "<txtclick>" << CMD_CLICK << "</txtclick>\n";
+        std::cout << "<tool>" << tooltip_txt << "</tool>\n";
+    } else {
+        std::cout << final_out << "\n";
+        std::cerr << "\x1b[2J" << tooltip_txt;
     }
 
     return 0;
