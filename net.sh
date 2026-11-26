@@ -104,13 +104,7 @@ if $IS_INDICATOR; then
     if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
         [ -z "$GENMON_ID" ] && exit 0
         pgrep -f ".*nmcli monitor.*xfce4-panel.*--plugin-event.*:refresh:bool:true.*" >/dev/null && exit 0
-        setsid -f bash -c '
-            nmcli monitor 2>/dev/null | while read -r _; do
-                if pgrep -x "xfce4-panel" >/dev/null; then
-                    xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
-                fi
-            done
-        ' _ "$GENMON_ID" >/dev/null 2>&1
+        setsid -f bash -c 'nmcli monitor 2>/dev/null | while read -r _; do pgrep -x "xfce4-panel" >/dev/null && xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1; done' _ "$GENMON_ID" >/dev/null 2>&1
         exit 0
     fi
     nmcli monitor 2>/dev/null | while read -r _; do

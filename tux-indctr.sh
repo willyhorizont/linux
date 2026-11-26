@@ -79,23 +79,7 @@ esac
 if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
     [ -z "$GENMON_ID" ] && exit 0
     pgrep -f ".*pidwait.*xpenguins.*xfce4-panel.*--plugin-event.*:refresh:bool:true.*" >/dev/null && exit 0
-    setsid -f bash -c '
-        while true; do
-            if pgrep -x "xfce4-panel" >/dev/null; then
-                if pgrep -x "xpenguins" >/dev/null; then
-                    pidwait -x "xpenguins" 2>/dev/null
-                    xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
-                else
-                    sleep 1
-                    if pgrep -x "xpenguins" >/dev/null; then
-                        xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1
-                    fi
-                fi
-            else
-                sleep 1
-            fi
-        done
-    ' _ "$GENMON_ID" >/dev/null 2>&1
+    setsid -f bash -c 'while true; do { pgrep -x "xpenguins" >/dev/null && pidwait -x "xpenguins" 2>/dev/null || sleep 1; }; pgrep -x "xfce4-panel" >/dev/null && xfce4-panel --plugin-event="$1:refresh:bool:true" >/dev/null 2>&1; done' _ "$GENMON_ID" >/dev/null 2>&1
     exit 0
 fi
 
