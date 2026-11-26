@@ -16,11 +16,11 @@ while [ $# -gt 0 ]; do
             fi
             shift 2
             ;;
-        --pref) pref="$2"; shift 2 ;;
-        --suff) suff="$2"; shift 2 ;;
-        --sep)  sep="$2";  shift 2 ;;
-        --pango) use_pango=1; shift ;;
-        *) shift ;;
+        --pref)   pref="$2";    shift 2 ;;
+        --suff)   suff="$2";    shift 2 ;;
+        --sep)    sep="$2";     shift 2 ;;
+        --pango)  use_pango=1;  shift ;;
+        *)                      shift ;;
     esac
 done
 

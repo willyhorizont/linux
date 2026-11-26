@@ -21,6 +21,8 @@ AC_NONE="❌️"
 PREF=" "
 SUFF=" "
 SEP=" | "
+USE_PANGO=false
+USE_DARK=false
 
 HAS_BAT_HI=false
 HAS_BAT_LO=false
@@ -47,6 +49,8 @@ while [[ $# -gt 0 ]]; do
         --pref)       PREF="$2";                         shift 2 ;;
         --suff)       SUFF="$2";                         shift 2 ;;
         --sep)        SEP="$2";                          shift 2 ;;
+        --pango)      USE_PANGO=true;                    shift ;;
+        --dark)       USE_DARK=true;                     shift ;;
         *)                                               shift ;;
     esac
 done
@@ -62,9 +66,40 @@ get_bat_icon() {
     fi
 }
 
+OUT_TXT=""
+
+format_out() {
+    local bat_ic="$1"
+    local cap_val="$2"
+    local ac_ic="$3"
+    if $USE_PANGO; then
+        if $USE_DARK; then
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${PREF}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>BAT </span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#CCFF00'>${bat_ic} ${cap_val}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>%</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${SEP}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>AC </span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#CCFF00'>${ac_ic}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${SUFF}</span>"
+        else
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${PREF}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>BAT </span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${bat_ic} ${cap_val}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>%</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${SEP}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>AC </span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${ac_ic}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
+        fi
+    else
+        OUT_TXT="${PREF}BAT=${bat_ic} ${cap_val}%${SEP}AC=${ac_ic}${SUFF}"
+    fi
+}
+
 get_powr_stat() {
     if [ ! -d /sys/class/power_supply ] || [ -z "$(ls /sys/class/power_supply/ | grep -E '^BAT|^battery')" ]; then
-        OUT_TXT="${PREF}BAT=${BAT_NONE}   0%${SEP}AC=${AC_ON}${SUFF}"
+        format_out "${BAT_NONE}" "  0" "${AC_ON}"
         return 0
     fi
 
@@ -111,16 +146,16 @@ get_powr_stat() {
 
     if $is_charging || [ "$ac_online" = "1" ]; then
         rmdir "$STATE_NOTIFIED_DIR" 2>/dev/null
-        OUT_TXT="${PREF}BAT=${BAT_ON} ${cap_pad}%${SEP}AC=${AC_ON}${SUFF}"
+        format_out "${BAT_ON}" "${cap_pad}" "${AC_ON}"
     elif [ "$ac_online" = "0" ]; then
         local sel_bat_on
         sel_bat_on=$(get_bat_icon "$cap")
         if [ "$cap" -lt 40 ] && mkdir "$STATE_NOTIFIED_DIR" 2>/dev/null; then
             notify-send "⚠️ Low BAT"
         fi
-        OUT_TXT="${PREF}BAT=${sel_bat_on} ${cap_pad}%${SEP}AC=${AC_NONE}${SUFF}"
+        format_out "${sel_bat_on}" "${cap_pad}" "${AC_NONE}"
     else
-        OUT_TXT="${PREF}BAT=${IC_INIT} ${cap_pad}%${SEP}AC=${IC_INIT}${SUFF}"
+        format_out "${IC_INIT}" "${cap_pad}" "${IC_INIT}"
     fi
 }
 

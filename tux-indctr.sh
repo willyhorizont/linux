@@ -12,6 +12,8 @@ ALL_MODES=(
 
 MODE="${ALL_MODES["tint2"]}"
 GENMON_ID=""
+USE_PANGO=false
+USE_DARK=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -21,8 +23,10 @@ while [[ $# -gt 0 ]]; do
             fi
             shift 2
             ;;
-        --genmon-id) GENMON_ID="$2"; shift 2 ;;
-        *)                           shift ;;
+        --genmon-id) GENMON_ID="$2";  shift 2 ;;
+        --pango)     USE_PANGO=true;  shift ;;
+        --dark)      USE_DARK=true;   shift ;;
+        *)                            shift ;;
     esac
 done
 
@@ -33,6 +37,7 @@ EOF
 )
 
 print_indicator() {
+    local out_txt=""
     case "$DESKTOP_SESSION" in
         LXDE|openbox)
             if pgrep -x "xpenguins" >/dev/null; then
@@ -44,12 +49,21 @@ print_indicator() {
                     printf "\e[2J\n" 1>&2
                 fi
             else
+                if $USE_PANGO; then
+                    if $USE_PANGO; then
+                        out_txt="<span background='#000000' foreground='#CCFF00'>🐧</span>"
+                    else
+                        out_txt="<span background='#FFFFFF' foreground='#000000'>🐧</span>"
+                    fi
+                else
+                    out_txt="🐧"
+                fi
                 if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
-                    echo "<txt>🐧</txt>"
+                    echo "<txt>${out_txt}</txt>"
                     echo "<txtclick>$CMD_CLICK</txtclick>"
                     echo "<tool>$TOOLTIP_TXT</tool>"
                 else
-                    echo "🐧"
+                    echo "${out_txt}"
                     printf "\e[2J%s\n" "$TOOLTIP_TXT" 1>&2
                 fi
             fi

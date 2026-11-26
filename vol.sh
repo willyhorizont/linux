@@ -18,6 +18,8 @@ IC_NONE="❌"
 
 PREF=" "
 SUFF=" "
+USE_PANGO=false
+USE_DARK=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -35,26 +37,52 @@ while [[ $# -gt 0 ]]; do
         --ic-none)     IC_NONE="$2";       shift 2 ;;
         --pref)        PREF="$2";          shift 2 ;;
         --suff)        SUFF="$2";          shift 2 ;;
+        --pango)       USE_PANGO=true;     shift ;;
+        --dark)        USE_DARK=true;      shift ;;
         *)                                 shift ;;
     esac
 done
+
+OUT_TXT=""
+
+format_vol_out() {
+    local icon="$1"
+    local val_pad="$2"
+    if $USE_PANGO; then
+        if $USE_DARK; then
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${PREF}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>VOL </span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#CCFF00'>${icon} ${val_pad}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>%</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${SUFF}</span>"
+        else
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${PREF}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>VOL </span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${icon} ${val_pad}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>%</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
+        fi
+    else
+        OUT_TXT="${PREF}VOL=${icon} ${val_pad}%${SUFF}"
+    fi
+}
 
 get_vol_stat() {
     local vol
     vol=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk '{print $5}' | tr -d '%')
     if [ -z "$vol" ]; then
         STATE="NONE"
-        OUT_TXT="${PREF}VOL=${IC_NONE}   0%${SUFF}"
+        format_vol_out "$IC_NONE" "  0"
         return 0
     fi
     local vol_pad
     vol_pad=$(printf "%3d" "${vol:-0}")
     if [ "$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{print $2}')" = "yes" ]; then
         STATE="OFF"
-        OUT_TXT="${PREF}VOL=${IC_OFF} ${vol_pad}%${SUFF}"
+        format_vol_out "$IC_OFF" "$vol_pad"
     else
         STATE="ON"
-        OUT_TXT="${PREF}VOL=${IC_ON} ${vol_pad}%${SUFF}"
+        format_vol_out "$IC_ON" "$vol_pad"
     fi
 }
 

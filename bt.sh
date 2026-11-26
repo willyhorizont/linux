@@ -18,6 +18,8 @@ IC_NONE="❌"
 
 PREF=" "
 SUFF=" "
+USE_PANGO=false
+USE_DARK=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -35,6 +37,8 @@ while [[ $# -gt 0 ]]; do
         --ic-none)     IC_NONE="$2";      shift 2 ;;
         --pref)        PREF="$2";         shift 2 ;;
         --suff)        SUFF="$2";         shift 2 ;;
+        --pango)       USE_PANGO=true;    shift ;;
+        --dark)        USE_DARK=true;     shift ;;
         *)                                shift ;;
     esac
 done
@@ -64,9 +68,34 @@ get_bt_stat() {
 print_indicator() {
     get_bt_stat
     local dvc_nm=""
-    if [ "$STATE" = "ON" ]; then
-        dvc_nm="${DVC_NM}"
+    local ic_cur=""
+    case "$STATE" in
+        NONE) ic_cur="$IC_NONE" ;;
+        OFF)  ic_cur="$IC_OFF" ;;
+        INIT) ic_cur="$IC_INIT" ;;
+        ON)
+            ic_cur="$IC_ON"
+            dvc_nm="${DVC_NM}"
+            ;;
+    esac
+
+    local out_txt=""
+    if $USE_PANGO; then
+        if $USE_DARK; then
+            out_txt="${out_txt}<span background='#000000' foreground='#00ADD8'>${PREF}</span>"
+            out_txt="${out_txt}<span background='#000000' foreground='#FF1493'>BT </span>"
+            out_txt="${out_txt}<span background='#000000' foreground='#CCFF00'>${ic_cur}</span>"
+            out_txt="${out_txt}<span background='#000000' foreground='#00ADD8'>${SUFF}</span>"
+        else
+            out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>${PREF}</span>"
+            out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>BT </span>"
+            out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>${ic_cur}</span>"
+            out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
+        fi
+    else
+        out_txt="${PREF}BT=${ic_cur}${SUFF}"
     fi
+
     local tooltip_txt
     tooltip_txt=$(cat << EOF
 bt.sh
@@ -79,21 +108,11 @@ ${dvc_nm}
 EOF
     )
     if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
-        case "$STATE" in
-            NONE) echo "<txt>${PREF}BT=${IC_NONE}${SUFF}</txt>" ;;
-            OFF)  echo "<txt>${PREF}BT=${IC_OFF}${SUFF}</txt>" ;;
-            INIT) echo "<txt>${PREF}BT=${IC_INIT}${SUFF}</txt>" ;;
-            ON)   echo "<txt>${PREF}BT=${IC_ON}${SUFF}</txt>" ;;
-        esac
+        echo "<txt>${out_txt}</txt>"
         echo "<txtclick>$CMD_CLICK</txtclick>"
         echo "<tool>$tooltip_txt</tool>"
     else
-        case "$STATE" in
-            NONE) echo "${PREF}BT=${IC_NONE}${SUFF}" ;;
-            OFF)  echo "${PREF}BT=${IC_OFF}${SUFF}" ;;
-            INIT) echo "${PREF}BT=${IC_INIT}${SUFF}" ;;
-            ON)   echo "${PREF}BT=${IC_ON}${SUFF}" ;;
-        esac
+        echo "${out_txt}"
         printf "\e[2J%s\n" "$tooltip_txt" 1>&2
     fi
 }

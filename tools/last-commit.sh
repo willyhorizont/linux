@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exi
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.10.3" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.10.4" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,13 +15,14 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-update bt.sh, make indicator for xfce4-panel one-liner;
-update cam.sh, make indicator for xfce4-panel one-liner;
-update mic.sh, make indicator for xfce4-panel one-liner;
-update net.sh, make indicator for xfce4-panel one-liner;
-update powr-indctr.sh, make indicator for xfce4-panel one-liner;
-update tux-indctr.sh, make indicator for xfce4-panel one-liner;
-update vol.sh, make indicator for xfce4-panel one-liner;
+-- add --pango to --indicator *indctr --;
+update bt.sh, add --pango --dark;
+update cam.sh, add --pango --dark;
+update mic.sh, add --pango --dark;
+update net.sh, add --pango --dark;
+update powr-indctr.sh, add --pango --dark;
+update tux-indctr.sh, add --pango --dark;
+update vol.sh, add --pango --dark;
 
 [working on]
 create windows-control-panel.sh;
@@ -39,7 +40,6 @@ update powr-indctr.sh, add --mode xfce4-panel <txt></txt>\n<txtclick></txtclick>
 
 [TODO #1]
 create rofi tile-cur-win.sh;
-add --pango to --indicator *indctr;
 create rofi Windows Notification Area or System Tray / Mac Menu Bar Extras or Status Menus / Linux Status Notifier Area or System Tray;
 
 [TODO #2]

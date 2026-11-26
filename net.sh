@@ -18,6 +18,8 @@ IC_NONE="✈️"
 
 PREF=" "
 SUFF=" "
+USE_PANGO=false
+USE_DARK=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -35,15 +37,41 @@ while [[ $# -gt 0 ]]; do
         --ic-none)     IC_NONE="$2";       shift 2 ;;
         --pref)        PREF="$2";          shift 2 ;;
         --suff)        SUFF="$2";          shift 2 ;;
+        --pango)       USE_PANGO=true;     shift ;;
+        --dark)        USE_DARK=true;      shift ;;
         *)                                 shift ;;
     esac
 done
+
+OUT_TXT=""
+
+format_out() {
+    local icon="$1"
+    local val="$2"
+    if $USE_PANGO; then
+        if $USE_DARK; then
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${PREF}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>NET </span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#CCFF00'>${icon} ${val}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>%</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${SUFF}</span>"
+        else
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${PREF}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>NET </span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${icon} ${val}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>%</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
+        fi
+    else
+        OUT_TXT="${PREF}NET=${icon} ${val}%${SUFF}"
+    fi
+}
 
 get_net_stat() {
     DVC_INFO=""
     if [ -z "$(ls /sys/class/net/ 2>/dev/null | grep -E 'eth|wlan|enp|wlp')" ]; then
         STATE="INIT"
-        OUT_TXT="${PREF}NET=${IC_INIT}   0%${SUFF}"
+        format_out "${IC_INIT}" "  0"
         DVC_INFO="${IC_INIT}"
         return 0
     fi
@@ -51,7 +79,7 @@ get_net_stat() {
     con_type=$(nmcli -t -f TYPE,STATE dev | awk -F: '$2=="connected" {print $1; exit}')
     if [ "$con_type" = "ethernet" ]; then
         STATE="ETH"
-        OUT_TXT="${PREF}NET=${IC_ETH} 100%${SUFF}"
+        format_out "${IC_ETH}" "100"
         DVC_INFO="${IC_ETH}"
     elif [ "$con_type" = "wifi" ]; then
         local wifi_info
@@ -63,15 +91,15 @@ get_net_stat() {
         sig=${wifi_info#*,}
         sig_pad=$(printf "%3d" "${sig:-0}")
         STATE="WIFI"
-        OUT_TXT="${PREF}NET=${IC_WIFI} ${sig_pad}%${SUFF}"
+        format_out "${IC_WIFI}" "${sig_pad}"
         DVC_INFO="${IC_WIFI} ${ssid:-Unknown}"
     elif [ "$(nmcli radio wifi)" = "disabled" ]; then
         STATE="NONE"
-        OUT_TXT="${PREF}NET=${IC_NONE}   0%${SUFF}"
+        format_out "${IC_NONE}" "  0"
         DVC_INFO="${IC_NONE}"
     else
         STATE="INIT"
-        OUT_TXT="${PREF}NET=${IC_INIT}   0%${SUFF}"
+        format_out "${IC_INIT}" "  0"
         DVC_INFO="${IC_INIT}"
     fi
 }

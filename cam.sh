@@ -23,6 +23,8 @@ IC_NONE="🚫"
 
 PREF=" "
 SUFF=" "
+USE_PANGO=false
+USE_DARK=false
 
 STATUS_FILE="/sys/class/video4linux/video0/device/power/runtime_status"
 
@@ -42,6 +44,8 @@ while [[ $# -gt 0 ]]; do
         --ic-none)     IC_NONE="$2";      shift 2 ;;
         --pref)        PREF="$2";         shift 2 ;;
         --suff)        SUFF="$2";         shift 2 ;;
+        --pango)       USE_PANGO=true;    shift ;;
+        --dark)        USE_DARK=true;     shift ;;
         *)                                shift ;;
     esac
 done
@@ -91,24 +95,38 @@ click to open cam.sh
 ${app_ln}
 EOF
     )
+    local icon_str=""
+    case "$STATE" in
+        NONE)   icon_str="${IC_NONE}" ;;
+        STB)    icon_str="${IC_STB}" ;;
+        INIT)   icon_str="${IC_INIT}" ;;
+        ACCESS) icon_str="${IC_INIT}" ;;
+        ON)     icon_str="${IC_ON}" ;;
+    esac
+
+    local out_txt=""
+    if $USE_PANGO; then
+        if $USE_DARK; then
+            out_txt="${out_txt}<span background='#000000' foreground='#00ADD8'>${PREF}</span>"
+            out_txt="${out_txt}<span background='#000000' foreground='#FF1493'>CAM </span>"
+            out_txt="${out_txt}<span background='#000000' foreground='#CCFF00'>${icon_str}</span>"
+            out_txt="${out_txt}<span background='#000000' foreground='#00ADD8'>${SUFF}</span>"
+        else
+            out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>${PREF}</span>"
+            out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>CAM </span>"
+            out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>${icon_str}</span>"
+            out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
+        fi
+    else
+        out_txt="${PREF}CAM=${icon_str}${SUFF}"
+    fi
+
     if [ "$MODE" = "${ALL_MODES["xfce4-panel"]}" ]; then
-        case "$STATE" in
-            NONE)   echo "<txt>${PREF}CAM=${IC_NONE}${SUFF}</txt>" ;;
-            STB)    echo "<txt>${PREF}CAM=${IC_STB}${SUFF}</txt>" ;;
-            INIT)   echo "<txt>${PREF}CAM=${IC_INIT}${SUFF}</txt>" ;;
-            ACCESS) echo "<txt>${PREF}CAM=${IC_INIT}${SUFF}</txt>" ;;
-            ON)     echo "<txt>${PREF}CAM=${IC_ON}${SUFF}</txt>" ;;
-        esac
+        echo "<txt>${out_txt}</txt>"
         echo "<txtclick>$CMD_CLICK</txtclick>"
         echo "<tool>$tooltip_txt</tool>"
     else
-        case "$STATE" in
-            NONE)   echo "${PREF}CAM=${IC_NONE}${SUFF}" ;;
-            STB)    echo "${PREF}CAM=${IC_STB}${SUFF}" ;;
-            INIT)   echo "${PREF}CAM=${IC_INIT}${SUFF}" ;;
-            ACCESS) echo "${PREF}CAM=${IC_INIT}${SUFF}" ;;
-            ON)     echo "${PREF}CAM=${IC_ON}${SUFF}" ;;
-        esac
+        echo "${out_txt}"
         printf "\e[2J%s\n" "$tooltip_txt" 1>&2
     fi
 }

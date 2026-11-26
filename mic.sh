@@ -17,6 +17,8 @@ IC_NONE="❌"
 
 PREF=" "
 SUFF=" "
+USE_PANGO=false
+USE_DARK=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -33,26 +35,52 @@ while [[ $# -gt 0 ]]; do
         --ic-none)     IC_NONE="$2";       shift 2 ;;
         --pref)        PREF="$2";          shift 2 ;;
         --suff)        SUFF="$2";          shift 2 ;;
+        --pango)       USE_PANGO=true;     shift ;;
+        --dark)        USE_DARK=true;      shift ;;
         *)                                 shift ;;
     esac
 done
 
+OUT_TXT=""
+
 get_mic_stat() {
     local mic_vol
     mic_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ 2>/dev/null | awk '{print $5}' | tr -d '%')
+    local icon_str=""
+    local val_str=""
     if [ -z "$mic_vol" ]; then
         STATE="NONE"
-        OUT_TXT="${PREF}MIC=${IC_NONE}   0%${SUFF}"
-        return 0
-    fi
-    local mic_pad
-    mic_pad=$(printf "%3d" "${mic_vol:-0}")
-    if [ "$(pactl get-source-mute @DEFAULT_SOURCE@ 2>/dev/null | awk '{print $2}')" = "yes" ]; then
-        STATE="OFF"
-        OUT_TXT="${PREF}MIC=${IC_OFF} ${mic_pad}%${SUFF}"
+        icon_str="${IC_NONE}"
+        val_str="  0"
     else
-        STATE="ON"
-        OUT_TXT="${PREF}MIC=${IC_ON} ${mic_pad}%${SUFF}"
+        local mic_pad
+        mic_pad=$(printf "%3d" "${mic_vol:-0}")
+        if [ "$(pactl get-source-mute @DEFAULT_SOURCE@ 2>/dev/null | awk '{print $2}')" = "yes" ]; then
+            STATE="OFF"
+            icon_str="${IC_OFF}"
+        else
+            STATE="ON"
+            icon_str="${IC_ON}"
+        fi
+        val_str="${mic_pad}"
+    fi
+
+    if $USE_PANGO; then
+        if $USE_DARK; then
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${PREF}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>MIC </span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#CCFF00'>${icon_str} ${val_str}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#FF1493'>%</span>"
+            OUT_TXT="${OUT_TXT}<span background='#000000' foreground='#00ADD8'>${SUFF}</span>"
+        else
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${PREF}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>MIC </span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${icon_str} ${val_str}</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>%</span>"
+            OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
+        fi
+    else
+        OUT_TXT="${PREF}MIC=${icon_str} ${val_str}%${SUFF}"
     fi
 }
 
