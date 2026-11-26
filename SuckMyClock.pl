@@ -56,7 +56,7 @@ if ($use_pango) {
 }
 
 my $tooltip_txt = "SuckMyClock (My Suckless Clock) Perl version\n" .
-                  "click to open calcurse\n";
+                  "click to open calcurse";
 
 if ($mode eq "xfce4-panel") {
     print "<txt>$out_string</txt>\n";

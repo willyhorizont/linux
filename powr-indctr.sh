@@ -93,7 +93,7 @@ format_out() {
             OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
         fi
     else
-        OUT_TXT="${PREF}BAT=${bat_ic} ${cap_val}%${SEP}AC=${ac_ic}${SUFF}"
+        OUT_TXT="${PREF}BAT ${bat_ic} ${cap_val}%${SEP}AC ${ac_ic}${SUFF}"
     fi
 }
 

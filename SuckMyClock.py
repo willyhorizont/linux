@@ -71,7 +71,7 @@ def main():
 
     tooltip_txt = (
         "SuckMyClock (My Suckless Clock) Python version\n"
-        "click to open calcurse\n"
+        "click to open calcurse"
     )
 
     if mode == "xfce4-panel":

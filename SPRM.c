@@ -393,7 +393,7 @@ int main(int argc, char *argv[]) {
         "W = Total Disk Write\n"
         "▼ = Average Download Rate\n"
         "▲ = Average Upload Rate\n"
-        "click to open btop\n";
+        "click to open btop";
 
     if (strcmp(mode, "xfce4-panel") == 0) {
         printf("<txt>%s</txt>\n", out_txt);

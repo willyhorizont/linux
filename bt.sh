@@ -93,7 +93,7 @@ print_indicator() {
             out_txt="${out_txt}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
         fi
     else
-        out_txt="${PREF}BT=${ic_cur}${SUFF}"
+        out_txt="${PREF}BT ${ic_cur}${SUFF}"
     fi
 
     local tooltip_txt

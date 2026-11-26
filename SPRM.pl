@@ -304,7 +304,7 @@ my $tooltip_txt =
     "W = Total Disk Write\n" .
     "▼ = Average Download Rate\n" .
     "▲ = Average Upload Rate\n" .
-    "click to open btop\n";
+    "click to open btop";
 
 if ($mode eq "xfce4-panel") {
     print "<txt>$out_str</txt>\n";

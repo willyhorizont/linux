@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
 
     const char *tooltip_txt =
         "SuckMyClock (My Suckless Clock) C version\n"
-        "click to open calcurse\n";
+        "click to open calcurse";
 
     if (strcmp(mode, "xfce4-panel") == 0) {
         printf("<txt>%s</txt>\n", out_txt);

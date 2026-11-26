@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 
     std::string tooltip_txt =
         "SuckMyClock (My Suckless Clock) C++ version\n"
-        "click to open calcurse\n";
+        "click to open calcurse";
 
     if (mode == "xfce4-panel") {
         std::cout << "<txt>" << final_out << "</txt>\n";

@@ -80,7 +80,7 @@ get_mic_stat() {
             OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
         fi
     else
-        OUT_TXT="${PREF}MIC=${icon_str} ${val_str}%${SUFF}"
+        OUT_TXT="${PREF}MIC ${icon_str} ${val_str}%${SUFF}"
     fi
 }
 

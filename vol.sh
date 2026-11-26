@@ -63,7 +63,7 @@ format_vol_out() {
             OUT_TXT="${OUT_TXT}<span background='#FFFFFF' foreground='#000000'>${SUFF}</span>"
         fi
     else
-        OUT_TXT="${PREF}VOL=${icon} ${val_pad}%${SUFF}"
+        OUT_TXT="${PREF}VOL ${icon} ${val_pad}%${SUFF}"
     fi
 }
 

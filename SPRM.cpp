@@ -346,7 +346,7 @@ int main(int argc, char* argv[]) {
         "W = Total Disk Write\n"
         "▼ = Average Download Rate\n"
         "▲ = Average Upload Rate\n"
-        "click to open btop\n";
+        "click to open btop";
 
     if (mode == "xfce4-panel") {
         std::cout << "<txt>" << final_out << "</txt>\n";

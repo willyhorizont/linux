@@ -70,7 +70,7 @@ BEGIN {
     }
 
     tooltip_txt = "SuckMyClock (My Suckless Clock) Awk version\n" \
-                  "click to open calcurse\n"
+                  "click to open calcurse"
 
     if (mode == "xfce4-panel") {
         printf "<txt>%s</txt>\n", out_string

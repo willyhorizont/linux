@@ -273,7 +273,7 @@ BEGIN {
                   "W = Total Disk Write\n" \
                   "▼ = Average Download Rate\n" \
                   "▲ = Average Upload Rate\n" \
-                  "click to open btop\n"
+                  "click to open btop"
 
     if (mode == "xfce4-panel") {
         print "<txt>" out_string "</txt>"

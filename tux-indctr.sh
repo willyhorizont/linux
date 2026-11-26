@@ -50,7 +50,7 @@ print_indicator() {
                 fi
             else
                 if $USE_PANGO; then
-                    if $USE_PANGO; then
+                    if $USE_DARK; then
                         out_txt="<span background='#000000' foreground='#CCFF00'>🐧</span>"
                     else
                         out_txt="<span background='#FFFFFF' foreground='#000000'>🐧</span>"
