@@ -1,0 +1,9 @@
+Name                          | Languages                           | Debian Apt Install| Launch       | Rank By Me| Cons                                      | Pros                                      | 
+thunar                        | [C, GTK 3, Exo] (Core)              | thunar            | thunar       |          1|                                           | extreme lightweight, remember sort per dir| 
+caja                          | [C, GTK 3] (Core)                   | caja              | caja         |          2|                                           | extreme lightweight, remember sort per dir| 
+pcmanfm                       | [C, GTK 3, LibFM] (Core)            | pcmanfm           | pcmanfm      |          3| not remember sort per dir                 | extreme lightweight                       | 
+doublecmd-gtk                 | [Object Pascal, LCL / GTK 2] (Core) | doublecmd-gtk     | doublecmd-gtk|          4| unfamiliar workflow for Windows / Mac user| extreme lightweight, remember sort per dir| 
+Nemo (Cinnamon)               | [C, GTK 3, XApp] (Core)             | nemo              | nemo         |           | DE dependencies                           | remember sort per dir                     | 
+Nautilus / GNOME Files (GNOME)| [C, GTK 4 / Libadwaita] (Core)      | nautilus          | nautilus     |           | DE dependencies                           | remember sort per dir                     | 
+Dolphin (KDE)                 | [C++, Qt 6, KDE Frameworks 6] (Core)| dolphin           | dolphin      |           | DE dependencies, Qt                       | remember sort per dir                     | 
+Konqueror (KDE)               | [C++, Qt 6, KDE Frameworks 6] (Core)| konqueror         | konqueror    |           | DE dependencies, Qt                       | remember sort per dir via .directory      | 
