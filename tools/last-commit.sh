@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exi
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.10.6" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.10.9" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,10 +15,11 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-add top-bar-free-text.sh;
-and some other minor updates and fixes;
+update notes, update notes to List all workspaces, update notes to add Get pid from window id (_NET_WM_PID), update notes to add Kill by pid, update notes to add Kill by window id;
 
 [working on]
+-- replace wmctrl -d to xprop -root _NET_DESKTOP_NAMES --;
+-- rename wmctrl-lxcapg.sh to wmctrl-lxpcapg.sh, update wmctrl -l -x -G to wmctrl -l -x -p -G --;
 create lock-mgr.sh;
 create windows-control-panel.sh;
 
