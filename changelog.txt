@@ -1,3 +1,29 @@
+[Last updated: 28 Nov 2026 @ 12:03 PM][version: 0.11.0]
+[new]
+-- replace wmctrl -d to xprop -root _NET_DESKTOP_NAMES --, done;
+-- rename wmctrl-lxcapg.sh to wmctrl-lxpcapg.sh, update wmctrl -l -x -G to wmctrl -l -x -p -G --, canceled;
+replace lxterminal with xfce4-terminal;
+replace wmctrl-lxpcapg.sh and get-open-wins.sh to wmctrl -l -x -G for lxde openbox non display;
+
+[working on]
+
+[TODO #1]
+create rofi tile-cur-win.sh;
+create rofi Windows Notification Area or System Tray / Mac Menu Bar Extras or Status Menus / Linux Status Notifier Area or System Tray;
+
+[TODO #2]
+add rofi grid for Windows Start Menu / Mac Launchpad;
+try skippy-xd for Windows Task View / Mac Mission Control;
+dvd screensaver;
+try panel with signal support, IPC?;
+
+[TODO #3]
+check *openbox*.sh, remove openbox part if not related;
+rename script to job*, kb*, indic*, to match indic*, tui*;
+remove separate config and move it to the code instead;
+cleanup dev/*
+cleanup *i3*
+
 [Last updated: 28 Nov 2026 @ 03:49 AM][version: 0.10.11]
 [new]
 update notes, add file-manager.csv, update terminal-emulator.csv, text-editor.csv, rename de.csv to desktop-environtment.csv, rename wmwc.csv to window-manager.csv;

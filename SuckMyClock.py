@@ -4,7 +4,7 @@ import sys
 import datetime
 import calendar
 
-CMD_CLICK = "lxterminal --geometry=88x28 --working-directory=$HOME -e calcurse"
+CMD_CLICK = "xfce4-terminal -e calcurse"
 
 
 def main():

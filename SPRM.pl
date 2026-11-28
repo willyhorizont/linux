@@ -4,7 +4,7 @@ use warnings;
 use Time::HiRes qw(time);
 
 my $CACHE_FILE = "/tmp/sprm-cache-pl.json";
-my $CMD_CLICK = 'lxterminal --geometry=88x28 --working-directory=$HOME -e btop';
+my $CMD_CLICK = 'xfce4-terminal -e btop';
 
 my $mode = "tint2";
 my $pref = "[";

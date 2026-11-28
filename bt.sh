@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CMD_CLICK="lxterminal --geometry=88x28 --working-directory=$HOME -e $HOME/willyhorizont.github.io/linux/bt.sh"
+CMD_CLICK="xfce4-terminal -e $HOME/willyhorizont.github.io/linux/bt.sh"
 
 declare -A ALL_MODES
 ALL_MODES=(

@@ -2,7 +2,7 @@
 
 SCRIPT_NAME="tux-indctr.sh"
 
-CMD_CLICK="lxterminal --geometry=88x28 --working-directory=$HOME -e $HOME/willyhorizont.github.io/linux/screensavr-mgr.sh"
+CMD_CLICK="xfce4-terminal -e $HOME/willyhorizont.github.io/linux/screensavr-mgr.sh"
 
 declare -A ALL_MODES
 ALL_MODES=(

@@ -12,13 +12,7 @@
 * xfce4-panel + xfce4-whiskermenu-plugin
 
 ## terminal
-* lxterminal
-* alacritty
-* wezterm
-* xfce4-terminal
-* kitty
-* ghostty
-* foot (wayland)
+check [https://github.com/willyhorizont/linux/blob/main/top-best-list/terminal-emulator.csv](https://github.com/willyhorizont/linux/blob/main/top-best-list/terminal-emulator.csv)
 
 ## file manager
 * pcmanfm

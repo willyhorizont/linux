@@ -10,7 +10,7 @@
 #include <sys/statvfs.h>
 
 #define CACHE_FILE "/tmp/sprm-cache-c.json"
-#define CMD_CLICK "lxterminal --geometry=88x28 --working-directory=$HOME -e btop"
+#define CMD_CLICK "xfce4-terminal -e btop"
 
 void pad(const char *str, int len, char *out, size_t out_sz) {
     snprintf(out, out_sz, "%*s", len, str);

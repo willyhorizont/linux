@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Time::Piece;
 
-my $CMD_CLICK = 'lxterminal --geometry=88x28 --working-directory=$HOME -e calcurse';
+my $CMD_CLICK = 'xfce4-terminal -e calcurse';
 my $mode = "tint2";
 my $pref = "[";
 my $suff = "]";

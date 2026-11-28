@@ -103,7 +103,7 @@ fi
 
 if [[ "$SHW_WIN" == "true" ]]; then
     echo "Opening welcome-window..."
-    xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "welcome-window" -hold -e fastfetch &
+    xterm -name "welcome-window" -hold -e fastfetch &
     while true; do
         if [ -n "$("$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk '$7 == "welcome-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
             break
@@ -172,7 +172,7 @@ while true; do
     fi
     if [[ "$IS_ACTION_OPEN_IDLE_WINDOW" == true ]]; then
         echo "Opening idle-window..."
-        xterm -bc -uc -u8 -fa Monospace -fs 8 -geometry 88x28 -name "idle-window" -hold -e fastfetch &
+        xterm -name "idle-window" -hold -e fastfetch &
         while true; do
             if [ -n "$("$HOME/willyhorizont.github.io/linux/wmctrl-lxcapg.sh" | awk '$7 == "idle-window.XTerm" && $9 == "fastfetch" {print $0}' 2>/dev/null)" ]; then
                 break

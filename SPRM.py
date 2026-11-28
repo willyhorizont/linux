@@ -7,7 +7,7 @@ import json
 import re
 
 CACHE_FILE = "/tmp/sprm-cache-py.json"
-CMD_CLICK = "lxterminal --geometry=88x28 --working-directory=$HOME -e btop"
+CMD_CLICK = "xfce4-terminal -e btop"
 
 
 def get_active_net_interf():

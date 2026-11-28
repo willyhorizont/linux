@@ -1,64 +1,71 @@
 # cheatsheet > general
 
 ## Find distro icon
-```
+```sh
 find /usr/share/icons/ -name "*<distro>*"
 find /usr/share/icons/ -name "*distributor-logo-<distro>*"
 ```
 
 ### List any qt installed
-```
+```sh
 dpkg -l | grep -i qt
 ```
 
 ### Get window class
-```
+```sh
 xprop WM_CLASS
 ```
 
 ### Get window name
-```
+```sh
 xdotool search --onlyvisible --class ".*" | while read id; do name=$(xdotool getwindowname $id 2>/dev/null); [ -n "$name" ] && echo "$id ; $name"; done
 ```
 
-### Check is installed
+### Get cur active win id
+```sh
+cur_actv_win_id_hex=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print $NF}')
+cur_actv_win_id_dec=$(xdotool getactivewindow 2>/dev/null)
+cur_actv_win_id_hex=$(printf "0x%08llx" "$cur_actv_win_id_dec" 2>/dev/null || printf "0x%08x" "$cur_actv_win_id_dec" 2>/dev/null)
 ```
+
+### Check is installed
+```sh
 dpkg -l diodon copyq parcellite rofi-greenclip clipster xclip xsel 2>/dev/null
 ```
 
 ### Save installed to list
-```
+```sh
 dpkg -l > "$HOME/willyhorizont.github.io/dpkg-l.txt"
 ```
 
 ### Detect key symbol
-```
+```sh
 xev | grep keysym
 ```
 
 ### Get Window Dimension
-```
+```sh
 xwininfo | grep -E "Width|Height"
 ```
 
 ### Check if something is installed
-```
+```sh
 dpkg -l | grep -i something
 which something
 ```
 
 ### See command history
-```
+```sh
 history
 ```
 
 ### Disable GRUB_TIMEOUT
-```
+```sh
 sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub && sudo update-grub
 ```
 
 ### List all categories
-```
+```sh
 grep "Categories=" /usr/share/applications/*.desktop
 ```
 
@@ -74,7 +81,7 @@ CUR_WS_NM=$(echo "$WS_NMS" | awk -v ws_i="$CUR_WS_I" 'NR == ws_i + 1 {print $0}'
 ```
 
 ### List all pid program command
-```
+```sh
 ps -eo pid,comm,args ww >> "$HOME/Codes/linux-debian-lxde/dev/cmd-out-$(date +%Y-%m-%d-%H%M%S-%3N).txt"
 pgrep -af "." >> "$HOME/Codes/linux-debian-lxde/dev/cmd-out-$(date +%Y-%m-%d-%H%M%S-%3N).txt"
 pstree -ap >> "$HOME/Codes/linux-debian-lxde/dev/cmd-out-$(date +%Y-%m-%d-%H%M%S-%3N).txt"

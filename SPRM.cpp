@@ -10,7 +10,7 @@
 #include <sys/statvfs.h>
 
 #define CACHE_FILE "/tmp/sprm-cache-cpp.json"
-#define CMD_CLICK "lxterminal --geometry=88x28 --working-directory=$HOME -e btop"
+#define CMD_CLICK "xfce4-terminal -e btop"
 
 struct FmtResult {
     std::string val;

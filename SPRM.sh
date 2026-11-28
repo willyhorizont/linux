@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CACHE_FILE="/tmp/sprm-cache-sh.json"
-CMD_CLICK="lxterminal --geometry=88x28 --working-directory=\$HOME -e btop"
+CMD_CLICK="xfce4-terminal -e btop"
 
 mode="tint2"
 pref="["

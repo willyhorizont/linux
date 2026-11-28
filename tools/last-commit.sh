@@ -4,7 +4,7 @@ $HOME/willyhorizont.github.io/linux/confirm-cmd.sh --msg "Confirm Commit" || exi
 
 SD=$(dirname "$(realpath "$0")")
 RD=$(realpath "$SD/..")
-V="0.10.11" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
+V="0.11.0" # ! DON'T FORGET TO CHANGE VERSION BEFORE RUNNING !!!! run git tag -d "$V" in case accidentally ran
 T=$(date "+%d %b %Y @ %I:%M %p")
 cd "$RD" || exit
 
@@ -15,11 +15,12 @@ H=$(sed -e '/./,$!d' <<< "$H")
 # ! DON'T FORGET TO CHANGE COMMIT MESSAGE BEFORE RUNNING !!!!
 M="
 [new]
-update notes, add file-manager.csv, update terminal-emulator.csv, text-editor.csv, rename de.csv to desktop-environtment.csv, rename wmwc.csv to window-manager.csv;
+-- replace wmctrl -d to xprop -root _NET_DESKTOP_NAMES --, done;
+-- rename wmctrl-lxcapg.sh to wmctrl-lxpcapg.sh, update wmctrl -l -x -G to wmctrl -l -x -p -G --, canceled;
+replace lxterminal with xfce4-terminal;
+replace wmctrl-lxpcapg.sh and get-open-wins.sh to wmctrl -l -x -G for lxde openbox non display;
 
 [working on]
--- replace wmctrl -d to xprop -root _NET_DESKTOP_NAMES --;
--- rename wmctrl-lxcapg.sh to wmctrl-lxpcapg.sh, update wmctrl -l -x -G to wmctrl -l -x -p -G --;
 
 [TODO #1]
 create rofi tile-cur-win.sh;

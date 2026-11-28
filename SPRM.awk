@@ -32,7 +32,7 @@ function fmt(bytesps, out_arr,    units, i, v, num_str, split_arr, f_p, b_p) {
 }
 
 BEGIN {
-    CMD_CLICK = "lxterminal --geometry=88x28 --working-directory=$HOME -e btop"
+    CMD_CLICK = "xfce4-terminal -e btop"
     mode = "tint2"
     pref = "["
     suff = "]"

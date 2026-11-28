@@ -11,7 +11,7 @@ function get_total_days(year, month) {
 }
 
 BEGIN {
-    CMD_CLICK = "lxterminal --geometry=88x28 --working-directory=$HOME -e calcurse"
+    CMD_CLICK = "xfce4-terminal -e calcurse"
     mode = "tint2"
     pref = "["
     suff = "]"

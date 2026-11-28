@@ -5,7 +5,7 @@
 #include <string.h>
 #include <time.h>
 
-#define CMD_CLICK "lxterminal --geometry=88x28 --working-directory=$HOME -e calcurse"
+#define CMD_CLICK "xfce4-terminal -e calcurse"
 
 int get_total_days(int year, int month) {
     int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
